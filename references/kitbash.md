@@ -78,7 +78,10 @@ along its edges. The SDK FBX gives 112 faces of the frame `PaintedMetalScratched
 `CargoContainerSmall.mwm` also names that material, so the reason for the difference is not established (the
 shipped faces may be assigned differently). Fix: swap the scratched slot for `PaintedMetal_Yellow` on that
 part and merge the duplicate slot (port frame result: `PaintedMetal_Yellow` 272, `Metal_Dull` 476,
-`Conveyor` 2). General rule: after a kitbash, put the new block next to the vanilla one in game, and where a
+`Conveyor` 2). The owner found the same on the keypad frame (`DoorTerminalFrame`) and the dark text banner
+(`TextSign`): vanilla is clean, ours had `PaintedMetalScratched_Darker` on 208 and 196 faces, swapped to
+`PaintedMetal_Darker`. The grey outer port frame (`LargeConveyorFrame`, `PaintedMetalScratched_Colorable`) was
+left as imported and not compared. General rule: after a kitbash, put the new block next to the vanilla one in game, and where a
 kitbashed part looks worn and the vanilla one does not, use the clean variant of the material. Do not
 assume the FBX material names are what the game renders.
 
