@@ -11,7 +11,8 @@ on error) shows them; `Delete Temporary Files` off keeps `*.mwm.log` for export 
 ## Pre-export checklist
 
 1. .blend saved (E008), SubtypeId set and unique in the file (E004, E018), ASCII names (E033).
-2. Every mesh has a valid UV map with real coordinates (E032, E042, W002) and no empty meshes (W013).
+2. Every mesh has a valid UV map with real coordinates (E032, E042, W002) and no empty meshes (W013). This
+   includes highlight target meshes and collision meshes (collision UVs: E044).
 3. Materials: no custom node trees (E053), texture paths contain `Textures\` (E007), valid resolutions (W004).
 4. Collision: at most 10 objects (E022), modifiers applied (E034), rigid body shape allowed (E054), no
    external HKT plus objects (E055), all inside the bounding box.
@@ -43,7 +44,7 @@ on error) shows them; `Delete Temporary Files` off keeps `*.mwm.log` for export 
 | E034 | collision has unapplied modifiers | apply them |
 | E037 | Havok `hctFilterManager.dll` not found | install Havok Content Tools 2013 |
 | E039 / E050 | Assimp32.dll / VC++ redist missing | install .NET 3.5 SP1, VC++ 2012 x86 |
-| E043 / E044 | MWM conversion failed | read `*.mwm.log` |
+| E043 / E044 | MWM conversion failed | read `*.mwm.log` (turn `Delete Temporary Files` off first). Seen: `Mesh 'pc' has no UV map/channel` for `<SubtypeId>.hkt.fbx` means a collision mesh has no UVs or all UVs at (0,0): MwmBuilder builds the collision FBX too, so give collision meshes a real UV map (Blender's primitives have one). The main `.mwm` is still written, but without the collision |
 | E045 | model path outside mod folder | fix Mod / Export paths |
 | E046 | DDS conversion failed | check texture file and `texconv` |
 | E053 | custom node tree | use SEUT material; change textures instead |

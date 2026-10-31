@@ -22,11 +22,13 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
 - WeaponCore and ToolCore wiki pages (Ash-LikeSnow): Weapon Block Types, Minimal Configuration, Required Files,
   Definition Fields, Turret Fields, Example Turret Definition.
 - SEUT dummy and subpart presets: `empties` list in the add-on preferences module.
+- Export recipe and E044 cause: ran `scene.export` on a scratch mod folder with SEUT 1.2.1, Blender 4.5, read `*.mwm.log`, `seut_ot_export.py` and `seut_mwmbuilder.py`.
 - Atlas region maps: `_alphamask` textures from the SEUT assets (`Textures\Models\Cubes`), segmented by `scripts/extract_atlas_regions.py`, labelled from `scripts/annotate_atlas.py` previews.
 
 ## Not yet verified
 
-- `scene.export` end to end (needs mod path, MwmBuilder, Havok).
+- In-game load of an exported block (aim at a highlight, collision behaviour, LOD switching).
+- Export of LODs, build stages, subparts and the SBC (`export_sbc_type` update/new); only a Main plus collision model was exported.
 - Mirroring and mountpoint operators driven from script.
 - Atlas region descriptions for small pieces (Atlas2 labels, ButtonsAtlas, Atlas3); boxes are measured, the names were read by eye and need a second look.
 - Dummy and preset subpart names; subpart workflow.

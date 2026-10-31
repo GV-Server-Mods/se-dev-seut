@@ -10,7 +10,7 @@ driving a live Blender through the Blender MCP.
 It is not affiliated with Keen Software House or the SEUT authors. Facts come from SEUT's source, the
 Space Engineers wiki, the ModSDK content, and checks run in Blender 4.5 with SEUT 1.2.1. Every claim in the
 references is tagged **[HARD]** (read in source or docs) or **[SOFT]** (inferred, verify first), and
-`references/sources.md` lists what is still unverified. Export and in-game behaviour have not been tested yet.
+`references/sources.md` lists what is still unverified. Export of a Main plus collision model was tested through the Blender MCP; in-game behaviour has not been tested yet.
 
 ## What it covers
 

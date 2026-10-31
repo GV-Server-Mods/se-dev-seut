@@ -75,12 +75,39 @@ col.rigid_body.collision_shape = 'BOX'      # BOX, SPHERE, CAPSULE, CYLINDER, CO
 
 Apply scale and rotation first, because the rigid body does not follow them afterwards.
 
-## Operators seen in the addon source (idnames only; call signatures not yet tested)
+## Export through the MCP [HARD, tested on SEUT 1.2.1, Blender 4.5]
+
+`scene.export` polls for a 3D viewport in Object mode, which the MCP does not give by default, so override the
+context. The .blend must be saved, and the Mod folder and Export Folder must exist (the folder must contain
+`Models\`).
+
+```python
+s = scn.seut
+s.mod_path = r"<mod folder>"; s.export_exportPath = r"<mod folder>\Models\Cubes\large"
+s.export_sbc_type = 'none'            # 'update' / 'new' also write the CubeBlocks SBC
+s.export_deleteLooseFiles = False     # keep *.mwm.log and *.hkt.*.log while debugging; True for the final run
+win = bpy.context.window
+area = next(a for a in win.screen.areas if a.type == 'VIEW_3D')
+region = next(r for r in area.regions if r.type == 'WINDOW')
+with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
+    result = bpy.ops.scene.export()
+```
+
+- A clean run ends with `I007` and leaves only `<SubtypeId>.mwm` when `export_deleteLooseFiles` is True.
+- `{'FINISHED'}` is returned even when `E044` was reported. Read the Notifications output, and keep the logs
+  to find the cause.
+- Tools used: `FBXImporter.exe` ships inside the add-on (`tools\`), `MwmBuilder.exe` and Havok come from
+  Addon Preferences. Havok warning `Calculated 'extra radius' for box shape is 0` is harmless.
+- Check the result by searching the `.mwm` bytes: `Dummies` with your `detector_*` names and a `highlight`
+  user property, `HavokCollisionGeometry`, and the material names.
+
+## Operators seen in the addon source (signatures tested only where noted)
 
 `scene.recreate_collections`, `scene.create_collection`, `scene.add_mountpoint_area`, `scene.add_dummy`,
-`scene.add_preset_subpart`, `scene.add_custom_subpart`, `object.add_highlight_empty`,
-`object.create_material`, `object.remapmaterials`, `wm.import_materials`, `wm.convert_textures`,
-`scene.export`, `scene.export_all_scenes`, `scene.export_materials`, `scene.import_complete`,
+`scene.add_preset_subpart`, `scene.add_custom_subpart`, `object.add_highlight_empty` (tested, see
+`interaction-highlights.md`), `object.create_material`, `object.remapmaterials`, `wm.import_materials`,
+`wm.convert_textures`, `scene.export` (tested, above), `scene.export_all_scenes`, `scene.export_materials`,
+`scene.import_complete`,
 `quicktools.add_bevels`, `quicktools.remove_bevels`, `quicktools.apply_transforms`,
 `quicktools.mirror_apply`, `quicktools.origin_to_selected`, `quicktools.cut_and_solidify`,
 `quicktools.apply_construction_material`, `scene.update_subpart_instances`.
