@@ -59,6 +59,8 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
 
 - `scene.import_complete` and `scene.export_all_scenes` run on the crate 2 files (`bpy-recipes.md`): import and size-identical round trip worked, `export_all_scenes` worked with one scene and crashed Blender twice with two (`Crate2.crash.txt`, depsgraph trace). The crash checklist in `errors.md` was then used for real: kill, relaunch from `bpy.app.binary_path`, MCP reconnected on its own, three times. Crate 2's icon rendered with SEUT's renderer (full colour, DX10 BC7 128 x 128, 22,020 bytes) and read back with Pillow; framing was good with the default zoom of 70.
 
+- Crate 2 in game (owner): all tests passed except LOD. At 50 m the yellow conveyor-port frames were missing (traced to `Decals` faces deleted by a global decimate: 60 in Main, 0 in both LODs); a further, light-blue silhouette stage appeared beyond LOD2 and is unexplained. Vanilla `CargoContainerSmall` LODs read from the SDK (5 m near-full, 60 m 12-face box with a baked material). LODs rebuilt with decal faces protected (`bpy-recipes.md`); the rebuilt LODs are not yet seen in game.
+
 ## Not yet verified
 
 - In-game checks still open: the armor-style UV density (about 0.05 UV/m is extrapolated), a second functional block for the 0.40 UV/m figure, LOD switching, build stages in game, the SEUT-rendered icon in game, inventory on a `CubeBlock` via entity components, and subparts/turrets.
