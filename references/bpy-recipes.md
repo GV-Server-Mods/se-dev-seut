@@ -238,6 +238,30 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   not need) directly under `Models`; copy the three `.mwm` files into the mod's `Models` folder (LOD paths are
   relative to the mod root).
 
+### `import_complete` and `export_all_scenes` [HARD, run on SEUT 1.2.1 / Blender 4.5.10]
+
+- **`scene.import_complete(filepath=<main .fbx>)`** imports the main FBX plus every `<name>_LODn.fbx`,
+  `<name>_BSn.fbx` / `_Construction` file and a `<name>.hkt` found in the same folder, into the active scene
+  (set its `sceneType` and run `recreate_collections` first). It sets the scene's SubtypeId to the file's base
+  name, fills `Main`, `LOD1`, `LOD2`, and attaches the `.hkt` as the collection's external `hkt_file` (no
+  collision objects). It returned `4 of 4 files successfully imported (I021)`. LOD and BS collections are left
+  hidden in the view layer. Call it as `getattr(bpy.ops.scene, 'import_complete')(filepath=...)` under the
+  usual `temp_override`.
+- **Round trip check:** a block exported, imported with `import_complete` into a fresh scene and exported again
+  gave `.mwm` files of identical size (1,049,004 / 524,716 / 131,500 bytes). Use this to prove an importer
+  or export change did not alter the model.
+- **`scene.export_all_scenes()`** (needs a VIEW_3D override and Object mode) loops every main, subpart,
+  character and item scene and runs the normal export on each. With one scene in the file it worked
+  (`I008`, `1 of 1 scenes`). **With a second scene in the file (here the one filled by `import_complete`)
+  it crashed Blender 4.5.10 twice** (access violation in `BKE_base_eval_flags` on a depsgraph worker thread,
+  right after the operator started). Exporting that second scene alone with `scene.export` worked. So from
+  script, export scene by scene (set `window.scene` and `window.view_layer` yourself, `view_layer.update()`,
+  save, then `scene.export` under the override) instead of calling `export_all_scenes` on a multi-scene file.
+  Cause not established; it may only happen when the operator switches `window.scene` under a script override.
+- `export_sbc_type` read back as `'new'` after a save and reload even though it was set to `'none'` before
+  the save, and the export then wrote an extra `<Subtype>_1.sbc` next to the existing one. Read the value
+  just before exporting and clear stray `_1.sbc` files.
+
 ## Operators seen in the addon source (signatures tested only where noted)
 
 `scene.recreate_collections`, `scene.create_collection`, `scene.add_mountpoint_area`, `scene.add_dummy`,

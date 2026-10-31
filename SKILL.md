@@ -117,6 +117,8 @@ shape reference at most, and ask before spending credit.
   `references/bpy-recipes.md` ("Moving parts between .blend files, LODs from script"). At session start record
   `bpy.app.binary_path` and `bpy.data.filepath`; after a crash see `references/errors.md` ("When Blender
   crashes or the MCP connection drops").
+- **Do not call `scene.export_all_scenes` on a file with several scenes from script** [HARD, crashed Blender
+  4.5.10 twice]: export each scene with `scene.export` instead. `references/bpy-recipes.md`.
 - **Tiling texture scale depends on the kind of block** [HARD, owner-observed]: armor-style blocks want about
   0.05 UV per metre, functional blocks about 0.40. `references/materials.md`.
 - **Re-exporting with `export_sbc_type = 'new'` writes `<SubtypeId>_1.sbc`** instead of overwriting. Use
