@@ -55,6 +55,8 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
 
 - Small-grid scene exported twice on a scratch scene (default flags, then small flags) and the SBC read back; `mirror_apply` and `origin_to_selected` run on a scratch mesh.
 
+- Second antenna crate `TestAntennaCrate2` rebuilt from SEUT's importer in a fresh .blend: custom parts, collision shapes and the tower terminal detector appended from the first crate, LOD1/LOD2 built by script, exported and installed beside the first crate (`bpy-recipes.md`, "Moving parts between .blend files, LODs from script"). Two Blender crashes traced to iterating a live collection while mutating data (`Crate2.crash.txt`). Export log: 4 identical-UV warnings, source not found. Not yet seen in game; its icon is a copy of the first crate's.
+
 ## Not yet verified
 
 - In-game checks still open: the armor-style UV density (about 0.05 UV/m is extrapolated), a second functional block for the 0.40 UV/m figure, LOD switching, build stages in game, the SEUT-rendered icon in game, inventory on a `CubeBlock` via entity components, and subparts/turrets.

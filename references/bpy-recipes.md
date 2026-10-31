@@ -213,6 +213,31 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
 - Check the result by searching the `.mwm` bytes: `Dummies` with your `detector_*` names and a `highlight`
   user property, `HavokCollisionGeometry`, and the material names.
 
+## Moving parts between .blend files, LODs from script [HARD, run on SEUT 1.2.1 / Blender 4.5.10]
+
+- **Crash rule:** snapshot before mutating. A loop over `col.all_objects` that created and removed meshes
+  crashed Blender (access violation in `pyrna_prop_collection_iter_next`, crash log in `%TEMP%`). Use
+  `objs = list(col.all_objects)` first. Save the .blend before each step; the crash loses unsaved work.
+- **Appending parts:** `bpy.data.libraries.load(path, link=False)` with `dst.objects = [names]` pulls the old
+  parent in as `<Name>.001` as well. Read `o.matrix_world` (not stale, it is stored in the file) or compute
+  `parent.matrix_world @ o.matrix_parent_inverse @ o.matrix_basis` *before* removing that parent. Then
+  `o.parent = None; o.matrix_world = mw`, link to the target collection, `o.parent = new_root;
+  o.matrix_parent_inverse = new_root.matrix_world.inverted()`. Remove the `.001` leftovers and
+  `bpy.data.orphans_purge()`, or highlight links and W007 resolve to the wrong objects.
+- **Rigid bodies survive an append** (`o.rigid_body` is kept) even with no rigid body world in the new scene.
+- **Highlight links** (`empty.seut.highlight_objects[i].obj`) keep working when both the empty and the mesh
+  are re-parented; reassign `.obj` by hand if the mesh was renamed.
+- **LOD from script** without join/decimate operators: for each source mesh build a `bmesh`, apply
+  `bmesh.ops.transform(bm, matrix=o.matrix_world, verts=bm.verts)`, remap `material_index` onto one shared
+  material list, merge into one mesh, add a `DECIMATE` modifier (ratio about 0.35 for LOD1, 0.12 for LOD2),
+  then `bpy.data.meshes.new_from_object(ob.evaluated_get(depsgraph))` and swap `ob.data`. Skip `detector_*`
+  highlight meshes; drop text, decals and small pipes from LOD2. Link the object to the `LODn (...)`
+  collection and the export wrote the LOD `.mwm` files and the `<Model><LOD Distance=...>` XML (25 / 50) with no
+  other setup. Exporting 3827 and 1091 faces took well under a second.
+- A SEUT scene exported this way produced `Models\<Subtype>.mwm`, `_LOD1`, `_LOD2` (plus a `.hkt.mwm` that the earlier install of the same block did
+  not need) directly under `Models`; copy the three `.mwm` files into the mod's `Models` folder (LOD paths are
+  relative to the mod root).
+
 ## Operators seen in the addon source (signatures tested only where noted)
 
 `scene.recreate_collections`, `scene.create_collection`, `scene.add_mountpoint_area`, `scene.add_dummy`,

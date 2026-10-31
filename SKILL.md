@@ -111,6 +111,10 @@ shape reference at most, and ask before spending credit.
   `linkSubpartInstances = False` on the main scene, make the subpart empty the active object, then set
   `empty.seut.linkedScene`. The add-dummy and add-subpart operators also leave the new empty unparented.
   `references/bpy-recipes.md` ("Subparts, dummies, mirroring and mountpoints from script").
+- **Never loop over a live `collection.all_objects` / `bpy.data.objects` while creating or removing data**
+  [HARD, two Blender 4.5.10 crashes in `pyrna_prop_collection_iter_next`]: copy first,
+  `objs = list(col.all_objects)`, then build meshes, remove temp meshes, link objects. Save before each step.
+  `references/bpy-recipes.md` ("Moving parts between .blend files, LODs from script").
 - **Tiling texture scale depends on the kind of block** [HARD, owner-observed]: armor-style blocks want about
   0.05 UV per metre, functional blocks about 0.40. `references/materials.md`.
 - **Re-exporting with `export_sbc_type = 'new'` writes `<SubtypeId>_1.sbc`** instead of overwriting. Use
