@@ -76,6 +76,13 @@ weapon uses `"None"` for all three part ids and takes its muzzle from the main m
 subpart names without the `subpart_` prefix. SBC fields for a sorter turret include aiming limits
 (`MinElevationDegrees`, `MaxElevationDegrees`, `MinAzimuthDegrees`, `MaxAzimuthDegrees`), `RotationSpeed`,
 `ElevationSpeed`, `MaxRangeMeters`, `BuildProgressModels` and `UseModelIntersection`.
+Spinning barrels [HARD, WeaponCore source `Coreparts/Definitions/Gatlings.cs`, `WeaponState.cs`]: the mount
+point entry also has `SpinPartId` (the subpart that spins, `"None"` otherwise). The vanilla gatling example
+uses `SpinPartId` and `MuzzlePartId` `GatlingBarrel`, `AzimuthPartId` `GatlingTurretBase1`, `ElevationPartId`
+`GatlingTurretBase2`. `HardPoint.Other.RotateBarrelAxis` picks the spin axis in the spin part's own frame
+(1 = X, 2 = Y, 3 = Z; the gatling uses 3), and `Loading.SpinFree = true` spins it while not firing. So any
+subpart names work for a WeaponCore turret, including a spinning barrel under a missile-style chain; keep the
+barrels along the spin axis and the muzzles on the spin part.
 
 **ToolCore** [wiki: Definition Fields, Turret Fields, Example Turret Definition, Required Files]:
 tools are also sorters. A turret lists one or two `Subpart` entries with `Name` (no `subpart_` prefix),
