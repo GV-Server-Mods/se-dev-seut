@@ -44,12 +44,17 @@ new textures. Many vanilla blocks share atlases and tiling materials, which is w
    an atlas region. Match vanilla neighbours; the SEUT `UV Grid Overlay` toggle shows texel density [HARD].
    Texture detail size is set by UV per metre: **fewer UVs per metre = bigger features** ("zoom in"). Do not
    take one vanilla number as the target, because each material's texture has its own baked scale.
-   Owner tests of `PaintedMetal_Colorable` on a 2.5 m cube, with the vanilla concrete-skinned armor block as the
-   reference [HARD, owner-observed]: 0.145 UV/m looked about 2x too fine, and 0.40 UV/m was clearly too fine.
-   Start at **about 0.07 UV/m** (a 2.5 m face spans about 0.18 of the tile) [SOFT: awaiting the retest] and
-   adjust by eye against a vanilla block wearing the same skin and colour. Box-project each face
-   (`uv = (a, b) * D + 0.5`, using the two axes across the face's dominant normal); overlapping islands are
-   fine on a tiling material.
+   **Two scales exist in vanilla** [HARD, owner-observed, `PaintedMetal_Colorable` on a 2.5 m cube, all blocks
+   wearing the same concrete skin]:
+   - Deformable armor blocks have coarse detail. A probe at 0.145 UV/m looked about 2x too fine against light
+     armor, 0.40 UV/m was far too fine, and 0.07 UV/m was still "a tad" too fine. For an armor-style block
+     start at **about 0.05 UV/m** (a 2.5 m face spans about 0.13 of the tile) [SOFT: 0.05 is extrapolated].
+   - Functional (non-armor) cube blocks have fine detail. A vanilla reinforced conveyor tube matched the
+     0.40 UV/m probe. For machines, panels and other functional blocks use **about 0.40 UV/m** [SOFT: one
+     block compared].
+   Pick the scale by what the block is, then adjust by eye against a vanilla block of the same kind wearing the
+   same skin and colour. Box-project each face (`uv = (a, b) * D + 0.5`, using the two axes across the face's
+   dominant normal); overlapping islands are fine on a tiling material.
    Vanilla armor does not use `PaintedMetal_Colorable` directly: `LargeBlockArmorBlock` builds each side from
    `Models\Cubes\Large\Armor\SquarePlate.mwm` (material `SquarePlate`, 4x2 pattern sheet, UV span 0.25 x 0.5
    per 2.5 m plate, 0.141 UV/m averaged) [HARD, SBC and SDK FBX]. Look up the model a vanilla block really

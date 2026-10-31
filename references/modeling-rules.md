@@ -39,8 +39,8 @@
   shapes.
 - The wiki says collision appears slightly bigger in game, so shrink shapes a little. In a test of a 2.5 m
   bevelled cube, a 2.45 m box felt "a tad too small" against the model in game [HARD, tested by the owner].
-  Start from the model's real extent (2.5 m box for a full cube) and shrink only if it blocks neighbours.
-  [SOFT: the 2.5 m retest is pending.]
+  A 2.5 m box on the same cube felt right [HARD, tested by the owner]. Start from the model's real extent
+  (2.5 m box for a full cube) and shrink only if it blocks neighbours.
 - Debug in game: offline singleplayer, F11, Debug Draw, Physics Primitives. Red = hull, blue = box,
   white = sphere, orange = cylinder, yellow = capsule.
 - Subparts only get collision if vanilla blocks of that type have it on subparts too.
