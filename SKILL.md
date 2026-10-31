@@ -85,6 +85,9 @@ shape reference at most, and ask before spending credit.
 
 - **UV-less or all-at-(0,0) UVs crash the game** [HARD, E032/E042]. Every mesh needs a real UV map, and that
   includes collision meshes (a UV-less collision mesh gives E044 and no collision in the MWM).
+- **A highlight detector must cover its whole mesh** [HARD, owner test]: the outline shows only while the
+  reticle is inside the `detector_*` empty, so any part of the mesh outside it is dead. Size the empty from
+  the mesh bounds (`references/interaction-highlights.md`, "Detector size").
 - **Tiling texture scale depends on the kind of block** [HARD, owner-observed]: armor-style blocks want about
   0.05 UV per metre, functional blocks about 0.40. `references/materials.md`.
 - **Re-exporting with `export_sbc_type = 'new'` writes `<SubtypeId>_1.sbc`** instead of overwriting. Use

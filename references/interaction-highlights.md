@@ -27,7 +27,9 @@ the plain yellow-square box; a detector empty linked to a mesh outlines that mes
 2. Select that object, `bpy.ops.object.add_highlight_empty(detector_type=<key>, index=N)`
    (UI: Add > Empty > Add Highlight Empty). It creates the empty at the object, parents it to the same
    parent, links it, and renames the object to `<original>_section_<N>`.
-3. Resize the empty to cover the face the player should aim at (slightly generous, inside the bounding box).
+3. Resize the empty so it covers the **whole** highlighted mesh, with a small margin (see "Detector size"
+   below). The highlight only shows while the reticle is inside the empty, so any part of the mesh outside it
+   looks dead to the player.
 4. Export, restart the game fully (a reload keeps the old data), aim at the area. A yellow square means the
    empty and mesh are not associated.
 
@@ -47,7 +49,7 @@ bpy.ops.object.add_highlight_empty(detector_type="detector_terminal_", index=1)
   at the object's location, `empty_display_type` CUBE, display size 0.5. Its `highlight` property is already
   set to the object name, and `empty.seut.highlight_objects[0].obj` is the mesh. The info line is `I011`.
 - Size the aim area with the empty's `scale` (half-extent = `empty_display_size * scale`); `dimensions` reads 0
-  for empties.
+  for empties. The new empty is only a starting size, so resize it to the mesh (next section).
 - A duplicate `index` is not rejected: Blender appends `.001` to the name. Keep indices unique per type yourself.
 - Select the next target explicitly before each call; the operator works on the single selected object.
 
@@ -66,6 +68,33 @@ bpy.ops.object.add_highlight_empty(detector_type="detector_terminal_", index=1)
 | `detector_cryopod_` | cryopod | yes |
 | `detector_wardrobe` | wardrobe; moves player into the empty, add collision 0.95 m below | no (extras `_1`, `_2`) |
 | `detector_forageable` | forageable item; link the object that disappears when foraged | no |
+
+## Detector size [HARD, owner test]
+
+The outline appears only while the aim ray is inside the detector empty, not while it is over the mesh. In a test
+the empty was sized by eye and covered about 60% of the width and height of the panel mesh; aiming at the rest
+of the panel did nothing, and players would expect the whole mesh to react.
+
+- A CUBE empty spans `empty_display_size * scale` from its centre on each axis (half-extent). With the SEUT
+  default display size 0.5 and scale 1, the empty is 1 m across.
+- Size it from the mesh, not by eye: cover the mesh's full bounding box in the empty's own axes, plus a margin of
+  about 1 cm on the face directions, and make it a little deeper than the mesh (a few cm each side) so the aim
+  ray reliably enters it. Centre it on the mesh.
+- For a mesh at an angle, or a curved port frame, cover the box that contains the whole mesh. A bigger empty
+  only costs extra aim area.
+- Keep the empty inside the block bounding box where the mesh allows it.
+
+```python
+def size_detector_to_mesh(empty, mesh, pad=0.01, depth_half=0.04, depth_axis=1):
+    """Cover `mesh` (axis aligned with the empty) fully; depth_axis is the face normal (0 X, 1 Y, 2 Z)."""
+    half = [d / 2 + pad for d in mesh.dimensions]
+    half[depth_axis] = max(half[depth_axis], depth_half)
+    empty.location = mesh.location
+    empty.scale = [h / empty.empty_display_size for h in half]
+```
+
+Check it numerically before export: each of the mesh's dimensions must be at most twice the empty's
+half-extent on that axis.
 
 ## In-game result [HARD, owner test]
 

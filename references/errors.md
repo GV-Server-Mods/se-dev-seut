@@ -16,6 +16,8 @@ on error) shows them; `Delete Temporary Files` off keeps `*.mwm.log` for export 
 3. Materials: no custom node trees (E053), texture paths contain `Textures\` (E007), valid resolutions (W004).
 4. Collision: at most 10 objects (E022), modifiers applied (E034), rigid body shape allowed (E054), no
    external HKT plus objects (E055), all inside the bounding box.
+4a. Each `detector_*` empty covers the whole mesh it highlights (aim areas smaller than the mesh leave dead
+   spots in game; `references/interaction-highlights.md`).
 5. Each exported collection has one unparented top-level object (E031); LOD indexes continuous (E006) and
    distances increasing (E011).
 6. Paths: Export Folder contains `Models\` (E014), Mod folder set and model path inside it (E045),
