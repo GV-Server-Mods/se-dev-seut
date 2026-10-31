@@ -126,6 +126,7 @@ container breakdown: `references/interaction-highlights.md`.
 | `references/bpy-recipes.md` | scripting scenes, collections, materials, collision through the Blender MCP |
 | `references/modeling-rules.md` | geometry, bevels and normals, collision, LOD, build stages, empties, mountpoints, mirroring |
 | `references/materials.md` | picking or creating materials, texture types, techniques, atlas UV workflow |
+| `references/atlas-regions.md` | UV-mapping a decal quad onto a specific piece of Atlas1-4, ButtonsAtlas, Decals or TextAtlas (UV boxes per piece) |
 | `references/materials-catalog.md` | choosing a material by behaviour: paintable, decal, or emissive and state-driven glow; emissive presets and colours |
 | `references/vanilla-materials.md` | choosing one of the 165 vanilla materials by name |
 | `references/block-scenes.md` | laying out Main, LODs, build stages and collision for a complete block; vanilla LOD distances |

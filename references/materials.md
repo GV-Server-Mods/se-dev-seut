@@ -38,7 +38,8 @@ new textures. Many vanilla blocks share atlases and tiling materials, which is w
 3. Lay out UVs: scale and place islands over the region of the atlas that has the look you want.
    To find regions, import a vanilla block that uses the atlas (SEUT `Import FBX`, `Complete Import`
    from `<game>\Content\Models\Cubes`) and read its UV islands, or open the TIF in `<SEUT Assets>\Textures\Models\Cubes`.
-   [SOFT: atlas region maps are not yet documented in this skill.]
+   Region boxes for the decal and detail atlases are in `references/atlas-regions.md` [SOFT: boxes found by
+   script, small-piece descriptions read by eye].
 4. Tiling materials (`PaintedMetal_*`, `RustyMetal`, `Rubber*`) take UVs scaled to texel density instead of
    an atlas region. Match vanilla neighbours; the SEUT `UV Grid Overlay` toggle shows texel density [HARD].
 5. If every material on the model is Vanilla, no textures need to ship with the mod [HARD, wiki].
