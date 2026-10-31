@@ -49,8 +49,9 @@ Everything below was checked against SEUT 1.2.1 on Blender 4.5 unless marked "un
    result in game is a separate check the owner does; say what has and has not been tested in game.
    **Fast in-game loop** [HARD, owner]: for simple model and texture updates, no game restart is needed. In
    offline singleplayer open the admin Debug Draw menu (Alt+F11 on the owner's keys) and press "Reload
-   models" or "Reload textures". The wiki says dummy and collision changes need a full restart; treat that as
-   still true until a reload is seen to pick them up.
+   models" or "Reload textures". Do a full game restart after changing subparts [owner: reload has failed
+   to pick up subpart changes], and after dummy or collision changes (the wiki says so; a reload is not
+   yet seen to pick them up).
 
 ## Driving the live Blender (MCP)
 
