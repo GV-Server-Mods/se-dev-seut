@@ -178,6 +178,11 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
      does no damage). `look` through the `ICON` camera to check the framing.
   4. `bpy.ops.scene.icon_render_preview()` under the same override; it opens a render window and ends with
      `I018` and the file path. Then `renderToggle = 'off'`, which removes the helper objects again.
+     **Close the preview window when the render is done** [HARD, tested; owner asked]: it is a small extra
+     window (320 x 256, screen named `temp`) that stays open and in the way. Close every window except your own:
+     `wm = bpy.context.window_manager; main = next(w for w in wm.windows if w.screen.name != 'temp')`, then
+     `for w in [w for w in wm.windows if w != main]: with bpy.context.temp_override(window=w): bpy.ops.wm.window_close()`.
+     Check `len(wm.windows) == 1` afterwards. Never close the user's main window.
   5. The next export with `'new'` or `'update'` writes `Icon` as `Textures\GUI\Icons\<SubtypeId>.dds` because
      that file exists under `scene.render.filepath`. Copy the file into the mod's `Textures\GUI\Icons`.
   Icon style [owner, 2026-10]: vanilla icons currently use the blue filter, which is SEUT's default. The

@@ -117,6 +117,8 @@ shape reference at most, and ask before spending credit.
   `references/bpy-recipes.md` ("Moving parts between .blend files, LODs from script"). At session start record
   `bpy.app.binary_path` and `bpy.data.filepath`; after a crash see `references/errors.md` ("When Blender
   crashes or the MCP connection drops").
+- **Close the icon render preview window after `icon_render_preview`** [HARD]: leave only the user's main
+  window open. Recipe in `references/bpy-recipes.md` (icons, step 4).
 - **Do not call `scene.export_all_scenes` on a file with several scenes from script** [HARD, crashed Blender
   4.5.10 twice]: export each scene with `scene.export` instead. `references/bpy-recipes.md`.
 - **Tiling texture scale depends on the kind of block** [HARD, owner-observed]: armor-style blocks want about
