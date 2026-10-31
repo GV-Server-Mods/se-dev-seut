@@ -50,8 +50,9 @@ Everything below was checked against SEUT 1.2.1 on Blender 4.5 unless marked "un
    **Fast in-game loop** [HARD, owner]: for simple model and texture updates, no game restart is needed. In
    offline singleplayer open the admin Debug Draw menu (Alt+F11 on the owner's keys) and press "Reload
    models" or "Reload textures". Do a full game restart after changing subparts [owner: reload has failed
-   to pick up subpart changes], and after dummy or collision changes (the wiki says so; a reload is not
-   yet seen to pick them up).
+   to pick up subpart changes], and after dummy or collision changes [HARD, owner]: after a reload the debug
+   overlay still drew the block's old two dummies although the new `.mwm` held eleven, while the new meshes
+   and SBC type had loaded. A reload that shows old dummies is stale data, not a model fault.
 
 ## Driving the live Blender (MCP)
 

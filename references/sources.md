@@ -39,9 +39,13 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
 
 - Kitbash material bug: first recipe lost per-face materials (owner screenshot of the all-yellow port); fixed and re-checked by counting faces per material on the re-imported port frame.
 
+- SEUT wiki hub (`Modding/Tools/Space_Engineers_Utilities`, Tutorials and Reference) all pages now read except the three YouTube videos and the Planet Editor (planet modding, out of scope): Installation Guide, Addon Preferences, Notifications (overview and panel), and Add and Context Menu were read late and folded into `errors.md` and `bpy-recipes.md`.
+- Step 4 tests on scratch block `S4Test` (SEUT 1.2.1): MountPoints, BuildProgressModels, MirroringX/Y, `update` mode and the icon path read from the generated SBC; icon rendered and converted to DXT5 DDS. Not yet seen in game.
+- Port frame material: the owner saw the vanilla yellow frame clean and the kitbashed one with scratched edges; swapped to `PaintedMetal_Yellow` and re-exported; cause not established (`kitbash.md`).
+
 ## Not yet verified
 
-- In-game checks still open: the armor-style UV density (about 0.05 UV/m is extrapolated), a second functional block for the 0.40 UV/m figure, LOD switching, build stages, and icon generation (SEUT does not make one).
+- In-game checks still open: the armor-style UV density (about 0.05 UV/m is extrapolated), a second functional block for the 0.40 UV/m figure, LOD switching, build stages in game, the DXT5 icon in game, and subparts/turrets.
 - Confirmed in game by the owner (probe cube): the exported mod loads with no mod errors, the highlight outlines the linked mesh, a 2.5 m collision box matches the model, paint and vanilla materials work, the keypad panel maps correctly, and `IsAirTight` in the SBC clears the BuildInfo hint.
 - Export of LODs, build stages and subparts; only a Main plus collision model was exported. The `new` SBC was generated but not loaded in game; `update` was not run.
 - Mirroring and mountpoint operators driven from script.

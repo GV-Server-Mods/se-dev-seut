@@ -260,7 +260,7 @@ table; not tested here.
 | PaintedMetalScratched_Colorable | MESH | paint 100% |
 | PaintedMetalScratched_Darker | MESH | no ADD texture |
 | PaintedMetalScratched_VeryDark | MESH | no ADD texture |
-| PaintedMetalScratched_Yellow | MESH | no ADD texture |
+| PaintedMetalScratched_Yellow | MESH | no ADD texture. Worn edges; the vanilla cargo container's port frame looks clean in game, so prefer `PaintedMetal_Yellow` there (`kitbash.md`) |
 | PanelingColorable | DECAL_CUTOUT | paint 45% |
 | PanelingDarker | DECAL_CUTOUT | fixed color |
 | PanelingDarkerNoReskin | DECAL_CUTOUT | fixed color |

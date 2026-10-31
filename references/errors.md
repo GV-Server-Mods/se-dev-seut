@@ -4,9 +4,25 @@ Codes are from `seut_errors.py` in SEUT 1.2.1 [HARD]. The Notifications panel (S
 on error) shows them; `Delete Temporary Files` off keeps `*.mwm.log` for export failures.
 
 ## Contents
+- Setup prerequisites and the Notifications panel
 - Pre-export checklist
 - Errors with a fix
 - Warnings
+
+## Setup prerequisites and the Notifications panel [HARD, wiki Installation Guide, Addon Preferences, Notifications]
+
+- A working SEUT install needs: Blender 4.0+, the SEUT add-on, Havok Content Tools (for collision `.hkt`;
+  Addon Preferences > Havok Standalone Filter Manager points at `hctStandAloneFilterManager.exe`), .NET
+  Framework 3.5, the VC++ 2012 redistributable, the Space Engineers ModSDK, and at least 15 GB free for the
+  Asset Directory. Game Directory and Asset Directory must be set, then "Update Textures from Game Files"
+  (30+ minutes, Blender freezes meanwhile), then Assets and MWMBuilder each "Download & Install". If an
+  export reports E012, E013 or missing textures, check these first. A "Rate Limit Exceeded" message from the
+  asset or MwmBuilder download is GitHub throttling; wait 30 to 60 minutes.
+- The Notifications panel has three levels (INFO, WARNING, ERROR) with an ID and timestamp. Errors link to a
+  wiki page per ID (`.../wiki/Modding/Tools/SEUT/Notifications/E0xx`). Hidden types are only filtered, not
+  deleted. `Export SEUT Logs` saves the Blender System Console to a file and `Toggle System Console` shows
+  problems the panel missed; use them before clearing notifications. The wiki lists E001 to E056 and W001 to
+  W020 (this skill's table follows SEUT 1.2.1 source).
 
 ## Pre-export checklist
 

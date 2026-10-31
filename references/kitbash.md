@@ -68,9 +68,19 @@ Result in the test: 13 materials used, all 97 slots remapped to linked library m
 the indices, so every vanilla part ended up with a single material: in game the port frame came out all
 yellow, with no door panel texture and no metal handle edges, while the vanilla container beside it looked
 right [HARD, owner screenshot]. After trimming, count faces per material on a multi-material part, for
-example `detector_conveyor_section_004` should show four (`PaintedMetal_Yellow` 160,
+example `detector_conveyor_section_004` imports with four (`PaintedMetal_Yellow` 160,
 `PaintedMetalScratched_Yellow` 112, `Metal_Dull` 476, `Conveyor` 2). The same trap applies to LOD meshes
 trimmed after a join: fix it the same way, or the LODs and the main model look different.
+
+**Match the vanilla look, not the SDK FBX materials.** The owner compared the kitbashed port with a vanilla
+container in game [HARD, owner screenshot]: the vanilla yellow frame is clean, ours had scratch and chip wear
+along its edges. The SDK FBX gives 112 faces of the frame `PaintedMetalScratched_Yellow`, and the shipped
+`CargoContainerSmall.mwm` also names that material, so the reason for the difference is not established (the
+shipped faces may be assigned differently). Fix: swap the scratched slot for `PaintedMetal_Yellow` on that
+part and merge the duplicate slot (port frame result: `PaintedMetal_Yellow` 272, `Metal_Dull` 476,
+`Conveyor` 2). General rule: after a kitbash, put the new block next to the vanilla one in game, and where a
+kitbashed part looks worn and the vanilla one does not, use the clean variant of the material. Do not
+assume the FBX material names are what the game renders.
 
 3. Move the parts you keep into the block. The imported root has scale 0.01 (the meshes are in cm), so
    unparent each kept object keeping its world transform, then apply scale:

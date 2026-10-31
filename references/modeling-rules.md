@@ -109,8 +109,9 @@ parts do:
   relative to the mod root, so moving the `.mwm` files breaks them. The mod root must contain a `Models`
   folder; the game cuts the path at the first `Models`.
 - Without a collision model the game makes a box from the bounding box. Construction (BS) models should share
-  the main block's collision. Dummy and collision changes need a full game restart [wiki], and so do subpart changes [owner]; simple mesh
-  and texture changes only need the Debug Draw "Reload models" / "Reload textures" buttons [HARD, owner].
+  the main block's collision. Dummy and collision changes need a full game restart [wiki; reload showed stale dummies, owner], and so do
+  subpart changes [owner]; simple mesh and texture changes only need the Debug Draw "Reload models" /
+  "Reload textures" buttons [HARD, owner].
 - `BS1..BS3` are construction stages (typically shells with less geometry). `Apply Construction` assigns
   the Construction material; `Cut and Solidify` makes the scaffold look [HARD].
 - Armor blocks vanilla-style use build stages; simple blocks may skip them [SOFT].
