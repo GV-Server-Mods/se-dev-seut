@@ -119,7 +119,8 @@ check whether a vanilla decal material already gives that look: `DECAL_CUTOUT` m
 one fits, and spend real geometry only on shape that has to read in the silhouette, catch light at
 grazing angles, or affect collision. Decals cost almost nothing in triangles and keep blocks cheap and
 consistent with vanilla. Say which decal you chose and why geometry was needed when you skip one.
-Decal quads sit just off the surface (not coplanar) to avoid z-fighting [SOFT, confirm the offset used by
+Decal quads sit just off the surface (not coplanar) to avoid z-fighting [SOFT, 0.01 m exported cleanly, see
+`references/materials-catalog.md` for normals and DLC pitfalls; confirm the offset used by
 vanilla blocks before fixing a number].
 
 ## Interaction points highlight real geometry (default style)

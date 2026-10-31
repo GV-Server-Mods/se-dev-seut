@@ -43,8 +43,25 @@ surfaces; glass, holo and shield materials are excluded (wiki, Materials referen
 lines, vents, hazard stripes, buttons, text, labels. Vanilla list: `Atlas1`, `Atlas1Colorable`, `Atlas2`,
 `Atlas3_*`, `Atlas4_*`, `ButtonsAtlas_*`, `Decals`, `PanelingColorable`, `PanelingDarker`,
 `PanelingDarkerNoReskin`, `TextAtlas`, `TextAtlasDark`. Decal quads need an offset from the base surface to
-avoid z-fighting [SOFT, offset value not yet measured]. `DECAL` and `DECAL_NOPREMULT` are other techniques
-for decal-style transparency (no vanilla library material uses them).
+avoid z-fighting: 0.01 m off the surface exported cleanly in a test run [SOFT: not seen in game yet].
+`DECAL` and `DECAL_NOPREMULT` are other techniques for decal-style transparency (no vanilla library material
+uses them).
+
+Decal quad pitfalls [HARD, hit in a test run]: a new bmesh face has no normal until `bm.normal_update()`, and
+`recalc_face_normals` flips an isolated quad arbitrarily, so check `face.normal` against the direction you
+want and flip explicitly (`bmesh.ops.reverse_faces`); a quad facing into the block is invisible. A decal can
+also sit on curved geometry (a planar-mapped decal material on a dome), but how the game renders that is not
+checked.
+
+## DLC materials (W012) [HARD, `asset_data.seut.is_dlc` in `Materials.blend`]
+
+Using one of these locks the model to the DLC (W012). Avoid them in public or non-DLC blocks:
+`AquariumGlass`, `BraidedSteel`, `Console`, `Cooker`, `Dirt`, `FabricBlack`, `FabricWhite`, `Fish`,
+`FoodDispenser`, `HydrogenThrusterCone`, `HydrogenThrusterConePlates`, `HydrogenThrusterInjector`,
+`LabEquipmentScreen_01`, `Leather_Dark`, `LightPanel_Light`, `PaintedMetal_Red`, `WarningSignsEaster`.
+There is no non-DLC solid red `PaintedMetal`; for red use a paintable `Colorable` material painted red, or a
+red region from `ButtonsAtlas_*` for a small lamp. Re-read the flag with a background Blender
+(`blender -b Materials.blend --python ...`) after SEUT asset updates.
 
 ## Emissive materials and state-driven glow
 

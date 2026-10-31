@@ -28,7 +28,13 @@ def seut_col(sc, col_type, index=0, ref=None):
             return c
 main = seut_col(sc, 'main')
 hkt  = seut_col(sc, 'hkt', 1, main)      # collision for Main has type_index 1
+lod1 = seut_col(sc, 'lod', 1, main)      # ALWAYS pass `main` for LODs, see below
 ```
+
+`LOD1` (ref Main) and `BS1_LOD1` (ref BS1) are both `lod` with `type_index` 1. Without `ref=main` the lookup
+can return `BS1_LOD1`, and the LOD mesh lands in the build-stage collection while `LOD1` stays empty; SEUT
+raises no warning [HARD, hit in a test run]. After filling LODs, list each collection's object count to check.
+Empty `LOD3` and `BS1..3` collections export without complaint.
 
 `col_type` values: `seut main hkt lod bs mountpoints mirroring render`. Data lives in `col.seut`
 (`lod_distance`, `ref_col`, `type_index`).
@@ -90,14 +96,15 @@ def add_box(bm, size, center=(0, 0, 0), rot_y_deg=0.0):
     m = Matrix.Translation(center) @ Matrix.Rotation(math.radians(rot_y_deg), 4, 'Y') @ Matrix.Diagonal((*size, 1))
     bmesh.ops.create_cube(bm, size=1.0, matrix=m)
 
-def box_project_uv(bm, uv_per_metre):
-    """Per-face box projection at a fixed texel density; overlapping islands are fine on tiling materials."""
+def box_project_uv(bm, uv_per_metre, origin=0.37):
+    """Per-face box projection at a fixed texel density; overlapping islands are fine on tiling materials.
+    `origin` is an offset: 0.5 puts every 2.5 m cell edge exactly on UV 0.0 at 0.4 UV/m and triggers W002."""
     uv = bm.loops.layers.uv.get("UVMap") or bm.loops.layers.uv.new("UVMap")
     for f in bm.faces:
         ax = max(range(3), key=lambda i: abs(f.normal[i]))
         a, b = [(1, 2), (0, 2), (0, 1)][ax]
         for l in f.loops:
-            l[uv].uv = (l.vert.co[a] * uv_per_metre + 0.5, l.vert.co[b] * uv_per_metre + 0.5)
+            l[uv].uv = (l.vert.co[a] * uv_per_metre + origin, l.vert.co[b] * uv_per_metre + origin)
 ```
 
 Armor-style density is about 0.05 UV per metre, functional blocks about 0.40 (`materials.md`). Check the result

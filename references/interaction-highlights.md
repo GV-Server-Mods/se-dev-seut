@@ -51,6 +51,14 @@ bpy.ops.object.add_highlight_empty(detector_type="detector_terminal_", index=1)
 - Size the aim area with the empty's `scale` (half-extent = `empty_display_size * scale`); `dimensions` reads 0
   for empties. The new empty is only a starting size, so resize it to the mesh (next section).
 - A duplicate `index` is not rejected: Blender appends `.001` to the name. Keep indices unique per type yourself.
+  Object names are global to the .blend, not per scene: `detector_terminal_1` in another scene of the same file
+  also forces `.001` here [HARD, hit in a test run]. Use an unused index, or rename the empty afterwards (the
+  empty's `highlight` property names the mesh, not the empty, so a rename does not break the link). Exported
+  dummies are named from the object, so make sure no `.001` suffix remains.
+- Detectors exported on a plain `CubeBlock` (SEUT's generated SBC) show the outline in game [HARD, owner test],
+  but opening a terminal or connecting a conveyor needs a block type that has that function (a TerminalBlock,
+  cargo container, ConveyorSorter, and so on) [SOFT, not tested]. Change `TypeId` in the SBC when the block
+  must actually work.
 - Select the next target explicitly before each call; the operator works on the single selected object.
 
 ## Detector types (SEUT 1.2.1 `empties['highlight_empties']`)
@@ -106,6 +114,10 @@ tileable surface:
   full height (top bar, circular display, 4x3 keypad, bottom bar); the right half is black.
 - Mapping the whole quad to a middle slice (u 0.35-0.65) showed a stretched fragment with two keys. Map the
   panel to `u 0.03..0.525, v 0..1` and size the mesh to that portrait ratio (about 1 : 2, for example 0.2 x 0.4 m).
+- A narrow lit strip does not fit that portrait mapping (it would stretch the keypad over a 1 : 7 strip). A test
+  run mapped a strip to a small flat key area of the sheet (u 0.035-0.06, v 0.45-0.54) to get a plain lit
+  patch [SOFT: not seen in game]. `Terminal` is a UI sheet; its emissive follows block state but is blue, not
+  a colour you choose.
 - General rule: a material that is a UI sheet or atlas needs a deliberate UV region; check its texture before
   mapping (`references/atlas-regions.md` lists the atlases; `Terminal` is not in it).
 

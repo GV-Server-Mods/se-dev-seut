@@ -18,6 +18,10 @@
   usually keep a small inset on faces that do not need to touch [SOFT, vanilla convention].
 - Set the grid scale to match the block, since it also scales SBC values [HARD].
 
+- Which Blender side is the block's in-game front is not verified. SEUT's FBX export uses forward `Z` and up
+  `Y` [HARD, `seut_export_utils.py`], but no test has placed a block and checked its front. Ask the owner, or
+  test with an obvious marker, before putting a port on "the front".
+
 ## Geometry and shading
 
 - Hard-surface with bevels: SEUT's `Add Bevels` quick tool adds bevel modifiers with Harden Normals on
