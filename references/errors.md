@@ -5,6 +5,7 @@ on error) shows them; `Delete Temporary Files` off keeps `*.mwm.log` for export 
 
 ## Contents
 - Setup prerequisites and the Notifications panel
+- When Blender crashes or the MCP connection drops
 - Pre-export checklist
 - Errors with a fix
 - Warnings
@@ -23,6 +24,27 @@ on error) shows them; `Delete Temporary Files` off keeps `*.mwm.log` for export 
   deleted. `Export SEUT Logs` saves the Blender System Console to a file and `Toggle System Console` shows
   problems the panel missed; use them before clearing notifications. The wiki lists E001 to E056 and W001 to
   W020 (this skill's table follows SEUT 1.2.1 source).
+
+## When Blender crashes or the MCP connection drops [SOFT: steps below not run end to end]
+
+Calls fail with "Connection to Blender lost" / WinError 10054, or `get_addon_status` stops answering.
+
+1. **Record two things at the start of every session**, while Blender still answers:
+   `bpy.app.binary_path` (the exact `blender.exe`, so nothing has to be guessed for a non-default install)
+   and `bpy.data.filepath`. Also save the .blend before each risky script step; a crash loses the rest.
+2. **Read the crash log**: `%TEMP%\<blend name>.crash.txt` (stack trace plus the last operators run). A
+   trace through `pyrna_prop_collection_iter_next` means a loop over a live collection while data changed
+   (`bpy-recipes.md`, "Moving parts between .blend files").
+3. **Ask before restarting** unless the user already said to: it closes their other work and may need
+   permission to start a process. If allowed, relaunch with the recorded path, for example
+   `Start-Process "<binary_path>" "<blend path>"` (PowerShell). Only the saved state comes back; check
+   `bpy.data.filepath` and the scene list, then redo anything after the last save.
+4. **Reconnect**: poll `get_addon_status` for a short while. If it never answers, the add-on's server is not
+   auto-starting on this machine (some installs start it automatically, others do not). Tell the user to open the
+   side panel (N) in Blender and press Start MCP Server, or enable the add-on's auto-start option if its
+   preferences have one. Do not loop restarts.
+5. If the recorded path is missing (context lost too), look in `C:\Program Files\Blender Foundation\`,
+   the Steam library (`steamapps\common\Blender`), or ask the user; do not search the whole drive.
 
 ## Pre-export checklist
 

@@ -114,7 +114,9 @@ shape reference at most, and ask before spending credit.
 - **Never loop over a live `collection.all_objects` / `bpy.data.objects` while creating or removing data**
   [HARD, two Blender 4.5.10 crashes in `pyrna_prop_collection_iter_next`]: copy first,
   `objs = list(col.all_objects)`, then build meshes, remove temp meshes, link objects. Save before each step.
-  `references/bpy-recipes.md` ("Moving parts between .blend files, LODs from script").
+  `references/bpy-recipes.md` ("Moving parts between .blend files, LODs from script"). At session start record
+  `bpy.app.binary_path` and `bpy.data.filepath`; after a crash see `references/errors.md` ("When Blender
+  crashes or the MCP connection drops").
 - **Tiling texture scale depends on the kind of block** [HARD, owner-observed]: armor-style blocks want about
   0.05 UV per metre, functional blocks about 0.40. `references/materials.md`.
 - **Re-exporting with `export_sbc_type = 'new'` writes `<SubtypeId>_1.sbc`** instead of overwriting. Use
