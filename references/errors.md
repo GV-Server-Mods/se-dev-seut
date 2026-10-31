@@ -49,6 +49,13 @@ Calls fail with "Connection to Blender lost" / WinError 10054, or `get_addon_sta
 5. If the recorded path is missing (context lost too), look in `C:\Program Files\Blender Foundation\`,
    the Steam library (`steamapps\common\Blender`), or ask the user; do not search the whole drive.
 
+- **Do not close the MwmBuilder / Havok command window that appears during an export** [owner-observed, once]:
+  closing it closed Blender completely (no crash file written, so it ended like a closed parent window, not
+  a crash). Those windows belong to the export run; wait for them to close themselves. An agent that
+  exports from script should warn the user before the first export of a session, and treat a Blender that
+  disappears with no `.crash.txt` as "closed by the user or by a closed child window", then use the
+  relaunch steps above. Which exports open a visible window was not established.
+
 ## Pre-export checklist
 
 1. .blend saved (E008), SubtypeId set and unique in the file (E004, E018), ASCII names (E033).
