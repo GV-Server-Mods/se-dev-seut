@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: armor-cube-bevel-lods
+expected_outcome: |
+  A saved SEUT scene TestArmorCube (large grid, 1x1x1) with one bevelled root mesh in Main using a vanilla colorable material, a collision collection of at most ten allowed convex shapes that matches the model extent, populated LOD1-LOD3 collections, and a successful export that wrote TestArmorCube.mwm with no E-code.

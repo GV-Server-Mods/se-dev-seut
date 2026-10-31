@@ -30,6 +30,12 @@ Subpart scenes (moving parts) use the same layout without BS or mountpoints; see
   exists for this). Later LODs reduce further. Keep UVs and material names identical so materials do not pop.
 - Empties (detectors, dummies, subpart links) live in Main only [SOFT, vanilla puts them there].
 - Match the weight of the block: a tiny armor block needs fewer LODs than a turret [SOFT].
+- Worked example, a bevelled armor cube [HARD, exported by a test run]: Main 56 verts (bevelled), LOD1 24 verts
+  (one bevel segment) at 60 m, LOD2 a plain 8-vert cube at 120 m. A LOD3 identical to LOD2 exports and works
+  (it was set to 240 m) but adds nothing: vanilla armor stops at two LODs (table below), so skip LOD3 for a
+  cube and keep it for blocks with real detail to shed.
+- Every LOD mesh needs the same material and real UVs, like Main. Each exports as its own
+  `<SubtypeId>_LODn.mwm`, and Main's `.mwm` lists them.
 
 ## Build stages
 
@@ -44,7 +50,7 @@ Subpart scenes (moving parts) use the same layout without BS or mountpoints; see
 
 | Model | LOD1 | LOD2 | LOD3 |
 |---|---|---|---|
-| Armor (`ArmorCenter`) | 60 m | 120 m | none |
+| Armor piece `ArmorCenter` (not the armor cube, which is built from `SquarePlate`) | 60 m | 120 m | none |
 | Armor build stages (`ArmorCenterConstruction_N`) | 5 m | none | none |
 | Small cargo container | 5 m | 60 m | none |
 | Gatling turret and its subparts | 20 m | 60 m | 150 m |

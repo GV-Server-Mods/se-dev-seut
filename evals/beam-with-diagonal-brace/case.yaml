@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: beam-with-diagonal-brace
+expected_outcome: |
+  A saved SEUT scene TestBraceBeam (large grid, 2x1x1) with two rails and a diagonal brace as one parented model inside the 5 x 2.5 x 2.5 m box, vanilla materials, at most ten convex collision objects that approximate the rails and brace without rotated cylinders, and a clean export producing TestBraceBeam.mwm.

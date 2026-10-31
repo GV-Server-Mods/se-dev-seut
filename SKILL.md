@@ -40,8 +40,10 @@ Everything below was checked against SEUT 1.2.1 on Blender 4.5 unless marked "un
 6. **LODs and build stages** (`LOD1..3`, `BS1..3`), then mountpoints and mirroring if the block needs them.
 7. **Check before export.** Run the checklist in `references/errors.md`; most failures are UVs,
    non-ASCII names, unapplied collision modifiers, or geometry outside the bounding box.
-8. **Export** (`scene.export`) needs a saved .blend, a mod path and an `...\Models\...` export folder.
-   Export has not been run in this skill's tests yet (unverified); say so rather than claiming it works.
+8. **Export** (`scene.export`) needs a saved .blend, a mod path and an `...\Models\...` export folder, and a
+   3D viewport context override through the MCP. Tested end to end on SEUT 1.2.1 (model, LODs, collision, SBC);
+   the exact recipe and its traps are in `references/bpy-recipes.md` ("Export through the MCP"). Loading the
+   result in game is a separate check the owner does; say what has and has not been tested in game.
 
 ## Driving the live Blender (MCP)
 
@@ -54,6 +56,8 @@ checkable steps and leave the scene tidy.
 3. One change per script; print only what you need (names, counts, dimensions).
 4. `look` after each meaningful change: `mode=angles` with `views` for shape, `shading=wireframe` for
    topology, `max_size` 400-512 for quick checks. Compare with the reference, fix the largest difference first.
+   LOD copies and collision sit on top of the Main model, so a bare `look` shows them stacked: hide the other
+   collections (`layer_collection.hide_viewport`) or offset the objects temporarily before checking one.
 5. Build new work in its own scene; do not delete or reshuffle the user's objects unless asked.
 
 Script hygiene:
@@ -79,7 +83,12 @@ shape reference at most, and ask before spending credit.
 
 ## Rules that fail silently or late
 
-- **UV-less or all-at-(0,0) UVs crash the game** [HARD, E032/E042]. Every mesh needs a real UV map.
+- **UV-less or all-at-(0,0) UVs crash the game** [HARD, E032/E042]. Every mesh needs a real UV map, and that
+  includes collision meshes (a UV-less collision mesh gives E044 and no collision in the MWM).
+- **Tiling texture scale depends on the kind of block** [HARD, owner-observed]: armor-style blocks want about
+  0.05 UV per metre, functional blocks about 0.40. `references/materials.md`.
+- **Re-exporting with `export_sbc_type = 'new'` writes `<SubtypeId>_1.sbc`** instead of overwriting. Use
+  `'new'` once, then `'none'`.
 - **ASCII only** in SubtypeId, material and object names [HARD, E033] or no MWM is written.
 - **Collision outside the bounding box** makes the game fall back to cube collision [HARD, wiki].
 - **Concave collision** gets filled in by Havok; split it into convex pieces [HARD, wiki].

@@ -24,6 +24,7 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
 - SEUT dummy and subpart presets: `empties` list in the add-on preferences module.
 - Armor UV density: measured (triangle UV area / world area) on ModSDK `OriginalContent` FBX files: `SquarePlate` 0.141 UV/m, `ArmorCenter` 0.40 UV/m. `ArmorCenter` turned out not to be the armor cube's model (see `CubeBlocks_Armor.sbc`), so the 0.40 value was wrong to use; the working value comes from owner observation (about 2x coarser than 0.145).
 - Terminal texture layout: read from `terminal_panel_cm.TIF` in the SEUT assets.
+- Test cases `armor-cube-bevel-lods` and `beam-with-diagonal-brace` (`evals/`): run by fresh agents reading only the skill, in the live Blender, with files and scene values checked afterwards. Both passed all assertions; the gaps they reported became the multi-piece, collision, LOD, export and SBC notes. Not run with a no-skill baseline.
 - Export recipe and E044 cause: ran `scene.export` on a scratch mod folder with SEUT 1.2.1, Blender 4.5, read `*.mwm.log`, `seut_ot_export.py` and `seut_mwmbuilder.py`.
 - Atlas region maps: `_alphamask` textures from the SEUT assets (`Textures\Models\Cubes`), segmented by `scripts/extract_atlas_regions.py`, labelled from `scripts/annotate_atlas.py` previews.
 

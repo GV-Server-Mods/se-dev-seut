@@ -75,6 +75,42 @@ col.rigid_body.collision_shape = 'BOX'      # BOX, SPHERE, CAPSULE, CYLINDER, CO
 
 Apply scale and rotation first, because the rigid body does not follow them afterwards.
 
+## Multi-piece blocks, diagonal members, UVs [HARD, built and exported in two test runs]
+
+Main needs one unparented top-level object (E031). For several solids (rails plus a brace), build each as a
+box in one bmesh and join them into a single mesh, or parent the parts under one root object or empty. Joined
+bmesh boxes need no boolean; overlapping ends are fine for a game model.
+
+```python
+import bmesh, math
+from mathutils import Matrix, Vector
+
+def add_box(bm, size, center=(0, 0, 0), rot_y_deg=0.0):
+    """Box of size (x, y, z) in metres, centred at `center`, rotated about Y by rot_y_deg."""
+    m = Matrix.Translation(center) @ Matrix.Rotation(math.radians(rot_y_deg), 4, 'Y') @ Matrix.Diagonal((*size, 1))
+    bmesh.ops.create_cube(bm, size=1.0, matrix=m)
+
+def box_project_uv(bm, uv_per_metre):
+    """Per-face box projection at a fixed texel density; overlapping islands are fine on tiling materials."""
+    uv = bm.loops.layers.uv.get("UVMap") or bm.loops.layers.uv.new("UVMap")
+    for f in bm.faces:
+        ax = max(range(3), key=lambda i: abs(f.normal[i]))
+        a, b = [(1, 2), (0, 2), (0, 1)][ax]
+        for l in f.loops:
+            l[uv].uv = (l.vert.co[a] * uv_per_metre + 0.5, l.vert.co[b] * uv_per_metre + 0.5)
+```
+
+Armor-style density is about 0.05 UV per metre, functional blocks about 0.40 (`materials.md`). Check the result
+by comparing UV area to world area per triangle: `sqrt(uv_area / world_area)` is the UV per metre.
+
+Collision for angled members: make one collision mesh per piece (a box is fine for an axis-aligned rail),
+and for a diagonal member build the same rotated box, apply rotation and scale, then set the rigid body
+shape to `CONVEX_HULL` (a rotated Box or Cylinder would ignore the rotation). A rail pair plus a brace is three
+objects, well under the limit of 10. Collision meshes need UVs too (add the same box projection; any real,
+non-degenerate coordinates work).
+
+Collision meshes should be sized to the model's real extent. Do not inset a full cube.
+
 ## Export through the MCP [HARD, tested on SEUT 1.2.1, Blender 4.5]
 
 `scene.export` polls for a 3D viewport in Object mode, which the MCP does not give by default, so override the
@@ -104,7 +140,16 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   airtight on all faces; plain-text `DisplayName` is easier than the `{LOC:...}` placeholders for a test mod.
 - Reading a vanilla FBX with `bpy.ops.import_scene.fbx` prints a huge "could not find any file path" dump to
   stdout; wrap the call in `contextlib.redirect_stdout` / `redirect_stderr` to an `io.StringIO`.
-- A clean run ends with `I007` and leaves only `<SubtypeId>.mwm` when `export_deleteLooseFiles` is True.
+- A clean run ends with `I007` and leaves only `<SubtypeId>.mwm` (plus `<SubtypeId>_LODn.mwm` files and the
+  SBC) when `export_deleteLooseFiles` is True. With False the run ends at `I004` and leaves the FBX, XML,
+  `.hkt` and log files. Always make the last run with True.
+- Re-running with `export_sbc_type = 'new'` does not overwrite: it writes `<SubtypeId>_1.sbc` beside the first
+  one. Use `'new'` once, then `'none'` (or `'update'`). Delete stray `_1.sbc` files.
+- Export reads the scene in memory, not the file on disk. `bpy.data.filepath` only has to point at a saved
+  .blend (E008). To leave the user's open file alone, write a copy with
+  `bpy.ops.wm.save_as_mainfile(filepath=..., copy=True)`. [SOFT: only tested with a file that already had a path.]
+- Making an SBC usable: replace the `{LOC:...}` names with plain text, add `<IsAirTight>`, and replace the
+  placeholder icon before shipping.
 - `{'FINISHED'}` is returned even when `E044` was reported. Read the Notifications output, and keep the logs
   to find the cause.
 - Tools used: `FBXImporter.exe` ships inside the add-on (`tools\`), `MwmBuilder.exe` and Havok come from
