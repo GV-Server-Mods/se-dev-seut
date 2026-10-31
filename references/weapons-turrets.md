@@ -61,6 +61,11 @@ Add with `scene.add_dummy` (UI: Add > Empty > Dummy). Relevant presets:
 Rotate each muzzle so its +Y axis points the way the weapon fires. Muzzle empties live in the subpart that
 moves with the barrel (the part named as the muzzle part in the config), or in the main model for fixed weapons.
 
+Subpart direction [SOFT]: a subpart scene's forward is +Y while a main scene's is -Y, so a subpart linked the
+normal way can come out turned round (the owner saw this on an earlier weapon model, and a door tutorial describes
+the same fix: rotate the subpart empty 180 degrees about Z). Check each turret subpart's facing in game, and
+check the muzzle direction after any rotation. Details: `doors-subparts.md`.
+
 ## What the configs expect
 
 **WeaponCore** [wiki: Weapon - Minimal Configuration, Weapon Block Types]:
