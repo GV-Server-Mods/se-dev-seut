@@ -114,6 +114,23 @@ Full size 2048 x 2048 px, 44 regions. Boxes found by script; labels read by eye.
 
 Full size 2048 x 2048 px, 43 regions. Boxes checked by eye; descriptions are rough shape names.
 
+Region 23 (the X panel) is not one symmetric decal [HARD, normal map read and seen in game]: the top and
+right triangles are recessed (debossed) and the left and bottom triangles are raised (embossed), so a whole
+square placed on a flat face looks lopsided. Pick one relief and build the X from four triangle faces that
+all use that one triangle's UVs, with the world triangles rotated 90 degrees apart (tangent space follows the
+UVs, so each rotated copy keeps correct lighting) [SOFT, UV recipe not yet seen in game]. Pixel corners
+(2048 px atlas, y up from the bottom) and UVs; the opaque art is 477 px wide, so a 1.6 m X is
+about 0.0034 m per px, and the whole region box is 481 px (do not scale the box to the face):
+
+| piece | corner px | corner UV (u, v) |
+|---|---|---|
+| top triangle (debossed) | (176,1397) (591,1397) apex (383,1169) | (0.086,0.682) (0.289,0.682) (0.187,0.571) |
+| bottom triangle (embossed) | (180,909) (587,909) apex (383,1131) | (0.088,0.444) (0.287,0.444) (0.187,0.552) |
+| X centre | (383.5, 1153) | (0.187, 0.563) |
+
+Size the finished decal to the open area of its face with margin; the test crate's 1.8 m square looked
+oversized against a 2.4 m face with corner brackets.
+
 | id | u0 | v0 | u1 | v1 | px | piece |
 |---|---|---|---|---|---|---|
 | 1 | 0.01 | 0.822 | 0.178 | 0.99 | 344x344 | round disc with centre hole and rings |

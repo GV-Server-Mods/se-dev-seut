@@ -59,6 +59,18 @@ bpy.ops.object.add_highlight_empty(detector_type="detector_terminal_", index=1)
   but opening a terminal or connecting a conveyor needs a block type that has that function (a TerminalBlock,
   cargo container, ConveyorSorter, and so on) [SOFT, not tested]. Change `TypeId` in the SBC when the block
   must actually work.
+- What the game does with `detector_conveyor*` [HARD, read in `MyConveyorLine.GetBlockLinePositions`,
+  `MyMultilineConveyorEndpoint`, `MyUseObjectInventory`]: one empty does two jobs.
+  1. Use object: the name prefix `conveyor` (like `inventory`) creates an inventory/terminal use object, so
+     aiming at it shows the outline and opens the inventory.
+  2. Connection point: for a block whose class has a conveyor endpoint, every dummy named `detector_conveyor*`
+     becomes a conveyor line end. The cell is the one containing the empty's position; the direction is the
+     dominant axis of the empty's offset from that cell's centre. `_small` in the name gives a small line,
+     `_in` / `_out` (third or fourth name part) makes it one-way.
+  So put the empty inside the cell it belongs to, on the side that faces the neighbour (about 0.2 m inside the
+  cell face is fine, the test crate used 0.17 m). A port frame mesh without such an empty is only a picture.
+  A plain `CubeBlock` has no conveyor endpoint, so the empty only highlights; the port connects once the SBC
+  `TypeId` is a conveyor block type [SOFT, from the code, not yet seen connecting in game].
 - Select the next target explicitly before each call; the operator works on the single selected object.
 
 ## Detector types (SEUT 1.2.1 `empties['highlight_empties']`)

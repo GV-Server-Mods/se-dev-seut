@@ -30,6 +30,8 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
 - Export recipe and E044 cause: ran `scene.export` on a scratch mod folder with SEUT 1.2.1, Blender 4.5, read `*.mwm.log`, `seut_ot_export.py` and `seut_mwmbuilder.py`.
 - Atlas region maps: `_alphamask` textures from the SEUT assets (`Textures\Models\Cubes`), segmented by `scripts/extract_atlas_regions.py`, labelled from `scripts/annotate_atlas.py` previews.
 
+- Case 3 in game (owner): terminal highlight correct; conveyor use checked in code (`MyConveyorLine`, `MyUseObjectInventory`); decal technique counts read from `Materials.blend`; X-panel relief read from the Atlas3 normal map and confirmed by the in-game screenshot; smooth-shading recipe run in Blender 4.5; kitbash import recipe run on `CargoContainerSmall.FBX` (`references/kitbash.md`).
+
 ## Not yet verified
 
 - In-game checks still open: the armor-style UV density (about 0.05 UV/m is extrapolated), a second functional block for the 0.40 UV/m figure, LOD switching, build stages, and icon generation (SEUT does not make one).

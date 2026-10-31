@@ -45,13 +45,23 @@ lines, vents, hazard stripes, buttons, text, labels. Vanilla list: `Atlas1`, `At
 `PanelingDarkerNoReskin`, `TextAtlas`, `TextAtlasDark`. Decal quads need an offset from the base surface to
 avoid z-fighting: 0.01 m off the surface exported cleanly in a test run [SOFT: not seen in game yet].
 `DECAL` and `DECAL_NOPREMULT` are other techniques for decal-style transparency (no vanilla library material
-uses them).
+uses them). Technique count over the 165 library materials [HARD, read from `Materials.blend`]: `MESH` 119,
+`DECAL_CUTOUT` 19, `GLASS` 18, `ALPHA_MASKED` 7 (`CargoNet`, `Fish`, `Grating`, `GratingMetallic`,
+`IngotsAtlas`, `MonolithText`, `StereolithText`), `HOLO` 4.
+
+**Decal materials are for flat quads only** [HARD, seen in game; cause SOFT]. A dome built from real geometry
+with `ButtonsAtlas_Darker` rendered with broken transparency (parts of the dome were cut off by objects
+that sit behind it, as if those were in front). Use a `MESH` material for any real 3D shape (a lamp dome,
+knob, pipe), and put the decal only on a flat quad over a flat face. A decal quad must also sit fully
+inside the face it is on: an LED decal that overhangs the edge of its panel hangs in the air (seen in
+game), and a decal bigger than the open area of a framed face looks oversized.
 
 Decal quad pitfalls [HARD, hit in a test run]: a new bmesh face has no normal until `bm.normal_update()`, and
 `recalc_face_normals` flips an isolated quad arbitrarily, so check `face.normal` against the direction you
-want and flip explicitly (`bmesh.ops.reverse_faces`); a quad facing into the block is invisible. A decal can
-also sit on curved geometry (a planar-mapped decal material on a dome), but how the game renders that is not
-checked.
+want and flip explicitly (`bmesh.ops.reverse_faces`); a quad facing into the block is invisible. A decal on
+curved geometry (a dome) misrenders, see above. In game the test crate's top vent decal showed even though it
+sat 0.025 m below the surface (decals appear to ignore depth), so a wrong offset can go unnoticed; still keep
+decals 0.01 m above the surface.
 
 ## DLC materials (W012) [HARD, `asset_data.seut.is_dlc` in `Materials.blend`]
 
@@ -60,7 +70,7 @@ Using one of these locks the model to the DLC (W012). Avoid them in public or no
 `FoodDispenser`, `HydrogenThrusterCone`, `HydrogenThrusterConePlates`, `HydrogenThrusterInjector`,
 `LabEquipmentScreen_01`, `Leather_Dark`, `LightPanel_Light`, `PaintedMetal_Red`, `WarningSignsEaster`.
 There is no non-DLC solid red `PaintedMetal`; for red use a paintable `Colorable` material painted red, or a
-red region from `ButtonsAtlas_*` for a small lamp. Re-read the flag with a background Blender
+red region from `ButtonsAtlas_*` as a flat decal quad for a small lamp (never on a 3D dome). Re-read the flag with a background Blender
 (`blender -b Materials.blend --python ...`) after SEUT asset updates.
 
 ## Emissive materials and state-driven glow

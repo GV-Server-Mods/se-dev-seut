@@ -26,6 +26,18 @@
 
 - Hard-surface with bevels: SEUT's `Add Bevels` quick tool adds bevel modifiers with Harden Normals on
   [HARD]. The same setup works from script: Bevel modifier, `harden_normals = True`, then apply.
+- Shade curved and bevelled parts smooth [HARD, owner saw faceted cylinders in game]. Blender creates meshes
+  flat shaded, and the exported model keeps that: a cylinder reads as a stack of flat panels. After
+  building each part (and after applying bevels), run, with the object selected and active:
+  `bpy.ops.object.shade_smooth_by_angle(angle=math.radians(30))` [tested, Blender 4.5]. That smooths faces
+  and marks edges sharper than 30 degrees as sharp, so box corners stay crisp. Check with
+  `sum(p.use_smooth for p in me.polygons)`, which should be close to the polygon count, and do it for LOD
+  meshes too. Flat decal quads can stay flat.
+- Bevel every hard edge of real geometry [SOFT, owner: the test block's plain box extrusions looked unlike the
+  game]. Vanilla parts carry a visible chamfer on nearly every edge, including the large chamfers where a
+  raised frame meets its panel. Hand-built boxes with sharp 90 degree edges stand out next to vanilla ones; use
+  the Bevel modifier with Harden Normals, then smooth shade as above. Better still, take shell parts from a
+  vanilla model (`kitbash.md`).
 - Triangulation is handled at export; model in quads where practical [SOFT].
 - Recalculate normals outward and check Face Orientation before export [SOFT].
 - LOD meshes may drop bevels (`Remove Bevels` exists for this) [HARD].

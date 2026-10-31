@@ -34,6 +34,7 @@ references is tagged **[HARD]** (read in source or docs) or **[SOFT]** (inferred
 | `references/weapons-turrets.md` | Sorter turrets, subpart chains, muzzle and camera dummies |
 | `references/interaction-highlights.md` | Highlight empties and the vanilla small cargo container example |
 | `references/materials.md`, `materials-catalog.md`, `vanilla-materials.md` | Texture types, behaviour catalog, all 165 materials |
+| `references/kitbash.md` | Import recipe for reusing vanilla model parts, tested |
 | `references/atlas-regions.md` | UV boxes for each piece of the vanilla decal atlases (JSON copy: `atlas-regions.json`) |
 | `scripts/` | Blender and Pillow scripts that regenerate the atlas region maps |
 | `references/errors.md` | SEUT error codes and fixes |

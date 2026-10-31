@@ -32,7 +32,10 @@ Everything below was checked against SEUT 1.2.1 on Blender 4.5 unless marked "un
    `bBox_X/Y/Z` are in cells. Origin is the block centre, so a 1x1x1 large block spans +-1.25 m.
    Keep the model in metres at export scale 1.0 unless the user says otherwise.
 3. **Model into `Main (<SubtypeId>)`.** One top-level (unparented) object per exported collection
-   [HARD, E031]; parent detail objects under it. Details: `references/modeling-rules.md`.
+   [HARD, E031]; parent detail objects under it. Details: `references/modeling-rules.md`. **Kitbash first**:
+   when a vanilla model has the part you need (crate frame, port, panel, handle), import it and reuse its
+   meshes instead of rebuilding them; build from scratch only what no vanilla part covers, then bevel and
+   smooth shade it. Recipe: `references/kitbash.md`.
 4. **UVs, then material.** Link a vanilla material from the SEUT material library and lay UVs onto its
    atlas. Do not bake. Details: `references/materials.md`.
 5. **Collision** in `Collision - Main (...)`: at most 10 convex objects, inside the bounding box, rigid
@@ -88,6 +91,13 @@ shape reference at most, and ask before spending credit.
 - **A highlight detector must cover its whole mesh** [HARD, owner test]: the outline shows only while the
   reticle is inside the `detector_*` empty, so any part of the mesh outside it is dead. Size the empty from
   the mesh bounds (`references/interaction-highlights.md`, "Detector size").
+- **Decal materials (`DECAL_CUTOUT`: `Atlas*`, `ButtonsAtlas_*`, `Decals`, `Paneling*`, `TextAtlas*`) are for
+  flat quads only** [HARD, seen in game]. On a 3D dome they render with broken transparency; keep each decal
+  fully inside its flat face. `references/materials-catalog.md`.
+- **Shade curved parts smooth and bevel hard edges** [HARD, owner saw faceted cylinders]:
+  `bpy.ops.object.shade_smooth_by_angle(angle=math.radians(30))` on every part. `references/modeling-rules.md`.
+- **A `detector_conveyor*` empty is also the conveyor connection point** [HARD, game code]: put it in the cell
+  it belongs to, facing the neighbour. `references/interaction-highlights.md`.
 - **Tiling texture scale depends on the kind of block** [HARD, owner-observed]: armor-style blocks want about
   0.05 UV per metre, functional blocks about 0.40. `references/materials.md`.
 - **Re-exporting with `export_sbc_type = 'new'` writes `<SubtypeId>_1.sbc`** instead of overwriting. Use
@@ -139,6 +149,7 @@ container breakdown: `references/interaction-highlights.md`.
 | `references/bpy-recipes.md` | scripting scenes, collections, materials, collision through the Blender MCP |
 | `references/modeling-rules.md` | geometry, bevels and normals, collision, LOD, build stages, empties, mountpoints, mirroring |
 | `references/materials.md` | picking or creating materials, texture types, techniques, atlas UV workflow |
+| `references/kitbash.md` | Reusing parts of vanilla models (crates, frames, ports, panels) instead of modelling them from scratch: import recipe |
 | `references/atlas-regions.md` | UV-mapping a decal quad onto a specific piece of Atlas1-4, ButtonsAtlas, Decals or TextAtlas (UV boxes per piece) |
 | `references/materials-catalog.md` | choosing a material by behaviour: paintable, decal, or emissive and state-driven glow; emissive presets and colours |
 | `references/vanilla-materials.md` | choosing one of the 165 vanilla materials by name |
