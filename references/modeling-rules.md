@@ -75,6 +75,15 @@ parts do:
   leave the rest to decals and textures.
 - Think about the neighbours: the block sits in a grid beside other blocks, so flush faces, mount points and
   edge chamfers should let it join cleanly. Armor-style blocks keep faces flush; functional blocks inset.
+- Use worn and scratched materials sparingly [owner]: a `*Scratched*` variant over whole faces looks bad.
+  Put the clean sibling on flat faces and the scratched one only on the bevel faces, where wear would really
+  happen. From script: Bevel modifier `material = 1` with slots `[clean, scratched]`, or reassign existing
+  faces by width (`area / longest edge` under about 0.03 m is a bevel strip). Recipe in `bpy-recipes.md`.
+- Mechanical detail should look designed, not like stacked rectangles [owner]. Build parts from shaped
+  profiles: rounded-corner plates, rounded clevis ears with pins and hex nuts, U cradles, gussets, finned
+  drums with bell ends, conduits with elbows, pistons with eye ends and gland rings. Mount brackets flat on
+  the face they attach to (a piston along a sloped edge gets pads lying in that slope), and tie protruding
+  machinery to the structure it would bolt onto rather than leaving it floating in a recess.
 - Pick the footprint with symmetry in mind: an odd cell width puts a feature on the centre line, an even
   width cannot [community advice; vanilla blocks follow it].
 

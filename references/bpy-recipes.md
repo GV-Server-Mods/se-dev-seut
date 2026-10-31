@@ -281,6 +281,23 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   the save, and the export then wrote an extra `<Subtype>_1.sbc` next to the existing one. Read the value
   just before exporting and clear stray `_1.sbc` files.
 
+### Shaped parts and edge wear from script [HARD, used on the gatling turret]
+
+- **Profile prism:** build a 2D outline (rounded rectangle, clevis tab = base edge plus a half circle around
+  the pin, U cradle = rectangle with an arc cut) and extrude it with a local frame matrix whose X and Y span the
+  outline's plane: `M = Matrix((ex, ey, ex.cross(ey))).transposed().to_4x4(); M.translation = origin`. A pad
+  "parallel to a sloped face" uses `ex` = the slope direction and `ey` = the world axis along the face.
+  Triangulate the caps of concave outlines (`bmesh.ops.triangulate`) before export.
+- **Booleans:** cut pockets into the *unbevelled* solid first, then bevel; an exact boolean on an already
+  bevelled mesh produced stray geometry. A feature that pokes through the far side of a plate shows as a dark
+  slot there: ray-cast from the camera (`scene.ray_cast`, with helper objects hidden) to find which object it is.
+- **Edge-only wear:** `md = ob.modifiers.new('bev','BEVEL'); md.material = 1`, then give the mesh the slots
+  `[PaintedMetal_Darker, PaintedMetalScratched_Darker]` so only the bevel faces get scratches. For meshes that
+  are already bevelled, set `material_index = 1` on faces where `area / longest edge < 0.03`.
+- **Preview renders:** Workbench in Texture mode shows only one image of a SEUT material (often the mask) and
+  exaggerates wear; EEVEE (`BLENDER_EEVEE_NEXT` in 4.5) with a sun lamp and a grey world reads closer to the
+  game, but the in-game shader still differs.
+
 ## Operators seen in the addon source (signatures tested only where noted)
 
 `scene.recreate_collections`, `scene.create_collection`, `scene.add_mountpoint_area`, `scene.add_dummy`,
