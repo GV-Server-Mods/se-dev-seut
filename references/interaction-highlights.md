@@ -77,6 +77,12 @@ bpy.ops.object.add_highlight_empty(detector_type="detector_terminal_", index=1)
   container shows all its dummies, our `CubeBlock` test showed none, though the `.mwm` held them (byte search)
   and the terminal outline worked. Do not read "no dummies drawn" as "dummies missing". To inspect dummies
   in game, give the test block a terminal-derived `TypeId` such as `CargoContainer`.
+- From the wiki Interaction Highlights tutorial [HARD, wiki]: a highlight that shows as a plain yellow square
+  means the empty did not link to its target. Check that both share the same parent, both follow the naming
+  scheme, and every index within a detector type is unique. The target must have the same parent as the
+  empty to be selectable. The outline colour is game wide (Environment Definition `ContourHighlightColor`)
+  and cannot be set per block; the outline-only style is the default for text panel blocks (UseObjects
+  highlight style). Restart the game completely, not just the world, to see model changes.
 - Select the next target explicitly before each call; the operator works on the single selected object.
 
 ## Detector types (SEUT 1.2.1 `empties['highlight_empties']`)

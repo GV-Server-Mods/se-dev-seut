@@ -34,6 +34,9 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
 
 - Rebuilt antenna crate (`TestAntennaCrate`): kitbashed from `CargoContainerSmall.FBX`, exported with 11 detectors, 5 collision shapes, LODs; warnings read from `TestAntennaCrate.mwm.log`. Debug-draw behaviour read in `MyDebugRenderComponentCubeBlock` / `MyDebugRenderComponentTerminal`.
 
+- Wiki Models reference (`spaceengineers.wiki.gg/wiki/Modding/Reference/Models`) and SEUT Interaction Highlights tutorial, fetched later: LOD, dummy, collision and highlight rules in `modeling-rules.md` and `interaction-highlights.md`. The wiki's "Advanced 3D Models" guide is only a pointer to the SEUT page; the official SE2 art guide was not used (different game).
+- Design style section: owner-supplied community ship-building advice, adapted, tagged SOFT.
+
 ## Not yet verified
 
 - In-game checks still open: the armor-style UV density (about 0.05 UV/m is extrapolated), a second functional block for the 0.40 UV/m figure, LOD switching, build stages, and icon generation (SEUT does not make one).

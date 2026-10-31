@@ -3,6 +3,7 @@
 ## Contents
 - Scale and bounding box
 - Geometry and shading
+- Design style
 - Collision
 - LODs and build stages
 - Empties, subparts, dummies
@@ -52,6 +53,26 @@
 - Origin is the block centre unless the block is a subpart, whose origin is its pivot [SOFT].
 - Keep object and material names ASCII [HARD, E033].
 
+## Design style: make the block read like Space Engineers [SOFT]
+
+Adapted from community ship-building advice (a Steam guide and the Building Tips wiki, which are about
+building ships, not modelling blocks; only the ideas that carry over are kept) and from what the vanilla
+parts do:
+
+- Silhouette first, detail second: block out the large shapes at real proportions, then add small features.
+  Do not start with details on a shape that is still wrong.
+- Break up every large flat face: a recess, a raised frame, panel lines or a decal. A blank face is the
+  commonest reason a block looks unfinished. Prefer decals for this (`materials-catalog.md`).
+- Use two or three tones, not one: a paintable base, a darker trim material, and one small accent (a lit
+  strip, a warning stripe, a lamp). Vanilla blocks do this with `Colorable` plus `Darker` plus a small
+  accent material.
+- Greeble with small real parts only where they read from a few metres (handles, vents, pipes, lamps);
+  leave the rest to decals and textures.
+- Think about the neighbours: the block sits in a grid beside other blocks, so flush faces, mount points and
+  edge chamfers should let it join cleanly. Armor-style blocks keep faces flush; functional blocks inset.
+- Pick the footprint with symmetry in mind: an odd cell width puts a feature on the centre line, an even
+  width cannot [community advice; vanilla blocks follow it].
+
 ## Collision
 
 - Collection `Collision - Main (<SubtypeId>)`; SEUT creates it. Build stages fall back to Main's collision
@@ -74,6 +95,16 @@
 
 - `LOD1..3` hold lower-detail copies of Main; default distances 25 / 50 / 100 m, strictly increasing
   (E011) [HARD]. Collection indexes must be gap free (E006).
+- Facts from the wiki Models reference [HARD, wiki]: use at least two LODs (three meshes in total). LODs
+  carry no dummies, no collision and no LODs of their own; only the main model's dummies count. LOD1 (or the
+  main model if there are no LODs) stays in memory for intersection checks (use objects, bullet decals,
+  aiming), so keep LOD1 recognisably the same shape. Model quality "medium" and "low" cap at LOD1 and shorten
+  the distances, so LOD1 is what many players see. Distances are metres at high quality, 1080p and 70 degree
+  FOV; the game scales them by `tan(FovH/2) / tan(70/2) * 1080 / verticalResolution`. LOD links in the XML are
+  relative to the mod root, so moving the `.mwm` files breaks them. The mod root must contain a `Models`
+  folder; the game cuts the path at the first `Models`.
+- Without a collision model the game makes a box from the bounding box. Construction (BS) models should share
+  the main block's collision. Dummy and collision changes need a full game restart [HARD, wiki].
 - `BS1..BS3` are construction stages (typically shells with less geometry). `Apply Construction` assigns
   the Construction material; `Cut and Solidify` makes the scaffold look [HARD].
 - Armor blocks vanilla-style use build stages; simple blocks may skip them [SOFT].
