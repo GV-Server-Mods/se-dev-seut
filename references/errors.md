@@ -36,12 +36,13 @@ Calls fail with "Connection to Blender lost" / WinError 10054, or `get_addon_sta
    trace through `pyrna_prop_collection_iter_next` means a loop over a live collection while data changed
    (`bpy-recipes.md`, "Moving parts between .blend files").
 3. **Ask before restarting** unless the user already said to: it closes their other work and may need
-   permission to start a process. If allowed, relaunch with the recorded path, for example
-   `Start-Process "<binary_path>" "<blend path>"` (PowerShell). Only the saved state comes back; check
-   `bpy.data.filepath` and the scene list, then redo anything after the last save. Tested: after
-   `Stop-Process -Force` on `blender.exe` and `Start-Process "<binary_path>" '"<blend path>"'` (quote the
-   .blend path), the file reopened and the MCP answered again within about 20 seconds with no click, on an
-   install where the add-on auto-starts its server.
+   permission to start a process. If allowed, relaunch with the launcher beside the recorded path (see the
+   `blender-launcher.exe` note below), for example
+   `Start-Process "<folder of binary_path>\blender-launcher.exe" -ArgumentList '"<blend path>"'` (PowerShell).
+   Only the saved state comes back; check `bpy.data.filepath` and the scene list, then redo anything after
+   the last save. Tested: after `Stop-Process -Force` on `blender.exe`, the file reopened and the MCP answered
+   again within about 20 seconds with no click, on an install where the add-on auto-starts its server
+   (five times; `blender-launcher.exe` on the last two).
 4. **Reconnect**: poll `get_addon_status` for a short while. If it never answers, the add-on's server is not
    auto-starting on this machine (some installs start it automatically, others do not). Tell the user to open the
    side panel (N) in Blender and press Start MCP Server, or enable the add-on's auto-start option if its
@@ -49,12 +50,14 @@ Calls fail with "Connection to Blender lost" / WinError 10054, or `get_addon_sta
 5. If the recorded path is missing (context lost too), look in `C:\Program Files\Blender Foundation\`,
    the Steam library (`steamapps\common\Blender`), or ask the user; do not search the whole drive.
 
-- **Do not close the MwmBuilder / Havok command window that appears during an export** [owner-observed, once]:
-  closing it closed Blender completely (no crash file written, so it ended like a closed parent window, not
-  a crash). Those windows belong to the export run; wait for them to close themselves. An agent that
-  exports from script should warn the user before the first export of a session, and treat a Blender that
-  disappears with no `.crash.txt` as "closed by the user or by a closed child window", then use the
-  relaunch steps above. Which exports open a visible window was not established.
+- **Relaunch with `blender-launcher.exe`, not `blender.exe`** [HARD, tested on Windows 11, Blender 4.5.10]:
+  `blender.exe` opens a console window (Windows Terminal on Windows 11) that stays open for the whole session.
+  SEUT's tools (MwmBuilder, Havok) run for a fraction of a second and write their progress into that console's
+  title bar (`MwmBuilder: 100.0%`), which makes it look like an MwmBuilder window. Closing that window closes
+  Blender with no `.crash.txt`. `blender-launcher.exe` in the same folder starts Blender with no console at all,
+  and exports still work. Derive its path from `bpy.app.binary_path` (same folder). If Blender was started
+  with a console anyway, tell the user not to close it; `Toggle System Console` did not hide it here.
+  A Blender that vanishes with no `.crash.txt` was probably closed by the user or by closing that console.
 
 ## Pre-export checklist
 
