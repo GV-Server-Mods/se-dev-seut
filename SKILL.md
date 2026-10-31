@@ -94,12 +94,12 @@ shape reference at most, and ask before spending credit.
 
 ## Reusing SE textures
 
-The user wants to reuse existing SE textures rather than bake new ones. SEUT already ships 165 linkable
+Default to reusing existing SE textures rather than baking new ones. SEUT already ships 165 linkable
 vanilla materials in `<SEUT Assets>\Materials\Materials.blend` (marked Vanilla, no new DDS files needed).
 Pick a material from `references/vanilla-materials.md`, link it (`link=True`), and move UV islands over the
 atlas region you want. A model that uses only vanilla textures ships no textures of its own.
 
-## Decals before geometry (owner preference)
+## Decals before geometry (default style)
 
 Before modelling a surface detail in 3D (panel line, vent, hazard stripe, label, rivet row, button),
 check whether a vanilla decal material already gives that look: `DECAL_CUTOUT` materials such as
@@ -110,7 +110,7 @@ consistent with vanilla. Say which decal you chose and why geometry was needed w
 Decal quads sit just off the surface (not coplanar) to avoid z-fighting [SOFT, confirm the offset used by
 vanilla blocks before fixing a number].
 
-## Interaction points highlight real geometry (owner preference)
+## Interaction points highlight real geometry (default style)
 
 Terminals, inventories, keypads and conveyor ports get a detector empty linked to a separate mesh
 (the screen panel, keypad or port frame), so aiming at them outlines that part instead of a bare box.

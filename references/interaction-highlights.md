@@ -1,6 +1,6 @@
 # Interaction highlights (terminal, inventory, keypad, ports)
 
-Owner preference: every interaction point should highlight a real part of the model (the screen panel,
+Default style: every interaction point should highlight a real part of the model (the screen panel,
 keypad, port or hatch), never just show a floating rectangle. A detector empty with no linked mesh draws
 the plain yellow-square box; a detector empty linked to a mesh outlines that mesh when the player aims at it.
 
