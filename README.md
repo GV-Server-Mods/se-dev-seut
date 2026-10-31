@@ -38,6 +38,11 @@ references is tagged **[HARD]** (read in source or docs) or **[SOFT]** (inferred
 | `references/hard-surface.md`, `reference-images.md` | Modeling technique and working from pictures |
 | `references/sources.md` | Provenance and verification status |
 
+## Versioning
+
+Semantic Versioning; see [VERSIONING.md](./VERSIONING.md) for what counts as a patch, minor or major change and
+the release checklist.
+
 ## Installation
 
 Clone into your agent's skills folder, for example for Claude Code:

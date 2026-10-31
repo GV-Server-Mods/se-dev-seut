@@ -1,0 +1,11 @@
+# Logs & Temporary Files
+*.log
+scratch/
+.system_generated/
+
+# IDE / Editor Files
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
