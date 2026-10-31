@@ -34,6 +34,23 @@ the plain yellow-square box; a detector empty linked to a mesh outlines that mes
 SEUT's operator needs `Main` to contain the object (E025), one selected object at a time (E009), and an
 empty index unique per type. Source: `empties/seut_ot_add_highlight_empty.py`.
 
+Run through the MCP on SEUT 1.2.1 / Blender 4.5 [HARD, tested]:
+
+```python
+ob.select_set(True); bpy.context.view_layer.objects.active = ob     # ob is in Main, parented to the root
+bpy.ops.object.add_highlight_empty(detector_type="detector_terminal_", index=1)
+```
+
+- `detector_type` is the key from the table below, including the trailing underscore. The enum is dynamic, so
+  introspecting `get_rna_type()` lists no items; pass the string.
+- Result: object renamed `<name>_section_1`, empty `detector_terminal_1` in `Main`, same parent as the object,
+  at the object's location, `empty_display_type` CUBE, display size 0.5. Its `highlight` property is already
+  set to the object name, and `empty.seut.highlight_objects[0].obj` is the mesh. The info line is `I011`.
+- Size the aim area with the empty's `scale` (half-extent = `empty_display_size * scale`); `dimensions` reads 0
+  for empties.
+- A duplicate `index` is not rejected: Blender appends `.001` to the name. Keep indices unique per type yourself.
+- Select the next target explicitly before each call; the operator works on the single selected object.
+
 ## Detector types (SEUT 1.2.1 `empties['highlight_empties']`)
 
 | Key (empty name prefix) | Use | Indexed |
@@ -74,4 +91,4 @@ Model `Models\Cubes\Large\CargoContainerSmall.mwm`, SDK FBX at
   material slots. Use SEUT's importer (`scene.import_complete` / Import FBX) or import into a throwaway
   file and purge afterwards.
 - Subpart objects: a highlight on a subpart needs the empty inside that subpart's scene [SOFT, untested].
-- Not yet exercised through the MCP: running `add_highlight_empty`, export, and in-game aim test.
+- Not yet exercised: export of a highlight, and the in-game aim test.
