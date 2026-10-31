@@ -108,6 +108,11 @@ parts do:
   FOV; the game scales them by `tan(FovH/2) / tan(70/2) * 1080 / verticalResolution`. LOD links in the XML are
   relative to the mod root, so moving the `.mwm` files breaks them. The mod root must contain a `Models`
   folder; the game cuts the path at the first `Models`.
+- What vanilla does [HARD, read from the SDK `CargoContainerSmall*.xml` / FBX]: LOD1 at 5 m is nearly the full
+  model (5,852 faces, all materials kept, including `Decals` and `PaintedMetal_Yellow`); LOD2 at 60 m is a
+  12-face box with one baked material (`CargoContainerSmall_LOD2`). SEUT's defaults of 25 / 50 m are only
+  defaults. Do not decimate hard: keep every material the block shows from a distance, and never let a
+  decimate pass delete decal or accent faces (`bpy-recipes.md`, "LOD from script").
 - Without a collision model the game makes a box from the bounding box. Construction (BS) models should share
   the main block's collision. Dummy and collision changes need a full game restart [wiki; reload showed stale dummies, owner], and so do
   subpart changes [owner]; simple mesh and texture changes only need the Debug Draw "Reload models" /

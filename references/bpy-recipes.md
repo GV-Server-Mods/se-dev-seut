@@ -231,7 +231,12 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   `bmesh.ops.transform(bm, matrix=o.matrix_world, verts=bm.verts)`, remap `material_index` onto one shared
   material list, merge into one mesh, add a `DECIMATE` modifier (ratio about 0.35 for LOD1, 0.12 for LOD2),
   then `bpy.data.meshes.new_from_object(ob.evaluated_get(depsgraph))` and swap `ob.data`. Skip `detector_*`
-  highlight meshes; drop text, decals and small pipes from LOD2. Link the object to the `LODn (...)`
+  highlight meshes; drop text and small pipes from LOD2. **Protect decal faces from the decimation** [HARD,
+  owner saw the yellow conveyor-port frames vanish at 50 m in game]: a plain global Decimate collapsed all 60
+  `Decals` faces (flat quads sitting just above a surface) to zero, so the LOD lost them. Split the merged
+  mesh by material, decimate only the shell, then add the untouched faces of `Decals`, `Terminal`, `TextAtlas`
+  (LOD1), `ButtonsAtlas_*`, `Atlas3_*` and other tiny accent materials back; check face counts per material
+  against Main before exporting. Link the object to the `LODn (...)`
   collection and the export wrote the LOD `.mwm` files and the `<Model><LOD Distance=...>` XML (25 / 50) with no
   other setup. Exporting 3827 and 1091 faces took well under a second.
 - A SEUT scene exported this way produced `Models\<Subtype>.mwm`, `_LOD1`, `_LOD2` (plus a `.hkt.mwm` that the earlier install of the same block did
@@ -247,9 +252,11 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   collision objects). It returned `4 of 4 files successfully imported (I021)`. LOD and BS collections are left
   hidden in the view layer. Call it as `getattr(bpy.ops.scene, 'import_complete')(filepath=...)` under the
   usual `temp_override`.
-- **Round trip check:** a block exported, imported with `import_complete` into a fresh scene and exported again
-  gave `.mwm` files of identical size (1,049,004 / 524,716 / 131,500 bytes). Use this to prove an importer
-  or export change did not alter the model.
+- **Round trip:** a block exported, imported with `import_complete` into a fresh scene and exported again gave
+  `.mwm` files of identical size, and the imported Main collection had the same 71 objects. `.mwm` sizes are
+  not good evidence on their own: they came out as a power of two plus 428 bytes (1,049,004 = 1 MiB + 428;
+  524,716; 131,500; 262,572), so a model with 50 percent more faces can have the same size. Compare object and
+  face counts, or hash the files, instead.
 - **`scene.export_all_scenes()`** (needs a VIEW_3D override and Object mode) loops every main, subpart,
   character and item scene and runs the normal export on each. With one scene in the file it worked
   (`I008`, `1 of 1 scenes`). **With a second scene in the file (here the one filled by `import_complete`)
