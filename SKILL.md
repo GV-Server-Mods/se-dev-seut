@@ -106,6 +106,10 @@ shape reference at most, and ask before spending credit.
   `bpy.ops.object.shade_smooth_by_angle(angle=math.radians(30))` on every part. `references/modeling-rules.md`.
 - **A `detector_conveyor*` empty is also the conveyor connection point** [HARD, game code]: put it in the cell
   it belongs to, facing the neighbour. `references/interaction-highlights.md`.
+- **Linking a subpart scene from script can crash Blender** [HARD, seen once on 4.5.10]: save first, set
+  `linkSubpartInstances = False` on the main scene, make the subpart empty the active object, then set
+  `empty.seut.linkedScene`. The add-dummy and add-subpart operators also leave the new empty unparented.
+  `references/bpy-recipes.md` ("Subparts, dummies, mirroring and mountpoints from script").
 - **Tiling texture scale depends on the kind of block** [HARD, owner-observed]: armor-style blocks want about
   0.05 UV per metre, functional blocks about 0.40. `references/materials.md`.
 - **Re-exporting with `export_sbc_type = 'new'` writes `<SubtypeId>_1.sbc`** instead of overwriting. Use

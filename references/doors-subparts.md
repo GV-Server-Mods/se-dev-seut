@@ -48,7 +48,12 @@ checked against the decompiled game code (`MyObjectBuilder_AdvancedDoorDefinitio
 6. An advanced door can give subparts their own build stages (BS collections in the subpart scenes), where vanilla
    doors only use whole-door stages [SOFT, video].
 
-## Orientation quirk [SOFT, video; the owner saw backwards subparts on an earlier weapon model]
+## Orientation quirk [video and owner; SEUT source agrees, game result not tested]
+
+The source backs this: SEUT exports subpart scenes with FBX `axis_forward = '-Z'` and main scenes with `'Z'`
+(`seut_export_utils.py`), so a subpart is turned 180 degrees about the up axis relative to a main model. The
+owner also saw backwards subparts on an earlier weapon model.
+
 
 Main scenes treat Blender -Y as the block's front. A subpart scene's forward direction is +Y. Linking a subpart
 the normal way therefore shows it turned the wrong way round; rotate the subpart empty 180 degrees about Z in

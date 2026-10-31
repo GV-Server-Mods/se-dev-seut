@@ -217,9 +217,55 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
 `quicktools.apply_construction_material`, `scene.update_subpart_instances`.
 
 Mirroring and mountpoint modes are toggles on `scene.seut` (`mirroringToggle`, `mountpointToggle`); the
-wiki says turning the mode off saves the values. The values themselves (`mountpointAreas`, `mirroring_X/Y/Z`)
-can be set from script and are exported to the SBC (see "Export through the MCP"); the interactive modes and
-their empties were not exercised.
+wiki says turning the mode off saves the values. Both work from script (section below); the values
+(`mountpointAreas`, `mirroring_X/Y/Z`) are exported to the SBC (see "Export through the MCP").
+
+## Subparts, dummies, mirroring and mountpoints from script [HARD, run on SEUT 1.2.1 / Blender 4.5]
+
+Test pair: a main scene `SPTurret` and a subpart scene `SPBarrel` (`sceneType = 'subpart'`, same
+`recreate_collections` recipe as above), with every operator called under `bpy.context.temp_override(scene=...,
+view_layer=scene.view_layers[0], window, area, region)` using the 3D viewport as for export.
+
+- `scene.add_dummy(detector_type='muzzle_projectile_', index=1)` makes `muzzle_projectile_1`;
+  `scene.add_custom_subpart(name="subpart_Barrel")` and `scene.add_preset_subpart(detector_type=..., index=..)`
+  make an ARROWS empty with a `file` custom property. **None of them parent the new empty to the selected
+  object**: the operators test `if 0 in context.selected_objects`, which is never true [HARD, source read and
+  seen in the run]. The empty lands unparented in the active collection, so parent it yourself
+  (`empty.parent = root; empty.matrix_parent_inverse = root.matrix_world.inverted()`) or you get W005 or W006,
+  and rename it if the default is not what you want. Preset subpart names are fixed keys such as
+  `subpart_DoorLeft`, `subpart_Barrel`, `subpart_GatlingTurretBase1`, `subpart_PistonSubpart1`,
+  `subpart_HangarDoor_door` (23 presets in `empties['preset_subparts']`, none uses an index).
+- **Linking a subpart scene to its empty** is the property `empty.seut.linkedScene = subpart_scene`, and its
+  update callback is fragile [HARD]: it acts on `context.view_layer.objects.active` (not on the empty being set),
+  writes `empty['file'] = <subpart scene name>`, and, when `scene.seut.linkSubpartInstances` is true, duplicates
+  the subpart's objects into the main scene while switching `window.scene`. A scripted set with another
+  object active crashed Blender 4.5.10 (access violation in the depsgraph, `rna_ViewLayer_update_tagged`; crash
+  log supplied by the owner). Safe recipe, which ran clean: save the file first, set
+  `main.seut.linkSubpartInstances = False`, make the empty the only selected and active object in the main
+  scene's view layer, then set `linkedScene`. `scene.update_subpart_instances` (instances shown in Blender) was
+  not run after the crash; the export does not need instances.
+- Exporting the subpart scene and then the main scene (same export folder) wrote `SPBarrel.mwm` and `SPTurret.mwm`;
+  the main model's dummy list contains `subpart_Barrel` with the property `file = SPBarrel`, which is how the
+  game finds the subpart model. The subpart scene exports FBX with `axis_forward = '-Z'` where main scenes use
+  `'Z'` (`seut_export_utils.py`, with the comment that the other value breaks subpart orientation), so the
+  subpart is deliberately turned 180 degrees about the up axis relative to a main model; see
+  `doors-subparts.md` for what that means when placing empties. An FBX re-import could not show the difference
+  (the importer reads the axes back), and the in-game result was not checked.
+- Mirroring mode: `scene.seut.mirroringToggle = 'on'` creates three empties and three plane meshes (`Mirror
+  LeftRight`, `Mirror FrontBack`, `Mirror TopBottom`) in a `Mirroring (<SubtypeId>)` collection. Rotate an
+  empty in 90 degree steps and set the toggle to `'off'`: SEUT prints `I016` per empty and stores the result
+  and removes the collection. Observed: LeftRight rotated 180 degrees about Z gave `mirroring_X = 'Y'`; TopBottom
+  rotated 90 degrees about X gave `mirroring_Z = 'HalfX'`; FrontBack unrotated stayed `None`. In the SBC they
+  came out as `<MirroringX>Y</MirroringX>` and `<MirroringY>HalfX</MirroringY>` (TopBottom is Blender Z, SBC Y).
+- Mountpoint mode: `scene.seut.mountpointToggle = 'on'` creates six full-face plane meshes
+  (`Mountpoint Area Front` and so on, 2.5 x 2.5 on a large cell). Move or scale them in Object Mode and turn the
+  toggle off: SEUT prints `I017` per face and fills `mountpointAreas` (`side`, `x`, `y`, `xDim`, `yDim`, metres
+  from the face centre). Check the sign: the front face area moved by +0.25 m on its X and halved in width
+  (1.25 m) exported as `StartX=0.15 EndX=0.65`, which is a centre at -0.25 m, so the offset sign is inverted
+  on that side. Verify each face's direction with the BuildInfo overlay in game, or pre-compute the expected
+  numbers, before trusting a one-sided area.
+- All six faces were written even though only one was changed. Removing unwanted areas before turning the mode
+  off was not tried; otherwise edit the SBC afterwards.
 
 From the wiki Add & Context Menu page [HARD, wiki]: `Add Highlight Empty` needs the target object selected and
 an index unique per highlight type; `Add Dummy` takes a dummy type and an index unique per dummy type (not all
