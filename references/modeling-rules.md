@@ -38,6 +38,14 @@
   raised frame meets its panel. Hand-built boxes with sharp 90 degree edges stand out next to vanilla ones; use
   the Bevel modifier with Harden Normals, then smooth shade as above. Better still, take shell parts from a
   vanilla model (`kitbash.md`).
+- Bevel on thin or small parts leaves zero-area faces [HARD, hit in a test run]: a 0.03 m bevel on parts under
+  0.1 m thick gave 34 to 60 degenerate faces per part, and MwmBuilder logged "degenerated triangle" and "UV with
+  3 identical vectors in a row ... will cause SE to make the entire model shaderless". After applying a
+  bevel, run `bmesh.ops.dissolve_degenerate(bm, dist=1e-5, edges=bm.edges[:])`, delete faces with
+  `f.calc_area() < 1e-9`, and re-project the UVs. Read `<SubtypeId>.mwm.log` (export with
+  `export_deleteLooseFiles = False`) and fix every WARNING; the clean run's `I007` does not mean the log is
+  clean. One run still logged 5 identical-UV warnings after all measurable zero-area faces were gone and the
+  source was not found, so treat that warning as unresolved until the block is seen in game.
 - Triangulation is handled at export; model in quads where practical [SOFT].
 - Recalculate normals outward and check Face Orientation before export [SOFT].
 - LOD meshes may drop bevels (`Remove Bevels` exists for this) [HARD].

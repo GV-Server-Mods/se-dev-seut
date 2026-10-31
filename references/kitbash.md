@@ -72,6 +72,33 @@ Result in the test: 13 materials used, all 97 slots remapped to linked library m
 5. Rename or delete vanilla empties you copy. Their names carry over (`detector_conveyor_5`, and `.001`
    suffixes when the name already exists), and object names are global to the file.
 
+## Gotchas from the rebuilt antenna crate [HARD, run in Blender 4.5 and exported]
+
+- After `scene.recreate_collections` the scene's only view layer is named `SEUT`. Once you switch the window
+  to the throwaway scene, `bpy.context.view_layer` is that scene's `ViewLayer`, and select/active calls on
+  objects of the block fail ("ViewLayer 'ViewLayer' does not contain object"). Switch back and use
+  `scene.view_layers[0]`.
+- Imported vanilla meshes are flat shaded (`use_smooth` false) but carry custom normals, so they already
+  look right. Do not run `shade_smooth_by_angle` on them; smooth only the parts you built.
+- Vanilla meshes name their UV layer `UVChannel_1`; yours is `UVMap`. Joining them (for a LOD) keeps both
+  layers and leaves zeros in the one a part did not have, which gives zero-size UVs. Rename every part's
+  single UV layer to `UVMap` before `bpy.ops.object.join()`.
+- Raw-imported detector empties have no SEUT highlight link, only a `highlight` custom property holding the
+  mesh name. Set `empty.seut.highlight_objects.add().obj = bpy.data.objects[empty['highlight']]` for each,
+  and set the empties to `CUBE` display, size 0.5. Their object scale already holds the detector size.
+- The vanilla container has a port frame, panel and terminal on every face. Remove the ones on a face that
+  another part covers (the test crate's top, under the tower: `LargeConveyorFrame_005`,
+  `detector_conveyor_section_005`, `detector_terminal_section_005`, their text/sign meshes and empties).
+- Parts stick out about 0.04 m past the 2.5 m cell (port frames, text signs); the box collision stayed 2.5 m.
+- Size: the whole container was 13,929 polygons with the tower parts and the main `.mwm` came to 2.1 MB.
+  A joined copy decimated with `ratio 0.25` gave 3,466 polygons for LOD1 and `ratio 0.06` of the big parts
+  gave 349 for LOD2. A LOD must be one unparented object per LOD collection, with the materials trimmed to
+  the used slots.
+- To make a kitbashed block behave like the container (conveyor ports, inventory, terminal, and the debug draw
+  of model dummies), give it the container's `TypeId`: `<Definition xsi:type="MyObjectBuilder_CargoContainerDefinition">`
+  with `<TypeId>CargoContainer</TypeId>`. A plain `CubeBlock` draws no dummies in the debug overlay
+  (`references/interaction-highlights.md`).
+
 ## Kitbash rules
 
 - Take the shell parts first (frames, corners, bevelled edge pieces, port frames, panels, handles), then

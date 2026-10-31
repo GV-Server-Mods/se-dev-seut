@@ -71,6 +71,12 @@ bpy.ops.object.add_highlight_empty(detector_type="detector_terminal_", index=1)
   cell face is fine, the test crate used 0.17 m). A port frame mesh without such an empty is only a picture.
   A plain `CubeBlock` has no conveyor endpoint, so the empty only highlights; the port connects once the SBC
   `TypeId` is a conveyor block type [SOFT, from the code, not yet seen connecting in game].
+- The debug overlay "Model dummies" (F11 menu, Debug draw settings) draws nothing for a plain `CubeBlock`
+  [HARD, game code plus owner test]: `MyDebugRenderComponentCubeBlock.DebugDraw` never calls the base method
+  that draws dummies, while terminal-type blocks (`MyDebugRenderComponentTerminal`) do. A vanilla cargo
+  container shows all its dummies, our `CubeBlock` test showed none, though the `.mwm` held them (byte search)
+  and the terminal outline worked. Do not read "no dummies drawn" as "dummies missing". To inspect dummies
+  in game, give the test block a terminal-derived `TypeId` such as `CargoContainer`.
 - Select the next target explicitly before each call; the operator works on the single selected object.
 
 ## Detector types (SEUT 1.2.1 `empties['highlight_empties']`)
