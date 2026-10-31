@@ -42,11 +42,18 @@ new textures. Many vanilla blocks share atlases and tiling materials, which is w
    script, small-piece descriptions read by eye].
 4. Tiling materials (`PaintedMetal_*`, `RustyMetal`, `Rubber*`) take UVs scaled to texel density instead of
    an atlas region. Match vanilla neighbours; the SEUT `UV Grid Overlay` toggle shows texel density [HARD].
-   Measured on the vanilla large armor block (`ArmorCenter.FBX`, PaintedMetal_Colorable): **0.40 UV per metre**,
-   so a 2.5 m face spans about one full UV tile. A first probe at 0.145 UV per metre looked too coarse next to
-   armor in game; the owner estimated "about 2x" and the measurement gave 2.8x [HARD, measured and
-   owner-observed]. Box-project each face (`uv = (a, b) * 0.40 + 0.5`, using the two axes across the face's
-   dominant normal); overlapping islands are fine on a tiling material.
+   Texture detail size is set by UV per metre: **fewer UVs per metre = bigger features** ("zoom in"). Do not
+   take one vanilla number as the target, because each material's texture has its own baked scale.
+   Owner tests of `PaintedMetal_Colorable` on a 2.5 m cube, with the vanilla concrete-skinned armor block as the
+   reference [HARD, owner-observed]: 0.145 UV/m looked about 2x too fine, and 0.40 UV/m was clearly too fine.
+   Start at **about 0.07 UV/m** (a 2.5 m face spans about 0.18 of the tile) [SOFT: awaiting the retest] and
+   adjust by eye against a vanilla block wearing the same skin and colour. Box-project each face
+   (`uv = (a, b) * D + 0.5`, using the two axes across the face's dominant normal); overlapping islands are
+   fine on a tiling material.
+   Vanilla armor does not use `PaintedMetal_Colorable` directly: `LargeBlockArmorBlock` builds each side from
+   `Models\Cubes\Large\Armor\SquarePlate.mwm` (material `SquarePlate`, 4x2 pattern sheet, UV span 0.25 x 0.5
+   per 2.5 m plate, 0.141 UV/m averaged) [HARD, SBC and SDK FBX]. Look up the model a vanilla block really
+   uses in `Content\Data\CubeBlocks\*.sbc` before measuring it (`ArmorCenter` is not the armor cube).
 5. If every material on the model is Vanilla, no textures need to ship with the mod [HARD, wiki].
 
 W012: a DLC material forces the model to be DLC-locked; avoid DLC-tagged materials for public blocks.
