@@ -25,7 +25,42 @@ Brd; video by Chipstix213]. Face the grid in game and press Ctrl+Alt+E. The warn
 be exported, but they can. The files land in a `SpaceEngineers_ExportedModels` folder on the desktop, and the
 FBX files import into Blender like the SDK ones. Not tried by this skill.
 
-## Import recipe [HARD, tested on SEUT 1.2.1 / Blender 4.5]
+## Preferred import: SEUT's own importer [HARD, run on SEUT 1.2.1 / Blender 4.5]
+
+Use `scene.import` (SEUT's "Import FBX") first; the raw recipe below is the fallback. It converts the FBX with
+the bundled FBX2glTF tool, imports it into the active collection, and remaps the materials to SEUT's library.
+Run on `CargoContainerSmall.FBX` it took about 24 s and gave a far cleaner result than the raw import:
+
+- 67 objects (55 meshes, 12 empties) under one root `CargoContainerSmall`, root scale 1.0 (the raw import has
+  0.01 and a rotation), world Z up, true metres; 97 material slots in total (at most 4 per mesh, not ~100);
+  materials are the linked library ones, with one stray local `Material` to delete; a single `UVMap` layer;
+  custom normals kept, so no smoothing pass is needed.
+- Highlight empties already have their `seut.highlight_objects` link, `CUBE` display, size 0.5.
+- **It also gives the clean vanilla look**: the port frame comes out as `PaintedMetal_Yellow` 272, `Metal_Dull`
+  476, `Conveyor` 2, the keypad frame and text banner as `PaintedMetal_Darker` only, and the grey outer frame as
+  `PaintedMetal_Colorable` only. The raw FBX import instead gives `PaintedMetalScratched_*` on a share of the
+  faces, which is what the owner saw as scratched edges that vanilla does not have (see "Match the vanilla look").
+  So the importer's mapping is the one that matches the game.
+
+```python
+imp = getattr(bpy.ops.scene, 'import')          # `import` is a Python keyword
+vl = scene.view_layers[0]                       # make the scene's Main layer collection active first
+with bpy.context.temp_override(scene=scene, view_layer=vl, window=win, area=area, region=region):
+    imp(filepath=FBX)                           # wrap in contextlib.redirect_stdout if it is chatty
+```
+
+Gotchas:
+- **Object names are global to the .blend.** If an object of the same name already exists in another scene,
+  Blender names the import's copy `Name.001`, and the highlight links of the imported empties then resolve to
+  the *old* same-named objects: W007 "different parent objects" on export, for 8 of 12 empties in the test.
+  Import into a scene of a clean file, or delete earlier imports of the same model first, and check
+  `empty.seut.highlight_objects[0].obj.parent` equals `empty.parent`.
+- The imported root is a mesh with the whole container as children, so keep the parts you want, reparent them
+  under your own single root (E031), and delete the rest, as in step 3 onward below. Delete the imported scene,
+  unused materials and the stray `Material` afterwards.
+- A direct export of the imported model with no changes works (MWM written), so it is a safe base to cut down.
+
+## Raw import recipe, fallback [HARD, tested on SEUT 1.2.1 / Blender 4.5]
 
 Import into a throwaway scene, keep what you want, and clean up. A raw import is messy: it gives every
 mesh a slot for every material in the file (about 100), creates the materials as plain local copies, and
@@ -79,9 +114,9 @@ trimmed after a join: fix it the same way, or the LODs and the main model look d
 
 **Match the vanilla look, not the SDK FBX materials.** The owner compared the kitbashed port with a vanilla
 container in game [HARD, owner screenshot]: the vanilla yellow frame is clean, ours had scratch and chip wear
-along its edges. The SDK FBX gives 112 faces of the frame `PaintedMetalScratched_Yellow`, and the shipped
-`CargoContainerSmall.mwm` also names that material, so the reason for the difference is not established (the
-shipped faces may be assigned differently). Fix: swap the scratched slot for `PaintedMetal_Yellow` on that
+along its edges. The raw FBX import gives 112 faces of the frame `PaintedMetalScratched_Yellow`, and the shipped
+`CargoContainerSmall.mwm` also names that material, but SEUT's own importer (previous section) assigns the clean
+materials, which matches what the owner sees in the game. If you use the raw route, fix it by hand: swap the scratched slot for `PaintedMetal_Yellow` on that
 part and merge the duplicate slot (port frame result: `PaintedMetal_Yellow` 272, `Metal_Dull` 476,
 `Conveyor` 2). The owner found the same on the keypad frame (`DoorTerminalFrame`) and the dark text banner
 (`TextSign`): vanilla is clean, ours had `PaintedMetalScratched_Darker` on 208 and 196 faces, swapped to
@@ -144,7 +179,7 @@ assume the FBX material names are what the game renders.
 
 ## Not yet tested
 
-- Whether SEUT's own importer (`scene.import_complete`) is a better route than the raw import above. It
-  only takes a file path, and no run has compared the two.
+- `scene.import_complete` (main model plus its build stages and LODs in one step) was not run; `scene.import`
+  was, and is the preferred route above.
 - Exporting a block made from kitbashed parts in game (the model exports like any other; only the look was
   not checked).

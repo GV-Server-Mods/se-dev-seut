@@ -136,6 +136,14 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
     result = bpy.ops.scene.export()
 ```
 
+- **Small-grid blocks** [HARD, run]: a scene with `gridScale = 'small'` exports as a *Large* block by default
+  (`<CubeSize>Large</CubeSize>`, model path under `Models\Cubes\large\`), because the export flags default to
+  `export_largeGrid = True`, `export_smallGrid = False`. Set `export_smallGrid = True` and
+  `export_largeGrid = False` for a small block to get `<CubeSize>Small</CubeSize>` and `Models\Cubes\small\`. There
+  is also `export_medium_grid` (the video's "large to medium", no scaling). The SBC model path comes from these
+  flags, while the `.mwm` goes to `export_exportPath`, so a mismatch gives an SBC that points at a file that is
+  not there; keep the folder's `large` or `small` in step with the flags. The SBC `Size` swaps Y and Z: a
+  bounding box of 1 x 2 x 1 cells gave `Size x=1 y=1 z=2`.
 - `export_sbc_type = 'new'` writes `Data\CubeBlocks\<SubtypeId>.sbc` (`I004`) [HARD, tested]: TypeId `CubeBlock`,
   Size from the bounding box, Model path, one `SteelPlate` x10 component, a placeholder icon
   (`AstronautBackpack.dds`), and `{LOC:DisplayName_<SubtypeId>}` / `{LOC:Description_<SubtypeId>}` names that
@@ -297,8 +305,10 @@ All are `quicktools.*`, need `'SEUT' in scene.view_layers`, and behave like this
   faces get **zero-area UVs** (16 of 52), so re-run `uv.smart_project` on the mesh before export or the
   model risks the shaderless warning (E032 family).
 - `mirror_apply(axis='x')`: object mode, mirrors the selected objects with `transform.mirror`, applies all
-  transforms and flips normals. `origin_to_selected`: edit mode with exactly one vertex, edge or face selected.
-  Both read but not run.
+  transforms and flips normals. Run on a cube at x = 2: it ended at x = -2 (mirrored about the world origin,
+  vertex x 1.8 became -1.8). `origin_to_selected`: edit mode with exactly one vertex, edge or face selected; run
+  with the top face of a unit cube selected, the object's origin moved to that face's centre (location
+  (-2, 0, 0.5)). Both ran without error from a script.
 - Build stage export [HARD, run]: a mesh in `BS1` with the Construction material exported
   `<SubtypeId>_BS1.mwm` and an SBC `<BuildProgressModels>` with one `Model BuildPercentUpperBound="1.00"` entry
   (the path includes the export subfolder, here `Models\Cubes\large\turret\`). `BS1` needs no collision of its

@@ -51,6 +51,10 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
 
 - Quick tools, build stage, mountpoint area edits and `update_subpart_instances` probed on `SPTurret` (`bpy-recipes.md`, "Quick tools"): `add_bevels` hard-coded width and `apply_transforms` rigid-body removal read in `seut_quicktools_operators.py` and confirmed by running; `cut_and_solidify` and `apply_construction_material` run and the BS1 export read back (SBC and files); mirror_apply and origin_to_selected read only.
 
+- SEUT importer (`scene.import`, `seut_ot_import.py`) run on `CargoContainerSmall.FBX` into a throwaway scene and compared with the raw FBX import: object, slot and material counts, root scale, highlight links, per-face materials of the port frame, keypad frame, text banner and grey frame, and an unmodified export (W007 from cross-scene name clashes). This explains the owner's clean-vanilla observation; in-game result of the importer's output not checked.
+
+- Small-grid scene exported twice on a scratch scene (default flags, then small flags) and the SBC read back; `mirror_apply` and `origin_to_selected` run on a scratch mesh.
+
 ## Not yet verified
 
 - In-game checks still open: the armor-style UV density (about 0.05 UV/m is extrapolated), a second functional block for the 0.40 UV/m figure, LOD switching, build stages in game, the SEUT-rendered icon in game, inventory on a `CubeBlock` via entity components, and subparts/turrets.

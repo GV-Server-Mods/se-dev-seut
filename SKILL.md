@@ -37,7 +37,8 @@ Everything below was checked against SEUT 1.2.1 on Blender 4.5 unless marked "un
    [HARD, E031]; parent detail objects under it. Details: `references/modeling-rules.md`. **Kitbash first**:
    when a vanilla model has the part you need (crate frame, port, panel, handle), import it and reuse its
    meshes instead of rebuilding them; build from scratch only what no vanilla part covers, then bevel and
-   smooth shade it. Recipe: `references/kitbash.md`.
+   smooth shade it. Import with SEUT's `scene.import` (`getattr(bpy.ops.scene, 'import')`), not the raw FBX
+   importer; recipe and traps: `references/kitbash.md`.
 4. **UVs, then material.** Link a vanilla material from the SEUT material library and lay UVs onto its
    atlas. Do not bake. Details: `references/materials.md`.
 5. **Collision** in `Collision - Main (...)`: at most 10 convex objects, inside the bounding box, rigid
