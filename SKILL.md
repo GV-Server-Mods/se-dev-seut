@@ -47,6 +47,10 @@ Everything below was checked against SEUT 1.2.1 on Blender 4.5 unless marked "un
    3D viewport context override through the MCP. Tested end to end on SEUT 1.2.1 (model, LODs, collision, SBC);
    the exact recipe and its traps are in `references/bpy-recipes.md` ("Export through the MCP"). Loading the
    result in game is a separate check the owner does; say what has and has not been tested in game.
+   **Fast in-game loop** [HARD, owner]: for simple model and texture updates, no game restart is needed. In
+   offline singleplayer open the admin Debug Draw menu (Alt+F11 on the owner's keys) and press "Reload
+   models" or "Reload textures". The wiki says dummy and collision changes need a full restart; treat that as
+   still true until a reload is seen to pick them up.
 
 ## Driving the live Blender (MCP)
 
@@ -106,7 +110,8 @@ shape reference at most, and ask before spending credit.
 - **Collision outside the bounding box** makes the game fall back to cube collision [HARD, wiki].
 - **Concave collision** gets filled in by Havok; split it into convex pieces [HARD, wiki].
 - **Collision shapes ignore rotation.** Apply transforms, then add the rigid body; redo it after any edit
-  [HARD, wiki]. Collision loads at game start, so restart the game to see changes.
+  [HARD, wiki]. Collision loads at game start, so restart the game to see collision changes (a model or texture reload does
+  not cover it [SOFT, wiki; not tested]).
 - **Custom shader node trees are ignored** and flagged (E053). Appearance comes from texture files plus
   the SEUT technique and parameters only [HARD].
 - **One collision model per block.** Separate Main and BS collision models misbehave [HARD, wiki].

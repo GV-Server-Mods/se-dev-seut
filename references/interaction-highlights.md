@@ -30,7 +30,8 @@ the plain yellow-square box; a detector empty linked to a mesh outlines that mes
 3. Resize the empty so it covers the **whole** highlighted mesh, with a small margin (see "Detector size"
    below). The highlight only shows while the reticle is inside the empty, so any part of the mesh outside it
    looks dead to the player.
-4. Export, restart the game fully (a reload keeps the old data), aim at the area. A yellow square means the
+4. Export, then restart the game fully (the wiki says a world reload keeps the old dummies; whether the Debug
+   Draw "Reload models" button picks up changed dummies is untested), aim at the area. A yellow square means the
    empty and mesh are not associated.
 
 SEUT's operator needs `Main` to contain the object (E025), one selected object at a time (E009), and an
@@ -82,7 +83,9 @@ bpy.ops.object.add_highlight_empty(detector_type="detector_terminal_", index=1)
   scheme, and every index within a detector type is unique. The target must have the same parent as the
   empty to be selectable. The outline colour is game wide (Environment Definition `ContourHighlightColor`)
   and cannot be set per block; the outline-only style is the default for text panel blocks (UseObjects
-  highlight style). Restart the game completely, not just the world, to see model changes.
+  highlight style). The wiki says to restart the game completely, not just the world, to see model changes; the owner finds the
+  Debug Draw "Reload models" / "Reload textures" buttons enough for simple mesh and texture updates
+  (`SKILL.md`, step 8).
 - Select the next target explicitly before each call; the operator works on the single selected object.
 
 ## Detector types (SEUT 1.2.1 `empties['highlight_empties']`)
