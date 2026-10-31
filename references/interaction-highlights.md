@@ -60,6 +60,22 @@ bpy.ops.object.add_highlight_empty(detector_type="detector_terminal_", index=1)
   but opening a terminal or connecting a conveyor needs a block type that has that function (a TerminalBlock,
   cargo container, ConveyorSorter, and so on) [SOFT, not tested]. Change `TypeId` in the SBC when the block
   must actually work.
+- Inventory on a decorative `CubeBlock` [SOFT, video by Chipstix213 plus game data; not run by this skill]: the
+  video's example crate is a plain `CubeBlock` with one `detector_inventory_1` linked to the crate mesh, and it
+  opens a working inventory in game. The inventory comes from two extra SBC files, not from the block type:
+  - `Data\EntityComponents.sbc`: `<EntityComponent xsi:type="MyObjectBuilder_InventoryComponentDefinition">`
+    with `<Id><TypeId>Inventory</TypeId><SubtypeId>MyCrate</SubtypeId></Id>` and `<Size x="1" y="1" z="1"/>`
+    (metres, so x*y*z cubic metres = 1000 L; vanilla blocks use the same element, e.g. `LargeBlockLockerRoom`).
+  - `Data\EntityContainers.sbc`: `<Container><Id><TypeId>CubeBlock</TypeId><SubtypeId>MyCrate</SubtypeId></Id>`
+    `<DefaultComponents><Component BuilderType="MyObjectBuilder_Inventory"/></DefaultComponents></Container>`,
+    in the vanilla form seen for `LargeBlockLockerRoomCorner` (there with `TypeId` `CargoContainer`). The
+    component and container are tied by sharing the block's SubtypeId.
+  - Optional `<InputConstraint Whitelist="true" ...>` inside the component limits what can be stored, with
+    `<Entry Type="AmmoMagazine"/>` or `<Entry><TypeId>..</TypeId><SubtypeId>..</SubtypeId></Entry>` lines
+    (vanilla locker rooms accept hand tools, gas bottles, ammo, consumables, datapads and credits).
+  - Changing the size later only affects newly placed blocks.
+  Use the cargo-container `TypeId` route (`kitbash.md`) when the block should also have terminal and conveyor
+  behaviour.
 - What the game does with `detector_conveyor*` [HARD, read in `MyConveyorLine.GetBlockLinePositions`,
   `MyMultilineConveyorEndpoint`, `MyUseObjectInventory`]: one empty does two jobs.
   1. Use object: the name prefix `conveyor` (like `inventory`) creates an inventory/terminal use object, so
@@ -67,7 +83,8 @@ bpy.ops.object.add_highlight_empty(detector_type="detector_terminal_", index=1)
   2. Connection point: for a block whose class has a conveyor endpoint, every dummy named `detector_conveyor*`
      becomes a conveyor line end. The cell is the one containing the empty's position; the direction is the
      dominant axis of the empty's offset from that cell's centre. `_small` in the name gives a small line,
-     `_in` / `_out` (third or fourth name part) makes it one-way.
+     `_in` / `_out` (third or fourth name part) makes it one-way. The video author describes the same thing as
+  half of the dummy lying inside the block and half inside the neighbour it connects to.
   So put the empty inside the cell it belongs to, on the side that faces the neighbour (about 0.2 m inside the
   cell face is fine, the test crate used 0.17 m). A port frame mesh without such an empty is only a picture.
   A plain `CubeBlock` has no conveyor endpoint, so the empty only highlights; the port connects once the SBC
@@ -172,4 +189,8 @@ Model `Models\Cubes\Large\CargoContainerSmall.mwm`, SDK FBX at
   material slots. Use SEUT's importer (`scene.import_complete` / Import FBX) or import into a throwaway
   file and purge afterwards.
 - Subpart objects: a highlight on a subpart needs the empty inside that subpart's scene [SOFT, untested].
+  The video's door example: the door is a main scene with two subpart empties, each linked to its own scene
+  (the right-hand door piece is a scene named `right`), exported together so they act as one model. On a
+  door the same `detector_terminal`-style empty both opens the door and highlights both subparts, so a door
+  detector does not behave exactly like the one on a cargo container [video; transcript wording uncertain].
 - Not yet exercised: export of a highlight, and the in-game aim test.

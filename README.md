@@ -34,6 +34,7 @@ references is tagged **[HARD]** (read in source or docs) or **[SOFT]** (inferred
 | `references/weapons-turrets.md` | Sorter turrets, subpart chains, muzzle and camera dummies |
 | `references/interaction-highlights.md` | Highlight empties and the vanilla small cargo container example |
 | `references/materials.md`, `materials-catalog.md`, `vanilla-materials.md` | Texture types, behaviour catalog, all 165 materials |
+| `references/setup.md` | Installing Blender, SEUT, Havok and the ModSDK from scratch, first model, testing in game |
 | `references/kitbash.md` | Import recipe for reusing vanilla model parts, tested |
 | `references/atlas-regions.md` | UV boxes for each piece of the vanilla decal atlases (JSON copy: `atlas-regions.json`) |
 | `scripts/` | Blender and Pillow scripts that regenerate the atlas region maps |
@@ -56,6 +57,14 @@ git clone https://github.com/GV-Server-Mods/se-dev-seut.git ~/.claude/skills/se-
 
 The Blender sections assume the [Blender MCP](https://mcp-for-blender.com/) add-on and a SEUT install; the
 vanilla material paths assume SEUT's default asset folder, read from the add-on preferences.
+
+## Credits
+
+- Space Engineers Utilities (SEUT) belongs to its authors; the add-on's behaviour here was read from its
+  source and the Space Engineers wiki.
+- The install steps, first-model workflow, icon render and entity-component notes in `references/setup.md`
+  draw on the YouTube tutorial series by **Chipstix213** (SEUT setup for Blender, The First Model, The Next
+  Steps). Thank you for the walkthroughs.
 
 ## License
 

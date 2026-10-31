@@ -25,6 +25,8 @@ Everything below was checked against SEUT 1.2.1 on Blender 4.5 unless marked "un
 
 ## Workflow
 
+0. **Is it installed?** If the user has no Blender, SEUT, Havok, ModSDK or converted textures yet, or an
+   export fails on a path or tool, read `references/setup.md` first and walk them through only what is missing.
 1. **Scene.** Create a Blender scene, set `scene.seut.sceneType = 'mainScene'`, `subtypeId`, `gridScale`
    (`'large'` or `'small'`), then `bpy.ops.scene.recreate_collections()`. Setting `subtypeId` renames the
    scene to match, so look the scene up again by its new name. Recipes: `references/bpy-recipes.md`.
@@ -156,6 +158,7 @@ container breakdown: `references/interaction-highlights.md`.
 | `references/bpy-recipes.md` | scripting scenes, collections, materials, collision through the Blender MCP |
 | `references/modeling-rules.md` | geometry, bevels and normals, collision, LOD, build stages, empties, mountpoints, mirroring |
 | `references/materials.md` | picking or creating materials, texture types, techniques, atlas UV workflow |
+| `references/setup.md` | the user has not installed Blender, SEUT, Havok or the ModSDK yet; first model; testing in game (credits Chipstix213's tutorial series) |
 | `references/kitbash.md` | Reusing parts of vanilla models (crates, frames, ports, panels) instead of modelling them from scratch: import recipe |
 | `references/atlas-regions.md` | UV-mapping a decal quad onto a specific piece of Atlas1-4, ButtonsAtlas, Decals or TextAtlas (UV boxes per piece) |
 | `references/materials-catalog.md` | choosing a material by behaviour: paintable, decal, or emissive and state-driven glow; emissive presets and colours |

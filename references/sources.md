@@ -43,9 +43,11 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
 - Step 4 tests on scratch block `S4Test` (SEUT 1.2.1): MountPoints, BuildProgressModels, MirroringX/Y, `update` mode and the icon path read from the generated SBC; icon rendered and converted to DXT5 DDS. Not yet seen in game.
 - Port frame material: the owner saw the vanilla yellow frame clean and the kitbashed one with scratched edges; swapped to `PaintedMetal_Yellow` and re-exported; cause not established (`kitbash.md`).
 
+- Chipstix213's YouTube tutorial series (SEUT setup for Blender 3.0, The First Model, The Next Steps), supplied by the owner as auto-generated transcripts (speech-to-text errors likely, so only claims that make sense against the add-on or game data were kept): install order, first-model workflow, export size options, local test mod folder, world settings for fast testing, icon render mode, inventory through entity components. Credited in `README.md` and `references/setup.md`. SEUT's icon renderer then read in `seut_icon_render.py` and run on `S4Test`; this corrected the earlier claim that SEUT makes no icon. Entity component and container XML checked against the game's `EntityComponents.sbc` and `EntityContainers.sbc` (LockerRoom blocks).
+
 ## Not yet verified
 
-- In-game checks still open: the armor-style UV density (about 0.05 UV/m is extrapolated), a second functional block for the 0.40 UV/m figure, LOD switching, build stages in game, the DXT5 icon in game, and subparts/turrets.
+- In-game checks still open: the armor-style UV density (about 0.05 UV/m is extrapolated), a second functional block for the 0.40 UV/m figure, LOD switching, build stages in game, the SEUT-rendered icon in game, inventory on a `CubeBlock` via entity components, and subparts/turrets.
 - Confirmed in game by the owner (probe cube): the exported mod loads with no mod errors, the highlight outlines the linked mesh, a 2.5 m collision box matches the model, paint and vanilla materials work, the keypad panel maps correctly, and `IsAirTight` in the SBC clears the BuildInfo hint.
 - Export of LODs, build stages and subparts; only a Main plus collision model was exported. The `new` SBC was generated but not loaded in game; `update` was not run.
 - Mirroring and mountpoint operators driven from script.
