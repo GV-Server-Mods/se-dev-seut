@@ -113,7 +113,9 @@ parts do:
   subpart changes [owner]; simple mesh and texture changes only need the Debug Draw "Reload models" /
   "Reload textures" buttons [HARD, owner].
 - `BS1..BS3` are construction stages (typically shells with less geometry). `Apply Construction` assigns
-  the Construction material; `Cut and Solidify` makes the scaffold look [HARD].
+  the Construction material; `Cut and Solidify` makes the scaffold look [HARD]. Both were run: Cut and Solidify
+  leaves zero-area UVs that need a re-unwrap, `Add Bevels` uses a hairline 2.5 mm width whatever you ask for,
+  and `Apply Transformations` strips the rigid body (details in `bpy-recipes.md`, "Quick tools").
 - Armor blocks vanilla-style use build stages; simple blocks may skip them [SOFT].
 
 ## Empties, subparts, dummies

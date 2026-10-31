@@ -242,8 +242,8 @@ view_layer=scene.view_layers[0], window, area, region)` using the 3D viewport as
   object active crashed Blender 4.5.10 (access violation in the depsgraph, `rna_ViewLayer_update_tagged`; crash
   log supplied by the owner). Safe recipe, which ran clean: save the file first, set
   `main.seut.linkSubpartInstances = False`, make the empty the only selected and active object in the main
-  scene's view layer, then set `linkedScene`. `scene.update_subpart_instances` (instances shown in Blender) was
-  not run after the crash; the export does not need instances.
+  scene's view layer, then set `linkedScene`. The export does not need the instance objects (see the
+  `update_subpart_instances` note below).
 - Exporting the subpart scene and then the main scene (same export folder) wrote `SPBarrel.mwm` and `SPTurret.mwm`;
   the main model's dummy list contains `subpart_Barrel` with the property `file = SPBarrel`, which is how the
   game finds the subpart model. The subpart scene exports FBX with `axis_forward = '-Z'` where main scenes use
@@ -264,8 +264,45 @@ view_layer=scene.view_layers[0], window, area, region)` using the 3D viewport as
   (1.25 m) exported as `StartX=0.15 EndX=0.65`, which is a centre at -0.25 m, so the offset sign is inverted
   on that side. Verify each face's direction with the BuildInfo overlay in game, or pre-compute the expected
   numbers, before trusting a one-sided area.
-- All six faces were written even though only one was changed. Removing unwanted areas before turning the mode
-  off was not tried; otherwise edit the SBC afterwards.
+- All six faces were written when only one was changed. Deleting an area object (`bpy.data.objects.remove`) while
+  the mode is on removes that face from `mountpointAreas` when you turn it off, so a block with one mount face
+  keeps just that one. `scene.add_mountpoint_area()` with an area object active makes a second full-face area
+  on the same side (`Mountpoint Area Front.001`, saved as another `front` entry). Turning the mode on again
+  reloads the stored areas.
+- `scene.update_subpart_instances` only sets `linkSubpartInstances` False then True (`seut_utils.py`), which
+  runs `link_subpart_scene` for every linked empty. Run from script it created no instance objects in the main
+  scene and left the window on the subpart scene (restore it with `bpy.context.window.scene = main`); it did
+  not crash with the empty active. The export does not need the instances, so for scripted work leave
+  `linkSubpartInstances = False` and judge placement from the subpart scene itself. Seeing a subpart in place
+  in Blender is a UI-only convenience for now [SOFT].
+
+### Quick tools [HARD, source read and run]
+
+All are `quicktools.*`, need `'SEUT' in scene.view_layers`, and behave like this:
+
+- `add_bevels`: for each selected object runs `shade_smooth_by_angle()` (30 degrees) and adds a Bevel modifier
+  with `harden_normals = True`, but the width is hard coded to **0.0025 m** and the `bevel_amount` property is
+  ignored [source and run: asked for 0.05, got 0.0025]. That is a hairline bevel. Set `modifier.width` yourself
+  to a visible chamfer (`modeling-rules.md`) and apply the modifier. `remove_bevels` only deletes Bevel modifiers,
+  not bevels already applied.
+- `apply_transforms`: removes the rigid body from each selected object, then applies location, rotation and
+  scale. **The rigid body is not put back**, so a collision object loses its shape: re-add
+  `bpy.ops.rigidbody.object_add()` and the collision shape afterwards [run: `rb after False`].
+- `apply_construction_material`: the file must already contain a material named `Construction` (link it from the
+  SEUT material library). Each selected object's slots become `<name>_Chrome` when that material is loaded in
+  the file, otherwise `Construction`. Run: `PaintedMetal_Colorable` became `Construction`.
+- `cut_and_solidify(inset_thickness=0.025, solidify_thickness=0.015)`: edit mode only, with faces selected; it
+  insets each selected face individually, deletes the inner faces and applies a Solidify modifier, which gives
+  the open scaffold shell. Run on a 2 x 2 x 1 m box with its four side faces selected: 6 faces became 52. The new
+  faces get **zero-area UVs** (16 of 52), so re-run `uv.smart_project` on the mesh before export or the
+  model risks the shaderless warning (E032 family).
+- `mirror_apply(axis='x')`: object mode, mirrors the selected objects with `transform.mirror`, applies all
+  transforms and flips normals. `origin_to_selected`: edit mode with exactly one vertex, edge or face selected.
+  Both read but not run.
+- Build stage export [HARD, run]: a mesh in `BS1` with the Construction material exported
+  `<SubtypeId>_BS1.mwm` and an SBC `<BuildProgressModels>` with one `Model BuildPercentUpperBound="1.00"` entry
+  (the path includes the export subfolder, here `Models\Cubes\large\turret\`). `BS1` needs no collision of its
+  own.
 
 From the wiki Add & Context Menu page [HARD, wiki]: `Add Highlight Empty` needs the target object selected and
 an index unique per highlight type; `Add Dummy` takes a dummy type and an index unique per dummy type (not all

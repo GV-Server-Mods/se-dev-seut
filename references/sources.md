@@ -49,6 +49,8 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
 
 - Subpart, dummy, mirroring and mountpoint operators run from script on scratch scenes `SPTurret` and `SPBarrel` (`bpy-recipes.md`): operator parenting bug found in source and seen in the run; `linkedScene` update callback read in `seut_object.py`; Blender 4.5.10 crashed once when `linkedScene` was set while another object was active (owner supplied `ProbeExport.crash.txt`); safe recipe then exported both scenes and the `subpart_Barrel` dummy with `file = SPBarrel` was found in the main `.mwm`; mirroring and mountpoint modes toggled and the SBC read back. In-game behaviour untested.
 
+- Quick tools, build stage, mountpoint area edits and `update_subpart_instances` probed on `SPTurret` (`bpy-recipes.md`, "Quick tools"): `add_bevels` hard-coded width and `apply_transforms` rigid-body removal read in `seut_quicktools_operators.py` and confirmed by running; `cut_and_solidify` and `apply_construction_material` run and the BS1 export read back (SBC and files); mirror_apply and origin_to_selected read only.
+
 ## Not yet verified
 
 - In-game checks still open: the armor-style UV density (about 0.05 UV/m is extrapolated), a second functional block for the 0.40 UV/m figure, LOD switching, build stages in game, the SEUT-rendered icon in game, inventory on a `CubeBlock` via entity components, and subparts/turrets.
