@@ -25,7 +25,7 @@ on error) shows them; `Delete Temporary Files` off keeps `*.mwm.log` for export 
   problems the panel missed; use them before clearing notifications. The wiki lists E001 to E056 and W001 to
   W020 (this skill's table follows SEUT 1.2.1 source).
 
-## When Blender crashes or the MCP connection drops [SOFT: steps below not run end to end]
+## When Blender crashes or the MCP connection drops [HARD for steps 1, 3 and 4 on Windows, Blender 4.5.10: tested by force-killing Blender and relaunching; the other steps SOFT]
 
 Calls fail with "Connection to Blender lost" / WinError 10054, or `get_addon_status` stops answering.
 
@@ -38,7 +38,10 @@ Calls fail with "Connection to Blender lost" / WinError 10054, or `get_addon_sta
 3. **Ask before restarting** unless the user already said to: it closes their other work and may need
    permission to start a process. If allowed, relaunch with the recorded path, for example
    `Start-Process "<binary_path>" "<blend path>"` (PowerShell). Only the saved state comes back; check
-   `bpy.data.filepath` and the scene list, then redo anything after the last save.
+   `bpy.data.filepath` and the scene list, then redo anything after the last save. Tested: after
+   `Stop-Process -Force` on `blender.exe` and `Start-Process "<binary_path>" '"<blend path>"'` (quote the
+   .blend path), the file reopened and the MCP answered again within about 20 seconds with no click, on an
+   install where the add-on auto-starts its server.
 4. **Reconnect**: poll `get_addon_status` for a short while. If it never answers, the add-on's server is not
    auto-starting on this machine (some installs start it automatically, others do not). Tell the user to open the
    side panel (N) in Blender and press Start MCP Server, or enable the add-on's auto-start option if its
