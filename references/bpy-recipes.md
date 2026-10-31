@@ -224,8 +224,11 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   crashed Blender (access violation in `pyrna_prop_collection_iter_next`, crash log in `%TEMP%`). Use
   `objs = list(col.all_objects)` first. Save the .blend before each step; the crash loses unsaved work.
 - **Appending parts:** `bpy.data.libraries.load(path, link=False)` with `dst.objects = [names]` pulls the old
-  parent in as `<Name>.001` as well. Read `o.matrix_world` (not stale, it is stored in the file) or compute
-  `parent.matrix_world @ o.matrix_parent_inverse @ o.matrix_basis` *before* removing that parent. Then
+  parent in as `<Name>.001` as well. Compute the world matrix *before* removing that parent, from the parent's
+  `matrix_basis`: `parent.matrix_basis @ o.matrix_parent_inverse @ o.matrix_basis` (for a one-level hierarchy).
+  Do not trust `matrix_world` of appended objects that are not linked to a scene yet [HARD, seen]: a parent
+  stored at z = -2.5 with a 180 degree turn reported an identity `matrix_world`, which put every child in the
+  wrong place. (An earlier append looked fine only because that parent sat at the origin.) Then
   `o.parent = None; o.matrix_world = mw`, link to the target collection, `o.parent = new_root;
   o.matrix_parent_inverse = new_root.matrix_world.inverted()`. Remove the `.001` leftovers and
   `bpy.data.orphans_purge()`, or highlight links and W007 resolve to the wrong objects.
