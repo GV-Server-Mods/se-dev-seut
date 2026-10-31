@@ -235,15 +235,19 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
 - **LOD from script** without join/decimate operators: for each source mesh build a `bmesh`, apply
   `bmesh.ops.transform(bm, matrix=o.matrix_world, verts=bm.verts)`, remap `material_index` onto one shared
   material list, merge into one mesh, add a `DECIMATE` modifier (ratio about 0.35 for LOD1, 0.12 for LOD2),
-  then `bpy.data.meshes.new_from_object(ob.evaluated_get(depsgraph))` and swap `ob.data`. Skip `detector_*`
-  highlight meshes; drop text and small pipes from LOD2. **Protect decal faces from the decimation** [HARD,
-  owner saw the yellow conveyor-port frames vanish at 50 m in game]: a plain global Decimate collapsed all 60
-  `Decals` faces (flat quads sitting just above a surface) to zero, so the LOD lost them. Split the merged
-  mesh by material, decimate only the shell, then add the untouched faces of `Decals`, `Terminal`, `TextAtlas`
-  (LOD1), `ButtonsAtlas_*`, `Atlas3_*` and other tiny accent materials back; check face counts per material
-  against Main before exporting. Link the object to the `LODn (...)`
-  collection and the export wrote the LOD `.mwm` files and the `<Model><LOD Distance=...>` XML (25 / 50) with no
-  other setup. Exporting 3827 and 1091 faces took well under a second.
+  then `bpy.data.meshes.new_from_object(ob.evaluated_get(depsgraph))` and swap `ob.data`. Drop text and small
+  pipes from LOD2. **Do not leave out `detector_*` meshes** [HARD, owner saw the yellow conveyor ports vanish
+  at 50 m in game]: in a vanilla model the `detector_conveyor_section_*` meshes are the visible yellow port
+  frames (272 `PaintedMetal_Yellow` faces each) and `detector_terminal_section_*` are the keypad panels, not
+  hidden highlight helpers. A first LOD build skipped them, so both LODs had no ports or keypads; the fix was
+  to include them. Compare the face count per material of every LOD against Main before exporting: a material
+  that is in Main and missing from a LOD is a bug. **Protect flat decal faces from the decimation** [HARD, seen]:
+  a global Decimate also collapsed all 60 `Decals` faces (flat quads just above a surface) to zero. Split the
+  merged mesh by material, decimate only the shell, then add the untouched faces of `Decals`, `Terminal`,
+  `TextAtlas` (LOD1), `ButtonsAtlas_*`, `Atlas3_*`, `Conveyor` and other tiny accent materials back. Link the
+  object to the `LODn (...)` collection and the export wrote the LOD `.mwm` files and the
+  `<Model><LOD Distance=...>` XML (25 / 50) with no other setup. Final crate: LOD1 7595 and LOD2 3415 faces
+  (ratios 0.5 and 0.25 on the shell), export well under a second.
 - A SEUT scene exported this way produced `Models\<Subtype>.mwm`, `_LOD1`, `_LOD2` (plus a `.hkt.mwm` that the earlier install of the same block did
   not need) directly under `Models`; copy the three `.mwm` files into the mod's `Models` folder (LOD paths are
   relative to the mod root).
