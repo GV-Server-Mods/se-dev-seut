@@ -31,6 +31,8 @@ references is tagged **[HARD]** (read in source or docs) or **[SOFT]** (inferred
 | `references/bpy-recipes.md` | Verified `bpy` snippets for SEUT scenes, materials and collision |
 | `references/modeling-rules.md` | Geometry, collision, LODs, empties, mountpoints, mirroring |
 | `references/block-scenes.md` | Ideal scene layout, vanilla LOD distances, build stages |
+| `references/doors-subparts.md` | Doors and animated subparts, advanced door definition fields |
+| `references/characters-and-animation.md` | Outline for characters, creatures and handheld weapon animation controllers |
 | `references/weapons-turrets.md` | Sorter turrets, subpart chains, muzzle and camera dummies |
 | `references/interaction-highlights.md` | Highlight empties and the vanilla small cargo container example |
 | `references/materials.md`, `materials-catalog.md`, `vanilla-materials.md` | Texture types, behaviour catalog, all 165 materials |
@@ -64,7 +66,9 @@ vanilla material paths assume SEUT's default asset folder, read from the add-on 
   source and the Space Engineers wiki.
 - The install steps, first-model workflow, icon render and entity-component notes in `references/setup.md`
   draw on the YouTube tutorial series by **Chipstix213** (SEUT setup for Blender, The First Model, The Next
-  Steps). Thank you for the walkthroughs.
+  Steps, Advanced Door parts 1 and 2, Custom Character, weapon animation controller), as do
+  `references/doors-subparts.md` and `references/characters-and-animation.md`. The tip about exporting a grid
+  from the game with Ctrl+Alt+E comes from the owner and credits Brd. Thank you for the walkthroughs.
 
 ## License
 

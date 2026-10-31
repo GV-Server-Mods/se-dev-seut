@@ -45,6 +45,8 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
 
 - Chipstix213's YouTube tutorial series (SEUT setup for Blender 3.0, The First Model, The Next Steps), supplied by the owner as auto-generated transcripts (speech-to-text errors likely, so only claims that make sense against the add-on or game data were kept): install order, first-model workflow, export size options, local test mod folder, world settings for fast testing, icon render mode, inventory through entity components. Credited in `README.md` and `references/setup.md`. SEUT's icon renderer then read in `seut_icon_render.py` and run on `S4Test`; this corrected the earlier claim that SEUT makes no icon. Entity component and container XML checked against the game's `EntityComponents.sbc` and `EntityContainers.sbc` (LockerRoom blocks).
 
+- Chipstix213's Advanced Door (parts 1 and 2), Custom Character and weapon animation controller videos (auto-generated transcripts): `doors-subparts.md` and `characters-and-animation.md`. Advanced door fields checked in the decompiled `MyObjectBuilder_AdvancedDoorDefinition` / `MyAdvancedDoor` (opening fields, `IDs` syntax, subpart model loaded by name beside the main model, subpart physics from collision shapes; no vanilla advanced door exists in `CubeBlocks`); `E051` weight-painting groups and `rotate_character` found in the SEUT source. Not built or loaded in game. Ctrl+Alt+E in-game export tip: owner, credits Brd.
+
 ## Not yet verified
 
 - In-game checks still open: the armor-style UV density (about 0.05 UV/m is extrapolated), a second functional block for the 0.40 UV/m figure, LOD switching, build stages in game, the SEUT-rendered icon in game, inventory on a `CubeBlock` via entity components, and subparts/turrets.

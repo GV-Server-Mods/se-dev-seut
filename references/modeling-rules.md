@@ -121,6 +121,8 @@ parts do:
 - Subpart empty links to a scene of type `Subpart`; the subpart scene must use the same grid export
   settings (W001, W020) and cannot loop into itself (E005) [HARD].
 - Empties should have a parent object (W005) and the parent should itself be unparented (W006).
+- Subpart scenes face the other way from main scenes (+Y forward instead of -Y) [SOFT, video]; rotate the
+  subpart empty 180 degrees about Z. Doors and the advanced door SBC fields: `doors-subparts.md`.
 - Highlight empties need an object in `Main` (E025) and share its parent (W007).
 - Dummy and preset subpart empties come from `scene.add_dummy` / `scene.add_preset_subpart`. The wiki
   empty-properties page does not list dummy names; read them from SEUT's `empties` module when needed.

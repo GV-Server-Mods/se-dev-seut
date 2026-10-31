@@ -164,6 +164,8 @@ container breakdown: `references/interaction-highlights.md`.
 | `references/materials-catalog.md` | choosing a material by behaviour: paintable, decal, or emissive and state-driven glow; emissive presets and colours |
 | `references/vanilla-materials.md` | choosing one of the 165 vanilla materials by name |
 | `references/block-scenes.md` | laying out Main, LODs, build stages and collision for a complete block; vanilla LOD distances |
+| `references/doors-subparts.md` | doors, hatches or any block with animated subparts: scene setup, orientation quirk, advanced door SBC fields |
+| `references/characters-and-animation.md` | a playable/NPC character, creature, or handheld weapon animation controller (outline only) |
 | `references/weapons-turrets.md` | turrets, weapons or tools (ConveyorSorter, WeaponCore, ToolCore): subpart chain, muzzle and camera dummies |
 | `references/interaction-highlights.md` | any terminal, inventory, keypad, conveyor port or door interaction point |
 | `references/errors.md` | any SEUT error or warning, and the pre-export checklist |

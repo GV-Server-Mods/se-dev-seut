@@ -20,6 +20,11 @@ reading `<Model>`. Do not guess from the block's name (`ArmorCenter` is not the 
 `LargeConveyorFrame_00n` corner/frame meshes, six `detector_conveyor_section_00n` port frames, six
 `detector_terminal_section_00n` panels, and the rest. Read `interaction-highlights.md` for its detectors.
 
+Another source: you can export a grid from the game itself, including modded blocks [owner tip, credit to
+Brd; video by Chipstix213]. Face the grid in game and press Ctrl+Alt+E. The warning says modded blocks cannot
+be exported, but they can. The files land in a `SpaceEngineers_ExportedModels` folder on the desktop, and the
+FBX files import into Blender like the SDK ones. Not tried by this skill.
+
 ## Import recipe [HARD, tested on SEUT 1.2.1 / Blender 4.5]
 
 Import into a throwaway scene, keep what you want, and clean up. A raw import is messy: it gives every
