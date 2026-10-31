@@ -93,6 +93,11 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
     result = bpy.ops.scene.export()
 ```
 
+- `export_sbc_type = 'new'` writes `Data\CubeBlocks\<SubtypeId>.sbc` (`I004`) [HARD, tested]: TypeId `CubeBlock`,
+  Size from the bounding box, Model path, one `SteelPlate` x10 component, a placeholder icon
+  (`AstronautBackpack.dds`), and `{LOC:DisplayName_<SubtypeId>}` / `{LOC:Description_<SubtypeId>}` names that
+  show as raw text in game unless a localization file supplies them. No mount points or build-stage models are
+  written. Edit the SBC for real blocks. [SOFT: whether this alone makes the block appear in the G menu.]
 - A clean run ends with `I007` and leaves only `<SubtypeId>.mwm` when `export_deleteLooseFiles` is True.
 - `{'FINISHED'}` is returned even when `E044` was reported. Read the Notifications output, and keep the logs
   to find the cause.

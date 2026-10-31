@@ -28,7 +28,7 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
 ## Not yet verified
 
 - In-game load of an exported block (aim at a highlight, collision behaviour, LOD switching).
-- Export of LODs, build stages, subparts and the SBC (`export_sbc_type` update/new); only a Main plus collision model was exported.
+- Export of LODs, build stages and subparts; only a Main plus collision model was exported. The `new` SBC was generated but not loaded in game; `update` was not run.
 - Mirroring and mountpoint operators driven from script.
 - Atlas region descriptions for small pieces (Atlas2 labels, ButtonsAtlas, Atlas3); boxes are measured, the names were read by eye and need a second look.
 - Dummy and preset subpart names; subpart workflow.
