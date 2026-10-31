@@ -37,15 +37,18 @@ with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.St
 new = [bpy.data.objects[n] for n in bpy.data.objects.keys() if n not in before]
 meshes = [o for o in new if o.type == 'MESH']
 
-# 1. drop the unused material slots on every mesh
-for o in meshes:
-    me = o.data
-    used = sorted({p.material_index for p in me.polygons})
+# 1. drop the unused material slots on every mesh. Clearing the slots RESETS every face's material index to 0,
+#    so save the new indices first and write them back after the slots are rebuilt.
+def trim_slots(me):
+    idx = [p.material_index for p in me.polygons]
+    used = sorted(set(idx))
     mats = [me.materials[i] for i in used]
     remap = {old: new_i for new_i, old in enumerate(used)}
-    for p in me.polygons: p.material_index = remap[p.material_index]
+    new_idx = [remap[i] for i in idx]
     me.materials.clear()
     for m in mats: me.materials.append(m)
+    for p, i in zip(me.polygons, new_idx): p.material_index = i
+for o in meshes: trim_slots(o.data)
 
 # 2. swap the local copies for the linked vanilla materials (names match)
 names = sorted({m.name for o in meshes for m in o.data.materials if m and not m.library})
@@ -60,6 +63,14 @@ bpy.ops.outliner.orphans_purge(do_local_ids=True, do_linked_ids=False, do_recurs
 
 Result in the test: 13 materials used, all 97 slots remapped to linked library materials, none missing,
 3131 data blocks purged.
+
+**Check the faces keep their materials.** The first version of this recipe cleared the slots before writing
+the indices, so every vanilla part ended up with a single material: in game the port frame came out all
+yellow, with no door panel texture and no metal handle edges, while the vanilla container beside it looked
+right [HARD, owner screenshot]. After trimming, count faces per material on a multi-material part, for
+example `detector_conveyor_section_004` should show four (`PaintedMetal_Yellow` 160,
+`PaintedMetalScratched_Yellow` 112, `Metal_Dull` 476, `Conveyor` 2). The same trap applies to LOD meshes
+trimmed after a join: fix it the same way, or the LODs and the main model look different.
 
 3. Move the parts you keep into the block. The imported root has scale 0.01 (the meshes are in cm), so
    unparent each kept object keeping its world transform, then apply scale:
