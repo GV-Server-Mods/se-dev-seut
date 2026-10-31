@@ -42,6 +42,11 @@ new textures. Many vanilla blocks share atlases and tiling materials, which is w
    script, small-piece descriptions read by eye].
 4. Tiling materials (`PaintedMetal_*`, `RustyMetal`, `Rubber*`) take UVs scaled to texel density instead of
    an atlas region. Match vanilla neighbours; the SEUT `UV Grid Overlay` toggle shows texel density [HARD].
+   Measured on the vanilla large armor block (`ArmorCenter.FBX`, PaintedMetal_Colorable): **0.40 UV per metre**,
+   so a 2.5 m face spans about one full UV tile. A first probe at 0.145 UV per metre looked too coarse next to
+   armor in game; the owner estimated "about 2x" and the measurement gave 2.8x [HARD, measured and
+   owner-observed]. Box-project each face (`uv = (a, b) * 0.40 + 0.5`, using the two axes across the face's
+   dominant normal); overlapping islands are fine on a tiling material.
 5. If every material on the model is Vanilla, no textures need to ship with the mod [HARD, wiki].
 
 W012: a DLC material forces the model to be DLC-locked; avoid DLC-tagged materials for public blocks.

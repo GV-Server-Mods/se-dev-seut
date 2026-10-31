@@ -67,6 +67,19 @@ bpy.ops.object.add_highlight_empty(detector_type="detector_terminal_", index=1)
 | `detector_wardrobe` | wardrobe; moves player into the empty, add collision 0.95 m below | no (extras `_1`, `_2`) |
 | `detector_forageable` | forageable item; link the object that disappears when foraged | no |
 
+## In-game result [HARD, owner test]
+
+A box mesh with the `Terminal` material plus `detector_terminal_1` loaded in game and the aimed panel outlined
+correctly, so the empty-to-mesh link works. The `Terminal` texture, however, is a whole UI sheet, not a
+tileable surface:
+
+- `terminal_panel_cm` (512 px) holds a portrait keypad UI in its **left half**: u about 0.03 to 0.525 over the
+  full height (top bar, circular display, 4x3 keypad, bottom bar); the right half is black.
+- Mapping the whole quad to a middle slice (u 0.35-0.65) showed a stretched fragment with two keys. Map the
+  panel to `u 0.03..0.525, v 0..1` and size the mesh to that portrait ratio (about 1 : 2, for example 0.2 x 0.4 m).
+- General rule: a material that is a UI sheet or atlas needs a deliberate UV region; check its texture before
+  mapping (`references/atlas-regions.md` lists the atlases; `Terminal` is not in it).
+
 ## Vanilla example: LargeBlockSmallContainer [verified by import]
 
 Model `Models\Cubes\Large\CargoContainerSmall.mwm`, SDK FBX at
