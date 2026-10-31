@@ -294,6 +294,14 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
 - **Edge-only wear:** `md = ob.modifiers.new('bev','BEVEL'); md.material = 1`, then give the mesh the slots
   `[PaintedMetal_Darker, PaintedMetalScratched_Darker]` so only the bevel faces get scratches. For meshes that
   are already bevelled, set `material_index = 1` on faces where `area / longest edge < 0.03`.
+- **Bolt decals:** `Decals_Atlas_A_01` row "eleven bolt and fitting heads" (`atlas-regions.md`, region 1), one
+  head per quad. Measured boxes from the alpha mask: hex nut u 0.0957-0.1226 v 0.9722-0.9961, round domed head
+  u 0.1587-0.1846 v 0.9717-0.9971, hex socket in a ring u 0.3135-0.3428 v 0.9697-0.9990. Material `Decals`,
+  quad 3 mm off the surface. Turn every head to a random angle about its normal (and every 3D nut about its
+  axis) so they look individually tightened [owner]. Keep real 3D bolts few and low (about 12 mm tall).
+- **Decals on curved surfaces:** split the quad into columns that follow the radius (8 columns for a 0.4 m
+  sign on a 1.05 m cylinder) instead of one flat quad, which would float or sink by about 2 cm at the edges.
+  Check text direction in a render: the first try read mirrored, fixed by reversing U (`u = u0 + u1 - u`).
 - **Preview renders:** Workbench in Texture mode shows only one image of a SEUT material (often the mask) and
   exaggerates wear; EEVEE (`BLENDER_EEVEE_NEXT` in 4.5) with a sun lamp and a grey world reads closer to the
   game, but the in-game shader still differs.
