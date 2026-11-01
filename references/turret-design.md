@@ -96,4 +96,11 @@ They apply to any turret, gun or weapon block. Tags as in SKILL.md: [owner] = ow
   exaggerates wear). Ray-cast from the camera to identify a stray dark shape before guessing.
 - Check every part against its support edge (no overhang past the turntable), every decal for floating or z-fighting,
   and every moving part with the sweep.
+- **Decal obstruction check** [HARD, caught real clashes; owner: decals were hidden or colliding]: hide the decal
+  objects and helper empties, then `scene.ray_cast` from each decal face centre along its normal for 0.3 m and list
+  every hit. Anything within a few centimetres is hidden or colliding (bolts under a trunnion collar, labels behind
+  a barrel ring, stencils on a drum hidden by rails). Move or drop those before showing renders. A decal can only
+  be judged in a render from the angles players actually see it from.
+- **Left and right are the weapon's own**, facing its muzzle: with the muzzle at Blender -Y, the turret's left is +X
+  [owner, I had L and R swapped].
 - Say what has not been seen in game (decals on curved shells, collision, subpart orientation).
