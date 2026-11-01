@@ -299,6 +299,15 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
 - **Angle-limited bevels and segment counts**: a 12-sided cylinder's side edges meet at exactly 30 degrees, so a
   Bevel with `angle_limit = 30` bevels every side edge and multiplies the triangles. Use 14 or more sides, raise
   the limit, or skip the bevel on small cylinders (barrels, pins, piston bodies). Small hex bosses need no bevel.
+- **Buried faces** [HARD, took a turret from 43,600 to 39,000 triangles with no visible change]: a face is
+  hidden when all its corners and its centre, nudged 0.5 mm along its normal, lie inside another closed solid.
+  Split every mesh into connected islands in world space and keep only closed ones (every edge has two faces);
+  build a `BVHTree.FromBMesh` per island and test points by ray parity in two directions (an odd hit count
+  both times means inside). Compare only against solids of the same moving part, so no rotation can reveal a
+  deleted face, and skip decals, glass, screens and vanilla parts. Do a dry run listing counts per object, then
+  delete the faces plus loose edges and verts, and render the busiest areas (muzzle, hubs, drum) to check for
+  holes. The biggest wins were rod and tube ends inside housings, flash hider bases inside the muzzle collar,
+  bands and straps sunk into a drum or servo pack, and the radome's lower rim inside the plate.
 - **Many small cuts:** an exact boolean that slots six small turned tubes at once collapsed them to fragments
   (two tries). Build such features by construction instead: a slotted flash hider is a base ring, three
   partial tube sections (wall rings swept over an angle range, capped at both ends) and a lip ring. Build each
