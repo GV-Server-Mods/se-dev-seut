@@ -77,6 +77,13 @@ They apply to any turret, gun or weapon block. Tags as in SKILL.md: [owner] = ow
   consoles on the base slab, outside the turntable's sweep, work: a sloped terminal face with the `Terminal`
   keypad sheet and a frame, and a low box with a yellow-framed access hatch for `detector_inventory_1`
   (`interaction-highlights.md`).
+- **Show how ammo reaches the gun** [owner]. A small hatch on the base reads as a joke. One good answer: a fixed
+  docking column on the azimuth axis rising through the turntable centre (a rotary seal ring where the hub turns
+  round it) and a matching receiver on the elevation part that lines up over it at 0 degrees. Check the receiver's
+  closest pass over the column across the full elevation range; guide pins clipped at small angles, so the mouth
+  and seal carry the docking look instead.
+- **Terminal keypad**: embedded flat and centred in the base's back face, turned 90 degrees, in a rectangular
+  pocket, read better than a console or a sloped corner pocket [owner].
 - **Avoid boxes perched on top of the shell** and boxes hanging outside the plate outline [owner].
 
 ## Surface detail: bolts, wear, seams, decals
