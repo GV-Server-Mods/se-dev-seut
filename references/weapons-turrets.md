@@ -146,9 +146,9 @@ Done on a large gatling turret built in one scene with a `part` tag on every obj
    highlight targets, then link each `linkedScene` with the crash-safe recipe in `bpy-recipes.md`, one per call.
 4. Collision: vanilla turret code (`MyLargeTurretBase`) creates no physics for its subparts, so subpart collision
    is never used. All collision goes in the base model, as simple shapes covering the turret at rest [owner]:
-   slab, turntable, the azimuth part, and for a domed elevation part a cylinder plus a dome on top, each as an
-   exact convex hull (24-sided prisms, a low-poly hemisphere), with vertices placed in block space and the
-   object left at the origin (`modeling-rules.md`, "Collision": a moved object's shape lands at the block
+   what worked on a domed turret was four shapes: a box for the slab, a hull prism for the turntable, one hull
+   prism at the dome's radius from the turntable up to the dome's base (covering supports and shell together),
+   and a sphere for the dome, with vertices placed in block space and each object left at the origin (`modeling-rules.md`, "Collision": a moved object's shape lands at the block
    centre). Build the slab hull from the slab's outline (an octagon prism for a cut-corner slab). The scope dummy (WeaponCore `Scope`, usually `camera`) must stay
    outside that static shell at every elevation: WeaponCore casts its line-of-sight ray from the scope, and a hit
    on its own grid resets the target (`RayCheckSelfHit`). With the scope behind the radome window it sat inside
