@@ -307,6 +307,12 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   u 0.1587-0.1846 v 0.9717-0.9971, hex socket in a ring u 0.3135-0.3428 v 0.9697-0.9990. Material `Decals`,
   quad 3 mm off the surface. Turn every head to a random angle about its normal (and every 3D nut about its
   axis) so they look individually tightened [owner]. Keep real 3D bolts few and low (about 12 mm tall).
+  A flat hex decal alone reads as a pale sticker on dark metal (the sheet's colour is light grey, and the darker
+  `Decals_Atlas_A_02` sheet used by `PanelingDarker` has the same light bolt row) [owner]. What worked: bolts of
+  5 cm and up sit on a low 3D hex boss (about 10 mm, the block's dark metal, wear on its bevel) with the hex
+  decal on top, the boss turned to match the decal (a 6-segment cone's first corner lies on its local +X, the
+  decal's right axis); smaller bolts get head 3 of the row (u 0.0635-0.0928, v 0.9697-0.9990, a dome inside a
+  recessed ring in the normal map) about 1.5 times their size underneath as a counterbore, about 1 mm lower.
 - **Decals on curved surfaces:** split the quad into columns that follow the radius (8 columns for a 0.4 m
   sign on a 1.05 m cylinder) instead of one flat quad, which would float or sink by about 2 cm at the edges.
   Check text direction in a render: the first try read mirrored, fixed by reversing U (`u = u0 + u1 - u`).
