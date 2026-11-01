@@ -73,6 +73,10 @@ They apply to any turret, gun or weapon block. Tags as in SKILL.md: [owner] = ow
 - **One mounting frame**: rails and cross ties under the boxes so they read as installed, not glued together.
 - **Cable runs** need a fitting at each end and clamps along the way, and should follow the structure (parallel to a
   yoke edge). Segmented, misaligned hoses read as an afterthought [owner].
+- **Terminal and inventory access on the fixed base** [HARD, game code: subpart detectors are ignored]. Corner
+  consoles on the base slab, outside the turntable's sweep, work: a sloped terminal face with the `Terminal`
+  keypad sheet and a frame, and a low box with a yellow-framed access hatch for `detector_inventory_1`
+  (`interaction-highlights.md`).
 - **Avoid boxes perched on top of the shell** and boxes hanging outside the plate outline [owner].
 
 ## Surface detail: bolts, wear, seams, decals

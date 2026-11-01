@@ -184,6 +184,14 @@ Model `Models\Cubes\Large\CargoContainerSmall.mwm`, SDK FBX at
 
 ## Rules and gotchas
 
+- **Detectors only work in the block's main model, not in a subpart** [HARD, game code]. `MyUseObjectsComponent`
+  builds its detectors from `Container.Entity.GetModel().Dummies` (the block's own model), and `MyEntitySubpart`
+  has no use-object component; the character's detector only walks from the hit entity up through its parents.
+  So a terminal, inventory or conveyor detector on a turret's rotating part is ignored. Put interaction points on
+  the fixed base (a console on the base slab worked well for a turret). Use-object names from the
+  `[MyUseObject("...")]` attributes: `terminal`, `inventory`, `conveyor`, `textpanel`, `door`, `advanceddoor`,
+  `cockpit`, `cryopod`, `ladder`, `panel`, `block`, `wardrobe`, `store`, `services`, `contract`, `ATM`,
+  `billboard`, `farmplot`, `forageable`, `jukebox*`, `vendingMachine*`.
 - Parent the empty and its target to the same object (W007), and keep all parts under one root.
 - Never raw-import vanilla FBX with `bpy.ops.import_scene.fbx` for study: it creates thousands of junk
   material slots. Use SEUT's importer (`scene.import_complete` / Import FBX) or import into a throwaway
