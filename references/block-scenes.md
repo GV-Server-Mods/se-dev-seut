@@ -67,6 +67,11 @@ Subpart scenes (moving parts) use the same layout without BS or mountpoints; see
   same proxies without the cut.
 - One mesh per stage, `Construction` material only, flat shading, box UVs offset from the origin (a vertex on
   the axis at UV (0,0) repeated across a pole made SEUT warn about UVs at (0,0) on the smallest stage).
+- **Nothing may float** [owner: a turntable frame and a shell-mounting plate looked like they hung in mid air
+  in BS1]. Every stage needs the load path, even as frames: whatever carries a part in the finished model
+  (bearing ring under a turntable, webs or brackets from a plate down to its pivot, hubs and bearings at the
+  pivot) goes into BS1 as a frame or simple solid. Gaps that are fine in the finished model (a 1.5 cm
+  clearance under a turntable) read as floating when the parts are bare frames, so fill them in the stages.
 - **Merge outline points closer than the strip width** before insetting: a support's hull with 2 cm corner
   edges and a 7 cm inset exploded to 270 km.
 - A stage mesh sits in its `BS<n>` collection; SEUT exports `<SubtypeId>_BS<n>.mwm` beside the main model.
