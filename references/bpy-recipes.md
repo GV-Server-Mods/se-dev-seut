@@ -336,6 +336,12 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   Sealed cavities (the hollow under a turntable, closed by a ring and a lid) need explicit bounds: delete faces
   wholly inside the cavity, plus walls and caps that face only into it, and flat faces covered by a part
   sitting on them (a ring gear's top and bottom). Re-check flat-face normals afterwards.
+  The inside test misses **flush joints** [HARD, owner saw z-fighting in game]: a cross beam whose ends stop
+  exactly at a long beam's outer face leaves its end cap and end chamfers in the same plane as the long beam's
+  faces, facing the same way, and they flicker. Find them with a `BVHTree.find_nearest_range(centre, 0.0015)`
+  pass that lists non-adjacent faces whose normals agree (`dot > 0.95`), then delete the buried member's copies
+  (its end cap and chamfers; the joined beam's end cap if it is buried in the other). Faces pressed against
+  another part with opposite normals (a tie under a box) are hidden too and can go.
 - **Many small cuts:** an exact boolean that slotted six small turned tubes at once collapsed them to fragments
   (two tries). Build such features by construction instead: a slotted tube is a base ring, partial tube
   sections (wall rings swept over an angle range, capped at both ends) and an end ring. Build each copy from a
