@@ -355,6 +355,14 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   boss); an island on a curved surface sets each vertex to `hit + n * target` along its vertex normal. Targets
   1.5 mm, and 0.7 mm for rings under bolt heads. The first pass found heads at 3-4 mm, one ring 26 mm off its
   face and another at 0.1 mm (a z-fighting risk). Rebuild LODs afterwards, since they copy the decals.
+- **UVs on round painted shells** [HARD, owner saw hard skin seams in game]: box projection switches axis every
+  90 degrees round a cylinder or dome, so a paint skin (camouflage) breaks in four vertical seams. Map the shell
+  cylindrically instead: `u = theta * R * upm`, with `theta = atan2(x, -y)` so the one wrap seam sits at the
+  back; `v = z * upm` on the wall and `v = z_dome_start + R * asin((z - z_dome_start) / R) * upm` (arc length)
+  on the dome, so wall and dome join without a step. Per face, add `2*pi` to negative angles when the face
+  straddles the wrap. Map only faces whose normal is within 60 degrees of radial; leave pocket walls on box
+  UVs. A pole vertex gets each triangle's average angle, which leaves a tiny pinch at the very top. Check by
+  listing edges between faces under 15 degrees apart whose two UVs differ; only the back seam should remain.
 - **Decals on curved surfaces:** split the quad into columns that follow the radius (8 columns for a 0.4 m
   sign on a 1.05 m cylinder) instead of one flat quad, which would float or sink by about 2 cm at the edges.
   Check text direction in a render: the first try read mirrored, fixed by reversing U (`u = u0 + u1 - u`).

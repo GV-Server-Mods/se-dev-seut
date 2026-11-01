@@ -91,8 +91,10 @@ SKILL.md: [owner] = owner design feedback, [HARD] = measured or rendered, [SOFT]
 - **Bolts clamp something** [owner]: a ring, flange, lid, plate or lug that visibly overlaps the part it holds,
   not heads scattered on a plain face. Mostly decal heads, each at a random angle so they look individually
   tightened; few, low 3D bolts (`bpy-recipes.md`, "Bolt decals").
-- **Wear on bevels only** [owner]: a `*Scratched*` variant over whole faces looks bad. Clean material on faces,
-  the scratched sibling on bevel strips (recipe in `bpy-recipes.md`, "Edge-only wear").
+- **Wear on bevels only, and sparingly** [owner]: a `*Scratched*` variant over whole faces looks bad. Clean
+  material on faces, the scratched sibling on bevel strips (recipe in `bpy-recipes.md`, "Edge-only wear"). Even
+  on bevels it was too obvious along long structural edges (a base slab, a turntable rim) and was removed
+  there; keep it for small machinery, and ask before putting it on the block's main outline.
 - **Panel seams as decals**, not 3D grooves, with mitred T-joins and pointed ends; give the tip vertex its own U
   or the groove shades flipped (`atlas-regions.md`, "Panel lines"). Seams must sit on surface: check each seam
   vertex with a short ray cast against the face behind it, and route seams round recesses and pockets, since a

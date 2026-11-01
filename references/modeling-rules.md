@@ -47,7 +47,7 @@
 - Do not build a part as several nested or stacked boxes with a thin bevel each [owner: the test crate's
   bezel and handle looked like three separate rectangles in game, not one moulded piece]. Make each part one
   solid with a single consistent chamfer, sized to the part (clearly visible from a few metres, not a hairline;
-  about 15 mm on the outer edges of a large-block slab read well, while 0.6 mm was invisible in game, so
+  on a large-block slab 0.6 mm was invisible in game and 15 mm too heavy, and about 7 mm was asked for, so
   measure the bevel's width from the vertices rather than trusting the modifier value [owner]),
   or take the part from a vanilla model (`kitbash.md` has handles, keypad frames and port frames). Check
   hand-built parts in game next to a vanilla block, as the owner did, before calling them done.
@@ -79,6 +79,10 @@ mechanical parts, openings, equipment, bolts, wear, seams, decals and labels) is
   Parent (E054). Cost, high to low: Convex Hull, Box, Cylinder, Capsule, Sphere [HARD, wiki].
 - Rigid bodies are axis fixed: a rotated cylinder will not work as modelled. Use Convex Hull for angled
   shapes.
+- A set of `SPHERE` and `CYLINDER` shapes on a turret base looked wrong in game, and the character stood about
+  0.3 m above the dome they modelled, though their Blender bounds matched the mesh [owner; cause not
+  established]. Exact convex hulls (a 24-sided prism, a low-poly hemisphere) replaced them; verify any
+  sphere or cylinder with the Physics Primitives debug draw before relying on it.
 - The wiki says collision appears slightly bigger in game, so shrink shapes a little. In a test of a 2.5 m
   bevelled cube, a 2.45 m box felt "a tad too small" against the model in game [HARD, tested by the owner].
   A 2.5 m box on the same cube felt right [HARD, tested by the owner]. Start from the model's real extent
