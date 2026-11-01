@@ -4,6 +4,8 @@ Modeling the parts a weapon or tool framework needs. The frameworks read the mod
 subpart and dummy names must match the config exactly.
 
 ## Contents
+- Barrels on any weapon
+- Clearance for moving subparts
 - Block type
 - Subpart tree
 - Dummies and empties
