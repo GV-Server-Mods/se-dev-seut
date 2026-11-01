@@ -34,7 +34,8 @@ Everything below was checked against SEUT 1.2.1 on Blender 4.5 unless marked "un
    `bBox_X/Y/Z` are in cells. Origin is the block centre, so a 1x1x1 large block spans +-1.25 m.
    Keep the model in metres at export scale 1.0 unless the user says otherwise.
 3. **Model into `Main (<SubtypeId>)`.** One top-level (unparented) object per exported collection
-   [HARD, E031]; parent detail objects under it. Details: `references/modeling-rules.md`. **Kitbash first**:
+   [HARD, E031]; parent detail objects under it. Details: `references/modeling-rules.md`; for anything
+   beyond a plain box, follow the design workflow in `references/design-detailing.md`. **Kitbash first**:
    when a vanilla model has the part you need (crate frame, port, panel, handle), import it and reuse its
    meshes instead of rebuilding them; build from scratch only what no vanilla part covers, then bevel and
    smooth shade it. Import with SEUT's `scene.import` (`getattr(bpy.ops.scene, 'import')`), not the raw FBX
@@ -173,7 +174,7 @@ asked.
 
 Decals cost almost nothing in triangles and keep blocks consistent with vanilla. Wrap them to curved surfaces
 in narrow columns, mitre seam joins, check text direction and obstruction with a render and a ray cast
-(`references/bpy-recipes.md`, `references/turret-design.md`).
+(`references/bpy-recipes.md`, `references/design-detailing.md`).
 Decal quads sit just off the surface (not coplanar) to avoid z-fighting [SOFT, 0.01 m exported cleanly, see
 `references/materials-catalog.md` for normals and DLC pitfalls; confirm the offset used by
 vanilla blocks before fixing a number].
@@ -203,7 +204,8 @@ container breakdown: `references/interaction-highlights.md`.
 | `references/doors-subparts.md` | doors, hatches or any block with animated subparts: scene setup, orientation quirk, advanced door SBC fields |
 | `references/characters-and-animation.md` | a playable/NPC character, creature, or handheld weapon animation controller (outline only) |
 | `references/weapons-turrets.md` | turrets, weapons or tools (ConveyorSorter, WeaponCore, ToolCore): subpart chain, muzzle and camera dummies |
-| `references/turret-design.md` | designing any turret or weapon model: design doc, blockout, supports, clearance, gun details, equipment, decals, review loop |
+| `references/design-detailing.md` | designing and detailing any block: design doc, blockout, shaped parts, openings, equipment, bolts, wear, seams, decals, labels, review checks |
+| `references/turret-design.md` | turret or weapon specifics on top of that: subpart chain, clearance, gun and muzzle, ammo path |
 | `references/interaction-highlights.md` | any terminal, inventory, keypad, conveyor port or door interaction point |
 | `references/errors.md` | any SEUT error or warning, and the pre-export checklist |
 | `references/sources.md` | where each fact came from, and what is still unverified |

@@ -18,9 +18,6 @@
 - Nothing may stick out past a mounting face (it would sit inside the neighbouring block). Detail a bottom or
   mounting face by recessing the field a few millimetres inside a rim and putting decals and pockets inside
   the recess [SOFT, applied on the gatling turret base].
-- Bolts must clamp something [owner]: put bolt heads on a flange, ring, lid, plate or lug that visibly
-  overlaps the part it holds (a retaining ring in a collar, a clamp ring on a disc, corner plates on a slab),
-  not scattered on a plain face.
 - Armor-style blocks sit flush with the cell faces so neighbours join without gaps. Functional blocks
   usually keep a small inset on faces that do not need to touch [SOFT, vanilla convention].
 - Set the grid scale to match the block, since it also scales SBC values [HARD].
@@ -64,40 +61,10 @@
 - Origin is the block centre unless the block is a subpart, whose origin is its pivot [SOFT].
 - Keep object and material names ASCII [HARD, E033].
 
-## Design style: make the block read like Space Engineers [SOFT]
+## Design style
 
-Adapted from community ship-building advice (a Steam guide and the Building Tips wiki, which are about
-building ships, not modelling blocks; only the ideas that carry over are kept) and from what the vanilla
-parts do:
-
-- Silhouette first, detail second: block out the large shapes at real proportions, then add small features.
-  Do not start with details on a shape that is still wrong.
-- Break up every large flat face: a recess, a raised frame, panel lines or a decal. A blank face is the
-  commonest reason a block looks unfinished. Prefer decals for this (`materials-catalog.md`).
-- Use two or three tones, not one: a paintable base, a darker trim material, and one small accent (a lit
-  strip, a warning stripe, a lamp). Vanilla blocks do this with `Colorable` plus `Darker` plus a small
-  accent material.
-- Greeble with small real parts only where they read from a few metres (handles, vents, pipes, lamps);
-  leave the rest to decals and textures.
-- Think about the neighbours: the block sits in a grid beside other blocks, so flush faces, mount points and
-  edge chamfers should let it join cleanly. Armor-style blocks keep faces flush; functional blocks inset.
-- Use worn and scratched materials sparingly [owner]: a `*Scratched*` variant over whole faces looks bad.
-  Put the clean sibling on flat faces and the scratched one only on the bevel faces, where wear would really
-  happen. From script: Bevel modifier `material = 1` with slots `[clean, scratched]`, or reassign existing
-  faces by width (`area / longest edge` under about 0.03 m is a bevel strip). Recipe in `bpy-recipes.md`.
-- Mechanical detail should look designed, not like stacked rectangles [owner]. Build parts from shaped
-  profiles: rounded-corner plates, rounded clevis ears with pins and hex nuts, U cradles, gussets, finned
-  drums with bell ends, conduits with elbows, pistons with eye ends and gland rings. Mount brackets flat on
-  the face they attach to (a piston along a sloped edge gets pads lying in that slope), and tie protruding
-  machinery to the structure it would bolt onto rather than leaving it floating in a recess.
-- An opening or pocket around a part repeats that part's silhouette [owner]: a chamfered box sits in a
-  chamfered opening with an even gap all round (about 4-7 cm on a large block), framed by a raised border offset
-  parallel to it. A rounded pocket around a chamfered box looked out of place. Angled members get parallel
-  companions too (an inset panel offset exactly inside an angled plate's outline).
-- Equipment hung under a moving part should share one mounting frame (rails, cross ties) rather than read as
-  boxes glued to boxes, and cable runs need visible fittings at both ends and clamps along the way [owner].
-- Pick the footprint with symmetry in mind: an odd cell width puts a feature on the centre line, an even
-  width cannot [community advice; vanilla blocks follow it].
+How to make a block read like Space Engineers (silhouette first, breaking up flat faces, tones, shaped
+mechanical parts, openings, equipment, bolts, wear, seams, decals and labels) is in `design-detailing.md`.
 
 ## Collision
 

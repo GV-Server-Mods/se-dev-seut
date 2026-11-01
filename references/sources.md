@@ -35,7 +35,8 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
 - Rebuilt antenna crate (`TestAntennaCrate`): kitbashed from `CargoContainerSmall.FBX`, exported with 11 detectors, 5 collision shapes, LODs; warnings read from `TestAntennaCrate.mwm.log`. Debug-draw behaviour read in `MyDebugRenderComponentCubeBlock` / `MyDebugRenderComponentTerminal`.
 
 - Wiki Models reference (`spaceengineers.wiki.gg/wiki/Modding/Reference/Models`) and SEUT Interaction Highlights tutorial, fetched later: LOD, dummy, collision and highlight rules in `modeling-rules.md` and `interaction-highlights.md`. The wiki's "Advanced 3D Models" guide is only a pointer to the SEUT page; the official SE2 art guide was not used (different game).
-- Design style section: owner-supplied community ship-building advice, adapted, tagged SOFT.
+- Design style (now `design-detailing.md`): owner-supplied community ship-building advice, adapted, tagged SOFT,
+  plus owner feedback from the gatling turret build. Turret-only points stay in `turret-design.md`.
 
 - Kitbash material bug: first recipe lost per-face materials (owner screenshot of the all-yellow port); fixed and re-checked by counting faces per material on the re-imported port frame.
 
