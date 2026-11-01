@@ -381,6 +381,11 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   underneath as a counterbore, about 1 mm lower. Fit each ring to its face: ray-cast 16 rim points down with a
   2 mm tolerance and a normal check, shrink until all land on flat face, drop it otherwise (a 2 cm tolerance let
   rings lap over a pad's bevel).
+  For fasteners with no 3D boss at all, use a sunken head instead: every `Decals` bolt head reads as raised
+  in its normal map (even the hex sockets are raised heads with a socket cut in), while `Atlas3` piece 14 (a
+  domed head in a counterbore) and piece 17 (a cross-head cap in a counterbore) read as sunk into the face
+  [HARD, normal map read]. Replacing 20 coin bolts (3D bosses plus hex decals, 320 triangles) with Atlas3 14
+  on `Atlas3_Darker` at 8 cm looked the same from a few metres [owner chose 14 over 17].
 - **Decal offset** [HARD, measured; owner saw floating bolt heads in game]: build one `BVHTree` from every
   non-decal mesh in the scene (world space), then for each decal face `ray_cast(centre + n * 0.0001, -n, 0.06)`
   and list the gaps. To normalise, split each decal object into connected islands: a flat island moves as a
