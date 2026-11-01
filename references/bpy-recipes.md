@@ -342,6 +342,14 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   pass that lists non-adjacent faces whose normals agree (`dot > 0.95`), then delete the buried member's copies
   (its end cap and chamfers; the joined beam's end cap if it is buried in the other). Faces pressed against
   another part with opposite normals (a tie under a box) are hidden too and can go.
+  **Whole-model z-fight scan** [HARD, run on a turret]: merge every Main mesh of every scene in its assembled
+  rest pose into one BVH and search at 0.3 mm (1.2 mm flags every decal over its surface and every bolt over
+  its ring, which are layered on purpose). Typical finds and fixes: barrel back caps on a rotor face and
+  bearing caps flush with a leg (cut the caps); doubled faces inside one object (keep the larger); a black
+  floor on the floor of its socket (lift it 1 mm); thin strap plates modelled on the side faces of the bands they
+  hold (slide each plate 2 mm out); seam decal T-joins at the cross seam's height (lift the stem's tip 0.7 mm);
+  a shell's flat bottom repeating the ceiling of a notch in the plate below it (cut the shell's copy). Prefer
+  cutting the copy that is fully covered; check by rendering the spot.
 - **Many small cuts:** an exact boolean that slotted six small turned tubes at once collapsed them to fragments
   (two tries). Build such features by construction instead: a slotted tube is a base ring, partial tube
   sections (wall rings swept over an angle range, capped at both ends) and an end ring. Build each copy from a
