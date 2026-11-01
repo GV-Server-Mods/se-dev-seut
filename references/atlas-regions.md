@@ -287,6 +287,12 @@ panel seams. Their colour is a flat mid grey and the line comes from the normal 
 not on `Decals` (which would paint a grey band). Map V across the band (about 0.025 to 0.03 m wide) and U along
 its length; U past 1 wraps within the same strip, so a long ring or seam can use `u = length * 0.5`. Build the
 band from many short quads that follow the surface (rings, meridians, radial lines), 3 to 4 mm off it.
+**Joins and ends** [HARD, rendered; owner asked]: a stem that stops square at a cross seam looks pasted on. Stop
+the stem's band half a cross-width short, then close it with two triangles meeting at a tip on the cross
+seam's centre line, tip UV at the middle of the strip (`v = (v0 + v1) / 2`), side corners at `v0` and `v1`.
+That compresses each half of the groove into a 45-degree mitre against the cross groove. Lift the stem about
+1 mm more than the cross seam so it draws on top. Free ends get the same pointed cap, extended half a width
+past the end. Polyline corners mitre by themselves when each row's side vector comes from the averaged tangent.
 
 ## TextAtlas
 

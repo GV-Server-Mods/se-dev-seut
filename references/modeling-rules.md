@@ -15,6 +15,12 @@
 - Large grid cell 2.5 m, small grid cell 0.5 m [HARD]. Blender grid is set to half a cell by SEUT's Grid Scale.
 - Bounding box is `bBox_X/Y/Z` cells, centred on the origin. Keep every Main, Collision and mountpoint
   inside it. Mountpoint areas past the box are trimmed on save [HARD].
+- Nothing may stick out past a mounting face (it would sit inside the neighbouring block). Detail a bottom or
+  mounting face by recessing the field a few millimetres inside a rim and putting decals and pockets inside
+  the recess [SOFT, applied on the gatling turret base].
+- Bolts must clamp something [owner]: put bolt heads on a flange, ring, lid, plate or lug that visibly
+  overlaps the part it holds (a retaining ring in a collar, a clamp ring on a disc, corner plates on a slab),
+  not scattered on a plain face.
 - Armor-style blocks sit flush with the cell faces so neighbours join without gaps. Functional blocks
   usually keep a small inset on faces that do not need to touch [SOFT, vanilla convention].
 - Set the grid scale to match the block, since it also scales SBC values [HARD].
