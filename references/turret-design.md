@@ -108,6 +108,9 @@ They apply to any turret, gun or weapon block. Tags as in SKILL.md: [owner] = ow
   bold hazard or warning signs (sized up: a 0.1 m diamond was far too small, 0.3 m worked), and skip decals
   from the light-grey `Decals` sheet on light paint (they nearly vanish). To choose, crop candidate regions into
   a labelled contact sheet (normal-map relief preview) and let the owner pick from it.
+- **Symmetric trim, asymmetric marks** [owner]: panel and trim decals on structural edges (a plate's sides and
+  chamfered corners) go symmetric: centred on each face, the same piece on every matching corner, a split pair
+  either side of anything in the way (a gun notch). Only signs, labels and the odd hazard mark go asymmetric.
 - **Keep a clean shell clean** [owner]: a smooth radome or cowl with seam decals, a recessed vent and a recessed
   camera reads better than strips, rivets, hatches and lifting eyes.
 - **Holes and pockets follow the part they hold** [owner]: a square cut round a chamfered conveyor port left
