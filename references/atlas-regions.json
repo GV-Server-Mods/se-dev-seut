@@ -131,402 +131,1147 @@
   ],
   "regions": [
    {
+    "id": 1,
     "u0": 0.0,
-    "v0": 0.873,
+    "v0": 0.8721,
     "u1": 0.127,
-    "v1": 0.996,
+    "v1": 0.9971,
     "w_px": 260,
-    "h_px": 252,
-    "id": 1
+    "h_px": 256,
+    "piece": "medical heart icon, pink rounded tile",
+    "inside": false
    },
    {
-    "u0": 0.131,
-    "v0": 0.881,
-    "u1": 0.244,
-    "v1": 0.994,
-    "w_px": 232,
-    "h_px": 232,
-    "id": 2
+    "id": 2,
+    "u0": 0.1289,
+    "v0": 0.8789,
+    "u1": 0.2461,
+    "v1": 0.9961,
+    "w_px": 240,
+    "h_px": 240,
+    "piece": "disc icon: left arrow",
+    "inside": false
    },
    {
-    "u0": 0.256,
-    "v0": 0.881,
-    "u1": 0.369,
-    "v1": 0.994,
-    "w_px": 232,
-    "h_px": 232,
-    "id": 3
+    "id": 3,
+    "u0": 0.2539,
+    "v0": 0.8789,
+    "u1": 0.3711,
+    "v1": 0.9961,
+    "w_px": 240,
+    "h_px": 240,
+    "piece": "disc icon: shopping cart with down arrow",
+    "inside": false
    },
    {
-    "u0": 0.381,
-    "v0": 0.881,
-    "u1": 0.494,
-    "v1": 0.994,
-    "w_px": 232,
-    "h_px": 232,
-    "id": 4
+    "id": 4,
+    "u0": 0.3789,
+    "v0": 0.8789,
+    "u1": 0.4961,
+    "v1": 0.9961,
+    "w_px": 240,
+    "h_px": 240,
+    "piece": "disc icon: skip back",
+    "inside": false
    },
    {
-    "u0": 0.506,
-    "v0": 0.881,
-    "u1": 0.619,
-    "v1": 0.994,
-    "w_px": 232,
-    "h_px": 232,
-    "id": 5
+    "id": 5,
+    "u0": 0.5039,
+    "v0": 0.8789,
+    "u1": 0.6211,
+    "v1": 0.9961,
+    "w_px": 240,
+    "h_px": 240,
+    "piece": "disc icon: play/pause",
+    "inside": false
    },
    {
-    "u0": 0.625,
+    "id": 6,
+    "u0": 0.6245,
     "v0": 0.875,
-    "u1": 0.852,
+    "u1": 0.8516,
     "v1": 1.0,
-    "w_px": 464,
+    "w_px": 465,
     "h_px": 256,
-    "id": 6
+    "piece": "WARNING TIP OVER HAZARD sign (orange header, pictogram, small print)",
+    "inside": false
    },
    {
-    "u0": 0.881,
-    "v0": 0.898,
-    "u1": 0.93,
-    "v1": 0.975,
-    "w_px": 100,
-    "h_px": 156,
-    "id": 7
+    "id": 7,
+    "u0": 0.8794,
+    "v0": 0.897,
+    "u1": 0.9312,
+    "v1": 0.9766,
+    "w_px": 106,
+    "h_px": 163,
+    "piece": "white left-pointing triangle",
+    "inside": false
    },
    {
-    "u0": 0.955,
-    "v0": 0.941,
-    "u1": 0.992,
-    "v1": 0.955,
-    "w_px": 76,
-    "h_px": 28,
-    "id": 8
+    "id": 8,
+    "u0": 0.9536,
+    "v0": 0.8306,
+    "u1": 0.9927,
+    "v1": 0.9878,
+    "w_px": 80,
+    "h_px": 322,
+    "piece": "word RIGHT, vertical (letters rotated 90 degrees)",
+    "inside": false
    },
    {
-    "u0": 0.955,
-    "v0": 0.975,
-    "u1": 0.992,
-    "v1": 0.988,
-    "w_px": 76,
-    "h_px": 28,
-    "id": 9
+    "id": 9,
+    "u0": 0.0244,
+    "v0": 0.8149,
+    "u1": 0.0981,
+    "v1": 0.855,
+    "w_px": 151,
+    "h_px": 82,
+    "piece": "words \"medical kit\", red, two lines",
+    "inside": false
    },
    {
-    "u0": 0.955,
-    "v0": 0.885,
-    "u1": 0.992,
-    "v1": 0.898,
-    "w_px": 76,
-    "h_px": 28,
-    "id": 10
+    "id": 10,
+    "u0": 0.1226,
+    "v0": 0.8267,
+    "u1": 0.2324,
+    "v1": 0.8643,
+    "w_px": 225,
+    "h_px": 77,
+    "piece": "word LEFT, black",
+    "inside": false
    },
    {
-    "u0": 0.178,
-    "v0": 0.826,
-    "u1": 0.191,
-    "v1": 0.863,
-    "w_px": 28,
-    "h_px": 76,
-    "id": 11
+    "id": 11,
+    "u0": 0.2441,
+    "v0": 0.8271,
+    "u1": 0.3926,
+    "v1": 0.8657,
+    "w_px": 304,
+    "h_px": 79,
+    "piece": "word DOWN, black",
+    "inside": false
    },
    {
+    "id": 12,
+    "u0": 0.4233,
+    "v0": 0.8257,
+    "u1": 0.4897,
+    "v1": 0.8643,
+    "w_px": 136,
+    "h_px": 79,
+    "piece": "word UP, black",
+    "inside": false
+   },
+   {
+    "id": 13,
     "u0": 0.5,
-    "v0": 0.818,
-    "u1": 0.596,
-    "v1": 0.871,
+    "v0": 0.8174,
+    "u1": 0.5957,
+    "v1": 0.8721,
     "w_px": 196,
+    "h_px": 112,
+    "piece": "HIGH VOLTAGE label, black on white",
+    "inside": false
+   },
+   {
+    "id": 14,
+    "u0": 0.6074,
+    "v0": 0.8179,
+    "u1": 0.8604,
+    "v1": 0.8677,
+    "w_px": 518,
+    "h_px": 102,
+    "piece": "Engine / Remote Operated System label, white on black",
+    "inside": false
+   },
+   {
+    "id": 15,
+    "u0": 0.0,
+    "v0": 0.687,
+    "u1": 0.2251,
+    "v1": 0.813,
+    "w_px": 461,
+    "h_px": 258,
+    "piece": "DANGER STRONG MAGNETIC FIELD sign",
+    "inside": false
+   },
+   {
+    "id": 16,
+    "u0": 0.2495,
+    "v0": 0.6904,
+    "u1": 0.3887,
+    "v1": 0.813,
+    "w_px": 285,
+    "h_px": 251,
+    "piece": "flame hazard triangle, yellow",
+    "inside": false
+   },
+   {
+    "id": 17,
+    "u0": 0.4131,
+    "v0": 0.6899,
+    "u1": 0.5869,
+    "v1": 0.813,
+    "w_px": 356,
+    "h_px": 252,
+    "piece": "CAUTION MOVING PARTS sign, yellow",
+    "inside": false
+   },
+   {
+    "id": 18,
+    "u0": 0.5991,
+    "v0": 0.6899,
+    "u1": 0.8071,
+    "v1": 0.813,
+    "w_px": 426,
+    "h_px": 252,
+    "piece": "WARNING HIGH PRESSURE sign, yellow",
+    "inside": false
+   },
+   {
+    "id": 19,
+    "u0": 0.8228,
+    "v0": 0.6821,
+    "u1": 0.9878,
+    "v1": 0.8477,
+    "w_px": 338,
+    "h_px": 339,
+    "piece": "explosive hazard diamond, orange, division 1 (diamond outline)",
+    "outline": [
+     [
+      0.9048,
+      0.8477
+     ],
+     [
+      0.9878,
+      0.7642
+     ],
+     [
+      0.9048,
+      0.6821
+     ],
+     [
+      0.8228,
+      0.7642
+     ]
+    ]
+   },
+   {
+    "id": 20,
+    "u0": 0.8135,
+    "v0": 0.6855,
+    "u1": 0.8691,
+    "v1": 0.7383,
+    "w_px": 114,
     "h_px": 108,
-    "id": 12
+    "piece": "three white dots, triangle cluster (box cut along the diamond edge)",
+    "outline": [
+     [
+      0.8135,
+      0.6855
+     ],
+     [
+      0.8691,
+      0.6855
+     ],
+     [
+      0.8691,
+      0.7122
+     ],
+     [
+      0.843,
+      0.7383
+     ],
+     [
+      0.8135,
+      0.7383
+     ]
+    ]
    },
    {
-    "u0": 0.25,
-    "v0": 0.691,
-    "u1": 0.389,
-    "v1": 0.812,
-    "w_px": 284,
-    "h_px": 248,
-    "id": 13
+    "id": 21,
+    "u0": 0.9395,
+    "v0": 0.6787,
+    "u1": 0.9937,
+    "v1": 0.7227,
+    "w_px": 111,
+    "h_px": 90,
+    "piece": "red ring (box cut along the diamond edge)",
+    "outline": [
+     [
+      0.9395,
+      0.6787
+     ],
+     [
+      0.9937,
+      0.6787
+     ],
+     [
+      0.9937,
+      0.7227
+     ],
+     [
+      0.9539,
+      0.7227
+     ],
+     [
+      0.9395,
+      0.7083
+     ]
+    ]
    },
    {
-    "u0": 0.414,
-    "v0": 0.691,
-    "u1": 0.586,
-    "v1": 0.812,
-    "w_px": 352,
-    "h_px": 248,
-    "id": 14
-   },
-   {
-    "u0": 0.6,
-    "v0": 0.684,
-    "u1": 0.986,
-    "v1": 0.867,
-    "w_px": 792,
-    "h_px": 376,
-    "id": 15
-   },
-   {
+    "id": 22,
     "u0": 0.0,
-    "v0": 0.688,
-    "u1": 0.225,
-    "v1": 0.812,
-    "w_px": 460,
-    "h_px": 256,
-    "id": 16
+    "v0": 0.5571,
+    "u1": 0.3657,
+    "v1": 0.6733,
+    "w_px": 749,
+    "h_px": 238,
+    "piece": "TYPE A label with barcode",
+    "inside": false
    },
    {
-    "u0": 0.389,
-    "v0": 0.611,
-    "u1": 0.592,
-    "v1": 0.686,
-    "w_px": 416,
-    "h_px": 152,
-    "id": 17
+    "id": 23,
+    "u0": 0.3872,
+    "v0": 0.6099,
+    "u1": 0.5928,
+    "v1": 0.6855,
+    "w_px": 421,
+    "h_px": 155,
+    "piece": "RESTRICTED AREA sign, red",
+    "inside": false
    },
    {
-    "u0": 0.611,
-    "v0": 0.619,
-    "u1": 0.672,
-    "v1": 0.682,
-    "w_px": 124,
+    "id": 24,
+    "u0": 0.6099,
+    "v0": 0.6191,
+    "u1": 0.6724,
+    "v1": 0.6816,
+    "w_px": 128,
     "h_px": 128,
-    "id": 18
+    "piece": "X-mark hazard square, orange",
+    "inside": false
    },
    {
+    "id": 25,
     "u0": 0.688,
-    "v0": 0.623,
-    "u1": 0.746,
-    "v1": 0.682,
-    "w_px": 120,
-    "h_px": 120,
-    "id": 19
+    "v0": 0.6216,
+    "u1": 0.748,
+    "v1": 0.6816,
+    "w_px": 123,
+    "h_px": 123,
+    "piece": "battery icon, red tile",
+    "inside": false
    },
    {
-    "u0": 0.764,
-    "v0": 0.609,
-    "u1": 0.844,
-    "v1": 0.676,
-    "w_px": 164,
-    "h_px": 136,
-    "id": 20
+    "id": 26,
+    "u0": 0.8628,
+    "v0": 0.6079,
+    "u1": 0.9263,
+    "v1": 0.6719,
+    "w_px": 130,
+    "h_px": 131,
+    "piece": "square with corner triangle",
+    "inside": false
    },
    {
-    "u0": 0.938,
-    "v0": 0.609,
-    "u1": 0.992,
-    "v1": 0.67,
-    "w_px": 112,
-    "h_px": 124,
-    "id": 21
+    "id": 27,
+    "u0": 0.9365,
+    "v0": 0.6084,
+    "u1": 0.9927,
+    "v1": 0.6699,
+    "w_px": 115,
+    "h_px": 126,
+    "piece": "small striped corner mark",
+    "inside": false
    },
    {
-    "u0": 0.0,
-    "v0": 0.559,
-    "u1": 0.365,
-    "v1": 0.674,
-    "w_px": 748,
-    "h_px": 236,
-    "id": 22
+    "id": 28,
+    "u0": 0.3857,
+    "v0": 0.5601,
+    "u1": 0.5488,
+    "v1": 0.5957,
+    "w_px": 334,
+    "h_px": 73,
+    "piece": "word SIGNAL on white plate",
+    "inside": false
    },
    {
-    "u0": 0.387,
-    "v0": 0.561,
-    "u1": 0.586,
-    "v1": 0.596,
-    "w_px": 408,
-    "h_px": 72,
-    "id": 23
-   },
-   {
-    "u0": 0.6,
-    "v0": 0.568,
-    "u1": 0.639,
-    "v1": 0.605,
-    "w_px": 80,
-    "h_px": 76,
-    "id": 24
-   },
-   {
-    "u0": 0.523,
-    "v0": 0.508,
-    "u1": 0.539,
-    "v1": 0.541,
-    "w_px": 32,
-    "h_px": 68,
-    "id": 25
-   },
-   {
-    "u0": 0.561,
-    "v0": 0.514,
-    "u1": 0.592,
-    "v1": 0.541,
-    "w_px": 64,
-    "h_px": 56,
-    "id": 26
-   },
-   {
-    "u0": 0.605,
-    "v0": 0.525,
-    "u1": 0.643,
-    "v1": 0.564,
-    "w_px": 76,
-    "h_px": 80,
-    "id": 27
-   },
-   {
-    "u0": 0.711,
-    "v0": 0.543,
-    "u1": 0.75,
-    "v1": 0.582,
-    "w_px": 80,
-    "h_px": 80,
-    "id": 28
-   },
-   {
-    "u0": 0.787,
-    "v0": 0.533,
-    "u1": 0.842,
-    "v1": 0.59,
-    "w_px": 112,
-    "h_px": 116,
-    "id": 29
-   },
-   {
-    "u0": 0.855,
-    "v0": 0.521,
+    "id": 29,
+    "u0": 0.8555,
+    "v0": 0.5215,
     "u1": 1.0,
-    "v1": 0.6,
+    "v1": 0.6021,
     "w_px": 296,
-    "h_px": 160,
-    "id": 30
+    "h_px": 165,
+    "piece": "ENERGY SOURCE sign, yellow with lightning",
+    "inside": false
    },
    {
-    "u0": 0.008,
-    "v0": 0.416,
-    "u1": 0.268,
-    "v1": 0.547,
-    "w_px": 532,
-    "h_px": 268,
-    "id": 31
+    "id": 30,
+    "u0": 0.0078,
+    "v0": 0.4146,
+    "u1": 0.2681,
+    "v1": 0.5469,
+    "w_px": 533,
+    "h_px": 271,
+    "piece": "COMPRESSED OXYGEN label, green",
+    "inside": false
    },
    {
-    "u0": 0.283,
-    "v0": 0.424,
-    "u1": 0.504,
-    "v1": 0.537,
-    "w_px": 452,
-    "h_px": 232,
-    "id": 32
+    "id": 31,
+    "u0": 0.2832,
+    "v0": 0.4224,
+    "u1": 0.5044,
+    "v1": 0.5376,
+    "w_px": 453,
+    "h_px": 236,
+    "piece": "CAUTION BATTERY BOX label, red stripes",
+    "inside": false
    },
    {
-    "u0": 0.824,
-    "v0": 0.459,
-    "u1": 0.869,
-    "v1": 0.504,
-    "w_px": 92,
-    "h_px": 92,
-    "id": 33
+    "id": 32,
+    "u0": 0.5234,
+    "v0": 0.5078,
+    "u1": 0.5396,
+    "v1": 0.5415,
+    "w_px": 33,
+    "h_px": 69,
+    "piece": "small red square",
+    "inside": false
    },
    {
-    "u0": 0.424,
-    "v0": 0.375,
-    "u1": 0.449,
-    "v1": 0.408,
-    "w_px": 52,
-    "h_px": 68,
-    "id": 34
+    "id": 33,
+    "u0": 0.5576,
+    "v0": 0.5088,
+    "u1": 0.5947,
+    "v1": 0.5405,
+    "w_px": 76,
+    "h_px": 65,
+    "piece": "small red down-triangle",
+    "inside": false
    },
    {
-    "u0": 0.166,
-    "v0": 0.289,
-    "u1": 0.404,
-    "v1": 0.402,
-    "w_px": 488,
-    "h_px": 232,
-    "id": 35
+    "id": 34,
+    "u0": 0.5264,
+    "v0": 0.4355,
+    "u1": 0.5894,
+    "v1": 0.4985,
+    "w_px": 129,
+    "h_px": 129,
+    "piece": "red prohibition circle (crossed out)",
+    "inside": false
    },
    {
-    "u0": 0.42,
-    "v0": 0.289,
-    "u1": 0.453,
-    "v1": 0.373,
-    "w_px": 68,
-    "h_px": 172,
-    "id": 36
+    "id": 35,
+    "u0": 0.5947,
+    "v0": 0.4707,
+    "u1": 0.7266,
+    "v1": 0.4858,
+    "w_px": 270,
+    "h_px": 31,
+    "piece": "word WARNING, red outline letters",
+    "inside": false
    },
    {
-    "u0": 0.539,
-    "v0": 0.252,
-    "u1": 0.715,
-    "v1": 0.428,
-    "w_px": 360,
-    "h_px": 360,
-    "id": 37
+    "id": 36,
+    "u0": 0.5952,
+    "v0": 0.4561,
+    "u1": 0.6875,
+    "v1": 0.4639,
+    "w_px": 189,
+    "h_px": 16,
+    "piece": "words DO NOT OPEN, red",
+    "inside": false
    },
    {
-    "u0": 0.725,
-    "v0": 0.146,
-    "u1": 0.795,
-    "v1": 0.428,
-    "w_px": 144,
-    "h_px": 576,
-    "id": 38
+    "id": 37,
+    "u0": 0.5947,
+    "v0": 0.4443,
+    "u1": 0.8047,
+    "v1": 0.4517,
+    "w_px": 430,
+    "h_px": 15,
+    "piece": "words AUTHORIZED PERSONNEL ONLY, red",
+    "inside": false
    },
    {
-    "u0": 0.801,
-    "v0": 0.156,
-    "u1": 0.994,
-    "v1": 0.428,
-    "w_px": 396,
-    "h_px": 556,
-    "id": 39
+    "id": 38,
+    "u0": 0.8237,
+    "v0": 0.4492,
+    "u1": 0.8701,
+    "v1": 0.5132,
+    "w_px": 95,
+    "h_px": 131,
+    "piece": "X icon in white frame",
+    "inside": false
    },
    {
-    "u0": 0.166,
-    "v0": 0.211,
-    "u1": 0.309,
-    "v1": 0.281,
-    "w_px": 292,
+    "id": 39,
+    "u0": 0.873,
+    "v0": 0.4399,
+    "u1": 0.9512,
+    "v1": 0.5088,
+    "w_px": 160,
+    "h_px": 141,
+    "piece": "white triangle outline",
+    "inside": false
+   },
+   {
+    "id": 40,
+    "u0": 0.9517,
+    "v0": 0.4404,
+    "u1": 0.9917,
+    "v1": 0.5112,
+    "w_px": 82,
+    "h_px": 145,
+    "piece": "white bracket, left-pointing",
+    "inside": false
+   },
+   {
+    "id": 41,
+    "u0": 0.0127,
+    "v0": 0.3862,
+    "u1": 0.1284,
+    "v1": 0.4033,
+    "w_px": 237,
+    "h_px": 35,
+    "piece": "text MXS-2859-B",
+    "inside": false
+   },
+   {
+    "id": 42,
+    "u0": 0.1353,
+    "v0": 0.3809,
+    "u1": 0.1533,
+    "v1": 0.4082,
+    "w_px": 37,
+    "h_px": 56,
+    "piece": "digit 9 in a box",
+    "inside": false
+   },
+   {
+    "id": 43,
+    "u0": 0.061,
+    "v0": 0.3643,
+    "u1": 0.1284,
+    "v1": 0.3818,
+    "w_px": 138,
+    "h_px": 36,
+    "piece": "text OB40-E",
+    "inside": false
+   },
+   {
+    "id": 44,
+    "u0": 0.0117,
+    "v0": 0.3394,
+    "u1": 0.0327,
+    "v1": 0.3569,
+    "w_px": 43,
+    "h_px": 36,
+    "piece": "number 52",
+    "inside": false
+   },
+   {
+    "id": 45,
+    "u0": 0.0391,
+    "v0": 0.3394,
+    "u1": 0.0811,
+    "v1": 0.3569,
+    "w_px": 86,
+    "h_px": 36,
+    "piece": "text ACG",
+    "inside": false
+   },
+   {
+    "id": 46,
+    "u0": 0.0132,
+    "v0": 0.3086,
+    "u1": 0.0488,
+    "v1": 0.3257,
+    "w_px": 73,
+    "h_px": 35,
+    "piece": "word NET",
+    "inside": false
+   },
+   {
+    "id": 47,
+    "u0": 0.0137,
+    "v0": 0.2852,
+    "u1": 0.0601,
+    "v1": 0.3027,
+    "w_px": 95,
+    "h_px": 36,
+    "piece": "word TARE",
+    "inside": false
+   },
+   {
+    "id": 48,
+    "u0": 0.0137,
+    "v0": 0.2637,
+    "u1": 0.0737,
+    "v1": 0.2812,
+    "w_px": 123,
+    "h_px": 36,
+    "piece": "text M.G.W.",
+    "inside": false
+   },
+   {
+    "id": 49,
+    "u0": 0.0132,
+    "v0": 0.2373,
+    "u1": 0.123,
+    "v1": 0.2495,
+    "w_px": 225,
+    "h_px": 25,
+    "piece": "serial 20124D0000E4",
+    "inside": false
+   },
+   {
+    "id": 50,
+    "u0": 0.1274,
+    "v0": 0.2373,
+    "u1": 0.1533,
+    "v1": 0.2495,
+    "w_px": 53,
+    "h_px": 25,
+    "piece": "number 210",
+    "inside": false
+   },
+   {
+    "id": 51,
+    "u0": 0.0127,
+    "v0": 0.2236,
+    "u1": 0.1123,
+    "v1": 0.2344,
+    "w_px": 204,
+    "h_px": 22,
+    "piece": "words MADE IN SPACE",
+    "inside": false
+   },
+   {
+    "id": 52,
+    "u0": 0.1646,
+    "v0": 0.2881,
+    "u1": 0.4058,
+    "v1": 0.4028,
+    "w_px": 494,
+    "h_px": 235,
+    "piece": "AMMUNITION label (heavy caliber, tare mass, warfare)",
+    "inside": false
+   },
+   {
+    "id": 53,
+    "u0": 0.4189,
+    "v0": 0.2866,
+    "u1": 0.4551,
+    "v1": 0.4121,
+    "w_px": 74,
+    "h_px": 257,
+    "piece": "bullet / shell icon, white",
+    "inside": false
+   },
+   {
+    "id": 54,
+    "u0": 0.4648,
+    "v0": 0.354,
+    "u1": 0.5342,
+    "v1": 0.4141,
+    "w_px": 142,
+    "h_px": 123,
+    "piece": "red warning triangle outline with !",
+    "inside": false
+   },
+   {
+    "id": 55,
+    "u0": 0.5391,
+    "v0": 0.2515,
+    "u1": 0.7153,
+    "v1": 0.4282,
+    "w_px": 361,
+    "h_px": 362,
+    "piece": "RADIOACTIVE II diamond, transport class 7",
+    "inside": false
+   },
+   {
+    "id": 56,
+    "u0": 0.7236,
+    "v0": 0.3584,
+    "u1": 0.7959,
+    "v1": 0.4287,
+    "w_px": 148,
     "h_px": 144,
-    "id": 40
+    "piece": "food icon: knife and fork, grey tile",
+    "inside": false
    },
    {
-    "u0": 0.006,
-    "v0": 0.113,
-    "u1": 0.305,
-    "v1": 0.203,
-    "w_px": 612,
+    "id": 57,
+    "u0": 0.7236,
+    "v0": 0.2881,
+    "u1": 0.7959,
+    "v1": 0.3584,
+    "w_px": 148,
+    "h_px": 144,
+    "piece": "food icon: heat waves, cyan tile",
+    "inside": false
+   },
+   {
+    "id": 58,
+    "u0": 0.7236,
+    "v0": 0.2173,
+    "u1": 0.7959,
+    "v1": 0.2881,
+    "w_px": 148,
+    "h_px": 145,
+    "piece": "food icon: wheat, orange tile",
+    "inside": false
+   },
+   {
+    "id": 59,
+    "u0": 0.7236,
+    "v0": 0.147,
+    "u1": 0.7959,
+    "v1": 0.2173,
+    "w_px": 148,
+    "h_px": 144,
+    "piece": "food icon: mushroom, brown tile",
+    "inside": false
+   },
+   {
+    "id": 60,
+    "u0": 0.8008,
+    "v0": 0.1553,
+    "u1": 0.9951,
+    "v1": 0.4287,
+    "w_px": 398,
+    "h_px": 560,
+    "piece": "DEHYDRATED MEAL PACK nutrition label",
+    "inside": false
+   },
+   {
+    "id": 61,
+    "u0": 0.1655,
+    "v0": 0.21,
+    "u1": 0.2383,
+    "v1": 0.2808,
+    "w_px": 149,
+    "h_px": 145,
+    "piece": "icon: spider, purple tile",
+    "inside": false
+   },
+   {
+    "id": 62,
+    "u0": 0.2383,
+    "v0": 0.21,
+    "u1": 0.3096,
+    "v1": 0.2808,
+    "w_px": 146,
+    "h_px": 145,
+    "piece": "icon: steak, red tile",
+    "inside": false
+   },
+   {
+    "id": 63,
+    "u0": 0.0059,
+    "v0": 0.1138,
+    "u1": 0.3052,
+    "v1": 0.2036,
+    "w_px": 613,
     "h_px": 184,
-    "id": 41
+    "piece": "SEEDS label with apple icon",
+    "inside": false
    },
    {
-    "u0": 0.811,
-    "v0": 0.121,
+    "id": 64,
+    "u0": 0.8101,
+    "v0": 0.1211,
     "u1": 1.0,
-    "v1": 0.152,
-    "w_px": 388,
-    "h_px": 64,
-    "id": 42
+    "v1": 0.1528,
+    "w_px": 389,
+    "h_px": 65,
+    "piece": "word SPORES, black on white",
+    "inside": false
    },
    {
+    "id": 65,
     "u0": 0.0,
-    "v0": 0.055,
+    "v0": 0.0552,
     "u1": 0.25,
     "v1": 0.105,
     "w_px": 512,
-    "h_px": 104,
-    "id": 43
+    "h_px": 102,
+    "piece": "orange and black hazard stripes",
+    "inside": false
    },
    {
+    "id": 66,
     "u0": 0.0,
     "v0": 0.0,
+    "u1": 0.25,
+    "v1": 0.0498,
+    "w_px": 512,
+    "h_px": 102,
+    "piece": "yellow and black hazard stripes (tileable band)",
+    "inside": false
+   },
+   {
+    "id": 67,
+    "u0": 0.25,
+    "v0": 0.0,
+    "u1": 0.5,
+    "v1": 0.0498,
+    "w_px": 512,
+    "h_px": 102,
+    "piece": "white and black stripes (tileable band)",
+    "inside": false
+   },
+   {
+    "id": 68,
+    "u0": 0.5,
+    "v0": 0.0,
+    "u1": 0.75,
+    "v1": 0.0498,
+    "w_px": 512,
+    "h_px": 102,
+    "piece": "red and white stripes (tileable band)",
+    "inside": false
+   },
+   {
+    "id": 69,
+    "u0": 0.75,
+    "v0": 0.0,
     "u1": 1.0,
-    "v1": 0.051,
-    "w_px": 2048,
-    "h_px": 104,
-    "id": 44
+    "v1": 0.0498,
+    "w_px": 512,
+    "h_px": 102,
+    "piece": "grey and black stripes (tileable band)",
+    "inside": false
+   },
+   {
+    "id": 70,
+    "u0": 0.9082,
+    "v0": 0.2422,
+    "u1": 0.9766,
+    "v1": 0.3105,
+    "w_px": 140,
+    "h_px": 140,
+    "piece": "leaf icon, green tile (inside MEAL PACK)",
+    "inside": true
+   },
+   {
+    "id": 71,
+    "u0": 0.9082,
+    "v0": 0.1699,
+    "u1": 0.9766,
+    "v1": 0.2383,
+    "w_px": 140,
+    "h_px": 140,
+    "piece": "QR code (inside MEAL PACK)",
+    "inside": true
+   },
+   {
+    "id": 72,
+    "u0": 0.0273,
+    "v0": 0.127,
+    "u1": 0.0898,
+    "v1": 0.1895,
+    "w_px": 128,
+    "h_px": 128,
+    "piece": "apple icon, green tile (inside SEEDS)",
+    "inside": true
+   },
+   {
+    "id": 73,
+    "u0": 0.0449,
+    "v0": 0.5801,
+    "u1": 0.2056,
+    "v1": 0.6143,
+    "w_px": 329,
+    "h_px": 70,
+    "piece": "barcode (inside TYPE A)",
+    "inside": true
+   },
+   {
+    "id": 74,
+    "u0": 0.627,
+    "v0": 0.8784,
+    "u1": 0.7031,
+    "v1": 0.9551,
+    "w_px": 156,
+    "h_px": 157,
+    "piece": "pictogram: person pushing tipping crate (inside TIP OVER sign)",
+    "inside": true
+   },
+   {
+    "id": 75,
+    "u0": 0.0049,
+    "v0": 0.6929,
+    "u1": 0.0767,
+    "v1": 0.7646,
+    "w_px": 147,
+    "h_px": 147,
+    "piece": "magnet pictogram (inside DANGER magnetic sign)",
+    "inside": true
+   },
+   {
+    "id": 76,
+    "u0": 0.103,
+    "v0": 0.3076,
+    "u1": 0.1519,
+    "v1": 0.3257,
+    "w_px": 100,
+    "h_px": 37,
+    "piece": "weights: 39.480 KGS / 67.200 LBS",
+    "inside": false
+   },
+   {
+    "id": 77,
+    "u0": 0.1079,
+    "v0": 0.2852,
+    "u1": 0.1519,
+    "v1": 0.3027,
+    "w_px": 90,
+    "h_px": 36,
+    "piece": "weights: 2.180 KGS / 4.810 LBS",
+    "inside": false
+   },
+   {
+    "id": 78,
+    "u0": 0.1016,
+    "v0": 0.2637,
+    "u1": 0.1509,
+    "v1": 0.2812,
+    "w_px": 101,
+    "h_px": 36,
+    "piece": "weights: 20.800 KGS / 64.100 LBS",
+    "inside": false
+   },
+   {
+    "id": 79,
+    "u0": 0.5991,
+    "v0": 0.5684,
+    "u1": 0.6387,
+    "v1": 0.6069,
+    "w_px": 81,
+    "h_px": 79,
+    "piece": "target icon quarter, top left",
+    "inside": false
+   },
+   {
+    "id": 80,
+    "u0": 0.6431,
+    "v0": 0.5635,
+    "u1": 0.6826,
+    "v1": 0.6035,
+    "w_px": 81,
+    "h_px": 82,
+    "piece": "target icon quarter, top right",
+    "inside": false
+   },
+   {
+    "id": 81,
+    "u0": 0.6045,
+    "v0": 0.5254,
+    "u1": 0.6431,
+    "v1": 0.5645,
+    "w_px": 79,
+    "h_px": 80,
+    "piece": "target icon quarter, bottom left",
+    "inside": false
+   },
+   {
+    "id": 82,
+    "u0": 0.6475,
+    "v0": 0.5239,
+    "u1": 0.6831,
+    "v1": 0.5591,
+    "w_px": 73,
+    "h_px": 72,
+    "piece": "target icon quarter, bottom right",
+    "inside": false
+   },
+   {
+    "id": 83,
+    "u0": 0.7605,
+    "v0": 0.6091,
+    "u1": 0.8098,
+    "v1": 0.675,
+    "w_px": 101,
+    "h_px": 135,
+    "piece": "chevron, left (one of a double chevron; outline, boxes overlap)",
+    "outline": [
+     [
+      0.7605,
+      0.6091
+     ],
+     [
+      0.7839,
+      0.6091
+     ],
+     [
+      0.8098,
+      0.6414
+     ],
+     [
+      0.7839,
+      0.6746
+     ],
+     [
+      0.7605,
+      0.675
+     ],
+     [
+      0.7864,
+      0.6423
+     ]
+    ]
+   },
+   {
+    "id": 84,
+    "u0": 0.7947,
+    "v0": 0.6091,
+    "u1": 0.8435,
+    "v1": 0.675,
+    "w_px": 100,
+    "h_px": 135,
+    "piece": "chevron, right (one of a double chevron; outline, boxes overlap)",
+    "outline": [
+     [
+      0.7947,
+      0.6091
+     ],
+     [
+      0.8176,
+      0.6091
+     ],
+     [
+      0.8435,
+      0.6418
+     ],
+     [
+      0.8176,
+      0.675
+     ],
+     [
+      0.7947,
+      0.675
+     ],
+     [
+      0.8206,
+      0.6423
+     ]
+    ]
+   },
+   {
+    "id": 85,
+    "u0": 0.7021,
+    "v0": 0.5303,
+    "u1": 0.7637,
+    "v1": 0.5918,
+    "w_px": 126,
+    "h_px": 126,
+    "piece": "square split diagonally, upper-left half (cut along the diagonal)",
+    "outline": [
+     [
+      0.7021,
+      0.5303
+     ],
+     [
+      0.7637,
+      0.5918
+     ],
+     [
+      0.7021,
+      0.5918
+     ]
+    ]
+   },
+   {
+    "id": 86,
+    "u0": 0.7021,
+    "v0": 0.5303,
+    "u1": 0.7637,
+    "v1": 0.5918,
+    "w_px": 126,
+    "h_px": 126,
+    "piece": "square split diagonally, lower-right half (cut along the diagonal)",
+    "outline": [
+     [
+      0.7021,
+      0.5303
+     ],
+     [
+      0.7637,
+      0.5303
+     ],
+     [
+      0.7637,
+      0.5918
+     ]
+    ]
+   },
+   {
+    "id": 87,
+    "u0": 0.7764,
+    "v0": 0.5234,
+    "u1": 0.8491,
+    "v1": 0.5962,
+    "w_px": 149,
+    "h_px": 149,
+    "piece": "striped diamond, upper-right half (cut along the diagonal)",
+    "outline": [
+     [
+      0.7764,
+      0.5962
+     ],
+     [
+      0.8491,
+      0.5962
+     ],
+     [
+      0.8491,
+      0.5234
+     ]
+    ]
+   },
+   {
+    "id": 88,
+    "u0": 0.7764,
+    "v0": 0.5234,
+    "u1": 0.8491,
+    "v1": 0.5962,
+    "w_px": 149,
+    "h_px": 149,
+    "piece": "striped diamond, lower-left half (cut along the diagonal)",
+    "outline": [
+     [
+      0.7764,
+      0.5962
+     ],
+     [
+      0.8491,
+      0.5234
+     ],
+     [
+      0.7764,
+      0.5234
+     ]
+    ]
+   },
+   {
+    "id": 89,
+    "u0": 0.5488,
+    "v0": 0.5601,
+    "u1": 0.5859,
+    "v1": 0.5957,
+    "w_px": 76,
+    "h_px": 73,
+    "piece": "radio-wave icon, orange square (right end of the SIGNAL label)",
+    "inside": false
    }
-  ]
+  ],
+  "note": "re-catalogued at full resolution; ids match atlas-regions.md"
  },
  "Atlas3": {
   "size": [
@@ -1019,294 +1764,758 @@
   ],
   "regions": [
    {
-    "u0": 0.004,
-    "v0": 0.879,
-    "u1": 0.246,
-    "v1": 0.996,
-    "w_px": 496,
-    "h_px": 240,
-    "id": 1
+    "id": 1,
+    "u0": 0.0034,
+    "v0": 0.8784,
+    "u1": 0.2471,
+    "v1": 0.9966,
+    "w_px": 499,
+    "h_px": 242,
+    "piece": "panel: three rotary toggles with green LEDs",
+    "inside": false
    },
    {
-    "u0": 0.254,
-    "v0": 0.879,
-    "u1": 0.496,
-    "v1": 0.996,
-    "w_px": 496,
-    "h_px": 240,
-    "id": 2
+    "id": 2,
+    "u0": 0.2534,
+    "v0": 0.8784,
+    "u1": 0.4966,
+    "v1": 0.9966,
+    "w_px": 498,
+    "h_px": 242,
+    "piece": "panel \"Panel 1\": 7 keys C1-C7 with LEDs",
+    "inside": false
    },
    {
-    "u0": 0.502,
-    "v0": 0.879,
-    "u1": 0.684,
-    "v1": 0.996,
-    "w_px": 372,
-    "h_px": 240,
-    "id": 3
+    "id": 3,
+    "u0": 0.5024,
+    "v0": 0.8789,
+    "u1": 0.6846,
+    "v1": 0.9966,
+    "w_px": 373,
+    "h_px": 241,
+    "piece": "panel: 6 keys F1-F6",
+    "inside": false
    },
    {
-    "u0": 0.697,
-    "v0": 0.943,
-    "u1": 0.74,
-    "v1": 0.986,
-    "w_px": 88,
-    "h_px": 88,
-    "id": 4
+    "id": 4,
+    "u0": 0.2754,
+    "v0": 0.9131,
+    "u1": 0.3008,
+    "v1": 0.9375,
+    "w_px": 52,
+    "h_px": 50,
+    "piece": "key C1",
+    "inside": true
    },
    {
+    "id": 5,
+    "u0": 0.3047,
+    "v0": 0.9131,
+    "u1": 0.3301,
+    "v1": 0.9375,
+    "w_px": 52,
+    "h_px": 50,
+    "piece": "key C2",
+    "inside": true
+   },
+   {
+    "id": 6,
+    "u0": 0.333,
+    "v0": 0.9131,
+    "u1": 0.3584,
+    "v1": 0.9375,
+    "w_px": 52,
+    "h_px": 50,
+    "piece": "key C3",
+    "inside": true
+   },
+   {
+    "id": 7,
+    "u0": 0.3623,
+    "v0": 0.9131,
+    "u1": 0.3877,
+    "v1": 0.9375,
+    "w_px": 52,
+    "h_px": 50,
+    "piece": "key C4",
+    "inside": true
+   },
+   {
+    "id": 8,
+    "u0": 0.3906,
+    "v0": 0.9131,
+    "u1": 0.416,
+    "v1": 0.9375,
+    "w_px": 52,
+    "h_px": 50,
+    "piece": "key C5",
+    "inside": true
+   },
+   {
+    "id": 9,
+    "u0": 0.4199,
+    "v0": 0.9131,
+    "u1": 0.4453,
+    "v1": 0.9375,
+    "w_px": 52,
+    "h_px": 50,
+    "piece": "key C6",
+    "inside": true
+   },
+   {
+    "id": 10,
+    "u0": 0.4482,
+    "v0": 0.9131,
+    "u1": 0.4736,
+    "v1": 0.9375,
+    "w_px": 52,
+    "h_px": 50,
+    "piece": "key C7",
+    "inside": true
+   },
+   {
+    "id": 11,
+    "u0": 0.5176,
+    "v0": 0.9414,
+    "u1": 0.5625,
+    "v1": 0.9707,
+    "w_px": 92,
+    "h_px": 60,
+    "piece": "key F1",
+    "inside": true
+   },
+   {
+    "id": 12,
+    "u0": 0.5723,
+    "v0": 0.9414,
+    "u1": 0.6172,
+    "v1": 0.9707,
+    "w_px": 92,
+    "h_px": 60,
+    "piece": "key F2",
+    "inside": true
+   },
+   {
+    "id": 13,
+    "u0": 0.625,
+    "v0": 0.9414,
+    "u1": 0.6699,
+    "v1": 0.9707,
+    "w_px": 92,
+    "h_px": 60,
+    "piece": "key F3",
+    "inside": true
+   },
+   {
+    "id": 14,
+    "u0": 0.5176,
+    "v0": 0.8926,
+    "u1": 0.5625,
+    "v1": 0.9219,
+    "w_px": 92,
+    "h_px": 60,
+    "piece": "key F4",
+    "inside": true
+   },
+   {
+    "id": 15,
+    "u0": 0.5723,
+    "v0": 0.8926,
+    "u1": 0.6172,
+    "v1": 0.9219,
+    "w_px": 92,
+    "h_px": 60,
+    "piece": "key F5",
+    "inside": true
+   },
+   {
+    "id": 16,
+    "u0": 0.625,
+    "v0": 0.8926,
+    "u1": 0.6699,
+    "v1": 0.9219,
+    "w_px": 92,
+    "h_px": 60,
+    "piece": "key F6",
+    "inside": true
+   },
+   {
+    "id": 17,
+    "u0": 0.6968,
+    "v0": 0.9424,
+    "u1": 0.7407,
+    "v1": 0.9863,
+    "w_px": 90,
+    "h_px": 90,
+    "piece": "LED, green",
+    "inside": false
+   },
+   {
+    "id": 18,
+    "u0": 0.6968,
+    "v0": 0.8892,
+    "u1": 0.7407,
+    "v1": 0.9331,
+    "w_px": 90,
+    "h_px": 90,
+    "piece": "LED, red",
+    "inside": false
+   },
+   {
+    "id": 19,
     "u0": 0.752,
-    "v0": 0.877,
+    "v0": 0.8774,
     "u1": 0.873,
-    "v1": 0.998,
+    "v1": 0.9976,
     "w_px": 248,
-    "h_px": 248,
-    "id": 5
+    "h_px": 246,
+    "piece": "big round button, white",
+    "inside": false
    },
    {
+    "id": 20,
     "u0": 0.877,
-    "v0": 0.877,
+    "v0": 0.8774,
     "u1": 0.998,
-    "v1": 0.998,
+    "v1": 0.9976,
     "w_px": 248,
-    "h_px": 248,
-    "id": 6
+    "h_px": 246,
+    "piece": "big round button, yellow",
+    "inside": false
    },
    {
-    "u0": 0.697,
-    "v0": 0.889,
-    "u1": 0.74,
-    "v1": 0.932,
-    "w_px": 88,
-    "h_px": 88,
-    "id": 7
+    "id": 21,
+    "u0": 0.0029,
+    "v0": 0.6279,
+    "u1": 0.1216,
+    "v1": 0.8716,
+    "w_px": 243,
+    "h_px": 499,
+    "piece": "panel: keypad of 10 labelled keys",
+    "inside": false
    },
    {
+    "id": 22,
+    "u0": 0.0195,
+    "v0": 0.8232,
+    "u1": 0.0557,
+    "v1": 0.8584,
+    "w_px": 74,
+    "h_px": 72,
+    "piece": "key Esc",
+    "inside": true
+   },
+   {
+    "id": 23,
+    "u0": 0.0693,
+    "v0": 0.8232,
+    "u1": 0.1055,
+    "v1": 0.8584,
+    "w_px": 74,
+    "h_px": 72,
+    "piece": "key Spin",
+    "inside": true
+   },
+   {
+    "id": 24,
+    "u0": 0.0195,
+    "v0": 0.7783,
+    "u1": 0.0557,
+    "v1": 0.8135,
+    "w_px": 74,
+    "h_px": 72,
+    "piece": "key If",
+    "inside": true
+   },
+   {
+    "id": 25,
+    "u0": 0.0693,
+    "v0": 0.7783,
+    "u1": 0.1055,
+    "v1": 0.8135,
+    "w_px": 74,
+    "h_px": 72,
+    "piece": "key YoU",
+    "inside": true
+   },
+   {
+    "id": 26,
+    "u0": 0.0195,
+    "v0": 0.7334,
+    "u1": 0.0557,
+    "v1": 0.7686,
+    "w_px": 74,
+    "h_px": 72,
+    "piece": "key Rea",
+    "inside": true
+   },
+   {
+    "id": 27,
+    "u0": 0.0693,
+    "v0": 0.7334,
+    "u1": 0.1055,
+    "v1": 0.7686,
+    "w_px": 74,
+    "h_px": 72,
+    "piece": "key DTh",
+    "inside": true
+   },
+   {
+    "id": 28,
+    "u0": 0.0195,
+    "v0": 0.6885,
+    "u1": 0.0557,
+    "v1": 0.7236,
+    "w_px": 74,
+    "h_px": 72,
+    "piece": "key iSHa",
+    "inside": true
+   },
+   {
+    "id": 29,
+    "u0": 0.0693,
+    "v0": 0.6885,
+    "u1": 0.1055,
+    "v1": 0.7236,
+    "w_px": 74,
+    "h_px": 72,
+    "piece": "key VEan",
+    "inside": true
+   },
+   {
+    "id": 30,
+    "u0": 0.0195,
+    "v0": 0.6436,
+    "u1": 0.0557,
+    "v1": 0.6787,
+    "w_px": 74,
+    "h_px": 72,
+    "piece": "key Ice",
+    "inside": true
+   },
+   {
+    "id": 31,
+    "u0": 0.0693,
+    "v0": 0.6436,
+    "u1": 0.1055,
+    "v1": 0.6787,
+    "w_px": 74,
+    "h_px": 72,
+    "piece": "key dAy",
+    "inside": true
+   },
+   {
+    "id": 32,
     "u0": 0.125,
-    "v0": 0.762,
-    "u1": 0.25,
-    "v1": 0.863,
-    "w_px": 256,
-    "h_px": 208,
-    "id": 8
+    "v0": 0.7607,
+    "u1": 0.187,
+    "v1": 0.8638,
+    "w_px": 127,
+    "h_px": 211,
+    "piece": "rocker switch, red (left)",
+    "inside": false
    },
    {
-    "u0": 0.508,
-    "v0": 0.76,
-    "u1": 0.561,
-    "v1": 0.867,
-    "w_px": 108,
-    "h_px": 220,
-    "id": 9
+    "id": 33,
+    "u0": 0.1875,
+    "v0": 0.7607,
+    "u1": 0.2495,
+    "v1": 0.8638,
+    "w_px": 127,
+    "h_px": 211,
+    "piece": "rocker switch, red (right)",
+    "inside": false
    },
    {
-    "u0": 0.568,
-    "v0": 0.76,
-    "u1": 0.621,
-    "v1": 0.867,
-    "w_px": 108,
-    "h_px": 220,
-    "id": 10
+    "id": 34,
+    "u0": 0.2534,
+    "v0": 0.6284,
+    "u1": 0.4966,
+    "v1": 0.8716,
+    "w_px": 498,
+    "h_px": 498,
+    "piece": "panel: keys N1-N5, three knobs Field1/Field2/Subfield, three knobs WPS/MOD/SRC, slider",
+    "inside": false
    },
    {
-    "u0": 0.629,
-    "v0": 0.76,
-    "u1": 0.682,
-    "v1": 0.867,
-    "w_px": 108,
-    "h_px": 220,
-    "id": 11
+    "id": 35,
+    "u0": 0.2803,
+    "v0": 0.79,
+    "u1": 0.3057,
+    "v1": 0.8135,
+    "w_px": 52,
+    "h_px": 48,
+    "piece": "key N1",
+    "inside": true
    },
    {
+    "id": 36,
+    "u0": 0.3096,
+    "v0": 0.79,
+    "u1": 0.335,
+    "v1": 0.8135,
+    "w_px": 52,
+    "h_px": 48,
+    "piece": "key N2",
+    "inside": true
+   },
+   {
+    "id": 37,
+    "u0": 0.3379,
+    "v0": 0.79,
+    "u1": 0.3633,
+    "v1": 0.8135,
+    "w_px": 52,
+    "h_px": 48,
+    "piece": "key N3",
+    "inside": true
+   },
+   {
+    "id": 38,
+    "u0": 0.3672,
+    "v0": 0.79,
+    "u1": 0.3926,
+    "v1": 0.8135,
+    "w_px": 52,
+    "h_px": 48,
+    "piece": "key N4",
+    "inside": true
+   },
+   {
+    "id": 39,
+    "u0": 0.3955,
+    "v0": 0.79,
+    "u1": 0.4209,
+    "v1": 0.8135,
+    "w_px": 52,
+    "h_px": 48,
+    "piece": "key N5",
+    "inside": true
+   },
+   {
+    "id": 40,
+    "u0": 0.5083,
+    "v0": 0.7588,
+    "u1": 0.5605,
+    "v1": 0.8667,
+    "w_px": 107,
+    "h_px": 221,
+    "piece": "slide switch with light, red",
+    "inside": false
+   },
+   {
+    "id": 41,
+    "u0": 0.5684,
+    "v0": 0.7588,
+    "u1": 0.6206,
+    "v1": 0.8667,
+    "w_px": 107,
+    "h_px": 221,
+    "piece": "slide switch with light, green",
+    "inside": false
+   },
+   {
+    "id": 42,
+    "u0": 0.6289,
+    "v0": 0.7588,
+    "u1": 0.6812,
+    "v1": 0.8667,
+    "w_px": 107,
+    "h_px": 221,
+    "piece": "slide switch with light, yellow",
+    "inside": false
+   },
+   {
+    "id": 43,
     "u0": 0.689,
-    "v0": 0.76,
-    "u1": 0.74,
-    "v1": 0.867,
-    "w_px": 104,
-    "h_px": 220,
-    "id": 12
+    "v0": 0.7588,
+    "u1": 0.7412,
+    "v1": 0.8667,
+    "w_px": 107,
+    "h_px": 221,
+    "piece": "slide switch with light, blue",
+    "inside": false
    },
    {
-    "u0": 0.754,
-    "v0": 0.756,
-    "u1": 0.871,
-    "v1": 0.871,
+    "id": 44,
+    "u0": 0.7539,
+    "v0": 0.7544,
+    "u1": 0.8711,
+    "v1": 0.8706,
     "w_px": 240,
-    "h_px": 236,
-    "id": 13
+    "h_px": 238,
+    "piece": "big square button, white",
+    "inside": false
    },
    {
-    "u0": 0.879,
-    "v0": 0.756,
-    "u1": 0.996,
-    "v1": 0.871,
+    "id": 45,
+    "u0": 0.8789,
+    "v0": 0.7544,
+    "u1": 0.9961,
+    "v1": 0.8706,
     "w_px": 240,
-    "h_px": 236,
-    "id": 14
+    "h_px": 238,
+    "piece": "big square button, yellow",
+    "inside": false
    },
    {
-    "u0": 0.004,
-    "v0": 0.629,
-    "u1": 0.121,
-    "v1": 0.871,
-    "w_px": 240,
-    "h_px": 496,
-    "id": 15
+    "id": 46,
+    "u0": 0.1274,
+    "v0": 0.6904,
+    "u1": 0.1846,
+    "v1": 0.7476,
+    "w_px": 117,
+    "h_px": 117,
+    "piece": "round jack, white",
+    "inside": false
    },
    {
-    "u0": 0.129,
-    "v0": 0.691,
-    "u1": 0.184,
-    "v1": 0.746,
-    "w_px": 112,
-    "h_px": 112,
-    "id": 16
+    "id": 47,
+    "u0": 0.1904,
+    "v0": 0.6904,
+    "u1": 0.2476,
+    "v1": 0.7476,
+    "w_px": 117,
+    "h_px": 117,
+    "piece": "round jack, blue",
+    "inside": false
    },
    {
-    "u0": 0.191,
-    "v0": 0.691,
-    "u1": 0.246,
-    "v1": 0.746,
-    "w_px": 112,
-    "h_px": 112,
-    "id": 17
+    "id": 48,
+    "u0": 0.1274,
+    "v0": 0.6274,
+    "u1": 0.1846,
+    "v1": 0.6846,
+    "w_px": 117,
+    "h_px": 117,
+    "piece": "round jack, orange",
+    "inside": false
    },
    {
-    "u0": 0.254,
-    "v0": 0.629,
-    "u1": 0.496,
-    "v1": 0.871,
-    "w_px": 496,
-    "h_px": 496,
-    "id": 18
+    "id": 49,
+    "u0": 0.1904,
+    "v0": 0.6274,
+    "u1": 0.2476,
+    "v1": 0.6846,
+    "w_px": 117,
+    "h_px": 117,
+    "piece": "round jack, green",
+    "inside": false
    },
    {
-    "u0": 0.129,
-    "v0": 0.629,
-    "u1": 0.184,
-    "v1": 0.684,
-    "w_px": 112,
-    "h_px": 112,
-    "id": 19
+    "id": 50,
+    "u0": 0.5044,
+    "v0": 0.6841,
+    "u1": 0.564,
+    "v1": 0.752,
+    "w_px": 122,
+    "h_px": 139,
+    "piece": "rotary knob, grey",
+    "inside": false
    },
    {
-    "u0": 0.191,
-    "v0": 0.629,
-    "u1": 0.246,
-    "v1": 0.684,
-    "w_px": 112,
-    "h_px": 112,
-    "id": 20
+    "id": 51,
+    "u0": 0.5688,
+    "v0": 0.689,
+    "u1": 0.6289,
+    "v1": 0.749,
+    "w_px": 123,
+    "h_px": 123,
+    "piece": "round push button, fluted",
+    "inside": false
    },
    {
-    "u0": 0.506,
-    "v0": 0.629,
-    "u1": 0.756,
-    "v1": 0.75,
-    "w_px": 512,
-    "h_px": 248,
-    "id": 21
+    "id": 52,
+    "u0": 0.6328,
+    "v0": 0.689,
+    "u1": 0.6924,
+    "v1": 0.7485,
+    "w_px": 122,
+    "h_px": 122,
+    "piece": "round push button, plain",
+    "inside": false
    },
    {
-    "u0": 0.77,
-    "v0": 0.637,
-    "u1": 0.871,
-    "v1": 0.738,
-    "w_px": 208,
-    "h_px": 208,
-    "id": 22
+    "id": 53,
+    "u0": 0.6968,
+    "v0": 0.6763,
+    "u1": 0.7563,
+    "v1": 0.7476,
+    "w_px": 122,
+    "h_px": 146,
+    "piece": "toggle lever (outline notched around the slot corner)",
+    "outline": [
+     [
+      0.7031,
+      0.6763
+     ],
+     [
+      0.7563,
+      0.6763
+     ],
+     [
+      0.7563,
+      0.7476
+     ],
+     [
+      0.6968,
+      0.7476
+     ],
+     [
+      0.6968,
+      0.6802
+     ],
+     [
+      0.7031,
+      0.6802
+     ]
+    ]
    },
    {
-    "u0": 0.885,
-    "v0": 0.639,
-    "u1": 0.988,
-    "v1": 0.74,
+    "id": 54,
+    "u0": 0.7681,
+    "v0": 0.6353,
+    "u1": 0.8716,
+    "v1": 0.7388,
     "w_px": 212,
-    "h_px": 208,
-    "id": 23
+    "h_px": 212,
+    "piece": "round connector, 4 pins",
+    "inside": false
    },
    {
-    "u0": 0.383,
-    "v0": 0.551,
-    "u1": 0.449,
-    "v1": 0.617,
-    "w_px": 136,
-    "h_px": 136,
-    "id": 24
+    "id": 55,
+    "u0": 0.8838,
+    "v0": 0.6367,
+    "u1": 0.9893,
+    "v1": 0.7417,
+    "w_px": 216,
+    "h_px": 215,
+    "piece": "round connector, 6 pins",
+    "inside": false
    },
    {
-    "u0": 0.455,
-    "v0": 0.551,
-    "u1": 0.523,
-    "v1": 0.619,
-    "w_px": 140,
+    "id": 56,
+    "u0": 0.5181,
+    "v0": 0.6274,
+    "u1": 0.603,
+    "v1": 0.6802,
+    "w_px": 174,
+    "h_px": 108,
+    "piece": "dark slot",
+    "inside": false
+   },
+   {
+    "id": 57,
+    "u0": 0.6167,
+    "v0": 0.6274,
+    "u1": 0.7031,
+    "v1": 0.6802,
+    "w_px": 177,
+    "h_px": 108,
+    "piece": "slot with white light",
+    "inside": false
+   },
+   {
+    "id": 58,
+    "u0": 0.2534,
+    "v0": 0.4995,
+    "u1": 0.3716,
+    "v1": 0.6177,
+    "w_px": 242,
+    "h_px": 242,
+    "piece": "EMERGENCY STOP button",
+    "inside": false
+   },
+   {
+    "id": 59,
+    "u0": 0.3818,
+    "v0": 0.5503,
+    "u1": 0.4497,
+    "v1": 0.6187,
+    "w_px": 139,
     "h_px": 140,
-    "id": 25
+    "piece": "square push button (left)",
+    "inside": false
    },
    {
-    "u0": 0.531,
-    "v0": 0.547,
-    "u1": 0.611,
-    "v1": 0.619,
-    "w_px": 164,
-    "h_px": 148,
-    "id": 26
+    "id": 60,
+    "u0": 0.4556,
+    "v0": 0.5508,
+    "u1": 0.5234,
+    "v1": 0.6187,
+    "w_px": 139,
+    "h_px": 139,
+    "piece": "square push button (right)",
+    "inside": false
    },
    {
-    "u0": 0.619,
-    "v0": 0.547,
-    "u1": 0.699,
-    "v1": 0.619,
-    "w_px": 164,
-    "h_px": 148,
-    "id": 27
+    "id": 61,
+    "u0": 0.5303,
+    "v0": 0.5459,
+    "u1": 0.6113,
+    "v1": 0.6196,
+    "w_px": 166,
+    "h_px": 151,
+    "piece": "round jack, white (large)",
+    "inside": false
    },
    {
-    "u0": 0.707,
-    "v0": 0.547,
-    "u1": 0.785,
-    "v1": 0.619,
-    "w_px": 160,
-    "h_px": 148,
-    "id": 28
+    "id": 62,
+    "u0": 0.6182,
+    "v0": 0.5459,
+    "u1": 0.6992,
+    "v1": 0.6196,
+    "w_px": 166,
+    "h_px": 151,
+    "piece": "round jack, orange and green (large)",
+    "inside": false
    },
    {
-    "u0": 0.793,
-    "v0": 0.547,
-    "u1": 0.873,
-    "v1": 0.619,
-    "w_px": 164,
-    "h_px": 148,
-    "id": 29
+    "id": 63,
+    "u0": 0.7051,
+    "v0": 0.5459,
+    "u1": 0.7861,
+    "v1": 0.6196,
+    "w_px": 166,
+    "h_px": 151,
+    "piece": "round jack, red (large)",
+    "inside": false
    },
    {
-    "u0": 0.254,
-    "v0": 0.5,
-    "u1": 0.371,
-    "v1": 0.617,
-    "w_px": 240,
-    "h_px": 240,
-    "id": 30
+    "id": 64,
+    "u0": 0.7915,
+    "v0": 0.5459,
+    "u1": 0.8726,
+    "v1": 0.6196,
+    "w_px": 166,
+    "h_px": 151,
+    "piece": "round jack, cyan (large)",
+    "inside": false
    },
    {
-    "u0": 0.881,
-    "v0": 0.504,
-    "u1": 0.992,
-    "v1": 0.621,
-    "w_px": 228,
-    "h_px": 240,
-    "id": 31
+    "id": 65,
+    "u0": 0.8804,
+    "v0": 0.5015,
+    "u1": 0.9937,
+    "v1": 0.623,
+    "w_px": 232,
+    "h_px": 249,
+    "piece": "large socket, open bore",
+    "inside": false
    },
    {
+    "id": 66,
     "u0": 0.877,
-    "v0": 0.379,
+    "v0": 0.3779,
     "u1": 0.998,
-    "v1": 0.498,
+    "v1": 0.4995,
     "w_px": 248,
-    "h_px": 244,
-    "id": 32
+    "h_px": 249,
+    "piece": "large socket, closed with clips, red ring",
+    "inside": false
    }
-  ]
+  ],
+  "note": "re-catalogued at full resolution; ids match atlas-regions.md"
  },
  "Decals_Atlas_A_01": {
   "size": [
@@ -1315,384 +2524,735 @@
   ],
   "regions": [
    {
-    "u0": 0.004,
-    "v0": 0.971,
-    "u1": 0.342,
+    "id": 1,
+    "u0": 0.0034,
+    "v0": 0.9712,
+    "u1": 0.0278,
+    "v1": 0.9971,
+    "w_px": 50,
+    "h_px": 53,
+    "piece": "bolt head 1: hex nut, slot",
+    "inside": false
+   },
+   {
+    "id": 2,
+    "u0": 0.0332,
+    "v0": 0.9707,
+    "u1": 0.0605,
     "v1": 0.998,
-    "w_px": 692,
+    "w_px": 56,
     "h_px": 56,
-    "id": 1
+    "piece": "bolt head 2: round with cross",
+    "inside": false
    },
    {
-    "u0": 0.344,
-    "v0": 0.926,
-    "u1": 0.566,
-    "v1": 1.0,
-    "w_px": 456,
-    "h_px": 152,
-    "id": 2
-   },
-   {
-    "u0": 0.598,
-    "v0": 0.945,
-    "u1": 0.627,
-    "v1": 0.969,
+    "id": 3,
+    "u0": 0.0635,
+    "v0": 0.9697,
+    "u1": 0.0928,
+    "v1": 0.999,
     "w_px": 60,
-    "h_px": 48,
-    "id": 3
+    "h_px": 60,
+    "piece": "bolt head 3: dome in recessed ring",
+    "inside": false
    },
    {
-    "u0": 0.627,
-    "v0": 0.945,
-    "u1": 0.646,
-    "v1": 0.969,
-    "w_px": 40,
-    "h_px": 48,
-    "id": 4
+    "id": 4,
+    "u0": 0.0957,
+    "v0": 0.9722,
+    "u1": 0.123,
+    "v1": 0.9966,
+    "w_px": 56,
+    "h_px": 50,
+    "piece": "bolt head 4: hex nut",
+    "inside": false
    },
    {
-    "u0": 0.664,
-    "v0": 0.891,
-    "u1": 0.711,
-    "v1": 0.988,
-    "w_px": 96,
-    "h_px": 200,
-    "id": 5
-   },
-   {
-    "u0": 0.734,
-    "v0": 0.959,
-    "u1": 0.891,
-    "v1": 0.979,
-    "w_px": 320,
-    "h_px": 40,
-    "id": 6
-   },
-   {
-    "u0": 0.33,
-    "v0": 0.857,
-    "u1": 0.389,
-    "v1": 0.889,
-    "w_px": 120,
-    "h_px": 64,
-    "id": 7
-   },
-   {
-    "u0": 0.729,
-    "v0": 0.898,
-    "u1": 0.896,
-    "v1": 0.918,
-    "w_px": 344,
-    "h_px": 40,
-    "id": 8
-   },
-   {
-    "u0": 0.912,
-    "v0": 0.83,
-    "u1": 0.994,
-    "v1": 0.982,
-    "w_px": 168,
-    "h_px": 312,
-    "id": 9
-   },
-   {
-    "u0": 0.002,
-    "v0": 0.781,
-    "u1": 0.125,
-    "v1": 0.844,
-    "w_px": 252,
-    "h_px": 128,
-    "id": 10
-   },
-   {
-    "u0": 0.135,
-    "v0": 0.795,
-    "u1": 0.178,
-    "v1": 0.83,
-    "w_px": 88,
-    "h_px": 72,
-    "id": 11
-   },
-   {
-    "u0": 0.664,
-    "v0": 0.783,
-    "u1": 0.713,
-    "v1": 0.873,
-    "w_px": 100,
-    "h_px": 184,
-    "id": 12
-   },
-   {
-    "u0": 0.734,
-    "v0": 0.834,
-    "u1": 0.893,
-    "v1": 0.854,
-    "w_px": 324,
-    "h_px": 40,
-    "id": 13
-   },
-   {
-    "u0": 0.002,
-    "v0": 0.725,
-    "u1": 0.059,
-    "v1": 0.777,
-    "w_px": 116,
-    "h_px": 108,
-    "id": 14
-   },
-   {
+    "id": 5,
     "u0": 0.127,
-    "v0": 0.744,
-    "u1": 0.225,
-    "v1": 0.844,
-    "w_px": 200,
-    "h_px": 204,
-    "id": 15
+    "v0": 0.9717,
+    "u1": 0.1538,
+    "v1": 0.9971,
+    "w_px": 55,
+    "h_px": 52,
+    "piece": "bolt head 5: oval slotted",
+    "inside": false
    },
    {
-    "u0": 0.285,
-    "v0": 0.717,
-    "u1": 0.299,
-    "v1": 0.82,
-    "w_px": 28,
+    "id": 6,
+    "u0": 0.1587,
+    "v0": 0.9712,
+    "u1": 0.1851,
+    "v1": 0.9976,
+    "w_px": 54,
+    "h_px": 54,
+    "piece": "bolt head 6: round domed",
+    "inside": false
+   },
+   {
+    "id": 7,
+    "u0": 0.1904,
+    "v0": 0.9727,
+    "u1": 0.2158,
+    "v1": 0.9961,
+    "w_px": 52,
+    "h_px": 48,
+    "piece": "bolt head 7: hex socket",
+    "inside": false
+   },
+   {
+    "id": 8,
+    "u0": 0.2217,
+    "v0": 0.9717,
+    "u1": 0.2471,
+    "v1": 0.9971,
+    "w_px": 52,
+    "h_px": 52,
+    "piece": "bolt head 8: slotted screw",
+    "inside": false
+   },
+   {
+    "id": 9,
+    "u0": 0.2505,
+    "v0": 0.9697,
+    "u1": 0.2803,
+    "v1": 0.999,
+    "w_px": 61,
+    "h_px": 60,
+    "piece": "bolt head 9: Phillips screw",
+    "inside": false
+   },
+   {
+    "id": 10,
+    "u0": 0.2842,
+    "v0": 0.9717,
+    "u1": 0.3096,
+    "v1": 0.9971,
+    "w_px": 52,
+    "h_px": 52,
+    "piece": "bolt head 10: plain round dome",
+    "inside": false
+   },
+   {
+    "id": 11,
+    "u0": 0.313,
+    "v0": 0.9692,
+    "u1": 0.3428,
+    "v1": 0.999,
+    "w_px": 61,
+    "h_px": 61,
+    "piece": "bolt head 11: hex socket in a ring",
+    "inside": false
+   },
+   {
+    "id": 12,
+    "u0": 0.3438,
+    "v0": 0.9688,
+    "u1": 0.5312,
+    "v1": 1.0,
+    "w_px": 384,
+    "h_px": 64,
+    "piece": "scratched light metal strip (one opaque rectangle; the scratches are in its colour)",
+    "inside": false
+   },
+   {
+    "id": 13,
+    "u0": 0.4121,
+    "v0": 0.8672,
+    "u1": 0.6489,
+    "v1": 0.9688,
+    "w_px": 485,
+    "h_px": 208,
+    "piece": "dark grime drips overlay",
+    "inside": false
+   },
+   {
+    "id": 14,
+    "u0": 0.3262,
+    "v0": 0.8535,
+    "u1": 0.3916,
+    "v1": 0.8965,
+    "w_px": 134,
+    "h_px": 88,
+    "piece": "grime blob",
+    "inside": false
+   },
+   {
+    "id": 15,
+    "u0": 0.021,
+    "v0": 0.8574,
+    "u1": 0.2637,
+    "v1": 0.9609,
+    "w_px": 497,
     "h_px": 212,
-    "id": 16
+    "piece": "scattered scratch specks",
+    "inside": false
    },
    {
-    "u0": 0.078,
-    "v0": 0.727,
-    "u1": 0.109,
-    "v1": 0.773,
-    "w_px": 64,
-    "h_px": 96,
-    "id": 17
+    "id": 16,
+    "u0": 0.6636,
+    "v0": 0.8896,
+    "u1": 0.7109,
+    "v1": 0.9883,
+    "w_px": 97,
+    "h_px": 202,
+    "piece": "tall pill plate",
+    "inside": false
    },
    {
-    "u0": 0.502,
-    "v0": 0.627,
-    "u1": 0.654,
-    "v1": 0.838,
-    "w_px": 312,
-    "h_px": 432,
-    "id": 18
+    "id": 17,
+    "u0": 0.7324,
+    "v0": 0.9575,
+    "u1": 0.8936,
+    "v1": 0.9795,
+    "w_px": 330,
+    "h_px": 45,
+    "piece": "thin bar, top",
+    "inside": false
    },
    {
-    "u0": 0.67,
-    "v0": 0.633,
-    "u1": 0.705,
-    "v1": 0.775,
-    "w_px": 72,
-    "h_px": 292,
-    "id": 19
+    "id": 18,
+    "u0": 0.7266,
+    "v0": 0.8965,
+    "u1": 0.8979,
+    "v1": 0.9185,
+    "w_px": 351,
+    "h_px": 45,
+    "piece": "thin bar, middle",
+    "inside": false
    },
    {
-    "u0": 0.314,
-    "v0": 0.594,
-    "u1": 0.404,
-    "v1": 0.686,
-    "w_px": 184,
+    "id": 19,
+    "u0": 0.7319,
+    "v0": 0.832,
+    "u1": 0.895,
+    "v1": 0.856,
+    "w_px": 334,
+    "h_px": 49,
+    "piece": "thin bar, bottom",
+    "inside": false
+   },
+   {
+    "id": 20,
+    "u0": 0.9102,
+    "v0": 0.8281,
+    "u1": 0.9966,
+    "v1": 0.9849,
+    "w_px": 177,
+    "h_px": 321,
+    "piece": "tall rounded panel",
+    "inside": false
+   },
+   {
+    "id": 21,
+    "u0": 0.0,
+    "v0": 0.7812,
+    "u1": 0.125,
+    "v1": 0.8438,
+    "w_px": 256,
+    "h_px": 128,
+    "piece": "pipe cross fitting",
+    "inside": false
+   },
+   {
+    "id": 22,
+    "u0": 0.1338,
+    "v0": 0.7935,
+    "u1": 0.1777,
+    "v1": 0.8315,
+    "w_px": 90,
+    "h_px": 78,
+    "piece": "small square plate",
+    "inside": false
+   },
+   {
+    "id": 23,
+    "u0": 0.1252,
+    "v0": 0.7434,
+    "u1": 0.2244,
+    "v1": 0.8435,
+    "w_px": 203,
+    "h_px": 205,
+    "piece": "pipe elbow (L-shaped outline; its box would cover the small square plate)",
+    "outline": [
+     [
+      0.1252,
+      0.7434
+     ],
+     [
+      0.1965,
+      0.7439
+     ],
+     [
+      0.2092,
+      0.7483
+     ],
+     [
+      0.2175,
+      0.7556
+     ],
+     [
+      0.2219,
+      0.7629
+     ],
+     [
+      0.2244,
+      0.7727
+     ],
+     [
+      0.2244,
+      0.8435
+     ],
+     [
+      0.2205,
+      0.8435
+     ],
+     [
+      0.2117,
+      0.8435
+     ],
+     [
+      0.2117,
+      0.7742
+     ],
+     [
+      0.2083,
+      0.7644
+     ],
+     [
+      0.2024,
+      0.759
+     ],
+     [
+      0.1951,
+      0.7566
+     ],
+     [
+      0.1252,
+      0.7566
+     ]
+    ]
+   },
+   {
+    "id": 24,
+    "u0": 0.0024,
+    "v0": 0.7241,
+    "u1": 0.0591,
+    "v1": 0.7793,
+    "w_px": 116,
+    "h_px": 113,
+    "piece": "rounded square plate",
+    "inside": false
+   },
+   {
+    "id": 25,
+    "u0": 0.0781,
+    "v0": 0.7261,
+    "u1": 0.1084,
+    "v1": 0.7725,
+    "w_px": 62,
+    "h_px": 95,
+    "piece": "small rounded square",
+    "inside": false
+   },
+   {
+    "id": 26,
+    "u0": 0.2705,
+    "v0": 0.7041,
+    "u1": 0.3145,
+    "v1": 0.8291,
+    "w_px": 90,
+    "h_px": 256,
+    "piece": "scratch line",
+    "inside": false
+   },
+   {
+    "id": 27,
+    "u0": 0.5015,
+    "v0": 0.6274,
+    "u1": 0.6543,
+    "v1": 0.8379,
+    "w_px": 313,
+    "h_px": 431,
+    "piece": "frame with window",
+    "inside": false
+   },
+   {
+    "id": 28,
+    "u0": 0.6636,
+    "v0": 0.7822,
+    "u1": 0.7134,
+    "v1": 0.874,
+    "w_px": 102,
     "h_px": 188,
-    "id": 20
+    "piece": "tall rounded plate, notched top",
+    "inside": false
    },
    {
-    "u0": 0.414,
-    "v0": 0.596,
-    "u1": 0.494,
-    "v1": 0.686,
-    "w_px": 164,
-    "h_px": 184,
-    "id": 21
-   },
-   {
-    "u0": 0.719,
-    "v0": 0.529,
-    "u1": 1.0,
-    "v1": 0.812,
-    "w_px": 576,
-    "h_px": 580,
-    "id": 22
-   },
-   {
-    "u0": 0.002,
-    "v0": 0.467,
-    "u1": 0.307,
-    "v1": 0.688,
-    "w_px": 624,
-    "h_px": 452,
-    "id": 23
-   },
-   {
-    "u0": 0.539,
-    "v0": 0.561,
-    "u1": 0.617,
-    "v1": 0.617,
-    "w_px": 160,
-    "h_px": 116,
-    "id": 24
-   },
-   {
-    "u0": 0.646,
-    "v0": 0.562,
-    "u1": 0.697,
-    "v1": 0.615,
-    "w_px": 104,
-    "h_px": 108,
-    "id": 25
-   },
-   {
-    "u0": 0.646,
-    "v0": 0.488,
-    "u1": 0.699,
-    "v1": 0.539,
-    "w_px": 108,
-    "h_px": 104,
-    "id": 26
-   },
-   {
-    "u0": 0.354,
-    "v0": 0.41,
-    "u1": 0.43,
-    "v1": 0.59,
-    "w_px": 156,
-    "h_px": 368,
-    "id": 27
-   },
-   {
-    "u0": 0.443,
-    "v0": 0.41,
-    "u1": 0.525,
-    "v1": 0.59,
-    "w_px": 168,
-    "h_px": 368,
-    "id": 28
-   },
-   {
-    "u0": 0.559,
-    "v0": 0.414,
-    "u1": 0.594,
-    "v1": 0.547,
+    "id": 29,
+    "u0": 0.6704,
+    "v0": 0.6318,
+    "u1": 0.7056,
+    "v1": 0.7759,
     "w_px": 72,
-    "h_px": 272,
-    "id": 29
+    "h_px": 295,
+    "piece": "tall pill plate, slim",
+    "inside": false
    },
    {
+    "id": 30,
+    "u0": 0.7188,
+    "v0": 0.5273,
+    "u1": 1.0,
+    "v1": 0.8125,
+    "w_px": 576,
+    "h_px": 584,
+    "piece": "vent grille",
+    "inside": false
+   },
+   {
+    "id": 31,
+    "u0": 0.3135,
+    "v0": 0.5928,
+    "u1": 0.4043,
+    "v1": 0.6885,
+    "w_px": 186,
+    "h_px": 196,
+    "piece": "ring disc",
+    "inside": false
+   },
+   {
+    "id": 32,
+    "u0": 0.4141,
+    "v0": 0.5947,
+    "u1": 0.4946,
+    "v1": 0.6865,
+    "w_px": 165,
+    "h_px": 188,
+    "piece": "rounded square plate, large",
+    "inside": false
+   },
+   {
+    "id": 33,
+    "u0": 0.3525,
+    "v0": 0.4097,
+    "u1": 0.4302,
+    "v1": 0.5903,
+    "w_px": 159,
+    "h_px": 370,
+    "piece": "tall chamfered plate",
+    "inside": false
+   },
+   {
+    "id": 34,
+    "u0": 0.4429,
+    "v0": 0.4102,
+    "u1": 0.5264,
+    "v1": 0.5894,
+    "w_px": 171,
+    "h_px": 367,
+    "piece": "tall octagon plate with side notches",
+    "inside": false
+   },
+   {
+    "id": 35,
     "u0": 0.729,
-    "v0": 0.441,
-    "u1": 0.771,
-    "v1": 0.527,
-    "w_px": 88,
-    "h_px": 176,
-    "id": 30
+    "v0": 0.4404,
+    "u1": 0.7715,
+    "v1": 0.5273,
+    "w_px": 87,
+    "h_px": 178,
+    "piece": "zip-pull / pipe end",
+    "inside": false
    },
    {
-    "u0": 0.188,
-    "v0": 0.312,
-    "u1": 0.346,
-    "v1": 0.469,
-    "w_px": 324,
-    "h_px": 320,
-    "id": 31
+    "id": 36,
+    "u0": 0.3442,
+    "v0": 0.3438,
+    "u1": 0.7812,
+    "v1": 0.3955,
+    "w_px": 895,
+    "h_px": 106,
+    "piece": "chain lattice strip",
+    "inside": false
    },
    {
-    "u0": 0.646,
-    "v0": 0.412,
-    "u1": 0.699,
-    "v1": 0.461,
-    "w_px": 108,
-    "h_px": 100,
-    "id": 32
+    "id": 37,
+    "u0": 0.0,
+    "v0": 0.4692,
+    "u1": 0.3066,
+    "v1": 0.6875,
+    "w_px": 628,
+    "h_px": 447,
+    "piece": "DANGER HIGH VOLTAGE sign (whole)",
+    "inside": false
    },
    {
-    "u0": 0.779,
-    "v0": 0.312,
-    "u1": 1.0,
-    "v1": 0.533,
-    "w_px": 452,
-    "h_px": 452,
-    "id": 33
-   },
-   {
-    "u0": 0.004,
-    "v0": 0.312,
-    "u1": 0.184,
-    "v1": 0.465,
-    "w_px": 368,
+    "id": 38,
+    "u0": 0.0034,
+    "v0": 0.3125,
+    "u1": 0.1846,
+    "v1": 0.4648,
+    "w_px": 371,
     "h_px": 312,
-    "id": 34
+    "piece": "high-voltage warning triangle, yellow",
+    "inside": false
    },
    {
-    "u0": 0.34,
-    "v0": 0.346,
-    "u1": 0.785,
-    "v1": 0.393,
-    "w_px": 912,
-    "h_px": 96,
-    "id": 35
+    "id": 39,
+    "u0": 0.1875,
+    "v0": 0.3125,
+    "u1": 0.3442,
+    "v1": 0.4688,
+    "w_px": 321,
+    "h_px": 320,
+    "piece": "pressure gauge, bar 0-6, coloured zones",
+    "inside": false
    },
    {
-    "u0": 0.0,
-    "v0": 0.295,
+    "id": 40,
+    "u0": 0.7812,
+    "v0": 0.3125,
     "u1": 1.0,
-    "v1": 0.309,
+    "v1": 0.5278,
+    "w_px": 448,
+    "h_px": 441,
+    "piece": "heart on grunge tile, red",
+    "inside": false
+   },
+   {
+    "id": 41,
+    "u0": 0.5391,
+    "v0": 0.5596,
+    "u1": 0.6191,
+    "v1": 0.6167,
+    "w_px": 164,
+    "h_px": 117,
+    "piece": "circuit logo sticker, green",
+    "inside": false
+   },
+   {
+    "id": 42,
+    "u0": 0.5591,
+    "v0": 0.4575,
+    "u1": 0.5938,
+    "v1": 0.5474,
+    "w_px": 71,
+    "h_px": 184,
+    "piece": "vertical text GOOD (dark)",
+    "inside": false
+   },
+   {
+    "id": 43,
+    "u0": 0.5581,
+    "v0": 0.4141,
+    "u1": 0.5947,
+    "v1": 0.4526,
+    "w_px": 75,
+    "h_px": 79,
+    "piece": "letters AI, green",
+    "inside": false
+   },
+   {
+    "id": 44,
+    "u0": 0.646,
+    "v0": 0.563,
+    "u1": 0.6987,
+    "v1": 0.6147,
+    "w_px": 108,
+    "h_px": 106,
+    "piece": "chevron badge, triple",
+    "inside": false
+   },
+   {
+    "id": 45,
+    "u0": 0.646,
+    "v0": 0.4873,
+    "u1": 0.6987,
+    "v1": 0.5396,
+    "w_px": 108,
+    "h_px": 107,
+    "piece": "chevron badge, double",
+    "inside": false
+   },
+   {
+    "id": 46,
+    "u0": 0.6465,
+    "v0": 0.4116,
+    "u1": 0.6987,
+    "v1": 0.4639,
+    "w_px": 107,
+    "h_px": 107,
+    "piece": "chevron badge, single",
+    "inside": false
+   },
+   {
+    "id": 47,
+    "u0": 0.0176,
+    "v0": 0.5977,
+    "u1": 0.2891,
+    "v1": 0.6738,
+    "w_px": 556,
+    "h_px": 156,
+    "piece": "DANGER red oval on black band (inside sign)",
+    "inside": true
+   },
+   {
+    "id": 48,
+    "u0": 0.0469,
+    "v0": 0.4961,
+    "u1": 0.2617,
+    "v1": 0.5859,
+    "w_px": 440,
+    "h_px": 184,
+    "piece": "words HIGH VOLTAGE (inside sign)",
+    "inside": true
+   },
+   {
+    "id": 49,
+    "u0": 0.0,
+    "v0": 0.2954,
+    "u1": 1.0,
+    "v1": 0.3086,
+    "w_px": 2048,
+    "h_px": 27,
+    "piece": "full-width plain strip (top)",
+    "inside": false
+   },
+   {
+    "id": 50,
+    "u0": 0.0,
+    "v0": 0.2744,
+    "u1": 1.0,
+    "v1": 0.2871,
+    "w_px": 2048,
+    "h_px": 26,
+    "piece": "row of round dots (rivets), full width",
+    "inside": false
+   },
+   {
+    "id": 51,
+    "u0": 0.0,
+    "v0": 0.2554,
+    "u1": 1.0,
+    "v1": 0.269,
     "w_px": 2048,
     "h_px": 28,
-    "id": 36
+    "piece": "panel seam, V-groove (used for seams)",
+    "inside": false
    },
    {
+    "id": 52,
     "u0": 0.0,
-    "v0": 0.232,
+    "v0": 0.2329,
     "u1": 1.0,
-    "v1": 0.246,
+    "v1": 0.2461,
+    "w_px": 2048,
+    "h_px": 27,
+    "piece": "full-width plain strip",
+    "inside": false
+   },
+   {
+    "id": 53,
+    "u0": 0.0,
+    "v0": 0.2119,
+    "u1": 1.0,
+    "v1": 0.2246,
+    "w_px": 2048,
+    "h_px": 26,
+    "piece": "row of round dots (rivets), full width, second",
+    "inside": false
+   },
+   {
+    "id": 54,
+    "u0": 0.0,
+    "v0": 0.1929,
+    "u1": 1.0,
+    "v1": 0.2065,
     "w_px": 2048,
     "h_px": 28,
-    "id": 37
+    "piece": "panel seam, V-groove (used on the gatling turret)",
+    "inside": false
    },
    {
+    "id": 55,
     "u0": 0.0,
-    "v0": 0.256,
+    "v0": 0.1392,
     "u1": 1.0,
-    "v1": 0.27,
+    "v1": 0.1753,
     "w_px": 2048,
-    "h_px": 28,
-    "id": 38
+    "h_px": 74,
+    "piece": "rolled-edge band, full width",
+    "inside": false
    },
    {
-    "u0": 0.0,
-    "v0": 0.141,
-    "u1": 1.0,
-    "v1": 0.174,
-    "w_px": 2048,
-    "h_px": 68,
-    "id": 39
+    "id": 56,
+    "u0": 0.0288,
+    "v0": 0.0898,
+    "u1": 0.9937,
+    "v1": 0.1084,
+    "w_px": 1976,
+    "h_px": 38,
+    "piece": "grime speck row",
+    "inside": false
    },
    {
+    "id": 57,
     "u0": 0.0,
-    "v0": 0.193,
+    "v0": 0.0449,
     "u1": 1.0,
-    "v1": 0.207,
+    "v1": 0.0552,
     "w_px": 2048,
-    "h_px": 28,
-    "id": 40
+    "h_px": 21,
+    "piece": "full-width thin strip",
+    "inside": false
    },
    {
+    "id": 58,
     "u0": 0.0,
-    "v0": 0.045,
+    "v0": 0.0073,
     "u1": 1.0,
-    "v1": 0.055,
+    "v1": 0.0239,
     "w_px": 2048,
-    "h_px": 20,
-    "id": 41
+    "h_px": 34,
+    "piece": "panel seam with one-sided bevel",
+    "inside": false
    },
    {
+    "id": 59,
     "u0": 0.0,
-    "v0": 0.008,
+    "v0": 0.2554,
     "u1": 1.0,
-    "v1": 0.023,
+    "v1": 0.3086,
     "w_px": 2048,
-    "h_px": 32,
-    "id": 42
+    "h_px": 109,
+    "piece": "riveted band: strip + rivet row + strip as one decal (49+50+51)",
+    "inside": false
+   },
+   {
+    "id": 60,
+    "u0": 0.0,
+    "v0": 0.1929,
+    "u1": 1.0,
+    "v1": 0.2461,
+    "w_px": 2048,
+    "h_px": 109,
+    "piece": "riveted band, second copy (52+53+54)",
+    "inside": false
+   },
+   {
+    "id": 61,
+    "u0": 0.0,
+    "v0": 0.0073,
+    "u1": 1.0,
+    "v1": 0.0552,
+    "w_px": 2048,
+    "h_px": 98,
+    "piece": "double strip: thin strip + bevelled seam as one decal (57+58)",
+    "inside": false
    }
-  ]
+  ],
+  "note": "re-catalogued at full resolution; ids match atlas-regions.md"
  },
  "TextAtlas": {
   "size": [

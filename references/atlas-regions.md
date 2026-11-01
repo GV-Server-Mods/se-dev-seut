@@ -3,9 +3,14 @@
 Where each piece sits in the vanilla decal atlases, so a decal quad can be UV-mapped to a known piece instead of guessing.
 
 - UV values use Blender's convention: (0, 0) is the **bottom left** of the image, so they can be typed straight into the UV editor.
-- Boxes are tight bounding boxes of the opaque pixels in the `_alphamask` texture, measured at 512 px and reported as fractions of the full image. Add a small margin in the UV editor if edges bleed.
+- Boxes are bounding boxes of the piece's pixels in the `_alphamask` texture, reported as fractions of the full image.
 - `px` is the piece size at the texture's full resolution.
-- [SOFT] Boxes come from `scripts/extract_atlas_regions.py`; the description column was read by eye from `scripts/annotate_atlas.py` previews. Boxes are reliable, descriptions of small pieces less so (see the note under each atlas). The raw numbers are in `atlas-regions.json`.
+- Atlas2, ButtonsAtlas and Decals_Atlas_A_01 were re-catalogued at full resolution (2048 px) and checked piece by
+  piece against the owner's markup [HARD]: faint faded edges are included, touching pieces are split on the
+  emptiest line between them, and pieces that cannot be boxed without catching a neighbour (diamonds, nested
+  chevrons, diagonal splits, an L-shaped pipe) have outlines. Atlas1, Atlas3, Atlas4 and TextAtlas still come from
+  the older 512 px pass [SOFT]: boxes from `scripts/extract_atlas_regions.py`, descriptions read by eye.
+  The raw numbers, outlines included, are in `atlas-regions.json`.
 
 ## Which materials use which atlas
 
@@ -39,6 +44,22 @@ Rotate the quad (or reorder the corner list) rather than flipping UVs when a pie
 2. Run `python scripts/annotate_atlas.py <OUT_DIR>` to draw numbered boxes.
 3. Read the annotated images and fix descriptions. For touching pieces, add rough rectangles to `SPLIT_HINTS`.
 
+How the full-resolution pass worked, and what the owner's review caught [HARD]:
+- Draw a generous rectangle per piece, then snap it to the pixels inside at 2048 px. Snapping only shrinks a box,
+  so a hint drawn too small stays clipped; draw them large but clear of neighbours.
+- Snap at a low alpha (0.02), grown only through pixels connected to the piece: a 0.5 cutoff dropped soft edges
+  (bolt halos, faded grunge borders, bevel strips), while a global low cutoff caught haze and neighbours.
+- Where pieces touch (a gauge tile against a chain strip, grime drips under a scratched strip), cut both boxes on
+  the emptiest row or column between them, then check every pair of boxes for overlap.
+- Use an outline when a box cannot avoid a neighbour: a diamond's four corners, nested chevrons, a square or
+  diamond split along a diagonal, an L-shaped pipe, a tile stepping around a strip's end.
+- Pieces inside a sign or panel cannot be snapped (the background is opaque): measure them from the colour
+  texture (dark pixels for a barcode, red for a prohibition circle) and give icons a square centred on the icon.
+- Tiles laid edge to edge (four food icons on one strip, colour bands in one stripe row) get equal boxes from the
+  strip they sit on, split at the real colour changes, not by eye.
+- Draw review outlines just outside each box; a line on the box edge hides the piece's outermost pixels and makes
+  the box look clipped.
+
 ## Atlas1
 
 Full size 2048 x 2048 px, 13 regions. Boxes checked by eye.
@@ -61,54 +82,111 @@ Full size 2048 x 2048 px, 13 regions. Boxes checked by eye.
 
 ## Atlas2
 
-Full size 2048 x 2048 px, 44 regions. Boxes found by script; labels read by eye. Box 15 is a merged group, and some pieces have no box (the medical kit caption, the serial-number text block, the red crossed-out WARNING, the red warning triangle, the logo marks at the right edge). Re-check small pieces in the UV editor before relying on them.
+Full size 2048 x 2048 px, 89 pieces. Re-catalogued at full resolution and checked piece by piece against the owner's markup. Boxes are snapped to every pixel with alpha above 0.02 that is connected to the piece, so faint edges are inside; where two pieces touch, the boundary sits on the emptiest line between them. `inside` rows are pieces within a larger sign (no transparent border to snap to; measured from the colour texture). Pieces whose box would overlap a neighbour have an outline instead (listed under the table; use the outline as the decal face's shape with the same points as UVs, then triangulate).
 
 | id | u0 | v0 | u1 | v1 | px | piece |
 |---|---|---|---|---|---|---|
-| 1 | 0.0 | 0.873 | 0.127 | 0.996 | 260x252 | medical heart icon on a pink tile |
-| 2 | 0.131 | 0.881 | 0.244 | 0.994 | 232x232 | disc: left arrow |
-| 3 | 0.256 | 0.881 | 0.369 | 0.994 | 232x232 | disc: shopping cart / download |
-| 4 | 0.381 | 0.881 | 0.494 | 0.994 | 232x232 | disc: skip back |
-| 5 | 0.506 | 0.881 | 0.619 | 0.994 | 232x232 | disc: pause/step |
-| 6 | 0.625 | 0.875 | 0.852 | 1.0 | 464x256 | WARNING tip-over hazard sign |
-| 7 | 0.881 | 0.898 | 0.93 | 0.975 | 100x156 | white left-pointing triangle |
-| 8 | 0.955 | 0.941 | 0.992 | 0.955 | 76x28 | vertical word fragment RIGHT (letters stacked) |
-| 9 | 0.955 | 0.975 | 0.992 | 0.988 | 76x28 | vertical word fragment RIGHT, top letters |
-| 10 | 0.955 | 0.885 | 0.992 | 0.898 | 76x28 | vertical word fragment RIGHT, bottom letters |
-| 11 | 0.178 | 0.826 | 0.191 | 0.863 | 28x76 | tiny fragment inside the LEFT DOWN UP word line |
-| 12 | 0.5 | 0.818 | 0.596 | 0.871 | 196x108 | HIGH VOLTAGE label |
-| 13 | 0.25 | 0.691 | 0.389 | 0.812 | 284x248 | flame hazard triangle |
-| 14 | 0.414 | 0.691 | 0.586 | 0.812 | 352x248 | CAUTION MOVING PARTS |
-| 15 | 0.6 | 0.684 | 0.986 | 0.867 | 792x376 | merged box: Remote Operated System strip, WARNING HIGH PRESSURE, explosive diamond, dots (split by hand before use) |
-| 16 | 0.0 | 0.688 | 0.225 | 0.812 | 460x256 | DANGER strong magnetic field |
-| 17 | 0.389 | 0.611 | 0.592 | 0.686 | 416x152 | RESTRICTED AREA |
-| 18 | 0.611 | 0.619 | 0.672 | 0.682 | 124x128 | X-mark hazard square |
-| 19 | 0.688 | 0.623 | 0.746 | 0.682 | 120x120 | battery icon, orange |
-| 20 | 0.764 | 0.609 | 0.844 | 0.676 | 164x136 | double chevron arrow |
-| 21 | 0.938 | 0.609 | 0.992 | 0.67 | 112x124 | striped corner tile |
-| 22 | 0.0 | 0.559 | 0.365 | 0.674 | 748x236 | TYPE A label with barcode |
-| 23 | 0.387 | 0.561 | 0.586 | 0.596 | 408x72 | SIGNAL with radio waves |
-| 24 | 0.6 | 0.568 | 0.639 | 0.605 | 80x76 | HUD corner arc fragment |
-| 25 | 0.523 | 0.508 | 0.539 | 0.541 | 32x68 | small red square |
-| 26 | 0.561 | 0.514 | 0.592 | 0.541 | 64x56 | small red down-triangle |
-| 27 | 0.605 | 0.525 | 0.643 | 0.564 | 76x80 | HUD ring arc |
-| 28 | 0.711 | 0.543 | 0.75 | 0.582 | 80x80 | square with diagonal split |
-| 29 | 0.787 | 0.533 | 0.842 | 0.59 | 112x116 | striped diamond |
-| 30 | 0.855 | 0.521 | 1.0 | 0.6 | 296x160 | ENERGY SOURCE, yellow |
-| 31 | 0.008 | 0.416 | 0.268 | 0.547 | 532x268 | COMPRESSED OXYGEN label |
-| 32 | 0.283 | 0.424 | 0.504 | 0.537 | 452x232 | CAUTION BATTERY BOX |
-| 33 | 0.824 | 0.459 | 0.869 | 0.504 | 92x92 | X in square icon |
-| 34 | 0.424 | 0.375 | 0.449 | 0.408 | 52x68 | small bottle shape |
-| 35 | 0.166 | 0.289 | 0.404 | 0.402 | 488x232 | AMMUNITION label |
-| 36 | 0.42 | 0.289 | 0.453 | 0.373 | 68x172 | white tube shape |
-| 37 | 0.539 | 0.252 | 0.715 | 0.428 | 360x360 | RADIOACTIVE diamond |
-| 38 | 0.725 | 0.146 | 0.795 | 0.428 | 144x576 | four food icons (utensils, water, wheat, mushroom) |
-| 39 | 0.801 | 0.156 | 0.994 | 0.428 | 396x556 | MEAL PACK nutrition label with QR code |
-| 40 | 0.166 | 0.211 | 0.309 | 0.281 | 292x144 | two icons: spider and steak |
-| 41 | 0.006 | 0.113 | 0.305 | 0.203 | 612x184 | SEEDS label |
-| 42 | 0.811 | 0.121 | 1.0 | 0.152 | 388x64 | SPORES strip |
-| 43 | 0.0 | 0.055 | 0.25 | 0.105 | 512x104 | orange hazard stripes |
-| 44 | 0.0 | 0.0 | 1.0 | 0.051 | 2048x104 | four stripe bands: yellow/black, white/black, pink/white, grey/black |
+| 1 | 0 | 0.8721 | 0.127 | 0.9971 | 260x256 | medical heart icon, pink rounded tile |
+| 2 | 0.1289 | 0.8789 | 0.2461 | 0.9961 | 240x240 | disc icon: left arrow |
+| 3 | 0.2539 | 0.8789 | 0.3711 | 0.9961 | 240x240 | disc icon: shopping cart with down arrow |
+| 4 | 0.3789 | 0.8789 | 0.4961 | 0.9961 | 240x240 | disc icon: skip back |
+| 5 | 0.5039 | 0.8789 | 0.6211 | 0.9961 | 240x240 | disc icon: play/pause |
+| 6 | 0.6245 | 0.875 | 0.8516 | 1 | 465x256 | WARNING TIP OVER HAZARD sign (orange header, pictogram, small print) |
+| 7 | 0.8794 | 0.897 | 0.9312 | 0.9766 | 106x163 | white left-pointing triangle |
+| 8 | 0.9536 | 0.8306 | 0.9927 | 0.9878 | 80x322 | word RIGHT, vertical (letters rotated 90 degrees) |
+| 9 | 0.0244 | 0.8149 | 0.0981 | 0.855 | 151x82 | words "medical kit", red, two lines |
+| 10 | 0.1226 | 0.8267 | 0.2324 | 0.8643 | 225x77 | word LEFT, black |
+| 11 | 0.2441 | 0.8271 | 0.3926 | 0.8657 | 304x79 | word DOWN, black |
+| 12 | 0.4233 | 0.8257 | 0.4897 | 0.8643 | 136x79 | word UP, black |
+| 13 | 0.5 | 0.8174 | 0.5957 | 0.8721 | 196x112 | HIGH VOLTAGE label, black on white |
+| 14 | 0.6074 | 0.8179 | 0.8604 | 0.8677 | 518x102 | Engine / Remote Operated System label, white on black |
+| 15 | 0 | 0.687 | 0.2251 | 0.813 | 461x258 | DANGER STRONG MAGNETIC FIELD sign |
+| 16 | 0.2495 | 0.6904 | 0.3887 | 0.813 | 285x251 | flame hazard triangle, yellow |
+| 17 | 0.4131 | 0.6899 | 0.5869 | 0.813 | 356x252 | CAUTION MOVING PARTS sign, yellow |
+| 18 | 0.5991 | 0.6899 | 0.8071 | 0.813 | 426x252 | WARNING HIGH PRESSURE sign, yellow |
+| 19 | 0.8228 | 0.6821 | 0.9878 | 0.8477 | 338x339 | explosive hazard diamond, orange, division 1 (diamond outline) (outline below) |
+| 20 | 0.8135 | 0.6855 | 0.8691 | 0.7383 | 114x108 | three white dots, triangle cluster (box cut along the diamond edge) (outline below) |
+| 21 | 0.9395 | 0.6787 | 0.9937 | 0.7227 | 111x90 | red ring (box cut along the diamond edge) (outline below) |
+| 22 | 0 | 0.5571 | 0.3657 | 0.6733 | 749x238 | TYPE A label with barcode |
+| 23 | 0.3872 | 0.6099 | 0.5928 | 0.6855 | 421x155 | RESTRICTED AREA sign, red |
+| 24 | 0.6099 | 0.6191 | 0.6724 | 0.6816 | 128x128 | X-mark hazard square, orange |
+| 25 | 0.688 | 0.6216 | 0.748 | 0.6816 | 123x123 | battery icon, red tile |
+| 26 | 0.8628 | 0.6079 | 0.9263 | 0.6719 | 130x131 | square with corner triangle |
+| 27 | 0.9365 | 0.6084 | 0.9927 | 0.6699 | 115x126 | small striped corner mark |
+| 28 | 0.3857 | 0.5601 | 0.5488 | 0.5957 | 334x73 | word SIGNAL on white plate |
+| 29 | 0.8555 | 0.5215 | 1 | 0.6021 | 296x165 | ENERGY SOURCE sign, yellow with lightning |
+| 30 | 0.0078 | 0.4146 | 0.2681 | 0.5469 | 533x271 | COMPRESSED OXYGEN label, green |
+| 31 | 0.2832 | 0.4224 | 0.5044 | 0.5376 | 453x236 | CAUTION BATTERY BOX label, red stripes |
+| 32 | 0.5234 | 0.5078 | 0.5396 | 0.5415 | 33x69 | small red square |
+| 33 | 0.5576 | 0.5088 | 0.5947 | 0.5405 | 76x65 | small red down-triangle |
+| 34 | 0.5264 | 0.4355 | 0.5894 | 0.4985 | 129x129 | red prohibition circle (crossed out) |
+| 35 | 0.5947 | 0.4707 | 0.7266 | 0.4858 | 270x31 | word WARNING, red outline letters |
+| 36 | 0.5952 | 0.4561 | 0.6875 | 0.4639 | 189x16 | words DO NOT OPEN, red |
+| 37 | 0.5947 | 0.4443 | 0.8047 | 0.4517 | 430x15 | words AUTHORIZED PERSONNEL ONLY, red |
+| 38 | 0.8237 | 0.4492 | 0.8701 | 0.5132 | 95x131 | X icon in white frame |
+| 39 | 0.873 | 0.4399 | 0.9512 | 0.5088 | 160x141 | white triangle outline |
+| 40 | 0.9517 | 0.4404 | 0.9917 | 0.5112 | 82x145 | white bracket, left-pointing |
+| 41 | 0.0127 | 0.3862 | 0.1284 | 0.4033 | 237x35 | text MXS-2859-B |
+| 42 | 0.1353 | 0.3809 | 0.1533 | 0.4082 | 37x56 | digit 9 in a box |
+| 43 | 0.061 | 0.3643 | 0.1284 | 0.3818 | 138x36 | text OB40-E |
+| 44 | 0.0117 | 0.3394 | 0.0327 | 0.3569 | 43x36 | number 52 |
+| 45 | 0.0391 | 0.3394 | 0.0811 | 0.3569 | 86x36 | text ACG |
+| 46 | 0.0132 | 0.3086 | 0.0488 | 0.3257 | 73x35 | word NET |
+| 47 | 0.0137 | 0.2852 | 0.0601 | 0.3027 | 95x36 | word TARE |
+| 48 | 0.0137 | 0.2637 | 0.0737 | 0.2812 | 123x36 | text M.G.W. |
+| 49 | 0.0132 | 0.2373 | 0.123 | 0.2495 | 225x25 | serial 20124D0000E4 |
+| 50 | 0.1274 | 0.2373 | 0.1533 | 0.2495 | 53x25 | number 210 |
+| 51 | 0.0127 | 0.2236 | 0.1123 | 0.2344 | 204x22 | words MADE IN SPACE |
+| 52 | 0.1646 | 0.2881 | 0.4058 | 0.4028 | 494x235 | AMMUNITION label (heavy caliber, tare mass, warfare) |
+| 53 | 0.4189 | 0.2866 | 0.4551 | 0.4121 | 74x257 | bullet / shell icon, white |
+| 54 | 0.4648 | 0.354 | 0.5342 | 0.4141 | 142x123 | red warning triangle outline with ! |
+| 55 | 0.5391 | 0.2515 | 0.7153 | 0.4282 | 361x362 | RADIOACTIVE II diamond, transport class 7 |
+| 56 | 0.7236 | 0.3584 | 0.7959 | 0.4287 | 148x144 | food icon: knife and fork, grey tile |
+| 57 | 0.7236 | 0.2881 | 0.7959 | 0.3584 | 148x144 | food icon: heat waves, cyan tile |
+| 58 | 0.7236 | 0.2173 | 0.7959 | 0.2881 | 148x145 | food icon: wheat, orange tile |
+| 59 | 0.7236 | 0.147 | 0.7959 | 0.2173 | 148x144 | food icon: mushroom, brown tile |
+| 60 | 0.8008 | 0.1553 | 0.9951 | 0.4287 | 398x560 | DEHYDRATED MEAL PACK nutrition label |
+| 61 | 0.1655 | 0.21 | 0.2383 | 0.2808 | 149x145 | icon: spider, purple tile |
+| 62 | 0.2383 | 0.21 | 0.3096 | 0.2808 | 146x145 | icon: steak, red tile |
+| 63 | 0.0059 | 0.1138 | 0.3052 | 0.2036 | 613x184 | SEEDS label with apple icon |
+| 64 | 0.8101 | 0.1211 | 1 | 0.1528 | 389x65 | word SPORES, black on white |
+| 65 | 0 | 0.0552 | 0.25 | 0.105 | 512x102 | orange and black hazard stripes |
+| 66 | 0 | 0 | 0.25 | 0.0498 | 512x102 | yellow and black hazard stripes (tileable band) |
+| 67 | 0.25 | 0 | 0.5 | 0.0498 | 512x102 | white and black stripes (tileable band) |
+| 68 | 0.5 | 0 | 0.75 | 0.0498 | 512x102 | red and white stripes (tileable band) |
+| 69 | 0.75 | 0 | 1 | 0.0498 | 512x102 | grey and black stripes (tileable band) |
+| 70 | 0.9082 | 0.2422 | 0.9766 | 0.3105 | 140x140 | leaf icon, green tile (inside MEAL PACK) |
+| 71 | 0.9082 | 0.1699 | 0.9766 | 0.2383 | 140x140 | QR code (inside MEAL PACK) |
+| 72 | 0.0273 | 0.127 | 0.0898 | 0.1895 | 128x128 | apple icon, green tile (inside SEEDS) |
+| 73 | 0.0449 | 0.5801 | 0.2056 | 0.6143 | 329x70 | barcode (inside TYPE A) |
+| 74 | 0.627 | 0.8784 | 0.7031 | 0.9551 | 156x157 | pictogram: person pushing tipping crate (inside TIP OVER sign) |
+| 75 | 0.0049 | 0.6929 | 0.0767 | 0.7646 | 147x147 | magnet pictogram (inside DANGER magnetic sign) |
+| 76 | 0.103 | 0.3076 | 0.1519 | 0.3257 | 100x37 | weights: 39.480 KGS / 67.200 LBS |
+| 77 | 0.1079 | 0.2852 | 0.1519 | 0.3027 | 90x36 | weights: 2.180 KGS / 4.810 LBS |
+| 78 | 0.1016 | 0.2637 | 0.1509 | 0.2812 | 101x36 | weights: 20.800 KGS / 64.100 LBS |
+| 79 | 0.5991 | 0.5684 | 0.6387 | 0.6069 | 81x79 | target icon quarter, top left |
+| 80 | 0.6431 | 0.5635 | 0.6826 | 0.6035 | 81x82 | target icon quarter, top right |
+| 81 | 0.6045 | 0.5254 | 0.6431 | 0.5645 | 79x80 | target icon quarter, bottom left |
+| 82 | 0.6475 | 0.5239 | 0.6831 | 0.5591 | 73x72 | target icon quarter, bottom right |
+| 83 | 0.7605 | 0.6091 | 0.8098 | 0.675 | 101x135 | chevron, left (one of a double chevron; outline, boxes overlap) (outline below) |
+| 84 | 0.7947 | 0.6091 | 0.8435 | 0.675 | 100x135 | chevron, right (one of a double chevron; outline, boxes overlap) (outline below) |
+| 85 | 0.7021 | 0.5303 | 0.7637 | 0.5918 | 126x126 | square split diagonally, upper-left half, cut along the diagonal (outline below) |
+| 86 | 0.7021 | 0.5303 | 0.7637 | 0.5918 | 126x126 | square split diagonally, lower-right half, cut along the diagonal (outline below) |
+| 87 | 0.7764 | 0.5234 | 0.8491 | 0.5962 | 149x149 | striped diamond, upper-right half, cut along the diagonal (outline below) |
+| 88 | 0.7764 | 0.5234 | 0.8491 | 0.5962 | 149x149 | striped diamond, lower-left half, cut along the diagonal (outline below) |
+| 89 | 0.5488 | 0.5601 | 0.5859 | 0.5957 | 76x73 | radio-wave icon, orange square (right end of the SIGNAL label) |
+
+Outlines (UV points in order; the piece's quad or polygon uses the same points as positions and UVs):
+
+- 19 explosive hazard diamond, orange, division 1 (diamond outline): (0.9048, 0.8477), (0.9878, 0.7642), (0.9048, 0.6821), (0.8228, 0.7642)
+- 20 three white dots, triangle cluster (box cut along the diamond edge): (0.8135, 0.6855), (0.8691, 0.6855), (0.8691, 0.7122), (0.843, 0.7383), (0.8135, 0.7383)
+- 21 red ring (box cut along the diamond edge): (0.9395, 0.6787), (0.9937, 0.6787), (0.9937, 0.7227), (0.9539, 0.7227), (0.9395, 0.7083)
+- 83 chevron, left (one of a double chevron; outline, boxes overlap): (0.7605, 0.6091), (0.7839, 0.6091), (0.8098, 0.6414), (0.7839, 0.6746), (0.7605, 0.675), (0.7864, 0.6423)
+- 84 chevron, right (one of a double chevron; outline, boxes overlap): (0.7947, 0.6091), (0.8176, 0.6091), (0.8435, 0.6418), (0.8176, 0.675), (0.7947, 0.675), (0.8206, 0.6423)
+- 85 square split diagonally, upper-left half (cut along the diagonal): (0.7021, 0.5303), (0.7637, 0.5918), (0.7021, 0.5918)
+- 86 square split diagonally, lower-right half (cut along the diagonal): (0.7021, 0.5303), (0.7637, 0.5303), (0.7637, 0.5918)
+- 87 striped diamond, upper-right half (cut along the diagonal): (0.7764, 0.5962), (0.8491, 0.5962), (0.8491, 0.5234)
+- 88 striped diamond, lower-left half (cut along the diagonal): (0.7764, 0.5962), (0.8491, 0.5234), (0.7764, 0.5234)
 
 ## Atlas3
 
@@ -195,93 +273,154 @@ Full size 1024 x 1024 px, 9 regions. Boxes checked by eye.
 
 ## ButtonsAtlas
 
-Full size 2048 x 2048 px, 32 regions. Boxes found by script; small pieces were not all confirmed.
+Full size 2048 x 2048 px, 66 pieces, re-catalogued at full resolution. Panels are snapped to their pixels; single keys on a panel are `inside` rows (the panel is opaque around them, so the box is measured, not snapped) and can be used as small decals on their own.
 
 | id | u0 | v0 | u1 | v1 | px | piece |
 |---|---|---|---|---|---|---|
-| 1 | 0.004 | 0.879 | 0.246 | 0.996 | 496x240 | panel: three round toggles with three LEDs |
-| 2 | 0.254 | 0.879 | 0.496 | 0.996 | 496x240 | Panel 1: seven LEDs and seven buttons |
-| 3 | 0.502 | 0.879 | 0.684 | 0.996 | 372x240 | F1-F6 button panel |
-| 4 | 0.697 | 0.943 | 0.74 | 0.986 | 88x88 | green LED |
-| 5 | 0.752 | 0.877 | 0.873 | 0.998 | 248x248 | white round button |
-| 6 | 0.877 | 0.877 | 0.998 | 0.998 | 248x248 | yellow round button |
-| 7 | 0.697 | 0.889 | 0.74 | 0.932 | 88x88 | red LED |
-| 8 | 0.125 | 0.762 | 0.25 | 0.863 | 256x208 | two red rocker switches |
-| 9 | 0.508 | 0.76 | 0.561 | 0.867 | 108x220 | slider switch, red |
-| 10 | 0.568 | 0.76 | 0.621 | 0.867 | 108x220 | slider switch, green |
-| 11 | 0.629 | 0.76 | 0.682 | 0.867 | 108x220 | slider switch, yellow |
-| 12 | 0.689 | 0.76 | 0.74 | 0.867 | 104x220 | slider switch, blue |
-| 13 | 0.754 | 0.756 | 0.871 | 0.871 | 240x236 | white square button |
-| 14 | 0.879 | 0.756 | 0.996 | 0.871 | 240x236 | yellow square button |
-| 15 | 0.004 | 0.629 | 0.121 | 0.871 | 240x496 | 12-key keypad (Esc, Spin, ...) |
-| 16 | 0.129 | 0.691 | 0.184 | 0.746 | 112x112 | grey ring button |
-| 17 | 0.191 | 0.691 | 0.246 | 0.746 | 112x112 | blue ring button |
-| 18 | 0.254 | 0.629 | 0.496 | 0.871 | 496x496 | control panel: M1-M5 buttons, round pads, slider |
-| 19 | 0.129 | 0.629 | 0.184 | 0.684 | 112x112 | orange ring button |
-| 20 | 0.191 | 0.629 | 0.246 | 0.684 | 112x112 | green ring button |
-| 21 | 0.506 | 0.629 | 0.756 | 0.75 | 512x248 | row of knobs, lever, joystick and two plug sockets (several pieces in one box) |
-| 22 | 0.77 | 0.637 | 0.871 | 0.738 | 208x208 | round connector, dark socket |
-| 23 | 0.885 | 0.639 | 0.988 | 0.74 | 212x208 | six-pin round connector |
-| 24 | 0.383 | 0.551 | 0.449 | 0.617 | 136x136 | plain light square button |
-| 25 | 0.455 | 0.551 | 0.523 | 0.619 | 140x140 | plain light square button |
-| 26 | 0.531 | 0.547 | 0.611 | 0.619 | 164x148 | round jack, white |
-| 27 | 0.619 | 0.547 | 0.699 | 0.619 | 164x148 | round jack, yellow and green |
-| 28 | 0.707 | 0.547 | 0.785 | 0.619 | 160x148 | round jack, red |
-| 29 | 0.793 | 0.547 | 0.873 | 0.619 | 164x148 | round jack, cyan |
-| 30 | 0.254 | 0.5 | 0.371 | 0.617 | 240x240 | EMERGENCY STOP button |
-| 31 | 0.881 | 0.504 | 0.992 | 0.621 | 228x240 | large round socket |
-| 32 | 0.877 | 0.379 | 0.998 | 0.498 | 248x244 | large round button with red ring |
+| 1 | 0.0034 | 0.8784 | 0.2471 | 0.9966 | 499x242 | panel: three rotary toggles with green LEDs |
+| 2 | 0.2534 | 0.8784 | 0.4966 | 0.9966 | 498x242 | panel "Panel 1": 7 keys C1-C7 with LEDs |
+| 3 | 0.5024 | 0.8789 | 0.6846 | 0.9966 | 373x241 | panel: 6 keys F1-F6 |
+| 4 | 0.2754 | 0.9131 | 0.3008 | 0.9375 | 52x50 | key C1 [inside] |
+| 5 | 0.3047 | 0.9131 | 0.3301 | 0.9375 | 52x50 | key C2 [inside] |
+| 6 | 0.333 | 0.9131 | 0.3584 | 0.9375 | 52x50 | key C3 [inside] |
+| 7 | 0.3623 | 0.9131 | 0.3877 | 0.9375 | 52x50 | key C4 [inside] |
+| 8 | 0.3906 | 0.9131 | 0.416 | 0.9375 | 52x50 | key C5 [inside] |
+| 9 | 0.4199 | 0.9131 | 0.4453 | 0.9375 | 52x50 | key C6 [inside] |
+| 10 | 0.4482 | 0.9131 | 0.4736 | 0.9375 | 52x50 | key C7 [inside] |
+| 11 | 0.5176 | 0.9414 | 0.5625 | 0.9707 | 92x60 | key F1 [inside] |
+| 12 | 0.5723 | 0.9414 | 0.6172 | 0.9707 | 92x60 | key F2 [inside] |
+| 13 | 0.625 | 0.9414 | 0.6699 | 0.9707 | 92x60 | key F3 [inside] |
+| 14 | 0.5176 | 0.8926 | 0.5625 | 0.9219 | 92x60 | key F4 [inside] |
+| 15 | 0.5723 | 0.8926 | 0.6172 | 0.9219 | 92x60 | key F5 [inside] |
+| 16 | 0.625 | 0.8926 | 0.6699 | 0.9219 | 92x60 | key F6 [inside] |
+| 17 | 0.6968 | 0.9424 | 0.7407 | 0.9863 | 90x90 | LED, green |
+| 18 | 0.6968 | 0.8892 | 0.7407 | 0.9331 | 90x90 | LED, red |
+| 19 | 0.752 | 0.8774 | 0.873 | 0.9976 | 248x246 | big round button, white |
+| 20 | 0.877 | 0.8774 | 0.998 | 0.9976 | 248x246 | big round button, yellow |
+| 21 | 0.0029 | 0.6279 | 0.1216 | 0.8716 | 243x499 | panel: keypad of 10 labelled keys |
+| 22 | 0.0195 | 0.8232 | 0.0557 | 0.8584 | 74x72 | key Esc [inside] |
+| 23 | 0.0693 | 0.8232 | 0.1055 | 0.8584 | 74x72 | key Spin [inside] |
+| 24 | 0.0195 | 0.7783 | 0.0557 | 0.8135 | 74x72 | key If [inside] |
+| 25 | 0.0693 | 0.7783 | 0.1055 | 0.8135 | 74x72 | key YoU [inside] |
+| 26 | 0.0195 | 0.7334 | 0.0557 | 0.7686 | 74x72 | key Rea [inside] |
+| 27 | 0.0693 | 0.7334 | 0.1055 | 0.7686 | 74x72 | key DTh [inside] |
+| 28 | 0.0195 | 0.6885 | 0.0557 | 0.7236 | 74x72 | key iSHa [inside] |
+| 29 | 0.0693 | 0.6885 | 0.1055 | 0.7236 | 74x72 | key VEan [inside] |
+| 30 | 0.0195 | 0.6436 | 0.0557 | 0.6787 | 74x72 | key Ice [inside] |
+| 31 | 0.0693 | 0.6436 | 0.1055 | 0.6787 | 74x72 | key dAy [inside] |
+| 32 | 0.125 | 0.7607 | 0.187 | 0.8638 | 127x211 | rocker switch, red (left) |
+| 33 | 0.1875 | 0.7607 | 0.2495 | 0.8638 | 127x211 | rocker switch, red (right) |
+| 34 | 0.2534 | 0.6284 | 0.4966 | 0.8716 | 498x498 | panel: keys N1-N5, three knobs Field1/Field2/Subfield, three knobs WPS/MOD/SRC, slider |
+| 35 | 0.2803 | 0.79 | 0.3057 | 0.8135 | 52x48 | key N1 [inside] |
+| 36 | 0.3096 | 0.79 | 0.335 | 0.8135 | 52x48 | key N2 [inside] |
+| 37 | 0.3379 | 0.79 | 0.3633 | 0.8135 | 52x48 | key N3 [inside] |
+| 38 | 0.3672 | 0.79 | 0.3926 | 0.8135 | 52x48 | key N4 [inside] |
+| 39 | 0.3955 | 0.79 | 0.4209 | 0.8135 | 52x48 | key N5 [inside] |
+| 40 | 0.5083 | 0.7588 | 0.5605 | 0.8667 | 107x221 | slide switch with light, red |
+| 41 | 0.5684 | 0.7588 | 0.6206 | 0.8667 | 107x221 | slide switch with light, green |
+| 42 | 0.6289 | 0.7588 | 0.6812 | 0.8667 | 107x221 | slide switch with light, yellow |
+| 43 | 0.689 | 0.7588 | 0.7412 | 0.8667 | 107x221 | slide switch with light, blue |
+| 44 | 0.7539 | 0.7544 | 0.8711 | 0.8706 | 240x238 | big square button, white |
+| 45 | 0.8789 | 0.7544 | 0.9961 | 0.8706 | 240x238 | big square button, yellow |
+| 46 | 0.1274 | 0.6904 | 0.1846 | 0.7476 | 117x117 | round jack, white |
+| 47 | 0.1904 | 0.6904 | 0.2476 | 0.7476 | 117x117 | round jack, blue |
+| 48 | 0.1274 | 0.6274 | 0.1846 | 0.6846 | 117x117 | round jack, orange |
+| 49 | 0.1904 | 0.6274 | 0.2476 | 0.6846 | 117x117 | round jack, green |
+| 50 | 0.5044 | 0.6841 | 0.564 | 0.752 | 122x139 | rotary knob, grey |
+| 51 | 0.5688 | 0.689 | 0.6289 | 0.749 | 123x123 | round push button, fluted |
+| 52 | 0.6328 | 0.689 | 0.6924 | 0.7485 | 122x122 | round push button, plain |
+| 53 | 0.6968 | 0.6763 | 0.7563 | 0.7476 | 122x146 | toggle lever (outline notched around the slot corner) (outline below) |
+| 54 | 0.7681 | 0.6353 | 0.8716 | 0.7388 | 212x212 | round connector, 4 pins |
+| 55 | 0.8838 | 0.6367 | 0.9893 | 0.7417 | 216x215 | round connector, 6 pins |
+| 56 | 0.5181 | 0.6274 | 0.603 | 0.6802 | 174x108 | dark slot |
+| 57 | 0.6167 | 0.6274 | 0.7031 | 0.6802 | 177x108 | slot with white light |
+| 58 | 0.2534 | 0.4995 | 0.3716 | 0.6177 | 242x242 | EMERGENCY STOP button |
+| 59 | 0.3818 | 0.5503 | 0.4497 | 0.6187 | 139x140 | square push button (left) |
+| 60 | 0.4556 | 0.5508 | 0.5234 | 0.6187 | 139x139 | square push button (right) |
+| 61 | 0.5303 | 0.5459 | 0.6113 | 0.6196 | 166x151 | round jack, white (large) |
+| 62 | 0.6182 | 0.5459 | 0.6992 | 0.6196 | 166x151 | round jack, orange and green (large) |
+| 63 | 0.7051 | 0.5459 | 0.7861 | 0.6196 | 166x151 | round jack, red (large) |
+| 64 | 0.7915 | 0.5459 | 0.8726 | 0.6196 | 166x151 | round jack, cyan (large) |
+| 65 | 0.8804 | 0.5015 | 0.9937 | 0.623 | 232x249 | large socket, open bore |
+| 66 | 0.877 | 0.3779 | 0.998 | 0.4995 | 248x249 | large socket, closed with clips, red ring |
+
+Outlines (UV points in order; the piece's quad or polygon uses the same points as positions and UVs):
+
+- 53 toggle lever (outline notched around the slot corner): (0.7031, 0.6763), (0.7563, 0.6763), (0.7563, 0.7476), (0.6968, 0.7476), (0.6968, 0.6802), (0.7031, 0.6802)
 
 ## Decals_Atlas_A_01
 
-Full size 2048 x 2048 px, 42 regions. The left block has touching pieces, so its boxes come from hand-placed hints (SPLIT_HINTS in the script). Ids 36-42 are full-width strips; fine grime specks around v 0.1 have no boxes.
+Full size 2048 x 2048 px, 61 pieces, re-catalogued at full resolution and checked against the owner's markup. Boxes include the faint faded edges connected to each piece. Rows 59-61 are combined strips (a riveted band and a double strip); their parts are also listed on their own for variety.
 
 | id | u0 | v0 | u1 | v1 | px | piece |
 |---|---|---|---|---|---|---|
-| 1 | 0.004 | 0.971 | 0.342 | 0.998 | 692x56 | row of eleven bolt and fitting heads |
-| 2 | 0.344 | 0.926 | 0.566 | 1.0 | 456x152 | grime streak overlay |
-| 3 | 0.598 | 0.945 | 0.627 | 0.969 | 60x48 | grime speck |
-| 4 | 0.627 | 0.945 | 0.646 | 0.969 | 40x48 | grime speck |
-| 5 | 0.664 | 0.891 | 0.711 | 0.988 | 96x200 | tall rounded plate |
-| 6 | 0.734 | 0.959 | 0.891 | 0.979 | 320x40 | thin bar |
-| 7 | 0.33 | 0.857 | 0.389 | 0.889 | 120x64 | grime blob |
-| 8 | 0.729 | 0.898 | 0.896 | 0.918 | 344x40 | thin bar |
-| 9 | 0.912 | 0.83 | 0.994 | 0.982 | 168x312 | tall rounded panel |
-| 10 | 0.002 | 0.781 | 0.125 | 0.844 | 252x128 | pipe cross fittings |
-| 11 | 0.135 | 0.795 | 0.178 | 0.83 | 88x72 | small square plate |
-| 12 | 0.664 | 0.783 | 0.713 | 0.873 | 100x184 | tall rounded plate |
-| 13 | 0.734 | 0.834 | 0.893 | 0.854 | 324x40 | thin bar |
-| 14 | 0.002 | 0.725 | 0.059 | 0.777 | 116x108 | rounded square plate |
-| 15 | 0.127 | 0.744 | 0.225 | 0.844 | 200x204 | pipe elbow |
-| 16 | 0.285 | 0.717 | 0.299 | 0.82 | 28x212 | scratch line |
-| 17 | 0.078 | 0.727 | 0.109 | 0.773 | 64x96 | small rounded square |
-| 18 | 0.502 | 0.627 | 0.654 | 0.838 | 312x432 | frame with window |
-| 19 | 0.67 | 0.633 | 0.705 | 0.775 | 72x292 | tall pill plate |
-| 20 | 0.314 | 0.594 | 0.404 | 0.686 | 184x188 | ring disc |
-| 21 | 0.414 | 0.596 | 0.494 | 0.686 | 164x184 | rounded square plate |
-| 22 | 0.719 | 0.529 | 1.0 | 0.812 | 576x580 | vent grille |
-| 23 | 0.002 | 0.467 | 0.307 | 0.688 | 624x452 | DANGER HIGH VOLTAGE sign |
-| 24 | 0.539 | 0.561 | 0.617 | 0.617 | 160x116 | circuit logo sticker |
-| 25 | 0.646 | 0.562 | 0.697 | 0.615 | 104x108 | chevron badge |
-| 26 | 0.646 | 0.488 | 0.699 | 0.539 | 108x104 | chevron badge |
-| 27 | 0.354 | 0.41 | 0.43 | 0.59 | 156x368 | tall chamfered plate |
-| 28 | 0.443 | 0.41 | 0.525 | 0.59 | 168x368 | tall octagon plate with side notches |
-| 29 | 0.559 | 0.414 | 0.594 | 0.547 | 72x272 | vertical text, Good AI |
-| 30 | 0.729 | 0.441 | 0.771 | 0.527 | 88x176 | pipe end |
-| 31 | 0.188 | 0.312 | 0.346 | 0.469 | 324x320 | pressure gauge |
-| 32 | 0.646 | 0.412 | 0.699 | 0.461 | 108x100 | chevron badge |
-| 33 | 0.779 | 0.312 | 1.0 | 0.533 | 452x452 | heart on grunge tile |
-| 34 | 0.004 | 0.312 | 0.184 | 0.465 | 368x312 | high-voltage triangle |
-| 35 | 0.34 | 0.346 | 0.785 | 0.393 | 912x96 | chain / lattice strip |
-| 36 | 0.0 | 0.295 | 1.0 | 0.309 | 2048x28 | full-width strips and bolt rows, stacked (36-42 each span u 0 to 1) |
-| 37 | 0.0 | 0.232 | 1.0 | 0.246 | 2048x28 | full-width strip |
-| 38 | 0.0 | 0.256 | 1.0 | 0.27 | 2048x28 | panel seam: flat grey colour, V-groove in the normal map |
-| 39 | 0.0 | 0.141 | 1.0 | 0.174 | 2048x68 | full-width rolled-edge band |
-| 40 | 0.0 | 0.193 | 1.0 | 0.207 | 2048x28 | panel seam: flat grey colour, V-groove in the normal map (used on the gatling turret) |
-| 41 | 0.0 | 0.045 | 1.0 | 0.055 | 2048x20 | full-width strip |
-| 42 | 0.0 | 0.008 | 1.0 | 0.023 | 2048x32 | panel seam with a one-sided bevel in the normal map |
+| 1 | 0.0034 | 0.9712 | 0.0278 | 0.9971 | 50x53 | bolt head 1: hex nut, slot |
+| 2 | 0.0332 | 0.9707 | 0.0605 | 0.998 | 56x56 | bolt head 2: round with cross |
+| 3 | 0.0635 | 0.9697 | 0.0928 | 0.999 | 60x60 | bolt head 3: dome in recessed ring |
+| 4 | 0.0957 | 0.9722 | 0.123 | 0.9966 | 56x50 | bolt head 4: hex nut |
+| 5 | 0.127 | 0.9717 | 0.1538 | 0.9971 | 55x52 | bolt head 5: oval slotted |
+| 6 | 0.1587 | 0.9712 | 0.1851 | 0.9976 | 54x54 | bolt head 6: round domed |
+| 7 | 0.1904 | 0.9727 | 0.2158 | 0.9961 | 52x48 | bolt head 7: hex socket |
+| 8 | 0.2217 | 0.9717 | 0.2471 | 0.9971 | 52x52 | bolt head 8: slotted screw |
+| 9 | 0.2505 | 0.9697 | 0.2803 | 0.999 | 61x60 | bolt head 9: Phillips screw |
+| 10 | 0.2842 | 0.9717 | 0.3096 | 0.9971 | 52x52 | bolt head 10: plain round dome |
+| 11 | 0.313 | 0.9692 | 0.3428 | 0.999 | 61x61 | bolt head 11: hex socket in a ring |
+| 12 | 0.3438 | 0.9688 | 0.5312 | 1 | 384x64 | scratched light metal strip (one opaque rectangle; the scratches are in its colour) |
+| 13 | 0.4121 | 0.8672 | 0.6489 | 0.9688 | 485x208 | dark grime drips overlay |
+| 14 | 0.3262 | 0.8535 | 0.3916 | 0.8965 | 134x88 | grime blob |
+| 15 | 0.021 | 0.8574 | 0.2637 | 0.9609 | 497x212 | scattered scratch specks |
+| 16 | 0.6636 | 0.8896 | 0.7109 | 0.9883 | 97x202 | tall pill plate |
+| 17 | 0.7324 | 0.9575 | 0.8936 | 0.9795 | 330x45 | thin bar, top |
+| 18 | 0.7266 | 0.8965 | 0.8979 | 0.9185 | 351x45 | thin bar, middle |
+| 19 | 0.7319 | 0.832 | 0.895 | 0.856 | 334x49 | thin bar, bottom |
+| 20 | 0.9102 | 0.8281 | 0.9966 | 0.9849 | 177x321 | tall rounded panel |
+| 21 | 0 | 0.7812 | 0.125 | 0.8438 | 256x128 | pipe cross fitting |
+| 22 | 0.1338 | 0.7935 | 0.1777 | 0.8315 | 90x78 | small square plate |
+| 23 | 0.1252 | 0.7434 | 0.2244 | 0.8435 | 203x205 | pipe elbow (L-shaped outline; its box would cover the small square plate) (outline below) |
+| 24 | 0.0024 | 0.7241 | 0.0591 | 0.7793 | 116x113 | rounded square plate |
+| 25 | 0.0781 | 0.7261 | 0.1084 | 0.7725 | 62x95 | small rounded square |
+| 26 | 0.2705 | 0.7041 | 0.3145 | 0.8291 | 90x256 | scratch line |
+| 27 | 0.5015 | 0.6274 | 0.6543 | 0.8379 | 313x431 | frame with window |
+| 28 | 0.6636 | 0.7822 | 0.7134 | 0.874 | 102x188 | tall rounded plate, notched top |
+| 29 | 0.6704 | 0.6318 | 0.7056 | 0.7759 | 72x295 | tall pill plate, slim |
+| 30 | 0.7188 | 0.5273 | 1 | 0.8125 | 576x584 | vent grille |
+| 31 | 0.3135 | 0.5928 | 0.4043 | 0.6885 | 186x196 | ring disc |
+| 32 | 0.4141 | 0.5947 | 0.4946 | 0.6865 | 165x188 | rounded square plate, large |
+| 33 | 0.3525 | 0.4097 | 0.4302 | 0.5903 | 159x370 | tall chamfered plate |
+| 34 | 0.4429 | 0.4102 | 0.5264 | 0.5894 | 171x367 | tall octagon plate with side notches |
+| 35 | 0.729 | 0.4404 | 0.7715 | 0.5273 | 87x178 | zip-pull / pipe end |
+| 36 | 0.3442 | 0.3438 | 0.7812 | 0.3955 | 895x106 | chain lattice strip |
+| 37 | 0 | 0.4692 | 0.3066 | 0.6875 | 628x447 | DANGER HIGH VOLTAGE sign (whole) |
+| 38 | 0.0034 | 0.3125 | 0.1846 | 0.4648 | 371x312 | high-voltage warning triangle, yellow |
+| 39 | 0.1875 | 0.3125 | 0.3442 | 0.4688 | 321x320 | pressure gauge, bar 0-6, coloured zones |
+| 40 | 0.7812 | 0.3125 | 1 | 0.5278 | 448x441 | heart on grunge tile, red |
+| 41 | 0.5391 | 0.5596 | 0.6191 | 0.6167 | 164x117 | circuit logo sticker, green |
+| 42 | 0.5591 | 0.4575 | 0.5938 | 0.5474 | 71x184 | vertical text GOOD (dark) |
+| 43 | 0.5581 | 0.4141 | 0.5947 | 0.4526 | 75x79 | letters AI, green |
+| 44 | 0.646 | 0.563 | 0.6987 | 0.6147 | 108x106 | chevron badge, triple |
+| 45 | 0.646 | 0.4873 | 0.6987 | 0.5396 | 108x107 | chevron badge, double |
+| 46 | 0.6465 | 0.4116 | 0.6987 | 0.4639 | 107x107 | chevron badge, single |
+| 47 | 0.0176 | 0.5977 | 0.2891 | 0.6738 | 556x156 | DANGER red oval on black band (inside sign) |
+| 48 | 0.0469 | 0.4961 | 0.2617 | 0.5859 | 440x184 | words HIGH VOLTAGE (inside sign) |
+| 49 | 0 | 0.2954 | 1 | 0.3086 | 2048x27 | full-width plain strip (top) |
+| 50 | 0 | 0.2744 | 1 | 0.2871 | 2048x26 | row of round dots (rivets), full width |
+| 51 | 0 | 0.2554 | 1 | 0.269 | 2048x28 | panel seam, V-groove (used for seams) |
+| 52 | 0 | 0.2329 | 1 | 0.2461 | 2048x27 | full-width plain strip |
+| 53 | 0 | 0.2119 | 1 | 0.2246 | 2048x26 | row of round dots (rivets), full width, second |
+| 54 | 0 | 0.1929 | 1 | 0.2065 | 2048x28 | panel seam, V-groove (used on the gatling turret) |
+| 55 | 0 | 0.1392 | 1 | 0.1753 | 2048x74 | rolled-edge band, full width |
+| 56 | 0.0288 | 0.0898 | 0.9937 | 0.1084 | 1976x38 | grime speck row |
+| 57 | 0 | 0.0449 | 1 | 0.0552 | 2048x21 | full-width thin strip |
+| 58 | 0 | 0.0073 | 1 | 0.0239 | 2048x34 | panel seam with one-sided bevel |
+| 59 | 0 | 0.2554 | 1 | 0.3086 | 2048x109 | riveted band: strip + rivet row + strip as one decal (49+50+51) |
+| 60 | 0 | 0.1929 | 1 | 0.2461 | 2048x109 | riveted band, second copy (52+53+54) |
+| 61 | 0 | 0.0073 | 1 | 0.0552 | 2048x98 | double strip: thin strip + bevelled seam as one decal (57+58) |
 
-**Panel lines** [HARD, read from the `_ng` and `_cm` textures, used on a model]: strips 38, 40 and 42 are
+Outlines (UV points in order; the piece's quad or polygon uses the same points as positions and UVs):
+
+- 23 pipe elbow (L-shaped outline; its box would cover the small square plate): (0.1252, 0.7434), (0.1965, 0.7439), (0.2092, 0.7483), (0.2175, 0.7556), (0.2219, 0.7629), (0.2244, 0.7727), (0.2244, 0.8435), (0.2205, 0.8435), (0.2117, 0.8435), (0.2117, 0.7742), (0.2083, 0.7644), (0.2024, 0.759), (0.1951, 0.7566), (0.1252, 0.7566)
+
+**Panel lines** [HARD, read from the `_ng` and `_cm` textures, used on a model]: strips 51, 54 and 58 are
 panel seams. Their colour is a flat mid grey and the line comes from the normal map, so put them on
 `PanelingColorable` (takes the block's paint) for colorable surfaces or `PanelingDarker` for dark fixed metal,
 not on `Decals` (which would paint a grey band). Map V across the band (about 0.025 to 0.03 m wide) and U along

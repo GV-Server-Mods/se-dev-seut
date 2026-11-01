@@ -353,9 +353,9 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
 - **Edge-only wear:** `md = ob.modifiers.new('bev','BEVEL'); md.material = 1`, then give the mesh the slots
   `[PaintedMetal_Darker, PaintedMetalScratched_Darker]` so only the bevel faces get scratches. For meshes that
   are already bevelled, set `material_index = 1` on faces where `area / longest edge < 0.03`.
-- **Bolt decals:** `Decals_Atlas_A_01` row "eleven bolt and fitting heads" (`atlas-regions.md`, region 1), one
-  head per quad. Measured boxes from the alpha mask: hex nut u 0.0957-0.1226 v 0.9722-0.9961, round domed head
-  u 0.1587-0.1846 v 0.9717-0.9971, hex socket in a ring u 0.3135-0.3428 v 0.9697-0.9990. Material `Decals`,
+- **Bolt decals:** `Decals_Atlas_A_01` bolt heads 1-11 (`atlas-regions.md`, one row per head), one head per
+  quad: for example head 4 hex nut u 0.0957-0.123 v 0.9722-0.9966, head 6 round domed u 0.1587-0.1851 v
+  0.9712-0.9976, head 11 hex socket in a ring u 0.313-0.3428 v 0.9692-0.999. Material `Decals`,
   quad 1.5 mm off the surface (3 mm looked like floating heads in game [owner]). Turn every head to a random angle about its normal (and every 3D nut about its
   axis) so they look individually tightened [owner]. Keep real 3D bolts few and low (about 12 mm tall).
   A flat hex decal alone reads as a pale sticker on dark metal (the sheet's colour is light grey, and the darker
@@ -363,8 +363,8 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   5 cm and up sit on a low 3D hex boss (about 16 mm; 10 mm read too thin [owner]; `Metal_Dull` so the boss
   matches the decal's bare-metal head [owner: dark painted bosses did not match]) with the hex decal on top at about 90% of the boss top's width. The hex in the decal has its corners
   on the decal's up axis, while a 6-segment cone has its first corner on local +X, so turn one of them 30 degrees
-  about the normal [HARD, the owner saw every head 30 degrees off]. Smaller bolts get head 3 of the row (u
-  0.0635-0.0928, v 0.9697-0.9990, a dome inside a recessed ring in the normal map) about 1.5 times their size
+  about the normal [HARD, the owner saw every head 30 degrees off]. Smaller bolts get head 3 (u
+  0.0635-0.0928, v 0.9697-0.999, a dome inside a recessed ring in the normal map) about 1.5 times their size
   underneath as a counterbore, about 1 mm lower. Fit each ring to its face: ray-cast 16 rim points down with a
   2 mm tolerance and a normal check, shrink until all land on flat face, drop it otherwise (a 2 cm tolerance let
   rings lap over a pad's bevel).
