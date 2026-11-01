@@ -84,7 +84,11 @@ mechanical parts, openings, equipment, bolts, wear, seams, decals and labels) is
   moved with `location` all landed stacked at the block centre in game, standing up to a foot above the dome
   and leaving the base with no collision, although Havok reported every rigid body. After building, bake the
   transform: `o.data.transform(o.matrix_world); o.matrix_world = Matrix()`. Check in game with the Physics
-  Primitives debug draw (convex hulls draw red).
+  Primitives debug draw (convex hulls draw red). SEUT only tags each mesh with its shape type and Havok fits the
+  shape to the vertices; with the vertices in place, a `BOX` and a `SPHERE` came out of the Havok filter
+  wrapped in `hkpConvexTranslateShape`/`hkpConvexTransformShape`, so they keep their offset [HARD in the .hkt,
+  SOFT in game]. Prefer boxes and spheres where they fit; for wide, flat round parts use hull prisms, since a
+  fitted cylinder may follow the mesh's longest dimension and lie on its side [SOFT].
 - The wiki says collision appears slightly bigger in game, so shrink shapes a little. In a test of a 2.5 m
   bevelled cube, a 2.45 m box felt "a tad too small" against the model in game [HARD, tested by the owner].
   A 2.5 m box on the same cube felt right [HARD, tested by the owner]. Start from the model's real extent
