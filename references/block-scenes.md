@@ -46,6 +46,34 @@ Subpart scenes (moving parts) use the same layout without BS or mountpoints; see
 - Each stage's collision follows Main's; do not give BS its own collision model [HARD, wiki].
 - Wall-style armor shapes are usually stage-less in modded blocks; decide per block with the user [SOFT].
 
+### Designing the stages [owner brief; HARD for the build, SOFT until seen in game]
+
+- **Every stage shows the whole outline** [owner]. A stage that starts small and grows collides with the player
+  or a neighbouring grid when it grows. Since every stage uses Main's collision anyway, make every stage fill
+  the same outline, and let detail grow, not size.
+- **Grow detail, and show internals with basic shapes** [owner]: not just more and more frame. What worked on a
+  large turret:
+  - BS1: a strip frame over every major part (base slab, turntable, supports, plate, shell, barrel), plus a few
+    solid core pieces (central column or mast, pivot shaft).
+  - BS2: the lowest parts turn solid; mechanisms appear as plain solids (drum, drive and electrical boxes,
+    feed parts, individual barrels, equipment inside the shell).
+  - BS3: most of the outline is solid; leave a few panels and the top as open frame so the internals still
+    show, and add the big recognisable parts (mantlet, muzzle, gearboxes).
+- **Vanilla look** (the SDK's `GatlingTurretConstruction_1..3`: 2,040 / 2,952 / 3,643 faces, one `Construction`
+  material, flat strips that trace the silhouette). Build a low-poly proxy per part from the finished model
+  (octagon or 12-16-sided prisms from the part's bounds, a 2D convex hull of a support's side profile
+  extruded through its thickness, a cylinder plus hemisphere for a dome), then per face `inset_individual`
+  (about 7 cm on a large block), delete the original faces and `solidify` (about 2 cm). Solid pieces are the
+  same proxies without the cut.
+- One mesh per stage, `Construction` material only, flat shading, box UVs offset from the origin (a vertex on
+  the axis at UV (0,0) repeated across a pole made SEUT warn about UVs at (0,0) on the smallest stage).
+- **Merge outline points closer than the strip width** before insetting: a support's hull with 2 cm corner
+  edges and a 7 cm inset exploded to 270 km.
+- A stage mesh sits in its `BS<n>` collection; SEUT exports `<SubtypeId>_BS<n>.mwm` beside the main model.
+  The finished turret came to 3,400 / 3,100 / 2,000 triangles per stage. Subparts are not shown while the block
+  is under construction (the stage model has no subpart empties) [SOFT, check in game], so a turret's stages
+  must include the moving parts in their rest pose.
+
 ## Vanilla reference numbers [HARD, SDK `OriginalContent` model XMLs]
 
 | Model | LOD1 | LOD2 | LOD3 |
