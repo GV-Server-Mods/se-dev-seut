@@ -153,9 +153,11 @@ Done on a large gatling turret built in one scene with a `part` tag on every obj
    outside that static shell at every elevation: WeaponCore casts its line-of-sight ray from the scope, and a hit
    on its own grid resets the target (`RayCheckSelfHit`). With the scope behind the radome window it sat inside
    the shell from 2 to 90 degrees, and the turret turned a few degrees every few seconds instead of tracking
-   [owner; SOFT: cause read from code, the fix of moving the scope just ahead of the muzzle on the barrel axis
-   not yet confirmed in game]. Check the scope's path through the elevation range against the collision shapes
-   before export.
+   [owner; SOFT: cause read from code, fix not yet confirmed in game]. Check the scope's path through the
+   elevation range against the collision shapes before export. On vanilla turret types the game also uses a
+   dummy named `camera` on the barrel subpart for the manual-control view (`MyLargeBarrelBase`), so keep
+   `camera` where the player should look from (a camera recess) and point WeaponCore's `Scope` at a muzzle
+   dummy instead. With no `Scope` set, WeaponCore falls back to the middle muzzle (`GetScope`).
 5. Before choosing names, read the weapon definition the model replaces. A replacement model must match its
    subpart names (`AzimuthPartId`, `ElevationPartId`, `SpinPartId`), its `Muzzles` list and `Scope` (often
    `camera`), or the config has to change with it.
