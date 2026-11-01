@@ -291,6 +291,14 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
 - **Booleans:** cut pockets into the *unbevelled* solid first, then bevel; an exact boolean on an already
   bevelled mesh produced stray geometry. A feature that pokes through the far side of a plate shows as a dark
   slot there: ray-cast from the camera (`scene.ray_cast`, with helper objects hidden) to find which object it is.
+- **Many small cuts:** an exact boolean that slots six small turned tubes at once collapsed them to fragments
+  (two tries). Build such features by construction instead: a slotted flash hider is a base ring, three
+  partial tube sections (wall rings swept over an angle range, capped at both ends) and a lip ring. Build each
+  copy from a base pattern rotated by its position angle so a cluster stays radially symmetric [owner].
+- **Odd-shaped decals:** to take one piece out of a sheet where its bounding box overlaps a neighbour (the solid
+  chevron of the Atlas2 double arrow), make the decal face the piece's outline (six corners for a chevron) with
+  UVs on the same outline in pixel space, then triangulate. The transparent gap around the piece keeps the
+  edges clean.
 - **Edge-only wear:** `md = ob.modifiers.new('bev','BEVEL'); md.material = 1`, then give the mesh the slots
   `[PaintedMetal_Darker, PaintedMetalScratched_Darker]` so only the bevel faces get scratches. For meshes that
   are already bevelled, set `material_index = 1` on faces where `area / longest edge < 0.03`.

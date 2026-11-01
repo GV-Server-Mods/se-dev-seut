@@ -290,6 +290,8 @@ band from many short quads that follow the surface (rings, meridians, radial lin
 **Joins and ends** [HARD, rendered; owner asked]: a stem that stops square at a cross seam looks pasted on. Stop
 the stem's band half a cross-width short, then close it with two triangles meeting at a tip on the cross
 seam's centre line, tip UV at the middle of the strip (`v = (v0 + v1) / 2`), side corners at `v0` and `v1`.
+Give the tip its own U as well (offset by its distance along the seam times the U scale): with one U for all
+three corners the triangle has no tangent direction and the groove renders flipped (seen in a render).
 That compresses each half of the groove into a 45-degree mitre against the cross groove. Lift the stem about
 1 mm more than the cross seam so it draws on top. Free ends get the same pointed cap, extended half a width
 past the end. Polyline corners mitre by themselves when each row's side vector comes from the averaged tangent.
