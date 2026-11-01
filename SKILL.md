@@ -128,8 +128,9 @@ shape reference at most, and ask before spending credit.
   `references/bpy-recipes.md` ("Moving parts between .blend files, LODs from script"). At session start record
   `bpy.app.binary_path` and `bpy.data.filepath`; after a crash see `references/errors.md` ("When Blender
   crashes or the MCP connection drops").
-- **Close the icon render preview window after `icon_render_preview`** [HARD]: leave only the user's main
-  window open; save first and close it in a separate call. Subparts need manual collection instancing to
+- **Leave the icon render preview window open after `icon_render_preview`** [owner]: do not close windows
+  from script (a render-and-close session crashed Blender); save before each render and tell the user to
+  close the preview windows when you are done. Subparts need manual collection instancing to
   appear in the icon, and `scene.update_subpart_instances` crashed Blender on nested subparts. Recipe in
   `references/bpy-recipes.md` (icons, step 4).
 - **Do not call `scene.export_all_scenes` on a file with several scenes from script** [HARD, crashed Blender

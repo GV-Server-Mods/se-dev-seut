@@ -181,16 +181,14 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
      does no damage). `look` through the `ICON` camera to check the framing.
   4. `bpy.ops.scene.icon_render_preview()` under the same override; it opens a render window and ends with
      `I018` and the file path. Then `renderToggle = 'off'`, which removes the helper objects again.
-     **Close the preview window when the render is done** [HARD, tested; owner asked]: it is a small extra
-     window (320 x 256, screen named `temp`) that stays open and in the way. Close every window except your own:
-     `wm = bpy.context.window_manager; main = next(w for w in wm.windows if w.screen.name != 'temp')`, then
-     `for w in [w for w in wm.windows if w != main]: with bpy.context.temp_override(window=w): bpy.ops.wm.window_close()`.
-     Check `len(wm.windows) == 1` afterwards. Never close the user's main window.
-     Save the .blend before each render, and close the window in its own call after the render call has
-     returned [SOFT]: on a three-scene turret, Blender 4.5.10 crashed on the fourth render of a session in which
-     every script rendered and then closed the window in the same call (access violation at address 0, no
-     Blender frames in `%TEMP%\<blend>.crash.txt`). The close had worked many times before, so the cause is
-     unknown.
+     **Leave the preview window open; the user closes it** [owner, 2026-11-01]: it is a small extra window
+     (320 x 256, screen named `temp`). Closing it from script (`bpy.ops.wm.window_close()` under a
+     `temp_override(window=w)`) works, but on a three-scene turret Blender 4.5.10 crashed on the fourth render of
+     a session in which every script rendered and then closed the window (access violation at address 0, no
+     Blender frames in `%TEMP%\<blend>.crash.txt`; cause unknown), so the owner chose the safe side. Each render
+     reuses or adds a preview window; when you are done, tell the user to close them. Never close the user's
+     main window. Save the .blend before each render. Find the main window as the one whose screen is not
+     named `temp` when you need a context override.
      **Subparts are not in the icon** [HARD, tested]: the renderer shows only the base scene's `Main`
      collection, so a turret renders as its base plate. Instance each subpart by hand for the render: for every
      subpart empty, in the base scene and inside the subpart scenes (nested subparts follow on their own),
