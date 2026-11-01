@@ -88,6 +88,12 @@ weapon uses `"None"` for all three part ids and takes its muzzle from the main m
 subpart names without the `subpart_` prefix. SBC fields for a sorter turret include aiming limits
 (`MinElevationDegrees`, `MaxElevationDegrees`, `MinAzimuthDegrees`, `MaxAzimuthDegrees`), `RotationSpeed`,
 `ElevationSpeed`, `MaxRangeMeters`, `BuildProgressModels` and `UseModelIntersection`.
+Vanilla turret types under WeaponCore [HARD, WeaponCore `WeaponController.cs` and `MyLargeTurretBase`]:
+WeaponCore drives the block through `SetManualAzimuthAndElevation` at its own `RotateRate`/`ElevateRate`, and
+the game clamps the angle to the SBC `MinElevationDegrees`/`MaxElevationDegrees`. Keep those SBC limits equal
+to WeaponCore's `HardWare` `MinElevation`/`MaxElevation`, or WeaponCore chases an angle the block cannot reach.
+With `AiEnabled=false` the vanilla idle rotation never runs. Out-of-arc targets and return-to-home both show as
+slow turning; that is WeaponCore behaviour, not a model fault.
 Spinning barrels [HARD, WeaponCore source `Coreparts/Definitions/Gatlings.cs`, `WeaponState.cs`]: the mount
 point entry also has `SpinPartId` (the subpart that spins, `"None"` otherwise). The vanilla gatling example
 uses `SpinPartId` and `MuzzlePartId` `GatlingBarrel`, `AzimuthPartId` `GatlingTurretBase1`, `ElevationPartId`
