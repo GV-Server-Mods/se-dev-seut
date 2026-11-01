@@ -115,6 +115,30 @@ SDK files `<ModSDK>\OriginalContent\Models\Cubes\large\GatlingTurret*.FBX` (+ `.
 - Base materials: `PaintedMetal_Colorable`, `PaintedMetalScratched_*`, `PaintedMetal_Darker`, `Chrome`,
   `Decals`, `Terminal`, `Conveyor`, `Metal_Dull` (from its model XML).
 
+## Splitting a turret into subpart scenes [HARD for the export, SOFT for the in-game result]
+
+Done on a large gatling turret built in one scene with a `part` tag on every object:
+
+1. Create one `subpart` scene per moving part (`recreate_collections` each), then move each object into its
+   scene's Main and set `matrix_world = R @ Translation(-pivot) @ old_matrix_world`, with `R` = 180 degrees about
+   Z. The pivot goes to the scene origin, and the 180-degree turn makes up for SEUT's `-Z` forward axis on subpart
+   scenes (`doors-subparts.md`), so in each subpart scene the muzzle points +Y. That way every subpart empty and
+   dummy keeps an identity rotation and each part's forward matches the block's. If parts show up backwards in
+   game, take the turn out of the subpart scenes and turn the main scene's first subpart empty instead.
+2. Child empties sit at `R @ (child pivot - parent pivot)`. Muzzle and camera dummies get identity rotation,
+   so their +Y lies along the barrels.
+3. Parent every object in each Main under one root (E031 fires on subpart scenes too), including empties and
+   highlight targets, then link each `linkedScene` with the crash-safe recipe in `bpy-recipes.md`, one per call.
+4. Collision: vanilla turret code (`MyLargeTurretBase`) creates no physics for its subparts, so subpart collision
+   is never used. Give the base model a few shapes (slab, turntable, a cylinder over the azimuth part below the
+   elevation sweep), and keep them clear of the scope or camera dummy at every elevation (WeaponCore checks line
+   of sight from it).
+5. Before choosing names, read the weapon definition the model replaces. A replacement model must match its
+   subpart names (`AzimuthPartId`, `ElevationPartId`, `SpinPartId`), its `Muzzles` list and `Scope` (often
+   `camera`), or the config has to change with it.
+6. Check the split by rebuilding the turret in the main scene from temporary objects that share the LOD or Main
+   meshes, placed with the inverse transforms, and render it before export.
+
 ## Build checklist
 
 1. Plan the part chain and write the names down before modeling (names are the contract with the config).

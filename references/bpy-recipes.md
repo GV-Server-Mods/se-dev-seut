@@ -72,6 +72,7 @@ Preferences: `bpy.context.preferences.addons['space-engineers-utilities'].prefer
 ```python
 col = bpy.data.objects.new("Collision1", bpy.data.meshes.new("c1"))
 bm = bmesh.new(); bmesh.ops.create_cube(bm, size=2.45); bm.to_mesh(col.data); bm.free()   # slightly under the block
+col.data.uv_layers.new(name="UVMap")   # bmesh meshes have no UVs; without one MwmBuilder fails (E044)
 hkt.objects.link(col)
 bpy.context.view_layer.objects.active = col
 bpy.ops.object.select_all(action='DESELECT'); col.select_set(True)
@@ -238,7 +239,10 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
 - **LOD from script** without join/decimate operators: for each source mesh build a `bmesh`, apply
   `bmesh.ops.transform(bm, matrix=o.matrix_world, verts=bm.verts)`, remap `material_index` onto one shared
   material list, merge into one mesh, add a `DECIMATE` modifier (ratio about 0.35 for LOD1, 0.12 for LOD2),
-  then `bpy.data.meshes.new_from_object(ob.evaluated_get(depsgraph))` and swap `ob.data`. Drop text and small
+  then `bpy.data.meshes.new_from_object(ob.evaluated_get(depsgraph))` and swap `ob.data`. Link the temporary
+  object to the scene shown in the window (`bpy.context.scene`), not to the subpart scene you are building for:
+  the evaluated depsgraph is the window's, so an object in another scene comes back undecimated [HARD, seen:
+  every subpart LOD kept full detail on the first run]. Drop text and small
   pipes from LOD2. **Do not leave out `detector_*` meshes** [HARD, owner saw the yellow conveyor ports vanish
   at 50 m in game]: in a vanilla model the `detector_conveyor_section_*` meshes are the visible yellow port
   frames (272 `PaintedMetal_Yellow` faces each) and `detector_terminal_section_*` are the keypad panels, not
