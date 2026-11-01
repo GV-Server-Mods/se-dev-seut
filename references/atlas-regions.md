@@ -77,7 +77,7 @@ Full size 2048 x 2048 px, 12 pieces, re-catalogued at full resolution and checke
 | 7 | 0.7549 | 0.5044 | 0.9976 | 0.7471 | 497x497 | octagon frame with an X (hazard-style) |
 | 8 | 0.7939 | 0.543 | 0.9585 | 0.708 | 337x338 | X from the octagon frame, on its own [inside] |
 | 9 | 0.001 | 0.6299 | 0.2773 | 0.7109 | 566x166 | field of 25 round holes with rims |
-| 10 | 0 | 0.519 | 0.7085 | 0.5996 | 1451x165 | yellow and black hazard stripe |
+| 10 | 0 | 0.519 | 0.7085 | 0.5996 | 1451x165 | hazard stripe, grey and black (the `Atlas1` colour map is neutral grey; for yellow use Atlas2 66) |
 | 11 | 0.0151 | 0.1211 | 0.9741 | 0.501 | 1964x778 | schematic panel (one decal: side plates, four rings, bars, two discs, cable run) |
 | 12 | 0 | 0.0234 | 1 | 0.0562 | 2048x67 | thin full-width strip |
 
