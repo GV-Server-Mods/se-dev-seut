@@ -41,6 +41,11 @@ SKILL.md: [owner] = owner design feedback, [HARD] = measured or rendered, [SOFT]
   commonest reason a block looks unfinished. Prefer decals for this.
 - **Two or three tones, not one**: a paintable base, a darker trim material, and one small accent (a lit strip,
   a warning stripe, a lamp). Vanilla blocks do this with `Colorable` plus `Darker` plus a small accent material.
+  On a mostly dark mechanical block, give the player a few paintable spots [owner]: flat plates framed by dark
+  trim read best (a hub plate inside a race ring, gearbox lids, bolted corner plates), switched to
+  `PaintedMetal_Colorable` so they take paint and skins.
+- **Small raised hatches and plates can be decals** [owner]: a pair of 3D coin hatches with handles cost 576
+  triangles; an `Atlas3_Darker` hatch decal (handle slot and screws) replaced them.
 - **Greeble with real parts only where they read from a few metres** (handles, vents, pipes, lamps); leave the
   rest to decals and textures.
 - **Think about the neighbours**: flush faces, mount points and edge chamfers should let the block join
