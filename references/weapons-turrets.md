@@ -12,6 +12,18 @@ subpart and dummy names must match the config exactly.
 - Build checklist
 - Unverified
 
+## Clearance for moving subparts [HARD, measured on a gatling turret model; owner design feedback]
+
+- Anything on the elevation subpart that sits outside the azimuth supports (legs, yokes) hits them as soon as
+  the gun tilts [owner]. Keep elevation equipment between the supports, and within the distance from the
+  pivot axis to the nearest fixed surface below (coin or deck), so it can never reach it. A part on the
+  pivot axis (an ammo drum, a trunnion hub) never clips at any angle.
+- Check numerically before export: rotate every elevation vertex about the pivot axis through the real range
+  and record the lowest point. Mind the sign: with Blender +Y as the back and -Y as the muzzle side, a positive
+  rotation about +X lowers the muzzle, so the range -20 down / +85 up is `range(-85, 21)` degrees.
+- Equipment that would otherwise hang in a swept corner can go on top of the elevation plate instead, as one
+  asymmetric detail.
+
 ## Block type [HARD, WeaponCore and ToolCore wikis]
 
 WeaponCore weapons and ToolCore tools are defined as `ConveyorSorter` blocks (`MyObjectBuilder_ConveyorSorterDefinition`)
