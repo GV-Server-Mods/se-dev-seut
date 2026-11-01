@@ -140,6 +140,12 @@ SKILL.md: [owner] = owner design feedback, [HARD] = measured or rendered, [SOFT]
   list every hit. Anything within a few centimetres is hidden or colliding (bolts under a collar, labels behind a
   ring, stencils hidden by rails). Move or drop those before showing renders. A decal can only be judged in a
   render from the angles players actually see it from.
+- **Clear along the normal is not visible** [HARD, three decals placed with a 6 cm check ended up under a
+  bearing, behind side covers and above a drum]: before placing, also cast from the spot toward a ring of
+  viewpoints about 5 m out (several azimuths, below the horizon for undersides, every elevation a moving part
+  reaches) and keep spots that several viewpoints see.
+- **Removing a part under a decal strands the decal**: deleting 16 mm bosses left their bolt decals floating
+  16 mm up. Re-cast every decal that sat on the removed part down to the new surface.
 - **Left and right are the block's own**, facing its front: with the front at Blender -Y, the block's left is +X
   [owner: L and R were swapped on the turret's legs].
 - Say what has not been seen in game (decals on curved shells, collision, subpart orientation).
