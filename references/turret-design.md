@@ -110,6 +110,12 @@ They apply to any turret, gun or weapon block. Tags as in SKILL.md: [owner] = ow
   a labelled contact sheet (normal-map relief preview) and let the owner pick from it.
 - **Keep a clean shell clean** [owner]: a smooth radome or cowl with seam decals, a recessed vent and a recessed
   camera reads better than strips, rivets, hatches and lifting eyes.
+- **Holes and pockets follow the part they hold** [owner]: a square cut round a chamfered conveyor port left
+  90-degree gaps at its corners. Measure the part's outline (for a chamfered square, max |x| and max |x|+|y| of its
+  vertices give the half size and the chamfer), cut the hole with an even clearance (about 1 cm), and keep every
+  surrounding step parallel to it.
+- **Seams must sit on surface**: check each seam decal vertex with a short ray cast against the face behind it;
+  a seam that crosses a recess or pocket floats [owner]. Route seams round pockets rather than over them.
 - **Nothing past the mount face**: detail the bottom inside a shallow recess; direction arrows there should point
   to the weapon's front.
 
