@@ -34,6 +34,9 @@ muzzle devices, shells) comes from the concept art and the owner, not from this 
 - **The elevating part needs visible support** from the azimuth part (`design-detailing.md`, "Carried parts
   need visible support").
 - **Nothing hangs past the turntable**: parts on the azimuth part stay inside its edge.
+- **Shallow bores, no rifling** [owner]: do not model a barrel's full internal length. A short recess with a dark
+  floor reads as a bore from any normal viewing angle. Rifling and deep bores only pay off on huge cannons
+  (battleship scale) that players can actually look down; on small calibres they waste triangles.
 - **Radial symmetry on spinning parts** [owner]: build every repeated element from one pattern rotated by its
   position angle, so a spinning cluster looks the same at every angle.
 
