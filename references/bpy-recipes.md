@@ -348,8 +348,13 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   bearing caps flush with a leg (cut the caps); doubled faces inside one object (keep the larger); a black
   floor on the floor of its socket (lift it 1 mm); thin strap plates modelled on the side faces of the bands they
   hold (slide each plate 2 mm out); seam decal T-joins at the cross seam's height (lift the stem's tip 0.7 mm);
-  a shell's flat bottom repeating the ceiling of a notch in the plate below it (cut the shell's copy). Prefer
-  cutting the copy that is fully covered; check by rendering the spot.
+  a shell's flat bottom repeating the ceiling of a notch in the plate below it (cut the shell's copy).
+  **Nudge rather than cut when in doubt** [owner saw both mistakes in game]: cutting a radome's window walls
+  because a frame sat on them let players see the sky through the gap at an angle, and cutting a brace's end
+  chamfers left a broken corner where the brace stuck out past the beam it joined. Only cut a face that is
+  covered from every angle; otherwise move the copy that should win 0.7-1 mm in front along its normal (a
+  window frame's inner edges into the opening, a brace's ends 1 mm back behind the beam face). Render the
+  spot from grazing angles before export.
 - **Many small cuts:** an exact boolean that slotted six small turned tubes at once collapsed them to fragments
   (two tries). Build such features by construction instead: a slotted tube is a base ring, partial tube
   sections (wall rings swept over an angle range, capped at both ends) and an end ring. Build each copy from a
