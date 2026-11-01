@@ -34,6 +34,15 @@ the plain yellow-square box; a detector empty linked to a mesh outlines that mes
    Draw "Reload models" button picks up changed dummies is untested), aim at the area. A yellow square means the
    empty and mesh are not associated.
 
+**From script, the exported link is the empty's custom property `highlight`, not the `seut.highlight_objects`
+list** [HARD, owner saw no outlines on a turret's keypad and port; the `.mwm` held no `highlight` key]. Filling
+`highlight_objects[i].obj` by hand leaves the property unset. Use the operator, or set both:
+`empty['highlight'] = 'Mesh_section_1;Other_section_2'` plus the list. Name each target `<name>_section_<N>`
+as the operator does, then byte-search the exported `.mwm` for `highlight` after each detector name.
+Also give a scripted empty its size inside one matrix (`empty.matrix_world = Translation(c) @ Diagonal(scale)`):
+setting `matrix_world` and then `scale` and reading `matrix_world` back before an update returns the old
+matrix, which left a conveyor detector at 1 m instead of its intended size.
+
 SEUT's operator needs `Main` to contain the object (E025), one selected object at a time (E009), and an
 empty index unique per type. Source: `empties/seut_ot_add_highlight_empty.py`.
 

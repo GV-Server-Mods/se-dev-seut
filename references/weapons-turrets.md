@@ -130,9 +130,11 @@ Done on a large gatling turret built in one scene with a `part` tag on every obj
 3. Parent every object in each Main under one root (E031 fires on subpart scenes too), including empties and
    highlight targets, then link each `linkedScene` with the crash-safe recipe in `bpy-recipes.md`, one per call.
 4. Collision: vanilla turret code (`MyLargeTurretBase`) creates no physics for its subparts, so subpart collision
-   is never used. Give the base model a few shapes (slab, turntable, a cylinder over the azimuth part below the
-   elevation sweep), and keep them clear of the scope or camera dummy at every elevation (WeaponCore checks line
-   of sight from it).
+   is never used. All collision goes in the base model, as simple shapes covering the turret at rest [owner]:
+   slab, turntable cylinder, a cylinder over the azimuth part, and for a domed elevation part a cylinder plus a
+   sphere on top. A first set (a hull of the detailed slab, coin and legs cylinders, nothing above the pivot)
+   looked wrong in game; build the slab hull from the slab's outline (an octagon prism for a cut-corner slab). The camera or scope dummy swings inside that static shell at
+   high elevation; whether WeaponCore's line-of-sight check minds is not yet tested.
 5. Before choosing names, read the weapon definition the model replaces. A replacement model must match its
    subpart names (`AzimuthPartId`, `ElevationPartId`, `SpinPartId`), its `Muzzles` list and `Scope` (often
    `camera`), or the config has to change with it.

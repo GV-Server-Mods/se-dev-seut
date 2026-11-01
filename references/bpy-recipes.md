@@ -331,7 +331,7 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
 - **Bolt decals:** `Decals_Atlas_A_01` row "eleven bolt and fitting heads" (`atlas-regions.md`, region 1), one
   head per quad. Measured boxes from the alpha mask: hex nut u 0.0957-0.1226 v 0.9722-0.9961, round domed head
   u 0.1587-0.1846 v 0.9717-0.9971, hex socket in a ring u 0.3135-0.3428 v 0.9697-0.9990. Material `Decals`,
-  quad 3 mm off the surface. Turn every head to a random angle about its normal (and every 3D nut about its
+  quad 1.5 mm off the surface (3 mm looked like floating heads in game [owner]). Turn every head to a random angle about its normal (and every 3D nut about its
   axis) so they look individually tightened [owner]. Keep real 3D bolts few and low (about 12 mm tall).
   A flat hex decal alone reads as a pale sticker on dark metal (the sheet's colour is light grey, and the darker
   `Decals_Atlas_A_02` sheet used by `PanelingDarker` has the same light bolt row) [owner]. What worked: bolts of
@@ -343,6 +343,13 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   underneath as a counterbore, about 1 mm lower. Fit each ring to its face: ray-cast 16 rim points down with a
   2 mm tolerance and a normal check, shrink until all land on flat face, drop it otherwise (a 2 cm tolerance let
   rings lap over a pad's bevel).
+- **Decal offset** [HARD, measured; owner saw floating bolt heads in game]: build one `BVHTree` from every
+  non-decal mesh in the scene (world space), then for each decal face `ray_cast(centre + n * 0.0001, -n, 0.06)`
+  and list the gaps. To normalise, split each decal object into connected islands: a flat island moves as a
+  whole by `target - min(gap)` along its normal (per-vertex rays would miss where a decal overhangs a small
+  boss); an island on a curved surface sets each vertex to `hit + n * target` along its vertex normal. Targets
+  1.5 mm, and 0.7 mm for rings under bolt heads. The first pass found heads at 3-4 mm, one ring 26 mm off its
+  face and another at 0.1 mm (a z-fighting risk). Rebuild LODs afterwards, since they copy the decals.
 - **Decals on curved surfaces:** split the quad into columns that follow the radius (8 columns for a 0.4 m
   sign on a 1.05 m cylinder) instead of one flat quad, which would float or sink by about 2 cm at the edges.
   Check text direction in a render: the first try read mirrored, fixed by reversing U (`u = u0 + u1 - u`).

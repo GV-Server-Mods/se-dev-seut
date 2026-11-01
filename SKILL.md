@@ -175,9 +175,10 @@ asked.
 Decals cost almost nothing in triangles and keep blocks consistent with vanilla. Wrap them to curved surfaces
 in narrow columns, mitre seam joins, check text direction and obstruction with a render and a ray cast
 (`references/bpy-recipes.md`, `references/design-detailing.md`).
-Decal quads sit just off the surface (not coplanar) to avoid z-fighting [SOFT, 0.01 m exported cleanly, see
-`references/materials-catalog.md` for normals and DLC pitfalls; confirm the offset used by
-vanilla blocks before fixing a number].
+Decal quads sit just off the surface (not coplanar) to avoid z-fighting: about 1.5 mm, and 0.7 mm for an
+underlay such as a counterbore ring under a bolt head [owner: bolt decals at 3-4 mm looked like they floated
+in game]. Measure every decal's gap with a ray cast before export (`references/bpy-recipes.md`, "Decal
+offset"); see `references/materials-catalog.md` for normals and DLC pitfalls.
 
 ## Interaction points highlight real geometry (default style)
 
