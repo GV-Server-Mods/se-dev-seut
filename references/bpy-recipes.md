@@ -319,13 +319,13 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   build a `BVHTree.FromBMesh` per island and test points by ray parity in two directions (an odd hit count
   both times means inside). Compare only against solids of the same moving part, so no rotation can reveal a
   deleted face, and skip decals, glass, screens and vanilla parts. Do a dry run listing counts per object, then
-  delete the faces plus loose edges and verts, and render the busiest areas (muzzle, hubs, drum) to check for
-  holes. The biggest wins were rod and tube ends inside housings, flash hider bases inside the muzzle collar,
-  bands and straps sunk into a drum or servo pack, and the radome's lower rim inside the plate.
-- **Many small cuts:** an exact boolean that slots six small turned tubes at once collapsed them to fragments
-  (two tries). Build such features by construction instead: a slotted flash hider is a base ring, three
-  partial tube sections (wall rings swept over an angle range, capped at both ends) and a lip ring. Build each
-  copy from a base pattern rotated by its position angle so a cluster stays radially symmetric [owner].
+  delete the faces plus loose edges and verts, and render the busiest areas to check for holes. The biggest
+  wins are ends of rods and tubes inside housings, bands and straps sunk into the part they wrap, and shell
+  rims inside the plate they sit on.
+- **Many small cuts:** an exact boolean that slotted six small turned tubes at once collapsed them to fragments
+  (two tries). Build such features by construction instead: a slotted tube is a base ring, partial tube
+  sections (wall rings swept over an angle range, capped at both ends) and an end ring. Build each copy from a
+  base pattern rotated by its position angle so a cluster stays radially symmetric [owner].
 - **Odd-shaped decals:** to take one piece out of a sheet where its bounding box overlaps a neighbour (the solid
   chevron of the Atlas2 double arrow), make the decal face the piece's outline (six corners for a chevron) with
   UVs on the same outline in pixel space, then triangulate. The transparent gap around the piece keeps the
