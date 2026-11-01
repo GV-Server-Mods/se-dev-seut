@@ -299,6 +299,11 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
 - **Angle-limited bevels and segment counts**: a 12-sided cylinder's side edges meet at exactly 30 degrees, so a
   Bevel with `angle_limit = 30` bevels every side edge and multiplies the triangles. Use 14 or more sides, raise
   the limit, or skip the bevel on small cylinders (barrels, pins, piston bodies). Small hex bosses need no bevel.
+  The same trap hits shading: a 30-degree smooth-by-angle marks every side edge of a 12-sided (and a 10-sided,
+  36 degrees) cylinder sharp, so barrels and piston rods render faceted [owner]. On round parts, smooth edges
+  under 40 degrees, then add a Weighted Normal modifier (`FACE_AREA`, weight 50, `keep_sharp`) and apply it so
+  flat caps stay flat while sides and rim bevels read round. Leave boxes on the 30-degree rule, or their flat
+  faces pick up gradients from smoothed bevels.
 - **Buried faces** [HARD, took a turret from 43,600 to 39,000 triangles with no visible change]: a face is
   hidden when all its corners and its centre, nudged 0.5 mm along its normal, lie inside another closed solid.
   Split every mesh into connected islands in world space and keep only closed ones (every edge has two faces);
