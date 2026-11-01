@@ -74,6 +74,14 @@ checkable steps and leave the scene tidy.
    LOD copies and collision sit on top of the Main model, so a bare `look` shows them stacked: hide the other
    collections (`layer_collection.hide_viewport`) or offset the objects temporarily before checking one.
 5. Build new work in its own scene; do not delete or reshuffle the user's objects unless asked.
+6. **Checkpoint before every risky edit** (reducing segments, deleting faces, moving or re-splitting parts,
+   anything that rewrites existing meshes): commit the .blend if the folder is under git, otherwise
+   `bpy.ops.wm.save_as_mainfile(filepath="<name>_before_<step>.blend", copy=True)` beside it. Then make the
+   change, render and inspect it, and keep it or restore it. Restore one object by copying it back from the
+   checkpoint with `bpy.data.libraries.load` (world matrix rules in `references/bpy-recipes.md`, "Moving parts
+   between .blend files"), or the whole file by reopening the checkpoint. Blender's `.blend1` holds only the
+   previous save, so it is no undo once you save again [HARD: a segment cut that looked wrong had to be
+   rebuilt by hand because it was saved over].
 
 Script hygiene:
 - Look shader nodes up by `type`, never by name (names are localized). Read enum values from `bl_rna`
