@@ -45,7 +45,15 @@ SKILL.md: [owner] = owner design feedback, [HARD] = measured or rendered, [SOFT]
   trim read best (a hub plate inside a race ring, gearbox lids, bolted corner plates), switched to
   `PaintedMetal_Colorable` so they take paint and skins.
 - **Small raised hatches and plates can be decals** [owner]: a pair of 3D coin hatches with handles cost 576
-  triangles; an `Atlas3_Darker` hatch decal (handle slot and screws) replaced them.
+  triangles; an `Atlas3_Darker` hatch decal (handle slot and screws) replaced them. A later pass turned thin
+  panels, pads and tabs into decals too (about 1,600 triangles), keeping the pieces that give real relief
+  (round flanges, a small handle, cooling fins) [owner]. When a part becomes a decal: delete the bolt decals
+  that sat on it, move any label it carried down onto the new surface just above the new decal (2.2 mm over
+  1.5 mm), place the decal on the surface found by a ray cast, and check a 3x3 grid of points on it (each
+  lands on the surface, nothing covers it within 5 cm). A decal may be stretched to fill a strip with equal
+  margins when its art tolerates it (a frame with a slot did) [owner].
+- **Decals on a structural outline look added on** [owner]: hazard stripes on a slab's chamfered corners read
+  as an afterthought and were removed. Put marks where something happens (a moving joint, a port, a hatch).
 - **Greeble with real parts only where they read from a few metres** (handles, vents, pipes, lamps); leave the
   rest to decals and textures.
 - **Think about the neighbours**: flush faces, mount points and edge chamfers should let the block join
