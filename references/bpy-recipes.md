@@ -363,6 +363,12 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   straddles the wrap. Map only faces whose normal is within 60 degrees of radial; leave pocket walls on box
   UVs. A pole vertex gets each triangle's average angle, which leaves a tiny pinch at the very top. Check by
   listing edges between faces under 15 degrees apart whose two UVs differ; only the back seam should remain.
+- **Stripe bands round a cylinder** [HARD, run]: put one decal column on each of the part's own facet angles
+  (read them from its outer vertices) at radius + 1.5 mm, so the decal chords stay parallel to the facets. Pick
+  a tile count that divides the column count, then set the band height to tile length / the region's aspect
+  (Atlas1 hazard stripe 1452x164: 16 tiles on a 1.35 m radius gave a 6 cm band). Inset the region's u range
+  about 1% or the tile ends show as vertical lines. Orient each loose face outward yourself
+  (`recalc_face_normals` guesses wrong on disconnected quads).
 - **Decals on curved surfaces:** split the quad into columns that follow the radius (8 columns for a 0.4 m
   sign on a 1.05 m cylinder) instead of one flat quad, which would float or sink by about 2 cm at the edges.
   Check text direction in a render: the first try read mirrored, fixed by reversing U (`u = u0 + u1 - u`).
