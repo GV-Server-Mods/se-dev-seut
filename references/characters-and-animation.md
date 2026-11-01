@@ -48,6 +48,9 @@ Everything is [SOFT] unless it says [HARD]. Nothing here was built or loaded by 
 
 ## Handheld weapon animation controller [SOFT, video; not Blender work]
 
+Modelling the weapon itself follows the same barrel rule as other weapons: shallow bores, no rifling
+(`weapons-turrets.md`, "Barrels on any weapon").
+
 - Use the ModSDK's animation controller tool to open and edit controllers. Start from the example mod's
   controller files for the male and female astronaut (the female one has an extra weapon pin state machine, so
   it needs duplicated nodes).

@@ -12,6 +12,13 @@ subpart and dummy names must match the config exactly.
 - Build checklist
 - Unverified
 
+## Barrels on any weapon [owner]
+
+Applies to every SE weapon model: turrets, fixed guns and handheld weapons. Do not model a barrel's full
+internal length; a short recess with a dark floor reads as a bore from any normal viewing angle. Skip rifling
+and deep bores except on huge cannons (battleship scale) that players can actually look down; on small and
+medium calibres they only waste triangles.
+
 ## Clearance for moving subparts [HARD, measured on a gatling turret model; owner design feedback]
 
 - Anything on the elevation subpart that sits outside the azimuth supports (legs, yokes) hits them as soon as
