@@ -366,6 +366,11 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
 - **Decals on curved surfaces:** split the quad into columns that follow the radius (8 columns for a 0.4 m
   sign on a 1.05 m cylinder) instead of one flat quad, which would float or sink by about 2 cm at the edges.
   Check text direction in a render: the first try read mirrored, fixed by reversing U (`u = u0 + u1 - u`).
+- **`matrix_world` in a scene that is not on screen is stale** [HARD, owner saw a turret's camera dummy 3.75 m
+  behind the gun]: setting `obj.matrix_world` on a child in a subpart scene, right after reopening the file,
+  used the parent's out-of-date world matrix and put the dummy at the mirrored, raised spot; reading it back
+  showed the requested value. Call `scene.view_layers[0].update()` first, or copy a correctly placed sibling's
+  `matrix_parent_inverse` and set `location` in parent space, then verify after another update.
 - **Hide LOD and collision objects in preview renders** [HARD, seen]: once `LOD1`/`LOD2` and collision are filled
   they render on top of Main in the same place, and the z-fighting shows as hatched streaks that look like a
   shading fault. Set `hide_render` on everything outside Main for the render and restore it afterwards.
