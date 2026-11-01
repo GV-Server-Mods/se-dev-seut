@@ -300,6 +300,13 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   48 around a 2 m radome (14 rows in its cap), 64 for 2.7 m turned rings, 40 for 0.5-1 m rings and drums, 28-32
   for 0.5 m cylinders, 12-16 for barrels, pins and tubes under 0.15 m, 8 for hoses. That pass brought it to
   about 43,600 with no visible faceting. Count early (sum `len(p.vertices) - 2` over polygons per object).
+  Halving a finished revolved part [HARD, run]: find its segment angles about its own axis, then
+  `bmesh.ops.dissolve_edges(use_verts=True)` on the meridian edges at every second angle; the profile is kept
+  and flat decal faces stay planar. 64 to 32 on 1.1-1.3 m rings read fine; 40 to 20 on a 0.45 m mantlet
+  showed corners close up, where the manual-control camera looks at it [owner], and was undone by
+  `subdivide_edges(cuts=1)` on the ring edges plus pushing each new vertex back out to its neighbours' radius.
+  Smoothing hides facets on the surface, not on the outline, so judge the silhouette at the distance players
+  actually see the part from.
 - **Angle-limited bevels and segment counts**: a 12-sided cylinder's side edges meet at exactly 30 degrees, so a
   Bevel with `angle_limit = 30` bevels every side edge and multiplies the triangles. Use 14 or more sides, raise
   the limit, or skip the bevel on small cylinders (barrels, pins, piston bodies). Small hex bosses need no bevel.
