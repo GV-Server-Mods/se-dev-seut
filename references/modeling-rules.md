@@ -36,7 +36,9 @@
   `bpy.ops.object.shade_smooth_by_angle(angle=math.radians(30))` [tested, Blender 4.5]. That smooths faces
   and marks edges sharper than 30 degrees as sharp, so box corners stay crisp. Check with
   `sum(p.use_smooth for p in me.polygons)`, which should be close to the polygon count, and do it for LOD
-  meshes too. Flat decal quads can stay flat.
+  meshes too. Flat decal quads can stay flat. Smoothing alone tilts the normals of a big flat face that meets
+  a smoothed bevel, which shows as a fake angled shade in game [owner]; finish every bevelled part with an
+  applied Weighted Normal modifier (`bpy-recipes.md`, "Flat faces next to smoothed bevels").
 - Bevel every hard edge of real geometry [SOFT, owner: the test block's plain box extrusions looked unlike the
   game]. Vanilla parts carry a visible chamfer on nearly every edge, including the large chamfers where a
   raised frame meets its panel. Hand-built boxes with sharp 90 degree edges stand out next to vanilla ones; use

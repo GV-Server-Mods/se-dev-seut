@@ -306,8 +306,13 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   The same trap hits shading: a 30-degree smooth-by-angle marks every side edge of a 12-sided (and a 10-sided,
   36 degrees) cylinder sharp, so barrels and piston rods render faceted [owner]. On round parts, smooth edges
   under 40 degrees, then add a Weighted Normal modifier (`FACE_AREA`, weight 50, `keep_sharp`) and apply it so
-  flat caps stay flat while sides and rim bevels read round. Leave boxes on the 30-degree rule, or their flat
-  faces pick up gradients from smoothed bevels.
+  flat caps stay flat while sides and rim bevels read round.
+- **Flat faces next to smoothed bevels** [HARD, owner saw a fake angled shade on a flat slab face in game]: a
+  2-segment bevel on a 90-degree edge makes 30-degree steps, so smooth-by-angle 30 smooths them, and the big
+  face's vertex normals tilt toward the bevel (measured 20-45 degrees on plates, boxes and drum caps). Apply the
+  same Weighted Normal modifier (`FACE_AREA`, weight 100, `keep_sharp`) to every bevelled part, boxes
+  included. Check before export: for each face over 0.02 m^2 with 4+ corners, the largest angle between
+  `me.corner_normals[i].vector` and `p.normal`; it should be 0 on flat faces (only curved sides may show more).
 - **Buried faces** [HARD, took a turret from 43,600 to 39,000 triangles with no visible change]: a face is
   hidden when all its corners and its centre, nudged 0.5 mm along its normal, lie inside another closed solid.
   Split every mesh into connected islands in world space and keep only closed ones (every edge has two faces);
