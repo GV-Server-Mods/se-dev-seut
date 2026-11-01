@@ -80,7 +80,9 @@ bpy.ops.rigidbody.object_add()
 col.rigid_body.collision_shape = 'BOX'      # BOX, SPHERE, CAPSULE, CYLINDER, CONVEX_HULL only
 ```
 
-Apply scale and rotation first, because the rigid body does not follow them afterwards.
+Apply scale and rotation first, because the rigid body does not follow them afterwards. Keep the object at
+the origin too: build the mesh where the shape belongs (or bake with `o.data.transform(o.matrix_world);
+o.matrix_world = Matrix()`), because the exported shape ignores the object's location [HARD, seen in game].
 
 ## Multi-piece blocks, diagonal members, UVs [HARD, built and exported in two test runs]
 

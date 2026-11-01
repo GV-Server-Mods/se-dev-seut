@@ -147,9 +147,9 @@ Done on a large gatling turret built in one scene with a `part` tag on every obj
 4. Collision: vanilla turret code (`MyLargeTurretBase`) creates no physics for its subparts, so subpart collision
    is never used. All collision goes in the base model, as simple shapes covering the turret at rest [owner]:
    slab, turntable, the azimuth part, and for a domed elevation part a cylinder plus a dome on top, each as an
-   exact convex hull (24-sided prisms, a low-poly hemisphere): Blender `SPHERE` and `CYLINDER` shapes left the
-   character standing about 0.3 m above the dome (`modeling-rules.md`, "Collision"). A first set (a hull of the detailed slab, coin and legs cylinders, nothing above the pivot)
-   looked wrong in game; build the slab hull from the slab's outline (an octagon prism for a cut-corner slab). The scope dummy (WeaponCore `Scope`, usually `camera`) must stay
+   exact convex hull (24-sided prisms, a low-poly hemisphere), with vertices placed in block space and the
+   object left at the origin (`modeling-rules.md`, "Collision": a moved object's shape lands at the block
+   centre). Build the slab hull from the slab's outline (an octagon prism for a cut-corner slab). The scope dummy (WeaponCore `Scope`, usually `camera`) must stay
    outside that static shell at every elevation: WeaponCore casts its line-of-sight ray from the scope, and a hit
    on its own grid resets the target (`RayCheckSelfHit`). With the scope behind the radome window it sat inside
    the shell from 2 to 90 degrees, and the turret turned a few degrees every few seconds instead of tracking

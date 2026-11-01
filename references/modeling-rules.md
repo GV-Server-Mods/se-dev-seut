@@ -79,10 +79,12 @@ mechanical parts, openings, equipment, bolts, wear, seams, decals and labels) is
   Parent (E054). Cost, high to low: Convex Hull, Box, Cylinder, Capsule, Sphere [HARD, wiki].
 - Rigid bodies are axis fixed: a rotated cylinder will not work as modelled. Use Convex Hull for angled
   shapes.
-- A set of `SPHERE` and `CYLINDER` shapes on a turret base looked wrong in game, and the character stood about
-  0.3 m above the dome they modelled, though their Blender bounds matched the mesh [owner; cause not
-  established]. Exact convex hulls (a 24-sided prism, a low-poly hemisphere) replaced them; verify any
-  sphere or cylinder with the Physics Primitives debug draw before relying on it.
+- **Keep every collision object at the origin with its vertices in place** [HARD, owner's Physics Primitives
+  view]: the exported shapes ignore the object's location. Shapes built centred on their own origin and then
+  moved with `location` all landed stacked at the block centre in game, standing up to a foot above the dome
+  and leaving the base with no collision, although Havok reported every rigid body. After building, bake the
+  transform: `o.data.transform(o.matrix_world); o.matrix_world = Matrix()`. Check in game with the Physics
+  Primitives debug draw (convex hulls draw red).
 - The wiki says collision appears slightly bigger in game, so shrink shapes a little. In a test of a 2.5 m
   bevelled cube, a 2.45 m box felt "a tad too small" against the model in game [HARD, tested by the owner].
   A 2.5 m box on the same cube felt right [HARD, tested by the owner]. Start from the model's real extent
