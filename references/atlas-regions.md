@@ -5,11 +5,10 @@ Where each piece sits in the vanilla decal atlases, so a decal quad can be UV-ma
 - UV values use Blender's convention: (0, 0) is the **bottom left** of the image, so they can be typed straight into the UV editor.
 - Boxes are bounding boxes of the piece's pixels in the `_alphamask` texture, reported as fractions of the full image.
 - `px` is the piece size at the texture's full resolution.
-- Atlas2, ButtonsAtlas and Decals_Atlas_A_01 were re-catalogued at full resolution (2048 px) and checked piece by
-  piece against the owner's markup [HARD]: faint faded edges are included, touching pieces are split on the
-  emptiest line between them, and pieces that cannot be boxed without catching a neighbour (diamonds, nested
-  chevrons, diagonal splits, an L-shaped pipe) have outlines. Atlas1, Atlas3, Atlas4 and TextAtlas still come from
-  the older 512 px pass [SOFT]: boxes from `scripts/extract_atlas_regions.py`, descriptions read by eye.
+- Every atlas was re-catalogued at its full resolution and checked piece by piece against the owner's markup
+  [HARD]: faint faded edges are included, touching pieces are split on the emptiest line between them, pieces
+  that cannot be boxed without catching a neighbour (diamonds, nested chevrons, diagonal splits, an L-shaped
+  pipe, the X-panel triangles) have outlines, and a repeating pattern or a multi-part panel is one decal.
   The raw numbers, outlines included, are in `atlas-regions.json`.
 
 ## Which materials use which atlas
@@ -62,23 +61,26 @@ How the full-resolution pass worked, and what the owner's review caught [HARD]:
 
 ## Atlas1
 
-Full size 2048 x 2048 px, 13 regions. Boxes checked by eye.
+Full size 2048 x 2048 px, 12 pieces, re-catalogued at full resolution and checked against the owner's markup. The schematic panel (11) is one decal: its plates, rings, bars, discs and cable run are not separate pieces. The X inside the octagon frame (8) also works on its own. Repeating patterns (five dots, six slots, 25 holes) are one decal each.
 
 | id | u0 | v0 | u1 | v1 | px | piece |
 |---|---|---|---|---|---|---|
-| 1 | 0.521 | 0.922 | 0.568 | 0.969 | 96x96 | round dot (corner of five-dot pattern) |
-| 2 | 0.623 | 0.922 | 0.668 | 0.969 | 92x96 | round dot |
-| 3 | 0.572 | 0.873 | 0.619 | 0.918 | 96x92 | round dot (centre) |
-| 4 | 0.682 | 0.809 | 0.996 | 0.982 | 644x356 | large plain rounded plate, upper right |
-| 5 | 0.521 | 0.822 | 0.568 | 0.869 | 96x96 | round dot |
-| 6 | 0.623 | 0.822 | 0.668 | 0.869 | 92x96 | round dot |
-| 7 | 0.0 | 0.617 | 0.393 | 1.0 | 804x784 | big plate: four tall slots, a comb of thin slots, and a field of round holes (several pieces in one box) |
-| 8 | 0.402 | 0.613 | 0.475 | 0.996 | 148x784 | lattice truss column (four stacked cells) |
-| 9 | 0.488 | 0.617 | 0.713 | 0.789 | 460x352 | plain scratched plate |
-| 10 | 0.756 | 0.504 | 0.998 | 0.746 | 496x496 | octagon frame with an X (hazard-style) |
-| 11 | 0.0 | 0.52 | 0.709 | 0.6 | 1452x164 | yellow and black hazard stripe |
-| 12 | 0.016 | 0.121 | 0.973 | 0.5 | 1960x776 | schematic panel: two large plates, wires, round pads, vents (several pieces in one box) |
-| 13 | 0.0 | 0.029 | 1.0 | 0.049 | 2048x40 | thin full-width strip |
+| 1 | 0.0002 | 0.7371 | 0.3918 | 0.9998 | 802x538 | big plate with four tall slots (L-shaped outline; the six-slot comb sits in its corner) (outline below) |
+| 2 | 0.4009 | 0.6113 | 0.4761 | 0.9976 | 154x791 | lattice truss column, four cells |
+| 3 | 0.6807 | 0.8076 | 0.9956 | 0.9829 | 645x359 | large plain rounded plate |
+| 4 | 0.5205 | 0.8208 | 0.6704 | 0.9702 | 307x306 | five-dot pattern |
+| 5 | 0.2993 | 0.6162 | 0.3877 | 0.8354 | 181x449 | comb of six tall thin slots |
+| 6 | 0.4888 | 0.6162 | 0.7134 | 0.7886 | 460x353 | plain scratched plate |
+| 7 | 0.7549 | 0.5044 | 0.9976 | 0.7471 | 497x497 | octagon frame with an X (hazard-style) |
+| 8 | 0.7939 | 0.543 | 0.9585 | 0.708 | 337x338 | X from the octagon frame, on its own [inside] |
+| 9 | 0.001 | 0.6299 | 0.2773 | 0.7109 | 566x166 | field of 25 round holes with rims |
+| 10 | 0 | 0.519 | 0.7085 | 0.5996 | 1451x165 | yellow and black hazard stripe |
+| 11 | 0.0151 | 0.1211 | 0.9741 | 0.501 | 1964x778 | schematic panel (one decal: side plates, four rings, bars, two discs, cable run) |
+| 12 | 0 | 0.0234 | 1 | 0.0562 | 2048x67 | thin full-width strip |
+
+Outlines (UV points in order; the piece's polygon uses the same points as positions and UVs):
+
+- 1 big plate with four tall slots (L-shaped outline; the six-slot comb sits in its corner): (0.0002, 0.7371), (0.281, 0.7371), (0.2815, 0.844), (0.3918, 0.844), (0.3918, 0.9998), (0.0002, 0.9998)
 
 ## Atlas2
 
@@ -190,86 +192,87 @@ Outlines (UV points in order; the piece's quad or polygon uses the same points a
 
 ## Atlas3
 
-Full size 2048 x 2048 px, 43 regions. Boxes checked by eye; descriptions are rough shape names.
+Full size 2048 x 2048 px, 46 pieces, re-catalogued at full resolution and checked against the owner's markup. The 6 x 10 rivet grid (46) is one decal.
 
-Region 23 (the X panel) is not one symmetric decal [HARD, normal map read and seen in game]: the top and
-right triangles are recessed (debossed) and the left and bottom triangles are raised (embossed), so a whole
-square placed on a flat face looks lopsided. Pick one relief and build the X from four triangle faces that
-all use that one triangle's UVs, with the world triangles rotated 90 degrees apart (tangent space follows the
-UVs, so each rotated copy keeps correct lighting) [SOFT, UV recipe not yet seen in game]. Pixel corners
-(2048 px atlas, y up from the bottom) and UVs; the opaque art is 477 px wide, so a 1.6 m X is
-about 0.0034 m per px, and the whole region box is 481 px (do not scale the box to the face):
-
-| piece | corner px | corner UV (u, v) |
-|---|---|---|
-| top triangle (debossed) | (176,1397) (591,1397) apex (383,1169) | (0.086,0.682) (0.289,0.682) (0.187,0.571) |
-| bottom triangle (embossed) | (180,909) (587,909) apex (383,1131) | (0.088,0.444) (0.287,0.444) (0.187,0.552) |
-| X centre | (383.5, 1153) | (0.187, 0.563) |
+The X panel is four independent decals (42-45), not one [owner; HARD, normal map read and seen in game]:
+the top (42) and right (44) triangles are recessed (debossed) and the left (43) and bottom (45) are raised
+(embossed), each pair at two different depths (deeper: 42 and 43) [SOFT, depth from edge steepness]. A whole
+square placed on a flat face looks lopsided. For a symmetric X, pick one triangle and build the X from four
+triangle faces that all use its outline as UVs, with the world triangles rotated 90 degrees apart (tangent
+space follows the UVs, so each rotated copy keeps correct lighting) [SOFT, UV recipe not yet seen in game].
+The four triangles together span 477 px of opaque art, so a 1.6 m X is about 0.0034 m per px.
 
 Size the finished decal to the open area of its face with margin; the test crate's 1.8 m square looked
 oversized against a 2.4 m face with corner brackets.
 
 | id | u0 | v0 | u1 | v1 | px | piece |
 |---|---|---|---|---|---|---|
-| 1 | 0.01 | 0.822 | 0.178 | 0.99 | 344x344 | round disc with centre hole and rings |
-| 2 | 0.193 | 0.818 | 0.307 | 0.992 | 232x356 | plate with centre dot and notch |
-| 3 | 0.326 | 0.818 | 0.363 | 0.994 | 76x360 | slim dark trapezoid slot |
-| 4 | 0.383 | 0.816 | 0.494 | 0.996 | 228x368 | rounded plate with dark rectangular window |
-| 5 | 0.504 | 0.82 | 0.621 | 0.992 | 240x352 | clamp block with two rounded bars |
-| 6 | 0.65 | 0.818 | 0.73 | 0.994 | 164x360 | trapezoid wedge |
-| 7 | 0.754 | 0.816 | 0.934 | 0.996 | 368x368 | large round speaker grille |
-| 8 | 0.941 | 0.818 | 0.998 | 0.998 | 116x368 | tall slot with knob and dot |
-| 9 | 0.256 | 0.693 | 0.371 | 0.809 | 236x236 | round cap with cross |
-| 10 | 0.508 | 0.691 | 0.555 | 0.811 | 96x244 | vertical strip with three holes |
-| 11 | 0.57 | 0.691 | 0.617 | 0.811 | 96x244 | small rounded pill |
-| 12 | 0.939 | 0.752 | 1.0 | 0.811 | 124x120 | small round dimple |
-| 13 | 0.006 | 0.693 | 0.059 | 0.807 | 108x232 | small dark slot pill |
-| 14 | 0.086 | 0.693 | 0.162 | 0.807 | 156x232 | small tab with hex bolt |
-| 15 | 0.178 | 0.688 | 0.248 | 0.811 | 144x252 | small plain rectangle |
-| 16 | 0.377 | 0.689 | 0.498 | 0.811 | 248x248 | disc with concentric rings |
-| 17 | 0.623 | 0.699 | 0.752 | 0.797 | 264x200 | horizontal clamp bar |
-| 18 | 0.756 | 0.691 | 0.932 | 0.809 | 360x240 | plate with six round dimples |
-| 19 | 0.947 | 0.689 | 1.0 | 0.748 | 108x120 | small slot with edge |
-| 20 | 0.883 | 0.564 | 0.93 | 0.686 | 96x248 | small pill |
-| 21 | 0.945 | 0.568 | 0.996 | 0.684 | 104x236 | pill with cross bar |
-| 22 | 0.006 | 0.443 | 0.059 | 0.682 | 108x488 | tall dark slot |
-| 23 | 0.07 | 0.445 | 0.305 | 0.682 | 480x484 | four-triangle panel (X pattern) |
-| 24 | 0.316 | 0.441 | 0.373 | 0.686 | 116x500 | tall plain strip |
-| 25 | 0.381 | 0.443 | 0.619 | 0.682 | 488x488 | large panel with mesh grille and frame |
-| 26 | 0.629 | 0.441 | 0.684 | 0.684 | 112x496 | tall narrow bar |
-| 27 | 0.693 | 0.443 | 0.809 | 0.684 | 236x492 | slatted vent (two groups) |
-| 28 | 0.818 | 0.443 | 0.869 | 0.684 | 104x492 | tall panel with inset square |
-| 29 | 0.881 | 0.383 | 0.994 | 0.494 | 232x228 | shallow round dish |
-| 30 | 0.002 | 0.252 | 0.186 | 0.436 | 376x376 | triangular corner plate with diagonal slots |
-| 31 | 0.191 | 0.254 | 0.371 | 0.434 | 368x368 | square plate, rounded corners, two slots |
-| 32 | 0.381 | 0.256 | 0.496 | 0.432 | 236x360 | panel with hinge notch |
-| 33 | 0.506 | 0.254 | 0.621 | 0.434 | 236x368 | panel with centre slot |
-| 34 | 0.625 | 0.254 | 0.75 | 0.434 | 256x368 | panel with two inset blocks and a dot |
-| 35 | 0.764 | 0.256 | 0.861 | 0.432 | 200x360 | tall panel with bands and four screws |
-| 36 | 0.887 | 0.262 | 0.988 | 0.363 | 208x208 | square recess (pyramid) |
-| 37 | 0.01 | 0.189 | 0.492 | 0.248 | 988x120 | long trapezoid bar |
-| 38 | 0.504 | 0.129 | 0.621 | 0.246 | 240x240 | 5x5 grid of holes |
-| 39 | 0.627 | 0.127 | 0.873 | 0.248 | 504x248 | wide frame with dark slot |
-| 40 | 0.008 | 0.01 | 0.117 | 0.178 | 224x344 | small plate with two holes |
-| 41 | 0.145 | 0.008 | 0.223 | 0.18 | 160x352 | small tall window |
-| 42 | 0.262 | 0.006 | 0.363 | 0.182 | 208x360 | rivet pattern |
-| 43 | 0.885 | 0.008 | 0.99 | 0.242 | 216x480 | tall pill with dark vent slits |
+| 1 | 0.3823 | 0.8154 | 0.4941 | 0.9966 | 229x371 | panel with dark rectangular window |
+| 2 | 0.7529 | 0.8164 | 0.9331 | 0.9966 | 369x369 | large round speaker grille |
+| 3 | 0.9404 | 0.8179 | 0.998 | 0.9976 | 118x368 | tall slot with knob and dot |
+| 4 | 0.0088 | 0.8218 | 0.1772 | 0.9902 | 345x345 | round disc with centre hole and rings |
+| 5 | 0.1929 | 0.8188 | 0.3071 | 0.9922 | 234x355 | plate with centre dot and a dark notched slot |
+| 6 | 0.3257 | 0.8174 | 0.3623 | 0.9946 | 75x363 | slim dark trapezoid slot |
+| 7 | 0.5029 | 0.8193 | 0.6211 | 0.9927 | 242x355 | clamp block with two rounded bars |
+| 8 | 0.6504 | 0.8179 | 0.731 | 0.9946 | 165x362 | trapezoid wedge |
+| 9 | 0.1782 | 0.688 | 0.248 | 0.8105 | 143x251 | small plain rectangle |
+| 10 | 0.3774 | 0.6899 | 0.4976 | 0.8105 | 246x247 | disc with concentric rings |
+| 11 | 0.5078 | 0.6904 | 0.5552 | 0.8096 | 97x244 | vertical strip with three holes |
+| 12 | 0.5703 | 0.6904 | 0.6177 | 0.8096 | 97x244 | small rounded pill |
+| 13 | 0.7554 | 0.6909 | 0.9326 | 0.8091 | 363x242 | plate with six round dimples |
+| 14 | 0.9399 | 0.752 | 0.999 | 0.8105 | 121x120 | small round dimple |
+| 15 | 0.0049 | 0.6929 | 0.0586 | 0.8071 | 110x234 | small dark slot pill |
+| 16 | 0.0864 | 0.6924 | 0.1631 | 0.8076 | 157x236 | small tab with hex bolt |
+| 17 | 0.2554 | 0.6929 | 0.3706 | 0.8076 | 236x235 | round cap with cross |
+| 18 | 0.6235 | 0.6982 | 0.7515 | 0.7979 | 262x204 | horizontal clamp bar |
+| 19 | 0.9463 | 0.689 | 0.999 | 0.749 | 108x123 | small slot with edge |
+| 20 | 0.0049 | 0.4429 | 0.0586 | 0.6826 | 110x491 | tall dark slot |
+| 21 | 0.3164 | 0.4404 | 0.373 | 0.6846 | 116x500 | tall plain strip |
+| 22 | 0.3804 | 0.4429 | 0.6196 | 0.6821 | 490x490 | large panel with mesh grille and frame |
+| 23 | 0.6289 | 0.4419 | 0.6831 | 0.6831 | 111x494 | tall narrow fluted bar |
+| 24 | 0.6924 | 0.4424 | 0.8076 | 0.6826 | 236x492 | slatted vent (two groups) |
+| 25 | 0.8184 | 0.4424 | 0.8696 | 0.6831 | 105x493 | tall panel with inset square |
+| 26 | 0.8823 | 0.5645 | 0.9307 | 0.6851 | 99x247 | small pill |
+| 27 | 0.9443 | 0.5679 | 0.9951 | 0.6826 | 104x235 | pill with cross bar |
+| 28 | 0.8813 | 0.3818 | 0.9937 | 0.4937 | 230x229 | shallow round dish |
+| 29 | 0.0024 | 0.2524 | 0.1851 | 0.4355 | 374x375 | triangular corner plate with diagonal slots |
+| 30 | 0.1919 | 0.2544 | 0.3706 | 0.4336 | 366x367 | square plate, rounded corners, two slots |
+| 31 | 0.3799 | 0.2559 | 0.4951 | 0.4312 | 236x359 | panel with hinge notch |
+| 32 | 0.5049 | 0.2534 | 0.6201 | 0.4331 | 236x368 | panel with centre slot |
+| 33 | 0.6245 | 0.2544 | 0.7505 | 0.4331 | 258x366 | panel with two inset blocks and a dot |
+| 34 | 0.7637 | 0.2554 | 0.8613 | 0.4321 | 200x362 | tall panel with bands and four screws |
+| 35 | 0.8867 | 0.2617 | 0.9883 | 0.3633 | 208x208 | square recess (pyramid) |
+| 36 | 0.0088 | 0.189 | 0.4912 | 0.2485 | 988x122 | long trapezoid bar |
+| 37 | 0.5039 | 0.1289 | 0.6211 | 0.2461 | 240x240 | 5x5 grid of holes |
+| 38 | 0.6274 | 0.1274 | 0.8726 | 0.2476 | 502x246 | wide frame with dark slot |
+| 39 | 0.8848 | 0.0073 | 0.9902 | 0.2432 | 216x483 | tall pill with dark vent slits |
+| 40 | 0.0078 | 0.0088 | 0.1172 | 0.1777 | 224x346 | small plate with two holes |
+| 41 | 0.1445 | 0.0068 | 0.2222 | 0.1797 | 159x354 | small tall window |
+| 42 | 0.0867 | 0.572 | 0.2878 | 0.6819 | 412x225 | X-panel triangle, top (debossed, deeper; outline) (outline below) |
+| 43 | 0.071 | 0.4607 | 0.1775 | 0.6643 | 218x417 | X-panel triangle, left (embossed, deeper; outline) (outline below) |
+| 44 | 0.1975 | 0.4607 | 0.304 | 0.6643 | 218x417 | X-panel triangle, right (debossed, shallower; outline) (outline below) |
+| 45 | 0.0891 | 0.4446 | 0.2859 | 0.5515 | 403x219 | X-panel triangle, bottom (embossed, shallower; outline) (outline below) |
+| 46 | 0.2617 | 0.0063 | 0.3633 | 0.1807 | 208x357 | rivet pattern, 6 x 10 grid |
+
+Outlines (UV points in order; the piece's polygon uses the same points as positions and UVs):
+
+- 42 X-panel triangle, top (debossed, deeper; outline): (0.0867, 0.6707), (0.0881, 0.6658), (0.0916, 0.6609), (0.1755, 0.5769), (0.1843, 0.572), (0.1907, 0.572), (0.1995, 0.5769), (0.2834, 0.6609), (0.2869, 0.6658), (0.2878, 0.6702), (0.2878, 0.6746), (0.2849, 0.6785), (0.28, 0.6809), (0.2742, 0.6819), (0.1008, 0.6819), (0.095, 0.6809), (0.0901, 0.6785), (0.0872, 0.6746)
+- 43 X-panel triangle, left (embossed, deeper; outline): (0.071, 0.4661), (0.0725, 0.4626), (0.0745, 0.4612), (0.0769, 0.4607), (0.0813, 0.4626), (0.1755, 0.5569), (0.1775, 0.5608), (0.1775, 0.5642), (0.1755, 0.5681), (0.0847, 0.6589), (0.0813, 0.6624), (0.0769, 0.6643), (0.0735, 0.6633), (0.071, 0.6589)
+- 44 X-panel triangle, right (debossed, shallower; outline): (0.1975, 0.5608), (0.1995, 0.5569), (0.2937, 0.4626), (0.2991, 0.4607), (0.3025, 0.4626), (0.304, 0.4661), (0.304, 0.5642), (0.304, 0.6589), (0.3015, 0.6633), (0.2981, 0.6643), (0.2937, 0.6624), (0.1995, 0.5681), (0.1975, 0.5642)
+- 45 X-panel triangle, bottom (embossed, shallower; outline): (0.0891, 0.4519), (0.093, 0.447), (0.1023, 0.4446), (0.2727, 0.4446), (0.28, 0.446), (0.2839, 0.4485), (0.2859, 0.4519), (0.2849, 0.4583), (0.281, 0.4646), (0.2, 0.5457), (0.1926, 0.5505), (0.1858, 0.5515), (0.1794, 0.5491), (0.175, 0.5457), (0.094, 0.4646), (0.0896, 0.4578)
 
 ## Atlas4
 
-Full size 1024 x 1024 px, 9 regions. Boxes checked by eye.
+Full size 1024 x 1024 px, 6 pieces, re-catalogued at full resolution and checked against the owner's markup. The four trapezoid caps (1) are one decal that repeats along a line; the five bands tile horizontally.
 
 | id | u0 | v0 | u1 | v1 | px | piece |
 |---|---|---|---|---|---|---|
-| 1 | 0.008 | 0.695 | 0.244 | 0.773 | 242x80 | trapezoid, slants left |
-| 2 | 0.256 | 0.695 | 0.494 | 0.773 | 244x80 | trapezoid, slants right |
-| 3 | 0.508 | 0.695 | 0.744 | 0.773 | 242x80 | trapezoid, slants left |
-| 4 | 0.756 | 0.695 | 0.994 | 0.773 | 244x80 | trapezoid, slants right |
-| 5 | 0.0 | 0.57 | 1.0 | 0.67 | 1024x102 | plate strip with eight dimples |
-| 6 | 0.0 | 0.484 | 1.0 | 0.518 | 1024x34 | thin strip with a dark line |
-| 7 | 0.0 | 0.336 | 1.0 | 0.436 | 1024x102 | wide strip with a dark line |
-| 8 | 0.0 | 0.125 | 1.0 | 0.303 | 1024x182 | wide plate band |
-| 9 | 0.0 | 0.018 | 1.0 | 0.102 | 1024x86 | band with square pads |
+| 1 | 0.0068 | 0.6953 | 0.9932 | 0.7725 | 1010x79 | row of four trapezoid caps, alternating narrow and wide tops (repeats along a line) |
+| 2 | 0 | 0.5693 | 1 | 0.6689 | 1024x102 | wide band with a row of eight bolt holes (tileable) |
+| 3 | 0 | 0.4834 | 1 | 0.5166 | 1024x34 | thin double strip with a dark centre line (tileable) |
+| 4 | 0 | 0.3359 | 1 | 0.4355 | 1024x102 | band with dark edge lines and a stained light centre (tileable) |
+| 5 | 0 | 0.124 | 1 | 0.3027 | 1024x183 | wide band with raised rims and a stained centre (tileable) |
+| 6 | 0 | 0.0166 | 1 | 0.1006 | 1024x86 | band with raised square blocks (tileable) |
 
 ## ButtonsAtlas
 
@@ -437,46 +440,45 @@ past the end. Polyline corners mitre by themselves when each row's side vector c
 
 ## TextAtlas
 
-Full size 1024 x 1024 px, 38 regions. Boxes checked by eye.
+Full size 1024 x 1024 px, 38 pieces, re-catalogued at full resolution. Letters and digits share a cap height (about 123 px); Q's tail drops below it.
 
 | id | u0 | v0 | u1 | v1 | px | piece |
 |---|---|---|---|---|---|---|
-| 1 | 0.021 | 0.861 | 0.098 | 0.98 | 78x122 | letter A |
-| 2 | 0.172 | 0.861 | 0.25 | 0.98 | 80x122 | letter B |
-| 3 | 0.32 | 0.861 | 0.398 | 0.98 | 80x122 | letter C |
-| 4 | 0.465 | 0.861 | 0.541 | 0.98 | 78x122 | letter D |
-| 5 | 0.615 | 0.861 | 0.686 | 0.98 | 72x122 | letter E |
-| 6 | 0.752 | 0.861 | 0.824 | 0.98 | 74x122 | letter F |
-| 7 | 0.883 | 0.861 | 0.961 | 0.98 | 80x122 | letter G |
-| 8 | 0.021 | 0.695 | 0.092 | 0.816 | 72x124 | letter H |
-| 9 | 0.168 | 0.695 | 0.184 | 0.814 | 16x122 | letter I |
-| 10 | 0.248 | 0.695 | 0.312 | 0.816 | 66x124 | letter J |
-| 11 | 0.387 | 0.695 | 0.459 | 0.816 | 74x124 | letter K |
-| 12 | 0.521 | 0.695 | 0.58 | 0.816 | 60x124 | letter L |
-| 13 | 0.635 | 0.695 | 0.75 | 0.816 | 118x124 | letter M |
-| 14 | 0.816 | 0.695 | 0.893 | 0.816 | 78x124 | letter N |
-| 15 | 0.02 | 0.529 | 0.1 | 0.648 | 82x122 | letter O |
-| 16 | 0.172 | 0.529 | 0.248 | 0.648 | 78x122 | letter P |
-| 17 | 0.316 | 0.512 | 0.398 | 0.648 | 84x140 | letter Q |
-| 18 | 0.467 | 0.529 | 0.545 | 0.648 | 80x122 | letter R |
-| 19 | 0.611 | 0.529 | 0.703 | 0.648 | 94x122 | letter S |
-| 20 | 0.754 | 0.529 | 0.84 | 0.648 | 88x122 | letter T |
-| 21 | 0.898 | 0.529 | 0.975 | 0.65 | 78x124 | letter U |
-| 22 | 0.016 | 0.363 | 0.1 | 0.484 | 86x124 | letter V |
-| 23 | 0.164 | 0.363 | 0.287 | 0.484 | 126x124 | letter W |
-| 24 | 0.352 | 0.363 | 0.438 | 0.484 | 88x124 | letter X |
-| 25 | 0.496 | 0.363 | 0.582 | 0.484 | 88x124 | letter Y |
-| 26 | 0.643 | 0.363 | 0.727 | 0.482 | 86x122 | letter Z |
-| 27 | 0.783 | 0.363 | 0.855 | 0.451 | 74x90 | small x (alternate X) |
-| 28 | 0.041 | 0.197 | 0.076 | 0.316 | 36x122 | digit 1 |
-| 29 | 0.16 | 0.197 | 0.246 | 0.316 | 88x122 | digit 2 |
-| 30 | 0.305 | 0.197 | 0.387 | 0.316 | 84x122 | digit 3 |
-| 31 | 0.453 | 0.197 | 0.535 | 0.316 | 84x122 | digit 4 |
-| 32 | 0.59 | 0.197 | 0.676 | 0.316 | 88x122 | digit 5 |
-| 33 | 0.74 | 0.197 | 0.828 | 0.316 | 90x122 | digit 6 |
-| 34 | 0.879 | 0.197 | 0.965 | 0.316 | 88x122 | digit 7 |
-| 35 | 0.016 | 0.021 | 0.102 | 0.143 | 88x124 | digit 8 |
-| 36 | 0.158 | 0.021 | 0.242 | 0.143 | 86x124 | digit 9 |
-| 37 | 0.303 | 0.021 | 0.389 | 0.143 | 88x124 | digit 0 |
-| 38 | 0.469 | 0.014 | 0.793 | 0.164 | 332x154 | human silhouette |
-
+| 1 | 0.0205 | 0.8604 | 0.0977 | 0.9805 | 79x123 | letter A |
+| 2 | 0.1709 | 0.8604 | 0.249 | 0.9805 | 80x123 | letter B |
+| 3 | 0.3203 | 0.8604 | 0.3994 | 0.9805 | 81x123 | letter C |
+| 4 | 0.4639 | 0.8604 | 0.542 | 0.9805 | 80x123 | letter D |
+| 5 | 0.6143 | 0.8604 | 0.6855 | 0.9805 | 73x123 | letter E |
+| 6 | 0.752 | 0.8604 | 0.8242 | 0.9805 | 74x123 | letter F |
+| 7 | 0.8828 | 0.8604 | 0.9609 | 0.9805 | 80x123 | letter G |
+| 8 | 0.0205 | 0.6943 | 0.0918 | 0.8164 | 73x125 | letter H |
+| 9 | 0.168 | 0.6943 | 0.1836 | 0.8145 | 16x123 | letter I |
+| 10 | 0.248 | 0.6943 | 0.3125 | 0.8164 | 66x125 | letter J |
+| 11 | 0.3857 | 0.6943 | 0.46 | 0.8164 | 76x125 | letter K |
+| 12 | 0.5215 | 0.6943 | 0.5801 | 0.8164 | 60x125 | letter L |
+| 13 | 0.6348 | 0.6943 | 0.75 | 0.8164 | 118x125 | letter M |
+| 14 | 0.8164 | 0.6943 | 0.8926 | 0.8164 | 78x125 | letter N |
+| 15 | 0.0195 | 0.5283 | 0.0986 | 0.6484 | 81x123 | letter O |
+| 16 | 0.1709 | 0.5283 | 0.2471 | 0.6484 | 78x123 | letter P |
+| 17 | 0.3154 | 0.5107 | 0.3984 | 0.6484 | 85x141 | letter Q |
+| 18 | 0.4668 | 0.5283 | 0.5439 | 0.6484 | 79x123 | letter R |
+| 19 | 0.6094 | 0.5283 | 0.7031 | 0.6484 | 96x123 | letter S |
+| 20 | 0.7539 | 0.5283 | 0.8389 | 0.6484 | 87x123 | letter T |
+| 21 | 0.8984 | 0.5283 | 0.9746 | 0.6504 | 78x125 | letter U |
+| 22 | 0.0156 | 0.3623 | 0.0986 | 0.4844 | 85x125 | letter V |
+| 23 | 0.1641 | 0.3623 | 0.2871 | 0.4844 | 126x125 | letter W |
+| 24 | 0.3516 | 0.3623 | 0.4375 | 0.4844 | 88x125 | letter X |
+| 25 | 0.4961 | 0.3623 | 0.5811 | 0.4844 | 87x125 | letter Y |
+| 26 | 0.6416 | 0.3623 | 0.7266 | 0.4824 | 87x123 | letter Z |
+| 27 | 0.7822 | 0.3623 | 0.8564 | 0.4502 | 76x90 | small x (alternate X) |
+| 28 | 0.041 | 0.1963 | 0.0752 | 0.3164 | 35x123 | digit 1 |
+| 29 | 0.1602 | 0.1963 | 0.2461 | 0.3164 | 88x123 | digit 2 |
+| 30 | 0.3037 | 0.1963 | 0.3867 | 0.3164 | 85x123 | digit 3 |
+| 31 | 0.4521 | 0.1963 | 0.5342 | 0.3164 | 84x123 | digit 4 |
+| 32 | 0.5879 | 0.1963 | 0.6768 | 0.3164 | 91x123 | digit 5 |
+| 33 | 0.7402 | 0.1963 | 0.8281 | 0.3164 | 90x123 | digit 6 |
+| 34 | 0.8779 | 0.1963 | 0.9648 | 0.3164 | 89x123 | digit 7 |
+| 35 | 0.0156 | 0.0215 | 0.1016 | 0.1416 | 88x123 | digit 8 |
+| 36 | 0.1572 | 0.0215 | 0.2422 | 0.1416 | 87x123 | digit 9 |
+| 37 | 0.3027 | 0.0215 | 0.3877 | 0.1416 | 87x123 | digit 0 |
+| 38 | 0.4688 | 0.0137 | 0.792 | 0.1641 | 331x154 | human silhouette |

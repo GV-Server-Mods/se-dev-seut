@@ -399,7 +399,7 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
 - **Stripe bands round a cylinder** [HARD, run]: put one decal column on each of the part's own facet angles
   (read them from its outer vertices) at radius + 1.5 mm, so the decal chords stay parallel to the facets. Pick
   a tile count that divides the column count, then set the band height to tile length / the region's aspect
-  (Atlas1 hazard stripe 1452x164: 16 tiles on a 1.35 m radius gave a 6 cm band). Inset the region's u range
+  (Atlas1 hazard stripe 1451x165: 16 tiles on a 1.35 m radius gave a 6 cm band). Inset the region's u range
   about 1% or the tile ends show as vertical lines. Orient each loose face outward yourself
   (`recalc_face_normals` guesses wrong on disconnected quads).
 - **Decals on curved surfaces:** split the quad into columns that follow the radius (8 columns for a 0.4 m

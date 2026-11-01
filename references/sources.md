@@ -69,6 +69,6 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
 - Confirmed in game by the owner (probe cube): the exported mod loads with no mod errors, the highlight outlines the linked mesh, a 2.5 m collision box matches the model, paint and vanilla materials work, the keypad panel maps correctly, and `IsAirTight` in the SBC clears the BuildInfo hint.
 - Export of LODs, build stages and subparts; only a Main plus collision model was exported. The `new` SBC was generated but not loaded in game; `update` was not run.
 - Mirroring and mountpoint operators driven from script.
-- Atlas region descriptions for small pieces (Atlas2 labels, ButtonsAtlas, Atlas3); boxes are measured, the names were read by eye and need a second look.
+- Atlas region names: every atlas was re-catalogued at full resolution and its boxes and groupings checked against owner markup, but the piece names were read by eye; the X-panel triangle depths come from edge steepness in the normal map.
 - Dummy and preset subpart names; subpart workflow.
 - Behaviour on SEUT 1.2.2-alpha / Blender 5.x.
