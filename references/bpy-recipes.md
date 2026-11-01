@@ -291,6 +291,14 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
 - **Booleans:** cut pockets into the *unbevelled* solid first, then bevel; an exact boolean on an already
   bevelled mesh produced stray geometry. A feature that pokes through the far side of a plate shows as a dark
   slot there: ray-cast from the camera (`scene.ray_cast`, with helper objects hidden) to find which object it is.
+- **Triangle budget** [HARD, measured on a large turret]: the first full detail pass reached about 74,000
+  triangles, almost all from over-segmented round parts. Segment counts that still read smooth at play distance:
+  48 around a 2 m radome (14 rows in its cap), 64 for 2.7 m turned rings, 40 for 0.5-1 m rings and drums, 28-32
+  for 0.5 m cylinders, 12-16 for barrels, pins and tubes under 0.15 m, 8 for hoses. That pass brought it to
+  about 43,600 with no visible faceting. Count early (sum `len(p.vertices) - 2` over polygons per object).
+- **Angle-limited bevels and segment counts**: a 12-sided cylinder's side edges meet at exactly 30 degrees, so a
+  Bevel with `angle_limit = 30` bevels every side edge and multiplies the triangles. Use 14 or more sides, raise
+  the limit, or skip the bevel on small cylinders (barrels, pins, piston bodies). Small hex bosses need no bevel.
 - **Many small cuts:** an exact boolean that slots six small turned tubes at once collapsed them to fragments
   (two tries). Build such features by construction instead: a slotted flash hider is a base ring, three
   partial tube sections (wall rings swept over an angle range, capped at both ends) and a lip ring. Build each
