@@ -39,6 +39,8 @@ Everything below was checked against SEUT 1.2.1 on Blender 4.5 unless marked "un
    meshes instead of rebuilding them; build from scratch only what no vanilla part covers, then bevel and
    smooth shade it. Import with SEUT's `scene.import` (`getattr(bpy.ops.scene, 'import')`), not the raw FBX
    importer; recipe and traps: `references/kitbash.md`.
+3b. **Decal pass on every surface** (mandatory, see "Decals before geometry"): before adding any flat 3D
+   detail, propose decals from a contact sheet and use them; revisit plain faces at the end and offer more.
 4. **UVs, then material.** Link a vanilla material from the SEUT material library and lay UVs onto its
    atlas. Do not bake. Details: `references/materials.md`.
 5. **Collision** in `Collision - Main (...)`: at most 10 convex objects, inside the bounding box, rigid
@@ -148,14 +150,30 @@ vanilla materials in `<SEUT Assets>\Materials\Materials.blend` (marked Vanilla, 
 Pick a material from `references/vanilla-materials.md`, link it (`link=True`), and move UV islands over the
 atlas region you want. A model that uses only vanilla textures ships no textures of its own.
 
-## Decals before geometry (default style)
+## Decals before geometry (mandatory, owner's standing rule)
 
-Before modelling a surface detail in 3D (panel line, vent, hazard stripe, label, rivet row, button),
-check whether a vanilla decal material already gives that look: `DECAL_CUTOUT` materials such as
-`PanelingColorable`, `Atlas*`, `ButtonsAtlas_*`, `TextAtlas`, `Decals`. Use a decal quad on the surface when
-one fits, and spend real geometry only on shape that has to read in the silhouette, catch light at
-grazing angles, or affect collision. Decals cost almost nothing in triangles and keep blocks cheap and
-consistent with vanilla. Say which decal you chose and why geometry was needed when you skip one.
+**Every flat surface detail is a decal unless you can say why it cannot be.** Panel lines, access panels,
+hatches, vents and grilles, window plates, hinge panels, rivet and bolt rows, buttons, keypads, hazard
+stripes, warning signs: reach for a vanilla `DECAL_CUTOUT` decal first, every time, and actively look for more
+places a decal improves a plain surface. The owner has had to push for this repeatedly; do not wait to be
+asked.
+
+1. **Propose before you model.** When a surface needs detail, crop the candidate atlas regions into a
+   labelled contact sheet (normal-map relief preview, `references/atlas-regions.md` for the boxes), show it,
+   and let the user pick with a multiple-choice prompt. Offer several options per surface, not one.
+2. **Paint-colour panels first on painted surfaces.** `Atlas3_Colorable` (access panels, hinge panels, window
+   plates, slatted vents, grilles, dimple plates), `Atlas1Colorable` (plates, circuit schematic pieces) and
+   `PanelingColorable` (panel seams) take the block's paint and get their relief from the normal map, so they read
+   as real panels. Prefer them over lettering and over the light-grey `Decals` sheet, which nearly vanishes on
+   light paint.
+3. **Signs and hazards, sized boldly.** `Atlas2` warning signs and hazard marks, placed asymmetrically and big
+   enough to read (a 0.1 m mark was far too small, 0.3 m worked on a large turret).
+4. **Geometry only for silhouette, grazing light or collision.** Say which decal you rejected and why when you
+   model a surface detail in 3D instead.
+
+Decals cost almost nothing in triangles and keep blocks consistent with vanilla. Wrap them to curved surfaces
+in narrow columns, mitre seam joins, check text direction and obstruction with a render and a ray cast
+(`references/bpy-recipes.md`, `references/turret-design.md`).
 Decal quads sit just off the surface (not coplanar) to avoid z-fighting [SOFT, 0.01 m exported cleanly, see
 `references/materials-catalog.md` for normals and DLC pitfalls; confirm the offset used by
 vanilla blocks before fixing a number].
