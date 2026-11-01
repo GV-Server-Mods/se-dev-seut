@@ -186,6 +186,20 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
      `wm = bpy.context.window_manager; main = next(w for w in wm.windows if w.screen.name != 'temp')`, then
      `for w in [w for w in wm.windows if w != main]: with bpy.context.temp_override(window=w): bpy.ops.wm.window_close()`.
      Check `len(wm.windows) == 1` afterwards. Never close the user's main window.
+     Save the .blend before each render, and close the window in its own call after the render call has
+     returned [SOFT]: on a three-scene turret, Blender 4.5.10 crashed on the fourth render of a session in which
+     every script rendered and then closed the window in the same call (access violation at address 0, no
+     Blender frames in `%TEMP%\<blend>.crash.txt`). The close had worked many times before, so the cause is
+     unknown.
+     **Subparts are not in the icon** [HARD, tested]: the renderer shows only the base scene's `Main`
+     collection, so a turret renders as its base plate. Instance each subpart by hand for the render: for every
+     subpart empty, in the base scene and inside the subpart scenes (nested subparts follow on their own),
+     `e.instance_type = 'COLLECTION'; e.instance_collection = <that subpart scene's Main collection>`. Set them
+     back (`instance_type = 'NONE'`, `instance_collection = None`) before saving or exporting. Do not use
+     `scene.update_subpart_instances` for this (note under "Quick tools": it crashed Blender).
+     Framing: `renderEmptyRotation` z turns the model; if the gun points away from the camera, add or subtract
+     180 degrees. Check the PNG's bounding box for clipping; move `renderEmptyLocation` toward the clipped side
+     and lower `renderZoom` until there is a margin on every side.
   5. The next export with `'new'` or `'update'` writes `Icon` as `Textures\GUI\Icons\<SubtypeId>.dds` because
      that file exists under `scene.render.filepath`. Copy the file into the mod's `Textures\GUI\Icons`.
   Icon style [owner, 2026-10]: vanilla icons currently use the blue filter, which is SEUT's default. The
@@ -492,6 +506,10 @@ view_layer=scene.view_layers[0], window, area, region)` using the 3D viewport as
   not crash with the empty active. The export does not need the instances, so for scripted work leave
   `linkSubpartInstances = False` and judge placement from the subpart scene itself. Seeing a subpart in place
   in Blender is a UI-only convenience for now [SOFT].
+  **Do not call it from script on nested subparts** [HARD, crashed Blender 4.5.10 once]: run in a loop over a
+  turret's three scenes (Barrel linked in Elevation, Elevation in Azimuth, Azimuth in the base), it crashed
+  Blender with an access violation during depsgraph evaluation. To see subparts in place (or in an icon), set
+  the collection instance by hand (icons, step 4) and undo it before saving.
 
 ### Quick tools [HARD, source read and run]
 

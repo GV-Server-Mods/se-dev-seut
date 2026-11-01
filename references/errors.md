@@ -47,6 +47,13 @@ Calls fail with "Connection to Blender lost" / WinError 10054, or `get_addon_sta
    auto-starting on this machine (some installs start it automatically, others do not). Tell the user to open the
    side panel (N) in Blender and press Start MCP Server, or enable the add-on's auto-start option if its
    preferences have one. Do not loop restarts.
+- **A crash dialog blocks the MCP** [HARD, seen on Windows, Blender 4.5.10]: when Blender crashes, its error
+  dialog stays open and the MCP call does not fail; it just waits for a result that never comes. If a call
+  hangs, ask the user whether a Blender error window is open; once they close it or click Restart, read the
+  crash log and go on from step 3.
+- **Check which file reopened** [HARD, seen]: after a crash restart Blender may open an autosave from `%TEMP%`
+  instead of the user's file. Compare `bpy.data.filepath` with the path recorded in step 1 and open the right
+  one with `bpy.ops.wm.open_mainfile(filepath=...)`.
 5. If the recorded path is missing (context lost too), look in `C:\Program Files\Blender Foundation\`,
    the Steam library (`steamapps\common\Blender`), or ask the user; do not search the whole drive.
 

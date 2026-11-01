@@ -129,7 +129,9 @@ shape reference at most, and ask before spending credit.
   `bpy.app.binary_path` and `bpy.data.filepath`; after a crash see `references/errors.md` ("When Blender
   crashes or the MCP connection drops").
 - **Close the icon render preview window after `icon_render_preview`** [HARD]: leave only the user's main
-  window open. Recipe in `references/bpy-recipes.md` (icons, step 4).
+  window open; save first and close it in a separate call. Subparts need manual collection instancing to
+  appear in the icon, and `scene.update_subpart_instances` crashed Blender on nested subparts. Recipe in
+  `references/bpy-recipes.md` (icons, step 4).
 - **Do not call `scene.export_all_scenes` on a file with several scenes from script** [HARD, crashed Blender
   4.5.10 twice]: export each scene with `scene.export` instead. `references/bpy-recipes.md`.
 - **A decal face whose corners all share one U (or one V) renders its normal map flipped** [HARD, seen on

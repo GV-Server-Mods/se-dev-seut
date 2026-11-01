@@ -62,6 +62,8 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
 
 - Crate 2 in game (owner): all tests passed except LOD. At 50 m the yellow conveyor-port frames were missing (first guessed to be `Decals` faces lost to a global decimate; a rebuild with decals protected still lost the ports at 50 m, and the real cause was that all `detector_*` meshes, which carry the yellow port frames and keypads, had been left out of both LODs; rebuilt with them included: the owner confirmed in game that the LODs look right); the light-blue silhouette seen beyond LOD2 was only the time of day and lighting changing, not a model stage. Vanilla `CargoContainerSmall` LODs read from the SDK (5 m near-full, 60 m 12-face box with a baked material).
 
+- Icon render of a three-scene WeaponCore turret (`GVK_GatlingTurret`, Blender 4.5.10): subparts missing until instanced by hand, `update_subpart_instances` crash on nested subparts, a crash on the fourth render-and-close of a session (`%TEMP%\GatlingTurret.crash.txt`), the crash dialog hanging the MCP, and a Temp autosave reopening after the restart (`bpy-recipes.md` icons step 4, `errors.md`).
+
 ## Not yet verified
 
 - In-game checks still open: the armor-style UV density (about 0.05 UV/m is extrapolated), a second functional block for the 0.40 UV/m figure, build stages in game, inventory on a `CubeBlock` via entity components, and subparts/turrets.
