@@ -140,8 +140,13 @@ Done on a large gatling turret built in one scene with a `part` tag on every obj
    slab, turntable, the azimuth part, and for a domed elevation part a cylinder plus a dome on top, each as an
    exact convex hull (24-sided prisms, a low-poly hemisphere): Blender `SPHERE` and `CYLINDER` shapes left the
    character standing about 0.3 m above the dome (`modeling-rules.md`, "Collision"). A first set (a hull of the detailed slab, coin and legs cylinders, nothing above the pivot)
-   looked wrong in game; build the slab hull from the slab's outline (an octagon prism for a cut-corner slab). The camera or scope dummy swings inside that static shell at
-   high elevation; whether WeaponCore's line-of-sight check minds is not yet tested.
+   looked wrong in game; build the slab hull from the slab's outline (an octagon prism for a cut-corner slab). The scope dummy (WeaponCore `Scope`, usually `camera`) must stay
+   outside that static shell at every elevation: WeaponCore casts its line-of-sight ray from the scope, and a hit
+   on its own grid resets the target (`RayCheckSelfHit`). With the scope behind the radome window it sat inside
+   the shell from 2 to 90 degrees, and the turret turned a few degrees every few seconds instead of tracking
+   [owner; SOFT: cause read from code, the fix of moving the scope just ahead of the muzzle on the barrel axis
+   not yet confirmed in game]. Check the scope's path through the elevation range against the collision shapes
+   before export.
 5. Before choosing names, read the weapon definition the model replaces. A replacement model must match its
    subpart names (`AzimuthPartId`, `ElevationPartId`, `SpinPartId`), its `Muzzles` list and `Scope` (often
    `camera`), or the config has to change with it.
