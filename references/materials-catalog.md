@@ -99,6 +99,20 @@ Vanilla library materials with these names: `Emissive`, `Emissive0..4`, `Emissiv
 brightness as the block goes Working / Disabled / Damaged / Warning. The exact blend with the CM texture is
 not verified; the wiki says the glow colour comes from CM at the same location [SOFT].
 
+**Subparts follow the state too** [HARD, `MyCubeBlock.SetEmissiveState` calls `SetEmissivePartsForSubparts`,
+which walks every subpart recursively; seen in game on a WeaponCore turret built on a vanilla turret type]: an
+`Emissive` face on an azimuth or elevation subpart changed colour with power on and off, with no WeaponCore
+emissive definition. So moving parts can carry state lights without script work.
+
+**Glow needs real geometry**: no decal sheet glows except `TextAtlas` (faintly). Put `Emissive` on a real
+face (a lens recessed in a bezel, a window plate), not on a decal quad.
+
+**`EmissiveAtlas` layout** (the texture behind `Emissive`) [HARD, read from the textures]: the top half
+(v > 0.5) is fine horizontal scan lines; the bottom half is a grungy bright patch. The emissive mask (ADD
+green) is even over the whole sheet, so the CM sets how bright it looks. For a plain lens, map the face into
+the brightest plain area, about u 0.40-0.50, v 0.26-0.32; a face left on default UVs can land on the scan
+lines and render striped.
+
 Other emissive materials are static unless named as above: `LightPanel_Light`, `ScreenArea*`,
 `CockpitScreen_*`, `EmissiveColorable` (flat, fully paintable and emissive), `FoodDispenser`,
 `LCD_Economy_Graph_4`.
