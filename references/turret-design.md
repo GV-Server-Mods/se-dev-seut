@@ -85,6 +85,10 @@ They apply to any turret, gun or weapon block. Tags as in SKILL.md: [owner] = ow
 - **Labels**: warning signs on flat faces, read checked in a render (mirrored text happens). Do not mirror one
   label symmetrically on the front; place labels on the sides and spread military stencils asymmetrically
   (`TextAtlas` letters and digits for unit numbers or calibre markings, chevron badges, gauges) [owner].
+  Calibre and unit stencils sit best somewhere underneath (an underside access panel), not on a front face
+  [owner]. Text on a downward face, read by someone looking up from in front (muzzle at -Y): letter right = +X,
+  letter up = -Y (toward the front), face normal -Z [HARD, took three renders to get right]. Text direction is
+  easy to get wrong on any face, so render every label once before calling it done.
 - **Keep a clean shell clean** [owner]: a smooth radome or cowl with seam decals, a recessed vent and a recessed
   camera reads better than strips, rivets, hatches and lifting eyes.
 - **Nothing past the mount face**: detail the bottom inside a shallow recess; direction arrows there should point
