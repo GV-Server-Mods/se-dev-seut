@@ -46,7 +46,9 @@
   vanilla model (`kitbash.md`).
 - Do not build a part as several nested or stacked boxes with a thin bevel each [owner: the test crate's
   bezel and handle looked like three separate rectangles in game, not one moulded piece]. Make each part one
-  solid with a single consistent chamfer, sized to the part (clearly visible from a few metres, not a hairline),
+  solid with a single consistent chamfer, sized to the part (clearly visible from a few metres, not a hairline;
+  about 15 mm on the outer edges of a large-block slab read well, while 0.6 mm was invisible in game, so
+  measure the bevel's width from the vertices rather than trusting the modifier value [owner]),
   or take the part from a vanilla model (`kitbash.md` has handles, keypad frames and port frames). Check
   hand-built parts in game next to a vanilla block, as the owner did, before calling them done.
 - Bevel on thin or small parts leaves zero-area faces [HARD, hit in a test run]: a 0.03 m bevel on parts under
