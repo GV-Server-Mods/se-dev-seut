@@ -81,7 +81,9 @@ They apply to any turret, gun or weapon block. Tags as in SKILL.md: [owner] = ow
   docking column on the azimuth axis rising through the turntable centre (a rotary seal ring where the hub turns
   round it) and a matching receiver on the elevation part that lines up over it at 0 degrees. Check the receiver's
   closest pass over the column across the full elevation range; guide pins clipped at small angles, so the mouth
-  and seal carry the docking look instead.
+  and seal carry the docking look instead. A receiver with nothing behind it reads as a flat plate [owner]: give
+  it a feed tube of the same style running on into the magazine (drum), with bolted collars at both ends, and
+  clear whatever equipment sat in that path.
 - **Terminal keypad**: embedded flat and centred in the base's back face, turned 90 degrees, in a rectangular
   pocket, read better than a console or a sloped corner pocket [owner].
 - **Avoid boxes perched on top of the shell** and boxes hanging outside the plate outline [owner].
