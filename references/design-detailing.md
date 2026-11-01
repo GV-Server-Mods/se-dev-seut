@@ -7,6 +7,7 @@ SKILL.md: [owner] = owner design feedback, [HARD] = measured or rendered, [SOFT]
 
 ## Contents
 - Workflow
+- Replacing a block's model
 - Shape and structure
 - Equipment and filling space
 - Surface detail: bolts, wear, seams, decals, labels
@@ -14,26 +15,49 @@ SKILL.md: [owner] = owner design feedback, [HARD] = measured or rendered, [SOFT]
 
 ## Workflow
 
-1. **Design document before Blender** [owner]. Write a short doc and get it confirmed: intent, block size and
-   mount faces, a parts table with heights above the mount face (and which subpart each part moves with, if
-   any), materials per part, limits, and open questions. Concept art and notes disagree more often than they
-   look; settling that on paper is far cheaper than in a model.
-2. **Silhouette first: blockout, then iterate proportions only.** Plain shapes at the doc's sizes, rendered at
+1. **Design document before Blender** [owner]. Ask for style references first: screenshots of the owner's own
+   blocks in the style they want, saved next to the concept art. Then write a short doc and get it confirmed:
+   intent, block size and mount faces, a parts table with heights above the mount face (and which subpart each
+   part moves with, if any), materials per part, limits, and open questions. Add where they apply: the
+   replacement contract (next section), kitbash candidates, a decal table per surface for large and small
+   features with each piece of geometry kept and why (SKILL.md, "Decals before geometry"), and the review
+   checkpoints (step 2). Concept art and notes disagree more often than they look; settling that on paper is far
+   cheaper than in a model.
+2. **Review checkpoints and a build log** [owner: check progress often]. List the checkpoints in the doc, each
+   with an owner sign-off: blockout, kitbash, each part group, each decal group (contact sheet first), the
+   split, LODs and stages, the icon. Render each at the concept art's angle, the owner's reference angle and
+   orthographic views. Keep `build-log.md` beside the doc and update it at every checkpoint (done, decided,
+   renders, next), so a context compaction or a fresh session continues from the files.
+3. **Silhouette first: blockout, then iterate proportions only.** Plain shapes at the doc's sizes, rendered at
    the concept art's angle and as an orthographic side view. Expect several rounds (the turret's base thickness,
    leg height and stance, pivot height and plate size changed seven times). Do not detail until the owner
    signs off the silhouette.
-3. **Kitbash check, honestly.** Look for a vanilla part first (`kitbash.md`), but compare its proportions with
+4. **Kitbash check, honestly.** Look for a vanilla part first (`kitbash.md`), but compare its proportions with
    the concept: a vanilla gatling barrel was too short and stubby for a long-barrelled concept, so custom
    barrels were right.
-4. **If anything moves, detail in one scene and split at the end.** Tag every object with the part it moves
+5. **If anything moves, detail in one scene and split at the end.** Tag every object with the part it moves
    with (a custom property) so the split is mechanical, and keep pivots and dummies as plain marker empties
    until then (`weapons-turrets.md`, "Splitting a turret into subpart scenes").
-5. **Small MCP steps.** Save before each step, never loop over a live collection while creating data, and keep
+6. **Small MCP steps.** Save before each step, never loop over a live collection while creating data, and keep
    a helper library in a Blender text block so every part gets the same bevel, cleanup, UV and material
    treatment (`bpy-recipes.md`, "Shaped parts and edge wear from script").
-6. **Decal pass on every surface** before any flat 3D detail (SKILL.md, "Decals before geometry").
-7. **Count triangles early** and cut over-segmented round parts and buried faces (`bpy-recipes.md`, "Triangle
+7. **Decal pass on every surface** before any flat 3D detail (SKILL.md, "Decals before geometry").
+8. **Count triangles early** and cut over-segmented round parts and buried faces (`bpy-recipes.md`, "Triangle
    budget" and "Buried faces").
+
+## Replacing a block's model
+
+When the new model replaces an existing block, the old block is the contract, so grids already built with it
+keep working. Put it in the design doc as a "fixed by the block it replaces" table:
+
+- Keep the SubtypeIds (every SBC entry that uses the model, NPC copies included), `Size`, mount points, conveyor
+  port cells and `BlockPairName`.
+- Read the old SBC entries and, for a weapon, both WeaponCore files: the weapon definition (part names, muzzles,
+  scope, limits) and its animation (`weapons-turrets.md`).
+- Read the old model's dummies with `scripts/mwm_dummies.py`: names, positions and directions give the pivot
+  heights, muzzle reach and port positions to keep or improve on.
+- Before deleting the old model files, search the mod's data for every other block that names them: build-stage
+  models are often shared (two different blocks used one pair of half-block stages).
 
 ## Shape and structure
 
@@ -59,7 +83,8 @@ SKILL.md: [owner] = owner design feedback, [HARD] = measured or rendered, [SOFT]
 - **Think about the neighbours**: flush faces, mount points and edge chamfers should let the block join
   cleanly. Armor-style blocks keep faces flush; functional blocks inset. Nothing may stick out past a mounting
   face: detail it inside a shallow recess (`modeling-rules.md`), and point any direction arrows there at the
-  block's front.
+  block's front. Kitbashed vanilla port frames and signs stand about 4 cm proud of their face (`kitbash.md`), so
+  set a mounting face that carries them about 5 cm inside the cell and they end flush.
 - **Pick the footprint with symmetry in mind**: an odd cell width puts a feature on the centre line, an even
   width cannot [community advice; vanilla blocks follow it].
 - **Mechanical detail should look designed, not like stacked rectangles** [owner]. Use imaginative shaped
@@ -112,6 +137,10 @@ SKILL.md: [owner] = owner design feedback, [HARD] = measured or rendered, [SOFT]
   or the groove shades flipped (`atlas-regions.md`, "Panel lines"). Seams must sit on surface: check each seam
   vertex with a short ray cast against the face behind it, and route seams round recesses and pockets, since a
   seam that crosses one floats [owner].
+- **Every joint says how it was made** [owner]: a V-groove seam between removable cover plates, a weld line on
+  permanent structural joints (around big mechanical parts: trunnion housings, bearing rings, frames, fillets in
+  inside corners), bolts where a plate clamps something. Weld lines are decals too (`atlas-regions.md`, "Weld
+  lines").
 - **On a painted shell, prefer paint-colour panel decals over lettering** [owner: stencilled numbers and marks on
   a dome were disliked]. `Atlas3_Colorable` access panels, window plates, hinge panels and slatted vents take
   the block's paint and get relief from the normal map, so they read as real panels. Skip decals from the

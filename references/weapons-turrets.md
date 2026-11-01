@@ -6,11 +6,13 @@ subpart and dummy names must match the config exactly.
 ## Contents
 - Barrels on any weapon
 - Clearance for moving subparts
+- Recoiling barrels and twin barrels
 - Block type
 - Subpart tree
 - Dummies and empties
 - What the configs expect
 - Vanilla Gatling turret as a template
+- Splitting a turret into subpart scenes
 - Build checklist
 - Unverified
 
@@ -32,6 +34,21 @@ medium calibres they only waste triangles.
   rotation about +X lowers the muzzle, so the range -20 down / +85 up is `range(-85, 21)` degrees.
 - Equipment that would otherwise hang in a swept corner can go on top of the elevation plate instead, as one
   asymmetric detail.
+
+## Recoiling barrels and twin barrels [HARD: WeaponCore `SessionAnimationMgr.cs`, SEUT source, a shipped twin-barrel turret's models and animation]
+
+- A WeaponCore movement adds its `Transformation(x, y, z)` (metres) to the subpart's local position, so it
+  moves along the parent part's axes. With unrotated empties under the turned subpart scenes ("Splitting"
+  below), +Z is backward: a 2 m recoil is `Transformation(0, 0, 2)` out and `(0, 0, -2)` back.
+- Each recoiling barrel is its own subpart scene linked from the elevation part. The muzzle dummies stay on the
+  part named as `MuzzlePartId` (the elevation part), so they do not travel with the recoil.
+- The barrel mesh runs back into the mantlet or gun shield by more than the recoil travel, so no gap opens at
+  full recoil (2.36 m of hidden barrel for a 2 m recoil on the shipped turret). Check that hidden end at the
+  minimum and maximum elevation: it stays inside the elevation part and clear of the azimuth part.
+- One subpart scene may be linked by several empties (twin barrels): SEUT has no check against it and writes
+  the same `file` on each empty, and the game loads that one model for each dummy. Link each empty with the
+  crash-safe recipe (`bpy-recipes.md`, "Subparts, dummies, mirroring and mountpoints from script") and give each
+  its own collection instance for the icon (`bpy-recipes.md`, icons step 4).
 
 ## Block type [HARD, WeaponCore and ToolCore wikis]
 
@@ -82,10 +99,9 @@ Add with `scene.add_dummy` (UI: Add > Empty > Dummy). Relevant presets:
 Rotate each muzzle so its +Y axis points the way the weapon fires. Muzzle empties live in the subpart that
 moves with the barrel (the part named as the muzzle part in the config), or in the main model for fixed weapons.
 
-Subpart direction [SOFT]: a subpart scene's forward is +Y while a main scene's is -Y, so a subpart linked the
-normal way can come out turned round (the owner saw this on an earlier weapon model, and a door tutorial describes
-the same fix: rotate the subpart empty 180 degrees about Z). Check each turret subpart's facing in game, and
-check the muzzle direction after any rotation. Details: `doors-subparts.md`.
+Subpart direction: on vanilla turret types the game drops the subpart empty's rotation, so the content of each
+subpart scene is turned 180 degrees (muzzle toward +Y); the rule and the sorter-turret case are in
+`modeling-rules.md`, "Which way a subpart faces". Check the muzzle direction after any rotation.
 
 ## What the configs expect
 
@@ -136,10 +152,10 @@ Done on a large gatling turret built in one scene with a `part` tag on every obj
 
 1. Create one `subpart` scene per moving part (`recreate_collections` each), then move each object into its
    scene's Main and set `matrix_world = R @ Translation(-pivot) @ old_matrix_world`, with `R` = 180 degrees about
-   Z. The pivot goes to the scene origin, and the 180-degree turn makes up for SEUT's `-Z` forward axis on subpart
-   scenes (`doors-subparts.md`), so in each subpart scene the muzzle points +Y. That way every subpart empty and
-   dummy keeps an identity rotation and each part's forward matches the block's. If parts show up backwards in
-   game, take the turn out of the subpart scenes and turn the main scene's first subpart empty instead.
+   Z. The pivot goes to the scene origin, and the 180-degree turn makes up for the half turn the game drops on
+   vanilla turret types (`modeling-rules.md`, "Which way a subpart faces"), so in each subpart scene the muzzle
+   points +Y and every subpart empty and dummy keeps an identity rotation. The gatling turret this was done on
+   shipped built this way. For a WeaponCore sorter turret, check the facing in game before detailing further.
 2. Child empties sit at `R @ (child pivot - parent pivot)`. Muzzle and camera dummies get identity rotation,
    so their +Y lies along the barrels.
 3. Parent every object in each Main under one root (E031 fires on subpart scenes too), including empties and
@@ -160,7 +176,8 @@ Done on a large gatling turret built in one scene with a `part` tag on every obj
    dummy instead. With no `Scope` set, WeaponCore falls back to the middle muzzle (`GetScope`).
 5. Before choosing names, read the weapon definition the model replaces. A replacement model must match its
    subpart names (`AzimuthPartId`, `ElevationPartId`, `SpinPartId`), its `Muzzles` list and `Scope` (often
-   `camera`), or the config has to change with it.
+   `camera`), or the config has to change with it. The rest of the replacement contract (size, mount points,
+   ports, shared files, the old dummies): `design-detailing.md`, "Replacing a block's model".
 6. Check the split by rebuilding the turret in the main scene from temporary objects that share the LOD or Main
    meshes, placed with the inverse transforms, and render it before export.
 
@@ -172,9 +189,15 @@ Done on a large gatling turret built in one scene with a `part` tag on every obj
 4. No collision on subparts unless vanilla allows it (wiki); put collision on the base.
 5. LODs and build stages per `block-scenes.md`.
 6. Config names exactly match subpart names (minus the prefix) and dummy names.
+7. SBC of a vanilla turret type under WeaponCore: `<AiEnabled>false</AiEnabled>` ("Block type"), elevation and
+   azimuth limits equal to WeaponCore's `HardWare` ("What the configs expect"), and `<EmissiveColorPreset>` when
+   the model has state lamps (`materials-catalog.md`, "Emissive presets and colors").
 
 ## Unverified
 
 - Dummy-in-subpart naming for ToolCore; whether vanilla barrel FBX carries `muzzle_projectile_001`.
-- Weapon-side dummies beyond the page list; WeaponCore animation basics (`Animation-Basics`) not read.
-- Nothing here has been run through SEUT export or tested in game.
+- Weapon-side dummies beyond the page list; the WeaponCore wiki's `Animation-Basics` page (the movement code
+  above was read instead).
+- Subpart facing on WeaponCore sorter turrets, and recoil clearance seen in game. The ToolCore notes have not
+  been run through SEUT export or tested in game; the vanilla-type turret notes come from a SEUT-built
+  WeaponCore turret loaded in game.

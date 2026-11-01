@@ -40,6 +40,19 @@ def map_quad_to_region(obj, u0, v0, u1, v1, uv_name='UVMap'):
 
 Rotate the quad (or reorder the corner list) rather than flipping UVs when a piece is the wrong way up. Keep the quad's aspect ratio equal to the region's `px` ratio so the piece is not stretched.
 
+**Cropping a piece without Pillow** (for a contact sheet or a pixel check) [HARD, run on Windows]: PowerShell's
+`System.Drawing` reads the asset TIFs (`<SEUT Assets>\Textures\Models\Cubes\*.TIF`, 2048 px). Pixel rows count
+from the top, so a box's top row is `(1 - v1) * 2048`:
+
+```powershell
+Add-Type -AssemblyName System.Drawing
+$src = [System.Drawing.Image]::FromFile('C:\SE_Assets\Textures\Models\Cubes\Decals_Atlas_A_01_cm.TIF')
+$box = [System.Drawing.Rectangle]::new(0, 1689, 2048, 74)        # piece 55: x, top row, width, height
+$out = [System.Drawing.Bitmap]::new($box.Width, $box.Height, [System.Drawing.Imaging.PixelFormat]::Format24bppRgb)
+[System.Drawing.Graphics]::FromImage($out).DrawImage($src, [System.Drawing.Rectangle]::new(0, 0, $box.Width, $box.Height), $box, [System.Drawing.GraphicsUnit]::Pixel)
+$out.Save("$env:TEMP\piece55_cm.png", [System.Drawing.Imaging.ImageFormat]::Png)
+```
+
 ## Regenerating
 
 1. In Blender, run `scripts/extract_atlas_regions.py` through the Blender MCP (set `ASSET_TEXTURES` and `OUT_DIR` first). It writes `regions.json` and `<atlas>_prev.png`.
@@ -414,7 +427,7 @@ Full size 2048 x 2048 px, 61 pieces, re-catalogued at full resolution and checke
 | 52 | 0 | 0.2329 | 1 | 0.2461 | 2048x27 | full-width plain strip |
 | 53 | 0 | 0.2119 | 1 | 0.2246 | 2048x26 | row of round dots (rivets), full width, second |
 | 54 | 0 | 0.1929 | 1 | 0.2065 | 2048x28 | panel seam, V-groove (used on the gatling turret) |
-| 55 | 0 | 0.1392 | 1 | 0.1753 | 2048x74 | rolled-edge band, full width |
+| 55 | 0 | 0.1392 | 1 | 0.1753 | 2048x74 | weld bead, full width (tileable outline) |
 | 56 | 0.0288 | 0.0898 | 0.9937 | 0.1084 | 1976x38 | grime speck row |
 | 57 | 0 | 0.0449 | 1 | 0.0552 | 2048x21 | full-width thin strip |
 | 58 | 0 | 0.0073 | 1 | 0.0239 | 2048x34 | panel seam with one-sided bevel |
@@ -431,7 +444,10 @@ panel seams. Their colour is a flat mid grey and the line comes from the normal 
 `PanelingColorable` (takes the block's paint) for colorable surfaces or `PanelingDarker` for dark fixed metal,
 not on `Decals` (which would paint a grey band). Map V across the band (about 0.025 to 0.03 m wide) and U along
 its length; U past 1 wraps within the same strip, so a long ring or seam can use `u = length * 0.5`. Build the
-band from many short quads that follow the surface (rings, meridians, radial lines), 3 to 4 mm off it.
+band from many short quads that follow the surface (rings, meridians, radial lines), 1.5 mm off it like every
+decal (SKILL.md). On a curved surface a flat quad's middle sits about `length² / (8 × radius)` below its
+corners, so keep the quads short enough that this sag stays well under the offset, and check with a ray cast
+(`bpy-recipes.md`, "Decal offset").
 **Joins and ends** [HARD, rendered; owner asked]: a stem that stops square at a cross seam looks pasted on. Stop
 the stem's band half a cross-width short, then close it with two triangles meeting at a tip on the cross
 seam's centre line, tip UV at the middle of the strip (`v = (v0 + v1) / 2`), side corners at `v0` and `v1`.
@@ -440,6 +456,16 @@ three corners the triangle has no tangent direction and the groove renders flipp
 That compresses each half of the groove into a 45-degree mitre against the cross groove. Lift the stem about
 1 mm more than the cross seam so it draws on top. Free ends get the same pointed cap, extended half a width
 past the end. Polyline corners mitre by themselves when each row's side vector comes from the averaged tangent.
+
+**Weld lines** [HARD, read from the A_01 and A_02 colour, normal and alpha textures; SOFT until seen in game]:
+piece 55 is a weld bead (overlapping ripples in the colour and normal maps, ragged alpha edges), and the bead
+sits at the same place on the `Decals_Atlas_A_02` sheet, so it works on `PanelingDarker` (dark metal),
+`PanelingColorable` (paint) and `Decals`; compare them in the first render. Map V across the bead and U along
+it, as for panel lines. At about 5 cm wide one U span covers about 1.4 m (the strip is 2048 x 74 px). The alpha
+tiles cleanly at the wrap but the colour jumps, so run alternate spans in opposite directions (U 0 to 1, then 1
+to 0). Round joints get a ring of short quads; a fillet weld in an inside corner is a strip at 45 degrees
+across the corner, one edge on each face. Which joints get a weld: `design-detailing.md`, "Every joint says how
+it was made".
 
 ## TextAtlas
 

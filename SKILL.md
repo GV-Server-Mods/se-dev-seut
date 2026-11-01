@@ -122,6 +122,9 @@ shape reference at most, and ask before spending credit.
   `linkSubpartInstances = False` on the main scene, make the subpart empty the active object, then set
   `empty.seut.linkedScene`. The add-dummy and add-subpart operators also leave the new empty unparented.
   `references/bpy-recipes.md` ("Subparts, dummies, mirroring and mountpoints from script").
+- **Vanilla-type turret and door subparts face backward in game unless their scene content is turned 180
+  degrees about Z** [HARD, SEUT export axes and game code that drops the subpart empty's rotation]. Turning the
+  empty does not help. `references/modeling-rules.md` ("Which way a subpart faces").
 - **Never loop over a live `collection.all_objects` / `bpy.data.objects` while creating or removing data**
   [HARD, two Blender 4.5.10 crashes in `pyrna_prop_collection_iter_next`]: copy first,
   `objs = list(col.all_objects)`, then build meshes, remove temp meshes, link objects. Save before each step.
@@ -164,11 +167,12 @@ atlas region you want. A model that uses only vanilla textures ships no textures
 
 ## Decals before geometry (mandatory, owner's standing rule)
 
-**Every flat surface detail is a decal unless you can say why it cannot be.** Panel lines, access panels,
-hatches, vents and grilles, window plates, hinge panels, rivet and bolt rows, buttons, keypads, hazard
+**Every flat surface detail is a decal unless you can say why it cannot be.** Panel lines, weld lines, access
+panels, hatches, vents and grilles, window plates, hinge panels, rivet and bolt rows, buttons, keypads, hazard
 stripes, warning signs: reach for a vanilla `DECAL_CUTOUT` decal first, every time, and actively look for more
-places a decal improves a plain surface. The owner has had to push for this repeatedly; do not wait to be
-asked.
+places a decal improves a plain surface. Large features count too [owner]: big bay panels, X panels and corner
+vent plates are decals on a flat face, not modelled recesses. The owner has had to push for this repeatedly;
+do not wait to be asked.
 
 1. **Propose before you model.** When a surface needs detail, crop the candidate atlas regions into a
    labelled contact sheet (normal-map relief preview, `references/atlas-regions.md` for the boxes), show it,

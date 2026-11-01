@@ -119,9 +119,12 @@ Other emissive materials are static unless named as above: `LightPanel_Light`, `
 
 ## Emissive presets and colors [HARD, `Content\Data\EmissiveColors.sbc`]
 
-Block SBC field: `<EmissiveColorPreset>Name</EmissiveColorPreset>`. If unset, the block uses code defaults
-(the timer block falls back to `Timer`). States the game uses: Working, Disabled, Damaged, Warning,
-Alternative, Locked, Autolock, Constraint (event controller adds State0, State1).
+Block SBC field: `<EmissiveColorPreset>Name</EmissiveColorPreset>`. Set it whenever the model has `Emissive`
+faces [HARD, `MyCubeBlock`, `MyEmissiveColorPresets.LoadPresetState`]: without it the generic block code never
+refreshes the lamps on working, functional or model changes (that runs only when `UsesEmissivePreset`, which
+needs a preset), and a block class that sets states itself falls back to the `Default` colours (the timer
+block uses `Timer`). States the game uses: Working, Disabled, Damaged, Warning, Alternative, Locked, Autolock,
+Constraint (event controller adds State0, State1).
 
 | Preset | States (colour, emissivity) | Vanilla blocks using it |
 |---|---|---|
@@ -139,8 +142,31 @@ Alternative, Locked, Autolock, Constraint (event controller adds State0, State1)
 
 Colours (RGB): Red 255,0,0; Orange 255,128,0; Green 10,255,0; Black 0,0,0; White 255,255,255; Yellow 255,255,0;
 LightBlue 0,255,255; Blue 0,0,255; Gray 128,128,128; LightYellow 255,255,128; DarkGray 30,30,30.
-The file defines presets as `EmissiveColorStatePreset` entries, so a mod may add its own state-to-colour
-table; not tested here.
+**Fixed-colour lamps** [format HARD, from `EmissiveColors.sbc` and `MyDefinitionManager.InitEmissiveColorPresets`;
+not tested in a mod]: a mod adds its own colour and preset in an `.sbc` under `Data`, with SubtypeIds of its
+own, and names the preset in the block's `EmissiveColorPreset`:
+
+```xml
+<EmissiveColors>
+  <EmissiveColor>
+    <Id><TypeId>MyObjectBuilder_EmissiveColorDefinition</TypeId><SubtypeId>MyMod_Amber</SubtypeId></Id>
+    <ColorDefinition><R>255</R><G>150</G><B>0</B><A>255</A></ColorDefinition>
+  </EmissiveColor>
+</EmissiveColors>
+<EmissiveColorStatePresets>
+  <EmissiveColorStatePreset>
+    <Id><TypeId>MyObjectBuilder_EmissiveColorStatePresetDefinition</TypeId><SubtypeId>MyMod_AmberLamp</SubtypeId></Id>
+    <EmissiveStates>
+      <EmissiveState StateName="Working" EmissiveColorName="MyMod_Amber" DisplayColorName="White" Emissivity="1" />
+      <EmissiveState StateName="Disabled" EmissiveColorName="MyMod_Amber" DisplayColorName="White" Emissivity="0.2" />
+      <EmissiveState StateName="Damaged" EmissiveColorName="Black" DisplayColorName="Black" Emissivity="0" />
+    </EmissiveStates>
+  </EmissiveColorStatePreset>
+</EmissiveColorStatePresets>
+```
+
+Both lists go inside the file's `<Definitions>` root. One preset serves the whole block, so every `Emissive`
+face shows the same colour; for a lamp in the player's paint colour use `EmissiveColorable` (above) instead.
 
 ## Screens, glass, holo
 

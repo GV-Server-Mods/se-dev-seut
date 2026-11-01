@@ -43,6 +43,10 @@ through only what is missing:
 5. **The SEUT zip** (latest release from the SEUT GitHub releases page). Do not extract it. In Blender:
    Edit > Preferences > Add-ons > Install (the install button is under the dropdown arrow on newer Blender),
    pick the zip, tick the add-on ("Scene: Space Engineers Utilities").
+6. **Pillow** (optional): a Python library for reading and writing pictures, used by some recipes here
+   (measuring a reference image, `scripts/annotate_atlas.py`, the icon fallback). Install it into a normal
+   Python with `python -m pip install pillow`. Without it, Blender's image loader and, on Windows, PowerShell's
+   `System.Drawing` cover the reading.
 
 ## First-run configuration [HARD, wiki Addon Preferences]
 

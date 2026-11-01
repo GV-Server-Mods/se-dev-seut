@@ -19,6 +19,12 @@ reading `<Model>`. Do not guess from the block's name (`ArmorCenter` is not the 
 `CargoContainerSmall` has 55 meshes and 12 empties under one root, about 2.49 m across: six
 `LargeConveyorFrame_00n` corner/frame meshes, six `detector_conveyor_section_00n` port frames, six
 `detector_terminal_section_00n` panels, and the rest. Read `interaction-highlights.md` for its detectors.
+`CargoContainerLarge` (the large-grid large container, 3x3x3 cells) has the same kit at a bigger size [HARD,
+names read from the FBX]: the root, six `LargeConveyorFrame` meshes, six `detector_conveyor_section` port frames,
+six `DoorTerminalFrame` keypad frames, six `detector_terminal_section` panels, eight `airtight_edge` pieces,
+three `Line` meshes, `Protection_Bars` and `metal_pipe`. Its `_LOD1..3.fbx` and
+`CargoContainerLargeConstruction_1..3.FBX` beside it are ready starting points for the LODs and build stages
+of a block kitbashed from it.
 
 Another source: you can export a grid from the game itself, including modded blocks [owner tip, credit to
 Brd; video by Chipstix213]. Face the grid in game and press Ctrl+Alt+E. The warning says modded blocks cannot
@@ -154,6 +160,8 @@ assume the FBX material names are what the game renders.
   another part covers (the test crate's top, under the tower: `LargeConveyorFrame_005`,
   `detector_conveyor_section_005`, `detector_terminal_section_005`, their text/sign meshes and empties).
 - Parts stick out about 0.04 m past the 2.5 m cell (port frames, text signs); the box collision stayed 2.5 m.
+  On a mounting face, set the face about 5 cm inside the cell so they end flush (`design-detailing.md`, "Think
+  about the neighbours").
 - Size: the whole container was 13,929 polygons with the tower parts and the main `.mwm` came to 2.1 MB.
   A joined copy decimated with `ratio 0.25` gave 3,466 polygons for LOD1 and `ratio 0.06` of the big parts
   gave 349 for LOD2. A LOD must be one unparented object per LOD collection, with the materials trimmed to
@@ -168,7 +176,9 @@ assume the FBX material names are what the game renders.
 - Take the shell parts first (frames, corners, bevelled edge pieces, port frames, panels, handles), then
   add only what the design needs on top. Keep the vanilla part's materials and UVs as they are.
 - Scale a vanilla part only when it must fit a different size, and keep the scale uniform so bevels and
-  UV density stay consistent.
+  UV density stay consistent. To make a part longer or wider (a frame beam spanning more cells), cut it
+  across its straight middle and move the vertices on one side of the cut; the ends, bevels and texture scale
+  stay as Keen made them. Re-check the UVs of the stretched faces, since they stretch with them.
 - The vanilla parts bring their own bevels and smooth shading. Anything you add yourself must be bevelled
   and smooth shaded the same way (`modeling-rules.md`, "Geometry and shading"), or it will look like a
   different game next to them.

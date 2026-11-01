@@ -23,7 +23,8 @@ A preview of a picture is scaled, and reading coordinates off it by eye can be o
 
 - Open the file with Pillow (`PIL.Image`) in a normal Python, or load it in Blender and read `image.pixels`
   with numpy. Scan a row or column and find where the object colour changes to the background, then take
-  widths in pixels.
+  widths in pixels. Pillow is optional (`setup.md`); when it is missing, Blender's loader reads every common
+  format including `.webp`, and on Windows PowerShell's `System.Drawing` reads PNG, JPG and TIF (not `.webp`).
 - Get the scale from one known dimension (a 2.5 m crate drawn 152 px wide gives 60.8 px/m), then convert every
   other measurement; compare with the written labels.
 - In Blender, set the image colour space to Non-Color (or read `pixels` and gamma-correct) before judging
@@ -32,6 +33,16 @@ A preview of a picture is scaled, and reading coordinates off it by eye can be o
 When the drawing's written dimensions disagree with the drawn ones, or between views (a generated or sloppy
 blueprint), go by the dimension the user fixed (grid size, cell count) and the drawn proportions, and list
 every disagreement in the report so the user can correct the table.
+
+### Perspective concept art [SOFT, used to plan a turret from a three-quarter view]
+
+A three-quarter view still gives proportions:
+- Take ratios only along one axis between features close together (a barrel's length against the gunhouse
+  beside it), never across the depth of the picture.
+- Take fixed dimensions from the grid and from the block the model replaces (cell count, pivot height, muzzle
+  reach), and let the art set only what they leave open.
+- Settle the rest on blockout renders from a Blender camera matched to the art's angle (line up the block's
+  edges with the art's), compared side by side with `look(image=...)`.
 
 ## 2. Build a target table
 

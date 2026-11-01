@@ -205,9 +205,11 @@ Model `Models\Cubes\Large\CargoContainerSmall.mwm`, SDK FBX at
 - Never raw-import vanilla FBX with `bpy.ops.import_scene.fbx` for study: it creates thousands of junk
   material slots. Use SEUT's importer (`scene.import_complete` / Import FBX) or import into a throwaway
   file and purge afterwards.
-- Subpart objects: a highlight on a subpart needs the empty inside that subpart's scene [SOFT, untested].
-  The video's door example: the door is a main scene with two subpart empties, each linked to its own scene
-  (the right-hand door piece is a scene named `right`), exported together so they act as one model. On a
-  door the same `detector_terminal`-style empty both opens the door and highlights both subparts, so a door
-  detector does not behave exactly like the one on a cargo container [video; transcript wording uncertain].
+- **Outlining a subpart** [HARD, game code `MyHudSelectedObject.ComputeHighlightIndices` and SEUT
+  `seut_empties.py`; not yet seen in game]: the detector stays in the main model (rule above), and its highlight
+  list names the subpart empty instead of a mesh. SEUT accepts any object with the same parent as the detector
+  and writes a subpart empty's name unchanged (`subpart_<Name>`); the game then outlines that whole subpart. It
+  resolves only direct subparts of the block, a single mesh inside a subpart cannot be outlined, and one name
+  that does not resolve blanks the whole outline. The video's door works this way: one `detector_terminal`-style
+  empty in the main scene opens the door and outlines both door subparts (`doors-subparts.md`).
 - Not yet exercised: export of a highlight, and the in-game aim test.

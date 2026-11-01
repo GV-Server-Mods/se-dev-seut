@@ -476,10 +476,9 @@ view_layer=scene.view_layers[0], window, area, region)` using the 3D viewport as
 - Exporting the subpart scene and then the main scene (same export folder) wrote `SPBarrel.mwm` and `SPTurret.mwm`;
   the main model's dummy list contains `subpart_Barrel` with the property `file = SPBarrel`, which is how the
   game finds the subpart model. The subpart scene exports FBX with `axis_forward = '-Z'` where main scenes use
-  `'Z'` (`seut_export_utils.py`, with the comment that the other value breaks subpart orientation), so the
-  subpart is deliberately turned 180 degrees about the up axis relative to a main model; see
-  `doors-subparts.md` for what that means when placing empties. An FBX re-import could not show the difference
-  (the importer reads the axes back), and the in-game result was not checked.
+  `'Z'` (`seut_export_utils.py`, with the comment that the other value breaks subpart orientation); what that
+  means for each block type is in `modeling-rules.md`, "Which way a subpart faces". An FBX re-import cannot show
+  the difference (the importer reads the axes back); read the exported `.mwm` with `scripts/mwm_dummies.py`.
 - Mirroring mode: `scene.seut.mirroringToggle = 'on'` creates three empties and three plane meshes (`Mirror
   LeftRight`, `Mirror FrontBack`, `Mirror TopBottom`) in a `Mirroring (<SubtypeId>)` collection. Rotate an
   empty in 90 degree steps and set the toggle to `'off'`: SEUT prints `I016` per empty and stores the result

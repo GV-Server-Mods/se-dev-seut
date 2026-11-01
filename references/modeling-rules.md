@@ -130,9 +130,24 @@ mechanical parts, openings, equipment, bolts, wear, seams, decals and labels) is
 - Subpart empty links to a scene of type `Subpart`; the subpart scene must use the same grid export
   settings (W001, W020) and cannot loop into itself (E005) [HARD].
 - Empties should have a parent object (W005) and the parent should itself be unparented (W006).
-- Subpart scenes face the other way from main scenes (+Y forward instead of -Y) [SOFT, video; the owner saw
-  backwards subparts on an earlier weapon model, which fits]; rotate the subpart empty 180 degrees about Z.
-  This applies to turret and weapon subparts too (`weapons-turrets.md`). Doors and the advanced door SBC fields: `doors-subparts.md`.
+- **Which way a subpart faces** [HARD: SEUT `seut_export_utils.py`, the game code named below, and a shipped
+  SEUT turret's .blend read against its exported .mwm]. SEUT exports main scenes with FBX forward `Z` and
+  subpart scenes with `-Z`: a main scene's -Y becomes the model's forward (-Z), and so does a subpart scene's +Y.
+  Every empty exports with its local +Y as the dummy's forward and +Z as its up, so an unrotated subpart empty in
+  a main scene points backward, while one in a subpart scene exports unrotated (`scripts/mwm_dummies.py` prints
+  both). The block's code decides whether that half turn reaches the game:
+  - Vanilla turret types rebuild the azimuth and elevation subparts from pure yaw and pitch, keeping only the
+    empty's position (`MyLargeTurretBase.RotateModels`), and doors rebuild theirs from the block origin
+    (`MyDoor`, `MyAdvancedDoor`). The empty's rotation is dropped, so turn the content of each such subpart scene
+    180 degrees about Z (front, muzzle or barrels toward +Y) and leave every empty unrotated, as that shipped
+    turret does. SEUT's subpart preview and icon instances then show those parts facing backward in the main
+    scene; that is expected.
+  - A subpart linked from a subpart scene (a barrel, a recoil part) keeps its empty's matrix, so with unrotated
+    empties its frame matches its parent's.
+  - WeaponCore sorter turrets keep the empty's rotation (`AzimuthPart.OriginalPosition` in
+    `WeaponController.AimBarrel`), so the half turn reaches the game there; the right arrangement for them is
+    unverified, so check the facing in game.
+  Turret steps: `weapons-turrets.md`, "Splitting a turret into subpart scenes". Door SBC fields: `doors-subparts.md`.
 - Highlight empties need an object in `Main` (E025) and share its parent (W007).
 - Dummy and preset subpart empties come from `scene.add_dummy` / `scene.add_preset_subpart`. The wiki
   empty-properties page does not list dummy names; read them from SEUT's `empties` module when needed.

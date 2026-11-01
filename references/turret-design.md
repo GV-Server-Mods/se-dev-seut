@@ -17,7 +17,7 @@ muzzle devices, shells) comes from the concept art and the owner, not from this 
 1. **The design doc also names the subpart chain**: which subpart each part moves with, the subpart and dummy
    names, and the elevation limits. If the model replaces an existing weapon, read its definition first and
    match its names, or plan the config change with it (`weapons-turrets.md`, "Splitting a turret into subpart
-   scenes").
+   scenes"), and fill in the replacement contract (`design-detailing.md`, "Replacing a block's model").
 2. **Ask what drives the subparts.** Vanilla turret types hard-code names and spin; WeaponCore reads part names
    from its config, so any names work (`weapons-turrets.md`, "Spinning barrels").
 3. **Keep pivot, muzzle and scope markers** as plain empties while detailing in one scene; they become the
@@ -34,6 +34,27 @@ muzzle devices, shells) comes from the concept art and the owner, not from this 
 - **The elevating part needs visible support** from the azimuth part (`design-detailing.md`, "Carried parts
   need visible support").
 - **Nothing hangs past the turntable**: parts on the azimuth part stay inside its edge.
+- **Sweep radius**: everything on the azimuth part stays within half the block's width of the azimuth axis,
+  since it sweeps a full circle. Only the barrels reach past the block (a shipped 5-wide turret's muzzles sit
+  12.7 m from its azimuth axis [HARD, read from its `.mwm`]). To keep long barrels from reaching further past
+  the block, move the azimuth axis forward on the gunhouse so more of the gunhouse sits behind it [owner].
+  Build stages show the barrels at rest like the rest of the outline; stages use Main's collision, which covers
+  only the base, so the overhang cannot catch a neighbour.
+- **Openings in the gunhouse (embrasures)**: whatever of the elevation part passes through an opening in the
+  azimuth part (mantlet, cheeks, gun shields) clears the opening's edges across the whole elevation range. A
+  drum or mantlet centred on the trunnion axis keeps one even gap at every angle, so make the part that fills
+  the opening round about that axis, cut the opening's top edge back for maximum elevation, and check both
+  limits numerically.
+- **Collision for a housing that is not round** (a box gunhouse): all collision sits on the base and covers the
+  turret at rest (`weapons-turrets.md`, step 4 of the split). Choose between a cylinder about the azimuth axis
+  out to the housing's farthest corner, which covers it at every azimuth but is bigger than the housing at
+  rest, and a hull of the housing at rest, which fits at rest but leaves turned corners uncovered and covers
+  empty space [owner chose the cylinder for a box gunhouse].
+- **Superfiring over a twin** [HARD, WeaponCore `WeaponTracking.RayCheckTest` and `WeaponTypes.cs`]: the
+  line-of-sight ray from the scope stops on the lower turret's collision shapes, and a hit on the same construct
+  pauses firing (`RayCheckSelfHit`). So collision, not cells or mesh, sets how low a twin mounted above and
+  behind can fire. Keep the collision top at the roof, give roof equipment (periscopes, sensor domes) no
+  collision, and keep that equipment out of the barrels' lanes.
 - **Shallow bores, no rifling** [owner], as on every SE weapon (`weapons-turrets.md`, "Barrels on any weapon").
 - **Radial symmetry on spinning parts** [owner]: build every repeated element from one pattern rotated by its
   position angle, so a spinning cluster looks the same at every angle.
@@ -59,5 +80,8 @@ muzzle devices, shells) comes from the concept art and the owner, not from this 
 ## Checking
 
 - **Left and right are the weapon's own**, facing its muzzle (`design-detailing.md`, "Checking and reviewing").
+- Before export, sweep the elevation part through both limits, the recoiling barrels at minimum, zero and
+  maximum elevation, and, for superfiring, a copy of the turret at the twin's offset: cast the upper scope's
+  ray over the lower turret's collision at the lowest angle the twin should fire.
 - Before the in-game test, list what is unverified: subpart facing, spin axis, muzzle direction, scope
-  clearance, elevation limits matching the config, and LOD switches.
+  clearance, elevation limits matching the config, recoil gaps, and LOD switches.
