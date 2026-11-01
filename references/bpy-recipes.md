@@ -358,6 +358,9 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
 - **Decals on curved surfaces:** split the quad into columns that follow the radius (8 columns for a 0.4 m
   sign on a 1.05 m cylinder) instead of one flat quad, which would float or sink by about 2 cm at the edges.
   Check text direction in a render: the first try read mirrored, fixed by reversing U (`u = u0 + u1 - u`).
+- **Hide LOD and collision objects in preview renders** [HARD, seen]: once `LOD1`/`LOD2` and collision are filled
+  they render on top of Main in the same place, and the z-fighting shows as hatched streaks that look like a
+  shading fault. Set `hide_render` on everything outside Main for the render and restore it afterwards.
 - **Preview renders:** Workbench in Texture mode shows only one image of a SEUT material (often the mask) and
   exaggerates wear; EEVEE (`BLENDER_EEVEE_NEXT` in 4.5) with a sun lamp and a grey world reads closer to the
   game, but the in-game shader still differs.
