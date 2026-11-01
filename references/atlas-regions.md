@@ -275,11 +275,18 @@ Full size 2048 x 2048 px, 42 regions. The left block has touching pieces, so its
 | 35 | 0.34 | 0.346 | 0.785 | 0.393 | 912x96 | chain / lattice strip |
 | 36 | 0.0 | 0.295 | 1.0 | 0.309 | 2048x28 | full-width strips and bolt rows, stacked (36-42 each span u 0 to 1) |
 | 37 | 0.0 | 0.232 | 1.0 | 0.246 | 2048x28 | full-width strip |
-| 38 | 0.0 | 0.256 | 1.0 | 0.27 | 2048x28 | full-width strip |
+| 38 | 0.0 | 0.256 | 1.0 | 0.27 | 2048x28 | panel seam: flat grey colour, V-groove in the normal map |
 | 39 | 0.0 | 0.141 | 1.0 | 0.174 | 2048x68 | full-width rolled-edge band |
-| 40 | 0.0 | 0.193 | 1.0 | 0.207 | 2048x28 | full-width strip |
+| 40 | 0.0 | 0.193 | 1.0 | 0.207 | 2048x28 | panel seam: flat grey colour, V-groove in the normal map (used on the gatling turret) |
 | 41 | 0.0 | 0.045 | 1.0 | 0.055 | 2048x20 | full-width strip |
-| 42 | 0.0 | 0.008 | 1.0 | 0.023 | 2048x32 | full-width strip |
+| 42 | 0.0 | 0.008 | 1.0 | 0.023 | 2048x32 | panel seam with a one-sided bevel in the normal map |
+
+**Panel lines** [HARD, read from the `_ng` and `_cm` textures, used on a model]: strips 38, 40 and 42 are
+panel seams. Their colour is a flat mid grey and the line comes from the normal map, so put them on
+`PanelingColorable` (takes the block's paint) for colorable surfaces or `PanelingDarker` for dark fixed metal,
+not on `Decals` (which would paint a grey band). Map V across the band (about 0.025 to 0.03 m wide) and U along
+its length; U past 1 wraps within the same strip, so a long ring or seam can use `u = length * 0.5`. Build the
+band from many short quads that follow the surface (rings, meridians, radial lines), 3 to 4 mm off it.
 
 ## TextAtlas
 
