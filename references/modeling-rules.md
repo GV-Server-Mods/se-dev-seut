@@ -84,6 +84,12 @@ parts do:
   drums with bell ends, conduits with elbows, pistons with eye ends and gland rings. Mount brackets flat on
   the face they attach to (a piston along a sloped edge gets pads lying in that slope), and tie protruding
   machinery to the structure it would bolt onto rather than leaving it floating in a recess.
+- An opening or pocket around a part repeats that part's silhouette [owner]: a chamfered box sits in a
+  chamfered opening with an even gap all round (about 4-7 cm on a large block), framed by a raised border offset
+  parallel to it. A rounded pocket around a chamfered box looked out of place. Angled members get parallel
+  companions too (an inset panel offset exactly inside an angled plate's outline).
+- Equipment hung under a moving part should share one mounting frame (rails, cross ties) rather than read as
+  boxes glued to boxes, and cable runs need visible fittings at both ends and clamps along the way [owner].
 - Pick the footprint with symmetry in mind: an odd cell width puts a feature on the centre line, an even
   width cannot [community advice; vanilla blocks follow it].
 
