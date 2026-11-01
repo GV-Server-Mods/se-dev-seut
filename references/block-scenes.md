@@ -72,6 +72,9 @@ Subpart scenes (moving parts) use the same layout without BS or mountpoints; see
   (bearing ring under a turntable, webs or brackets from a plate down to its pivot, hubs and bearings at the
   pivot) goes into BS1 as a frame or simple solid. Gaps that are fine in the finished model (a 1.5 cm
   clearance under a turntable) read as floating when the parts are bare frames, so fill them in the stages.
+  A strip frame only has material at its outline: supports that meet the middle of a framed plate touch nothing
+  and still look like they float [owner]. Add solid beams under a framed plate (along the supports, plus cross
+  beams reaching the frame's edge strips and any central post) until every support visibly meets metal.
 - **Merge outline points closer than the strip width** before insetting: a support's hull with 2 cm corner
   edges and a 7 cm inset exploded to 270 km.
 - A stage mesh sits in its `BS<n>` collection; SEUT exports `<SubtypeId>_BS<n>.mwm` beside the main model.
