@@ -121,6 +121,9 @@ shape reference at most, and ask before spending credit.
   window open. Recipe in `references/bpy-recipes.md` (icons, step 4).
 - **Do not call `scene.export_all_scenes` on a file with several scenes from script** [HARD, crashed Blender
   4.5.10 twice]: export each scene with `scene.export` instead. `references/bpy-recipes.md`.
+- **A decal face whose corners all share one U (or one V) renders its normal map flipped** [HARD, seen on
+  mitred seam tips]: the face has no tangent direction. Give every decal face real UV area in both directions.
+  `references/atlas-regions.md` ("Panel lines").
 - **Tiling texture scale depends on the kind of block** [HARD, owner-observed]: armor-style blocks want about
   0.05 UV per metre, functional blocks about 0.40. `references/materials.md`.
 - **Re-exporting with `export_sbc_type = 'new'` writes `<SubtypeId>_1.sbc`** instead of overwriting. Use
@@ -182,6 +185,7 @@ container breakdown: `references/interaction-highlights.md`.
 | `references/doors-subparts.md` | doors, hatches or any block with animated subparts: scene setup, orientation quirk, advanced door SBC fields |
 | `references/characters-and-animation.md` | a playable/NPC character, creature, or handheld weapon animation controller (outline only) |
 | `references/weapons-turrets.md` | turrets, weapons or tools (ConveyorSorter, WeaponCore, ToolCore): subpart chain, muzzle and camera dummies |
+| `references/turret-design.md` | designing any turret or weapon model: design doc, blockout, supports, clearance, gun details, equipment, decals, review loop |
 | `references/interaction-highlights.md` | any terminal, inventory, keypad, conveyor port or door interaction point |
 | `references/errors.md` | any SEUT error or warning, and the pre-export checklist |
 | `references/sources.md` | where each fact came from, and what is still unverified |
