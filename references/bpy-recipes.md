@@ -321,7 +321,12 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   deleted face, and skip decals, glass, screens and vanilla parts. Do a dry run listing counts per object, then
   delete the faces plus loose edges and verts, and render the busiest areas to check for holes. The biggest
   wins are ends of rods and tubes inside housings, bands and straps sunk into the part they wrap, and shell
-  rims inside the plate they sit on.
+  rims inside the plate they sit on. Two follow-ups [HARD, run]: a cross-part version (a face goes only if it
+  stays inside the other part's solids at every relative angle, sampled in 5-15 degree steps about each pivot)
+  found almost nothing on a turret, because hidden space between moving parts is usually a cavity, not a solid.
+  Sealed cavities (the hollow under a turntable, closed by a ring and a lid) need explicit bounds: delete faces
+  wholly inside the cavity, plus walls and caps that face only into it, and flat faces covered by a part
+  sitting on them (a ring gear's top and bottom). Re-check flat-face normals afterwards.
 - **Many small cuts:** an exact boolean that slotted six small turned tubes at once collapsed them to fragments
   (two tries). Build such features by construction instead: a slotted tube is a base ring, partial tube
   sections (wall rings swept over an angle range, capped at both ends) and an end ring. Build each copy from a
