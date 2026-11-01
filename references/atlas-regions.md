@@ -5,6 +5,9 @@ Where each piece sits in the vanilla decal atlases, so a decal quad can be UV-ma
 - UV values use Blender's convention: (0, 0) is the **bottom left** of the image, so they can be typed straight into the UV editor.
 - Boxes are bounding boxes of the piece's pixels in the `_alphamask` texture, reported as fractions of the full image.
 - `px` is the piece size at the texture's full resolution.
+- Ids change when an atlas is re-catalogued. When someone asks for a piece by number, look it up in this file
+  every time, and never reuse an id or box from an earlier session [owner: a decal placed from a stale id was
+  the wrong piece]. Confirm by the piece's description too.
 - Every atlas was re-catalogued at its full resolution and checked piece by piece against the owner's markup
   [HARD]: faint faded edges are included, touching pieces are split on the emptiest line between them, pieces
   that cannot be boxed without catching a neighbour (diamonds, nested chevrons, diagonal splits, an L-shaped
