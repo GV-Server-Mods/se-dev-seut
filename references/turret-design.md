@@ -102,6 +102,12 @@ They apply to any turret, gun or weapon block. Tags as in SKILL.md: [owner] = ow
   [owner]. Text on a downward face, read by someone looking up from in front (muzzle at -Y): letter right = +X,
   letter up = -Y (toward the front), face normal -Z [HARD, took three renders to get right]. Text direction is
   easy to get wrong on any face, so render every label once before calling it done.
+- **On a painted shell, prefer paint-colour panel decals over lettering** [owner: stencilled numbers and
+  marks on the radome were disliked]. `Atlas3_Colorable` access panels, window plates, hinge panels and slatted
+  vents take the block's paint and get relief from the normal map, so they read as real panels. Add one or two
+  bold hazard or warning signs (sized up: a 0.1 m diamond was far too small, 0.3 m worked), and skip decals
+  from the light-grey `Decals` sheet on light paint (they nearly vanish). To choose, crop candidate regions into
+  a labelled contact sheet (normal-map relief preview) and let the owner pick from it.
 - **Keep a clean shell clean** [owner]: a smooth radome or cowl with seam decals, a recessed vent and a recessed
   camera reads better than strips, rivets, hatches and lifting eyes.
 - **Nothing past the mount face**: detail the bottom inside a shallow recess; direction arrows there should point
