@@ -83,7 +83,7 @@ Full size 2048 x 2048 px, 12 pieces, re-catalogued at full resolution and checke
 |---|---|---|---|---|---|---|
 | 1 | 0.0002 | 0.7371 | 0.3918 | 0.9998 | 802x538 | big plate with four tall slots (L-shaped outline; the six-slot comb sits in its corner) (outline below) |
 | 2 | 0.4009 | 0.6113 | 0.4761 | 0.9976 | 154x791 | lattice truss column, four cells |
-| 3 | 0.6807 | 0.8076 | 0.9956 | 0.9829 | 645x359 | large plain rounded plate |
+| 3 | 0.6807 | 0.8076 | 0.9956 | 0.9829 | 645x359 | louvre: horizontal slats in a rounded frame (the slats are in the normal map; the colour map is plain) |
 | 4 | 0.5205 | 0.8208 | 0.6704 | 0.9702 | 307x306 | five-dot pattern |
 | 5 | 0.2993 | 0.6162 | 0.3877 | 0.8354 | 181x449 | comb of six tall thin slots |
 | 6 | 0.4888 | 0.6162 | 0.7134 | 0.7886 | 460x353 | plain scratched plate |
@@ -427,7 +427,7 @@ Full size 2048 x 2048 px, 61 pieces, re-catalogued at full resolution and checke
 | 52 | 0 | 0.2329 | 1 | 0.2461 | 2048x27 | full-width plain strip |
 | 53 | 0 | 0.2119 | 1 | 0.2246 | 2048x26 | row of round dots (rivets), full width, second |
 | 54 | 0 | 0.1929 | 1 | 0.2065 | 2048x28 | panel seam, V-groove (used on the gatling turret) |
-| 55 | 0 | 0.1392 | 1 | 0.1753 | 2048x74 | weld bead, full width (tileable outline) |
+| 55 | 0 | 0.1392 | 1 | 0.1753 | 2048x74 | weld bead, full width (capped ends: repeat texels 62 to 1931, "Weld lines") |
 | 56 | 0.0288 | 0.0898 | 0.9937 | 0.1084 | 1976x38 | grime speck row |
 | 57 | 0 | 0.0449 | 1 | 0.0552 | 2048x21 | full-width thin strip |
 | 58 | 0 | 0.0073 | 1 | 0.0239 | 2048x34 | panel seam with one-sided bevel |
@@ -456,16 +456,63 @@ three corners the triangle has no tangent direction and the groove renders flipp
 That compresses each half of the groove into a 45-degree mitre against the cross groove. Lift the stem about
 1 mm more than the cross seam so it draws on top. Free ends get the same pointed cap, extended half a width
 past the end. Polyline corners mitre by themselves when each row's side vector comes from the averaged tangent.
+The same cap works at any angle [HARD, rendered; owner: square T-ends were wrong]: end the stem's centre line on
+the cross seam's centre line, stop each side of the band where it reaches the cross seam's near edge (a line in
+the face), and close the end with the tip at the centre-line point. A stem that runs into the corner of two
+seams (a diagonal into a T) stops each side on whichever near edge it reaches last and puts its tip where the
+centre lines cross. A square end, even one cut flush along the cross seam, still reads as pasted on.
 
-**Weld lines** [HARD, read from the A_01 and A_02 colour, normal and alpha textures; SOFT until seen in game]:
-piece 55 is a weld bead (overlapping ripples in the colour and normal maps, ragged alpha edges), and the bead
-sits at the same place on the `Decals_Atlas_A_02` sheet, so it works on `PanelingDarker` (dark metal),
-`PanelingColorable` (paint) and `Decals`; compare them in the first render. Map V across the bead and U along
-it, as for panel lines. At about 5 cm wide one U span covers about 1.4 m (the strip is 2048 x 74 px). The alpha
-tiles cleanly at the wrap but the colour jumps, so run alternate spans in opposite directions (U 0 to 1, then 1
-to 0). Round joints get a ring of short quads; a fillet weld in an inside corner is a strip at 45 degrees
-across the corner, one edge on each face. Which joints get a weld: `design-detailing.md`, "Every joint says how
-it was made".
+**Groove direction** [HARD, read from the `_ng` texture of `Decals_Atlas_A_01`; owner saw the jog]: piece 51's
+groove is lopsided. Across the strip its normal map tilts towards `v1` over the first 11 px and towards `v0`
+over the last 16 px, so the wide wall is on the `v1` side. Two strips laid in opposite directions meet with a
+visible jog, most often where one seam wraps from one face onto the next. Pick one rule in world space and use it
+for the whole model, for example `v1` towards the rear for seams running across the block, `v1` towards +X for
+seams running front to back, and the same side (inside or outside) all the way round a closed outline. Apply it
+when building each strip (reverse the polyline when its first segment's `v1` side breaks the rule), then check
+it: from each seam face's positions and UVs, solve the world direction V increases in and count the faces that
+break the rule. Piece 58 is one-sided by design; measure 54 the same way before using it.
+
+**Seams over edges and bevels** [HARD, rendered; owner saw a gap at every edge]: a seam that stops short of an
+edge leaves a gap at each bevel, and it shows from most angles. Run every seam that crosses a plate edge right
+up to the edge, and carry it on across the next face at the same place along the edge (over a chamfer face too)
+so the plates read as one cut. To follow the bevel, draw the strip flat up to the sharp edge, cut its last 4 cm
+into 1 cm steps, then move each vertex to the nearest point of the bevelled mesh
+(`BVHTree.FromObject(obj, depsgraph).find_nearest` on the object with its Bevel modifier, in object space) and
+lift it 1.5 mm along that point's normal. The sharp corner lands on the middle of the bevel, so the strips from
+the two faces meet there. Treat a vertex more than 3 cm from the surface as an error and report it. A seam end
+that sits on a face edge needs no cap.
+
+**Weld lines** [HARD, read from the A_01 and A_02 colour, normal and alpha textures, and rendered; SOFT until
+seen in game]: piece 55 is a weld bead (overlapping ripples in the colour and normal maps, ragged alpha edges),
+and the bead sits at the same place on the `Decals_Atlas_A_02` sheet, so it works on `PanelingDarker` (dark
+metal), `PanelingColorable` (paint) and `Decals`; compare them in the first render. Map V across the bead and U
+along it, as for panel lines. At about 5 cm wide one U span covers about 1.4 m (the strip is 2048 x 74 px).
+
+- **Repeat one way, from a window inside the capped ends** [owner: mirrored spans read as breaks where the bead
+  turns round]. The ripples point one way, so alternate spans run backwards (U 0 to 1, then 1 to 0) show a break
+  every span. The piece's ends are capped: texels 0 and 2047 are a crease in the normal map and the
+  `PanelingDarker` colour fades dark from about texel 2020, so repeating the full width shows a dark crease at
+  every joint. Repeat texels 62 to 1931 (u 0.0303 to 0.9429): that pair joins as smoothly as two neighbouring
+  columns (A_01 normal, A_02 colour and alpha), about 1.26 m per repeat at 5 cm wide. Seam pieces 51 and 54 have
+  no caps and wrap as they are. For another strip, compare each map's end columns with its median column, and
+  search for the column pair that joins as smoothly as neighbours do.
+- **One direction per line.** Lay every bead along one direction of its edge (say, the edge direction with its
+  first non-zero component positive) and measure U from the world origin along it,
+  `U = position · direction × UV per metre`, so separate beads on one line run on in step.
+- **Joints between repeats.** Put a row of vertices at each repeat boundary and give each face the repeat it lies
+  in, `u = u0 + U - n × window`. Cut those rows square across the strip, each side's vertex where its own U
+  reaches the boundary: a mitred end shifts the side corners along the strip (5 cm seen), and a row lerped
+  between them straddles the joint. Keep the window a few dozen texels inside the caps so a tip that reaches past
+  a joint still lands on clean texture, then check that every bead UV lies in the clean range.
+- **Beads round a bevel** [owner: the harsh welded edge needed "a little bevel", on the corner and on the weld
+  decal both]. A rounder bevel alone changed nothing: the bead was still drawn in flat facets with a crease down
+  its middle. Bevel welded corners rounder than plate edges (2.5 cm in 4 segments, each step under the 30 degree
+  smoothing angle), lay the bead on the bevelled surface as in "Seams over edges and bevels" with 8 rows across
+  (seams need 4), then merge its vertices and shade it smooth.
+
+Round joints get a ring of short quads; a fillet weld in an inside corner is a strip at 45 degrees across the
+corner, one edge on each face. Which joints get a weld: `design-detailing.md`, "Every joint says how it was
+made".
 
 ## TextAtlas
 

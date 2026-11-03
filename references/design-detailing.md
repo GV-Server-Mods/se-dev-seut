@@ -16,7 +16,8 @@ SKILL.md: [owner] = owner design feedback, [HARD] = measured or rendered, [SOFT]
 ## Workflow
 
 1. **Design document before Blender** [owner]. Ask for style references first: screenshots of the owner's own
-   blocks in the style they want, saved next to the concept art. Then write a short doc and get it confirmed:
+   blocks in the style they want, saved next to the concept art. If the concept art is perspective only, also
+   ask for straight-on front, side and top views of it (`reference-images.md`). Then write a short doc and get it confirmed:
    intent, block size and mount faces, a parts table with heights above the mount face (and which subpart each
    part moves with, if any), materials per part, limits, and open questions. Add where they apply: the
    replacement contract (next section), kitbash candidates, a decal table per surface for large and small
@@ -129,6 +130,20 @@ keep working. Put it in the design doc as a "fixed by the block it replaces" tab
 - **Bolts clamp something** [owner]: a ring, flange, lid, plate or lug that visibly overlaps the part it holds,
   not heads scattered on a plain face. Mostly decal heads, each at a random angle so they look individually
   tightened; few, low 3D bolts (`bpy-recipes.md`, "Bolt decals").
+- **One fastener plan for the whole model** [owner: bolts of random size and spacing looked inconsistent, and one
+  part had a quarter of all the bolts]. Before placing any, measure the concept art (pixels to metres) and write
+  down: one head size (a second, smaller size only where a part is too narrow, such as a ring band), one inset
+  from the seam or plate edge, one pitch, and which edges get bolts at all (usually what the art draws: plate
+  corners and the edge that clamps, not every edge). Place every row from those numbers. Never ring every face
+  edge of a part with bolts, never put a bolt on a seam (keep the head about 1 cm clear of the groove), and never
+  put two at a shared corner. Count bolts per part after each build: a part with far more than its share is the
+  clutter the owner sees.
+- **Rows, not scattered bolts** [owner: rows from neighbouring seams bunched at plate corners, and short joints
+  got pairs a few cm apart, which looked random]. Lay each joint's row as one line at one pitch, and keep every
+  bolt at least two insets (the pair across a seam) from any bolt of another row, measured over the surface.
+  Lay the longest rows first; trim a later row to its clear stretches and re-space each stretch evenly instead of
+  dropping single bolts, and skip a stretch shorter than two insets. Line up the two rows of a seam, and parallel
+  rows on one plate, so the bolts pair across the joint.
 - **Wear on bevels only, and sparingly** [owner]: a `*Scratched*` variant over whole faces looks bad. Clean
   material on faces, the scratched sibling on bevel strips (recipe in `bpy-recipes.md`, "Edge-only wear"). Even
   on bevels it was too obvious along long structural edges (a base slab, a turntable rim) and was removed
@@ -140,7 +155,8 @@ keep working. Put it in the design doc as a "fixed by the block it replaces" tab
 - **Every joint says how it was made** [owner]: a V-groove seam between removable cover plates, a weld line on
   permanent structural joints (around big mechanical parts: trunnion housings, bearing rings, frames, fillets in
   inside corners), bolts where a plate clamps something. Weld lines are decals too (`atlas-regions.md`, "Weld
-  lines").
+  lines"): one direction along each line, no mirrored spans, and a welded corner gets a rounder bevel that the
+  bead follows. Keep panel bolts about 0.3 m clear of a weld; a welded joint needs none.
 - **On a painted shell, prefer paint-colour panel decals over lettering** [owner: stencilled numbers and marks on
   a dome were disliked]. `Atlas3_Colorable` access panels, window plates, hinge panels and slatted vents take
   the block's paint and get relief from the normal map, so they read as real panels. Skip decals from the

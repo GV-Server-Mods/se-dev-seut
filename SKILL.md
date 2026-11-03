@@ -141,6 +141,10 @@ shape reference at most, and ask before spending credit.
 - **A decal face whose corners all share one U (or one V) renders its normal map flipped** [HARD, seen on
   mitred seam tips]: the face has no tangent direction. Give every decal face real UV area in both directions.
   `references/atlas-regions.md` ("Panel lines").
+- **Panel seam grooves are lopsided, so a seam laid the other way round shows a jog** [HARD, read from the
+  normal map; owner saw it where seams wrapped over an edge]: lay every seam strip by one direction rule for the
+  whole model, and carry seams over edges onto the bevel instead of stopping them short. `references/atlas-regions.md`
+  ("Groove direction", "Seams over edges and bevels").
 - **Tiling texture scale depends on the kind of block** [HARD, owner-observed]: armor-style blocks want about
   0.05 UV per metre, functional blocks about 0.40. `references/materials.md`.
 - **Re-exporting with `export_sbc_type = 'new'` writes `<SubtypeId>_1.sbc`** instead of overwriting. Use
@@ -188,7 +192,8 @@ do not wait to be asked.
    model a surface detail in 3D instead.
 
 Decals cost almost nothing in triangles and keep blocks consistent with vanilla. Wrap them to curved surfaces
-in narrow columns, mitre seam joins, check text direction and obstruction with a render and a ray cast
+in narrow columns, mitre every seam join (T-joins end in a pointed tip, never square), place bolts from one
+written fastener plan, check text direction and obstruction with a render and a ray cast
 (`references/bpy-recipes.md`, `references/design-detailing.md`).
 Decal quads sit just off the surface (not coplanar) to avoid z-fighting: about 1.5 mm, and 0.7 mm for an
 underlay such as a counterbore ring under a bolt head [owner: bolt decals at 3-4 mm looked like they floated

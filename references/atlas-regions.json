@@ -3577,7 +3577,7 @@
     "v1": 0.1753,
     "w_px": 2048,
     "h_px": 74,
-    "piece": "weld bead, full width (tileable outline)",
+    "piece": "weld bead, full width (capped ends: repeat texels 62 to 1931)",
     "inside": false
    },
    {

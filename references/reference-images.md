@@ -15,6 +15,19 @@ Look at the image and write down, in plain numbers where possible:
 
 Ask for a missing side view or a scale cue when a dimension would otherwise be a guess.
 
+### Ask for straight-on views first [SOFT, field-tested on a turret]
+
+When the only reference is perspective concept art, ask the user before the blockout for straight-on front,
+side and top views of the same design. An image generator can make them from the concept art. In a turret
+build, four blockout rounds from two three-quarter views and camera fits still left the proportions wrong;
+generated top and side views fixed the gunhouse, roof, front slope, rear section and roof gear in one round.
+
+- Use generated views for shape and ratios, not exact sizes. Scale each to the dimensions already agreed
+  (width, length, height; a different scale per axis is fine), and write the pixel-to-metre mapping down.
+- Views from a generator disagree with each other and with the original art (a part's position, a length, a
+  taper). List each disagreement, follow the user's choice, and record it in the build log.
+- Check the blockout as outline overlays on each view from an orthographic camera at the same scale.
+
 ### Measure, do not eyeball [HARD, hit in two test runs]
 
 A preview of a picture is scaled, and reading coordinates off it by eye can be off by 40%. In a test the
