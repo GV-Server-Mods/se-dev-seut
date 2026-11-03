@@ -288,7 +288,12 @@ Full size 1024 x 1024 px, 6 pieces, re-catalogued at full resolution and checked
 | 3 | 0 | 0.4834 | 1 | 0.5166 | 1024x34 | thin double strip with a dark centre line (tileable) |
 | 4 | 0 | 0.3359 | 1 | 0.4355 | 1024x102 | band with dark edge lines and a stained light centre (tileable) |
 | 5 | 0 | 0.124 | 1 | 0.3027 | 1024x183 | wide band with raised rims and a stained centre (tileable) |
-| 6 | 0 | 0.0166 | 1 | 0.1006 | 1024x86 | band with raised square blocks (tileable) |
+| 6 | 0 | 0.0166 | 1 | 0.1006 | 1024x86 | band with raised square blocks, gear-like (tileable) |
+
+**Repeats along bands 2 and 6** [HARD, read from `Atlas4_Colorable_ng`]: band 2's holes are recessed, one every
+128 px centred at `58 + 128 j`; band 6's blocks are raised, one every 128 px, about 62 px wide, centred at
+`63 + 128 j`, on a raised base band, and read like a gear rim. Band 6's pitch is `1.49` times its height, so
+stretch U a little to land one block per facet (or per two) of a faceted cylinder: a block on a fold bends.
 
 ## ButtonsAtlas
 
@@ -422,17 +427,17 @@ Full size 2048 x 2048 px, 61 pieces, re-catalogued at full resolution and checke
 | 47 | 0.0176 | 0.5977 | 0.2891 | 0.6738 | 556x156 | DANGER red oval on black band (inside sign) |
 | 48 | 0.0469 | 0.4961 | 0.2617 | 0.5859 | 440x184 | words HIGH VOLTAGE (inside sign) |
 | 49 | 0 | 0.2954 | 1 | 0.3086 | 2048x27 | full-width plain strip (top) |
-| 50 | 0 | 0.2744 | 1 | 0.2871 | 2048x26 | row of round dots (rivets), full width |
+| 50 | 0 | 0.2744 | 1 | 0.2871 | 2048x26 | row of round rivets that read raised under light from above, full width (see "Riveted bands") |
 | 51 | 0 | 0.2554 | 1 | 0.269 | 2048x28 | panel seam, V-groove (used for seams) |
 | 52 | 0 | 0.2329 | 1 | 0.2461 | 2048x27 | full-width plain strip |
-| 53 | 0 | 0.2119 | 1 | 0.2246 | 2048x26 | row of round dots (rivets), full width, second |
+| 53 | 0 | 0.2119 | 1 | 0.2246 | 2048x26 | row of round recessed dimples, full width (see "Riveted bands") |
 | 54 | 0 | 0.1929 | 1 | 0.2065 | 2048x28 | panel seam, V-groove (used on the gatling turret) |
 | 55 | 0 | 0.1392 | 1 | 0.1753 | 2048x74 | weld bead, full width (capped ends: repeat texels 62 to 1931, "Weld lines") |
 | 56 | 0.0288 | 0.0898 | 0.9937 | 0.1084 | 1976x38 | grime speck row |
 | 57 | 0 | 0.0449 | 1 | 0.0552 | 2048x21 | full-width thin strip |
 | 58 | 0 | 0.0073 | 1 | 0.0239 | 2048x34 | panel seam with one-sided bevel |
-| 59 | 0 | 0.2554 | 1 | 0.3086 | 2048x109 | riveted band: strip + rivet row + strip as one decal (49+50+51) |
-| 60 | 0 | 0.1929 | 1 | 0.2461 | 2048x109 | riveted band, second copy (52+53+54) |
+| 59 | 0 | 0.2554 | 1 | 0.3086 | 2048x109 | riveted band, raised rivets: strip + rivet row + strip as one decal (49+50+51) |
+| 60 | 0 | 0.1929 | 1 | 0.2461 | 2048x109 | dimpled band, recessed dimples: strip + dimple row + strip as one decal (52+53+54) |
 | 61 | 0 | 0.0073 | 1 | 0.0552 | 2048x98 | double strip: thin strip + bevelled seam as one decal (57+58) |
 
 Outlines (UV points in order; the piece's quad or polygon uses the same points as positions and UVs):
@@ -481,6 +486,16 @@ into 1 cm steps, then move each vertex to the nearest point of the bevelled mesh
 lift it 1.5 mm along that point's normal. The sharp corner lands on the middle of the bevel, so the strips from
 the two faces meet there. Treat a vertex more than 3 cm from the surface as an error and report it. A seam end
 that sits on a face edge needs no cap.
+
+**Riveted bands** [HARD, read from the `_ng` and alpha textures; owner saw the difference]: 50 and 53 look
+alike in colour but not in relief. In 53 (and band 60) both normal channels tilt in towards each dot, as in
+`Atlas4` piece 2's bolt holes and opposite to piece 6's raised blocks, so they are recessed dimples. In 50 (and
+band 59) the green channel tilts out like a dome, so with light from above or below the heads read raised; the
+red channel still tilts in, so light from the side makes them read recessed [SOFT: 50 looks like 53 flipped top
+to bottom with its green values left as they were]. Use 59 for raised rivets, 60 for dimples. Both rows: 23 px
+dots every 68.27 px (30 per U span, the first centred at 6 px), filling the 26 px strip and centred in the
+109 px band; the ends match, so they wrap cleanly. The band's pitch is `0.626` times its width (at `0.171` m
+wide, one rivet per side of a 48-sided, 0.82 m radius drum).
 
 **Weld lines** [HARD, read from the A_01 and A_02 colour, normal and alpha textures, and rendered; SOFT until
 seen in game]: piece 55 is a weld bead (overlapping ripples in the colour and normal maps, ragged alpha edges),

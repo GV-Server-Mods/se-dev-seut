@@ -2146,7 +2146,7 @@
     "v1": 0.1006,
     "w_px": 1024,
     "h_px": 86,
-    "piece": "band with raised square blocks (tileable)",
+    "piece": "band with raised square blocks, gear-like (tileable)",
     "inside": false
    }
   ],
@@ -3522,7 +3522,7 @@
     "v1": 0.2871,
     "w_px": 2048,
     "h_px": 26,
-    "piece": "row of round dots (rivets), full width",
+    "piece": "row of round rivets that read raised under light from above, full width",
     "inside": false
    },
    {
@@ -3555,7 +3555,7 @@
     "v1": 0.2246,
     "w_px": 2048,
     "h_px": 26,
-    "piece": "row of round dots (rivets), full width, second",
+    "piece": "row of round recessed dimples, full width",
     "inside": false
    },
    {
@@ -3621,7 +3621,7 @@
     "v1": 0.3086,
     "w_px": 2048,
     "h_px": 109,
-    "piece": "riveted band: strip + rivet row + strip as one decal (49+50+51)",
+    "piece": "riveted band, raised rivets: strip + rivet row + strip as one decal (49+50+51)",
     "inside": false
    },
    {
@@ -3632,7 +3632,7 @@
     "v1": 0.2461,
     "w_px": 2048,
     "h_px": 109,
-    "piece": "riveted band, second copy (52+53+54)",
+    "piece": "dimpled band, recessed dimples: strip + dimple row + strip as one decal (52+53+54)",
     "inside": false
    },
    {

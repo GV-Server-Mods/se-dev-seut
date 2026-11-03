@@ -156,7 +156,8 @@ keep working. Put it in the design doc as a "fixed by the block it replaces" tab
   permanent structural joints (around big mechanical parts: trunnion housings, bearing rings, frames, fillets in
   inside corners), bolts where a plate clamps something. Weld lines are decals too (`atlas-regions.md`, "Weld
   lines"): one direction along each line, no mirrored spans, and a welded corner gets a rounder bevel that the
-  bead follows. Keep panel bolts about 0.3 m clear of a weld; a welded joint needs none.
+  bead follows. Bolts kept clear of welds is a style preference, not a rule: one owner wanted panel bolts about
+  0.3 m from any weld and none on a welded joint. Ask before applying it.
 - **On a painted shell, prefer paint-colour panel decals over lettering** [owner: stencilled numbers and marks on
   a dome were disliked]. `Atlas3_Colorable` access panels, window plates, hinge panels and slatted vents take
   the block's paint and get relief from the normal map, so they read as real panels. Skip decals from the

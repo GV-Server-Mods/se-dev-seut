@@ -419,6 +419,16 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   (Atlas1 hazard stripe 1451x165: 16 tiles on a 1.35 m radius gave a 6 cm band). Inset the region's u range
   about 1% or the tile ends show as vertical lines. Orient each loose face outward yourself
   (`recalc_face_normals` guesses wrong on disconnected quads).
+- **Rivets, blocks and holes round a faceted part** [HARD, run; owner]: bolt decals on a drum or cone looked
+  uneven and bent over the folds (a flat quad across a fold sank up to 0.9 mm into one facet). Use a strip with a
+  repeating feature (`atlas-regions.md`: Paneling 59/60, Atlas4 2/6) and lay one flat quad per facet, its U
+  window one feature pitch centred on the facet, so each feature sits mid-facet; set the band's width to
+  `chord * piece_height_px / pitch_px` to keep the piece's shape. Lift each fold vertex by
+  `DL * (n1 + n2) / (1 + n1·n2)` (it then sits DL off both facets), share it between the two quads and shade
+  smooth, so the band reads round on a smoothed part; split a quad where the window passes the piece's end. A
+  cone's facets are flat trapezoids, so the same works there. Run the band on under any part that covers it and
+  leave out only facets hidden all over [owner: a band stopping short of a part "looks cut and incomplete"]; use
+  one facet mask for both sides of a mirrored part so the bands match.
 - **Decals on curved surfaces:** split the quad into columns that follow the radius (8 columns for a 0.4 m
   sign on a 1.05 m cylinder) instead of one flat quad, which would float or sink by about 2 cm at the edges.
   Check text direction in a render: the first try read mirrored, fixed by reversing U (`u = u0 + u1 - u`).
