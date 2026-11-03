@@ -287,13 +287,17 @@ Full size 1024 x 1024 px, 6 pieces, re-catalogued at full resolution and checked
 | 2 | 0 | 0.5693 | 1 | 0.6689 | 1024x102 | wide band with a row of eight bolt holes (tileable) |
 | 3 | 0 | 0.4834 | 1 | 0.5166 | 1024x34 | thin double strip with a dark centre line (tileable) |
 | 4 | 0 | 0.3359 | 1 | 0.4355 | 1024x102 | band with dark edge lines and a stained light centre (tileable) |
-| 5 | 0 | 0.124 | 1 | 0.3027 | 1024x183 | wide band with raised rims and a stained centre (tileable) |
+| 5 | 0 | 0.124 | 1 | 0.3027 | 1024x183 | wide band of perforated bare metal: raised rims round a field of small round holes (tileable) |
 | 6 | 0 | 0.0166 | 1 | 0.1006 | 1024x86 | band with raised square blocks, gear-like (tileable) |
 
 **Repeats along bands 2 and 6** [HARD, read from `Atlas4_Colorable_ng`]: band 2's holes are recessed, one every
 128 px centred at `58 + 128 j`; band 6's blocks are raised, one every 128 px, about 62 px wide, centred at
 `63 + 128 j`, on a raised base band, and read like a gear rim. Band 6's pitch is `1.49` times its height, so
 stretch U a little to land one block per facet (or per two) of a faceted cylinder: a block on a fold bends.
+
+**Band 5 is bare metal in every colour variant** [HARD, read from the `_cm` maps]: its colour averages 154 of
+255 in `Atlas4_VeryDark`, 165 in `_Darker` and 196 in `_Colorable`, with metalness (alpha) 202, so
+`Atlas4_VeryDark` 5 renders as light perforated steel. Band 6 does follow the variant (60, 93 and 181).
 
 ## ButtonsAtlas
 

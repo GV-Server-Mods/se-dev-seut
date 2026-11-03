@@ -309,6 +309,9 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
 - **Booleans:** cut pockets into the *unbevelled* solid first, then bevel; an exact boolean on an already
   bevelled mesh produced stray geometry. A feature that pokes through the far side of a plate shows as a dark
   slot there: ray-cast from the camera (`scene.ray_cast`, with helper objects hidden) to find which object it is.
+  Two cutters that share a plane left six zero-area faces in a cone [HARD, run]: cut a stepped pocket with one
+  lofted cutter, and keep a part that fills the pocket (a lamp shroud) 2 mm off the cutter's faces, so no two
+  faces coincide.
 - **Triangle budget** [HARD, measured on a large turret]: the first full detail pass reached about 74,000
   triangles, almost all from over-segmented round parts. Segment counts that still read smooth at play distance:
   48 around a 2 m radome (14 rows in its cap), 64 for 2.7 m turned rings, 40 for 0.5-1 m rings and drums, 28-32
@@ -334,6 +337,17 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   same Weighted Normal modifier (`FACE_AREA`, weight 100, `keep_sharp`) to every bevelled part, boxes
   included. Check before export: for each face over 0.02 m^2 with 4+ corners, the largest angle between
   `me.corner_normals[i].vector` and `p.normal`; it should be 0 on flat faces (only curved sides may show more).
+- **A cut into a low-poly round part** [HARD, run on Blender 4.5; owner saw "funky surface issues" round a trough
+  cut into a 32-sided cone]: the boolean leaves uneven pieces of the round surface, and smooth or area-weighted
+  normals shade them in streaks (Weighted Normal at weight 100 snaps each vertex to its largest face). Give that
+  part true normals instead. Sort its faces into round surface, cut surface and flat ends, and mark the edges
+  between sorts sharp. Set each round-surface corner to the analytic normal, `normalize(radial - dr/da * axis)`
+  (radial from the part's axis, `dr/da` the profile's slope), each corner on a cylindrical cut to its normal
+  round the cut's axis, and the rest to their current `me.corner_normals`; then `me.normals_split_custom_set()`.
+  The Bevel modifier drops custom normals, with or without `harden_normals` (10-16 of 2,096 corners kept), and
+  Weighted Normal replaces them. So bevel that part in the mesh first (`bmesh.ops.bevel` on edges over 30
+  degrees, leaving the cut's lip crisp) and leave both modifiers off it. Custom normals survive a
+  `bm.from_mesh` / `bm.to_mesh` round trip.
 - **Buried faces** [HARD, took a turret from 43,600 to 39,000 triangles with no visible change]: a face is
   hidden when all its corners and its centre, nudged 0.5 mm along its normal, lie inside another closed solid.
   Split every mesh into connected islands in world space and keep only closed ones (every edge has two faces);
@@ -360,7 +374,10 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   bearing caps flush with a leg (cut the caps); doubled faces inside one object (keep the larger); a black
   floor on the floor of its socket (lift it 1 mm); thin strap plates modelled on the side faces of the bands they
   hold (slide each plate 2 mm out); seam decal T-joins at the cross seam's height (lift the stem's tip 0.7 mm);
-  a shell's flat bottom repeating the ceiling of a notch in the plate below it (cut the shell's copy).
+  a shell's flat bottom repeating the ceiling of a notch in the plate below it (cut the shell's copy); a ring
+  round a drum built as a closed cylinder, its end disc in the drum's end face [owner saw it flicker] (build the
+  ring as an outer wall and two end faces, open on the inside where the drum fills it, its vertices on the drum's
+  angles); a frame lining a recess in the recess walls' own planes (set the lining 2 mm into the opening).
   **Nudge rather than cut when in doubt** [owner saw both mistakes in game]: cutting a radome's window walls
   because a frame sat on them let players see the sky through the gap at an angle, and cutting a brace's end
   chamfers left a broken corner where the brace stuck out past the beam it joined. Only cut a face that is
@@ -428,7 +445,9 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   smooth, so the band reads round on a smoothed part; split a quad where the window passes the piece's end. A
   cone's facets are flat trapezoids, so the same works there. Run the band on under any part that covers it and
   leave out only facets hidden all over [owner: a band stopping short of a part "looks cut and incomplete"]; use
-  one facet mask for both sides of a mirrored part so the bands match.
+  one facet mask for both sides of a mirrored part so the bands match. A plain tiling band with no feature to
+  centre: give each facet `width_px * k / n` px of U (n facets, k whole repeats) so the circle closes without a
+  jump, and pick k for the band width you want.
 - **Decals on curved surfaces:** split the quad into columns that follow the radius (8 columns for a 0.4 m
   sign on a 1.05 m cylinder) instead of one flat quad, which would float or sink by about 2 cm at the edges.
   Check text direction in a render: the first try read mirrored, fixed by reversing U (`u = u0 + u1 - u`).
