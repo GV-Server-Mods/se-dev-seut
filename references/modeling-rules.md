@@ -140,7 +140,7 @@ mechanical parts, openings, equipment, bolts, wear, seams, decals and labels) is
     empty's position (`MyLargeTurretBase.RotateModels`), and doors rebuild theirs from the block origin
     (`MyDoor`, `MyAdvancedDoor`). The empty's rotation is dropped, so turn the content of each such subpart scene
     180 degrees about Z (front, muzzle or barrels toward +Y) and leave every empty unrotated, as that shipped
-    turret does. SEUT's subpart preview and icon instances then show those parts facing backward in the main
+    turret does (it faces correctly in game). SEUT's subpart preview and icon instances then show those parts facing backward in the main
     scene; that is expected.
   - A subpart linked from a subpart scene (a barrel, a recoil part) keeps its empty's matrix, so with unrotated
     empties its frame matches its parent's.

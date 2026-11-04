@@ -146,7 +146,7 @@ SDK files `<ModSDK>\OriginalContent\Models\Cubes\large\GatlingTurret*.FBX` (+ `.
 - Base materials: `PaintedMetal_Colorable`, `PaintedMetalScratched_*`, `PaintedMetal_Darker`, `Chrome`,
   `Decals`, `Terminal`, `Conveyor`, `Metal_Dull` (from its model XML).
 
-## Splitting a turret into subpart scenes [HARD for the export, SOFT for the in-game result]
+## Splitting a turret into subpart scenes [HARD, exported and working in game on a WeaponCore-driven vanilla turret type]
 
 Done on a large gatling turret built in one scene with a `part` tag on every object:
 
@@ -169,7 +169,7 @@ Done on a large gatling turret built in one scene with a `part` tag on every obj
    outside that static shell at every elevation: WeaponCore casts its line-of-sight ray from the scope, and a hit
    on its own grid resets the target (`RayCheckSelfHit`). With the scope behind the radome window it sat inside
    the shell from 2 to 90 degrees, and the turret turned a few degrees every few seconds instead of tracking
-   [owner; SOFT: cause read from code, fix not yet confirmed in game]. Check the scope's path through the
+   [owner; cause read from code; after the fix the turret works in game]. Check the scope's path through the
    elevation range against the collision shapes before export. On vanilla turret types the game also uses a
    dummy named `camera` on the barrel subpart for the manual-control view (`MyLargeBarrelBase`), so keep
    `camera` where the player should look from (a camera recess) and point WeaponCore's `Scope` at a muzzle
@@ -198,6 +198,8 @@ Done on a large gatling turret built in one scene with a `part` tag on every obj
 - Dummy-in-subpart naming for ToolCore; whether vanilla barrel FBX carries `muzzle_projectile_001`.
 - Weapon-side dummies beyond the page list; the WeaponCore wiki's `Animation-Basics` page (the movement code
   above was read instead).
+- A turret run by the game's own turret code, without WeaponCore: its aiming, barrel and muzzle dummies and the
+  manual-control `camera`. The vanilla-type notes come from a SEUT-built `LargeMissileTurret` driven by
+  WeaponCore, which works in game.
 - Subpart facing on WeaponCore sorter turrets, and recoil clearance seen in game. The ToolCore notes have not
-  been run through SEUT export or tested in game; the vanilla-type turret notes come from a SEUT-built
-  WeaponCore turret loaded in game.
+  been run through SEUT export or tested in game.

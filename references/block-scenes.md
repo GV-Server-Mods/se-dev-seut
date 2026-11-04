@@ -50,7 +50,7 @@ Subpart scenes (moving parts) use the same layout without BS or mountpoints; see
 - Each stage's collision follows Main's; do not give BS its own collision model [HARD, wiki].
 - Wall-style armor shapes are usually stage-less in modded blocks; decide per block with the user [SOFT].
 
-### Designing the stages [owner brief; HARD for the build, SOFT until seen in game]
+### Designing the stages [owner brief; HARD, built this way on a turret and working in game]
 
 - **Every stage shows the whole outline** [owner]. A stage that starts small and grows collides with the player
   or a neighbouring grid when it grows. Since every stage uses Main's collision anyway, make every stage fill

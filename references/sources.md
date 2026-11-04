@@ -39,9 +39,6 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
   plus owner feedback from the gatling turret build. Turret-only points stay in `turret-design.md`. One
   user's personal style calls were later taken out again; where a choice is a matter of taste, the files now
   say to ask the user.
-- Gatling turret in game (owner): the three-scene WeaponCore turret (base with build stages, azimuth, elevation
-  and spinning barrel subparts with vanilla-type names, two LODs on every scene) loaded and worked in game.
-
 - Kitbash material bug: first recipe lost per-face materials (owner screenshot of the all-yellow port); fixed and re-checked by counting faces per material on the re-imported port frame.
 
 - SEUT wiki hub (`Modding/Tools/Space_Engineers_Utilities`, Tutorials and Reference) all pages now read except the three YouTube videos and the Planet Editor (planet modding, out of scope): Installation Guide, Addon Preferences, Notifications (overview and panel), and Add and Context Menu were read late and folded into `errors.md` and `bpy-recipes.md`.
@@ -74,9 +71,14 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
 
 ## Not yet verified
 
-- In-game checks still open: the armor-style UV density (about 0.05 UV/m is extrapolated), a second functional block for the 0.40 UV/m figure, build stages seen while building in game, inventory on a `CubeBlock` via entity components, subpart facing
-  and recoil clearance on WeaponCore sorter turrets (`weapons-turrets.md`, "Unverified"), and mirroring and
-  mountpoints set from script (the SBC was read back, the block not placed).
+- In-game checks still open: a turret run by the game's own turret code without WeaponCore (its aiming, barrel
+  and muzzle dummies, manual-control camera), subpart facing on a WeaponCore `ConveyorSorter` turret, mirroring,
+  and the armor-style UV density (about 0.05 UV/m is extrapolated). Turret details: `weapons-turrets.md`,
+  "Unverified".
+- Confirmed in game by the owner on the gatling turret (a vanilla `LargeMissileTurret` type driven by
+  WeaponCore; azimuth, elevation and spinning barrel subparts, two LODs per scene): it places and mounts, builds
+  through its three stages, and tracks and fires with the subpart facing and dummies set up as in
+  `weapons-turrets.md`.
 - Confirmed in game by the owner on crate 2 (SEUT importer, LODs by script, SEUT-rendered icon): clean vanilla materials, highlights, conveyor and terminal use, collision, the 11 dummies after a full restart, LOD switching, the icon. LOD levels: a hand-built LOD must keep every material of Main, including the vanilla `detector_*` meshes.
 - Confirmed in game by the owner (probe cube): the exported mod loads with no mod errors, the highlight outlines the linked mesh, a 2.5 m collision box matches the model, paint and vanilla materials work, the keypad panel maps correctly, and `IsAirTight` in the SBC clears the BuildInfo hint.
 - Atlas region names: every atlas was re-catalogued at full resolution and its boxes and groupings checked against owner markup, but the piece names were read by eye; the X-panel triangle depths come from edge steepness in the normal map.
