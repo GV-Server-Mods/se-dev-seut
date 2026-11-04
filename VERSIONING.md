@@ -41,7 +41,8 @@ Bump the **Major** number when changes break paths or expectations that agents r
 1. **Verify against the install.** Open Blender with the SEUT version named in `references/sources.md` and re-run any
    recipe you changed in `references/bpy-recipes.md`. Do not tag changes you did not check.
 2. **Keep shared content generic.** No server-specific profile names; server values only as labelled suggestions.
-   Tag claims `[HARD]` (read in source or docs) or `[SOFT]` (inferred or field-tested).
+   Tag claims `[HARD]` (read in source or docs), `[SOFT]` (inferred or field-tested) or `[owner]` (seen in game
+   or asked for by the user). One user's taste is not a rule: write it as a choice to ask about.
 3. **Commit** with conventional messages and push (the git hooks run `sync-skills.ps1` to refresh the install clone):
    ```bash
    git add -A

@@ -36,7 +36,11 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
 
 - Wiki Models reference (`spaceengineers.wiki.gg/wiki/Modding/Reference/Models`) and SEUT Interaction Highlights tutorial, fetched later: LOD, dummy, collision and highlight rules in `modeling-rules.md` and `interaction-highlights.md`. The wiki's "Advanced 3D Models" guide is only a pointer to the SEUT page; the official SE2 art guide was not used (different game).
 - Design style (now `design-detailing.md`): owner-supplied community ship-building advice, adapted, tagged SOFT,
-  plus owner feedback from the gatling turret build. Turret-only points stay in `turret-design.md`.
+  plus owner feedback from the gatling turret build. Turret-only points stay in `turret-design.md`. One
+  user's personal style calls were later taken out again; where a choice is a matter of taste, the files now
+  say to ask the user.
+- Gatling turret in game (owner): the three-scene WeaponCore turret (base with build stages, azimuth, elevation
+  and spinning barrel subparts with vanilla-type names, two LODs on every scene) loaded and worked in game.
 
 - Kitbash material bug: first recipe lost per-face materials (owner screenshot of the all-yellow port); fixed and re-checked by counting faces per material on the re-imported port frame.
 
@@ -62,17 +66,19 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
 
 - Crate 2 in game (owner): all tests passed except LOD. At 50 m the yellow conveyor-port frames were missing (first guessed to be `Decals` faces lost to a global decimate; a rebuild with decals protected still lost the ports at 50 m, and the real cause was that all `detector_*` meshes, which carry the yellow port frames and keypads, had been left out of both LODs; rebuilt with them included: the owner confirmed in game that the LODs look right); the light-blue silhouette seen beyond LOD2 was only the time of day and lighting changing, not a model stage. Vanilla `CargoContainerSmall` LODs read from the SDK (5 m near-full, 60 m 12-face box with a baked material).
 
-- Icon render of a three-scene WeaponCore turret (`GVK_GatlingTurret`, Blender 4.5.10): subparts missing until instanced by hand, `update_subpart_instances` crash on nested subparts, a crash on the fourth render-and-close of a session (`%TEMP%\GatlingTurret.crash.txt`), the crash dialog hanging the MCP, and a Temp autosave reopening after the restart (`bpy-recipes.md` icons step 4, `errors.md`).
+- Icon render of a three-scene WeaponCore turret (Blender 4.5.10): subparts missing until instanced by hand, `update_subpart_instances` crash on nested subparts, a crash on the fourth render-and-close of a session (`%TEMP%\GatlingTurret.crash.txt`), the crash dialog hanging the MCP, and a Temp autosave reopening after the restart (`bpy-recipes.md` icons step 4, `errors.md`).
 
-- Planning a replacement model for a large twin-barrel WeaponCore turret (design doc only, nothing built): gaps found by a fresh agent reading only the skill, then checked before editing. Subpart orientation: SEUT export axes (`seut_export_utils.py`), the GVK gatling's `GatlingTurret.blend` read with a background Blender against its exported `.mwm` dummies, and game code (`MyLargeTurretBase.RotateModels`, `MyDoor`, `MyAdvancedDoor`; WeaponCore `WeaponController.AimBarrel`). `.mwm` layout for `scripts/mwm_dummies.py`: `MyModelImporter` (`LoadTagData`, `ReadIndexDictionary`, `ReadDummies`); detector box size from `MyUseObjectsComponent.RecreatePhysics` and `MyOrientedBoundingBoxD`. Recoil: WeaponCore `SessionAnimationMgr.cs` and a shipped turret's `.mwm` files. Subpart highlights: `MyHudSelectedObject.ComputeHighlightIndices`, SEUT `seut_empties.py`. Emissive presets: `MyEmissiveColorPresets.LoadPresetState`, `MyCubeBlock.UsesEmissivePreset`, `EmissiveColors.sbc`. Superfiring: WeaponCore `WeaponTracking.RayCheckTest`, `WeaponTypes.cs`. Weld bead: crops of the A_01 and A_02 colour, normal and alpha textures read with PowerShell `System.Drawing`. `CargoContainerLarge` part names: its SDK FBX. Not built or seen in game.
+- Planning a replacement model for a large twin-barrel WeaponCore turret (design doc written before any modelling): gaps found by a fresh agent reading only the skill, then checked before editing. Subpart orientation: SEUT export axes (`seut_export_utils.py`), an earlier SEUT-built gatling turret's `.blend` read with a background Blender against its exported `.mwm` dummies, and game code (`MyLargeTurretBase.RotateModels`, `MyDoor`, `MyAdvancedDoor`; WeaponCore `WeaponController.AimBarrel`). `.mwm` layout for `scripts/mwm_dummies.py`: `MyModelImporter` (`LoadTagData`, `ReadIndexDictionary`, `ReadDummies`); detector box size from `MyUseObjectsComponent.RecreatePhysics` and `MyOrientedBoundingBoxD`. Recoil: WeaponCore `SessionAnimationMgr.cs` and a shipped turret's `.mwm` files. Subpart highlights: `MyHudSelectedObject.ComputeHighlightIndices`, SEUT `seut_empties.py`. Emissive presets: `MyEmissiveColorPresets.LoadPresetState`, `MyCubeBlock.UsesEmissivePreset`, `EmissiveColors.sbc`. Superfiring: WeaponCore `WeaponTracking.RayCheckTest`, `WeaponTypes.cs`. Weld bead: crops of the A_01 and A_02 colour, normal and alpha textures read with PowerShell `System.Drawing`. `CargoContainerLarge` part names: its SDK FBX. Not seen in game.
+
+- Roof parts of the same turret (a turned sensor dome, a periscope pod, side sensor boxes; Blender 4.5.10): the material index clamp and the exact boolean's one-shell need were hit in runs; the faceted-cylinder outline seam was measured by ray cast; the enlarged-crop reading came after the user rejected a pass read at full size. Not seen in game.
 
 ## Not yet verified
 
-- In-game checks still open: the armor-style UV density (about 0.05 UV/m is extrapolated), a second functional block for the 0.40 UV/m figure, build stages in game, inventory on a `CubeBlock` via entity components, and subparts/turrets.
+- In-game checks still open: the armor-style UV density (about 0.05 UV/m is extrapolated), a second functional block for the 0.40 UV/m figure, build stages seen while building in game, inventory on a `CubeBlock` via entity components, subpart facing
+  and recoil clearance on WeaponCore sorter turrets (`weapons-turrets.md`, "Unverified"), and mirroring and
+  mountpoints set from script (the SBC was read back, the block not placed).
 - Confirmed in game by the owner on crate 2 (SEUT importer, LODs by script, SEUT-rendered icon): clean vanilla materials, highlights, conveyor and terminal use, collision, the 11 dummies after a full restart, LOD switching, the icon. LOD levels: a hand-built LOD must keep every material of Main, including the vanilla `detector_*` meshes.
 - Confirmed in game by the owner (probe cube): the exported mod loads with no mod errors, the highlight outlines the linked mesh, a 2.5 m collision box matches the model, paint and vanilla materials work, the keypad panel maps correctly, and `IsAirTight` in the SBC clears the BuildInfo hint.
-- Export of LODs, build stages and subparts; only a Main plus collision model was exported. The `new` SBC was generated but not loaded in game; `update` was not run.
-- Mirroring and mountpoint operators driven from script.
 - Atlas region names: every atlas was re-catalogued at full resolution and its boxes and groupings checked against owner markup, but the piece names were read by eye; the X-panel triangle depths come from edge steepness in the normal map.
-- Dummy and preset subpart names; subpart workflow.
+- Dummy and subpart presets other than the vanilla-type turret names the gatling used; ToolCore subparts.
 - Behaviour on SEUT 1.2.2-alpha / Blender 5.x.

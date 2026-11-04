@@ -26,7 +26,7 @@ muzzle devices, shells) comes from the concept art and the owner, not from this 
 ## Structure and moving parts
 
 - **Clearance first.** The muzzle must clear the blocks in front at the lowest elevation. Reach that height with
-  the base and support proportions rather than a tall plinth [owner].
+  the base and support proportions or with a plinth under the turret; which one is a style choice, so ask.
 - **Pivot below anything it carries**, so the bearings never cut into the part above them.
 - **Elevation equipment stays inside the supports** and within reach of the pivot axis: anything in a swept corner
   hits the supports as soon as the gun tilts [owner]. A part centred on the pivot axis never clips. Run the

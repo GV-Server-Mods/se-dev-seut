@@ -451,7 +451,8 @@ Outlines (UV points in order; the piece's quad or polygon uses the same points a
 **Panel lines** [HARD, read from the `_ng` and `_cm` textures, used on a model]: strips 51, 54 and 58 are
 panel seams. Their colour is a flat mid grey and the line comes from the normal map, so put them on
 `PanelingColorable` (takes the block's paint) for colorable surfaces or `PanelingDarker` for dark fixed metal,
-not on `Decals` (which would paint a grey band). Map V across the band (about 0.025 to 0.03 m wide) and U along
+not on `Decals` (which would paint a grey band). Map V across the band (about 0.025 to 0.03 m wide on hull-sized plates; scale it with the part, since
+on a part about 1.3 m across 2 cm read heavy and 1 cm right [SOFT, one user's call]) and U along
 its length; U past 1 wraps within the same strip, so a long ring or seam can use `u = length * 0.5`. Build the
 band from many short quads that follow the surface (rings, meridians, radial lines), 1.5 mm off it like every
 decal (SKILL.md). On a curved surface a flat quad's middle sits about `length² / (8 × radius)` below its

@@ -311,7 +311,12 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   slot there: ray-cast from the camera (`scene.ray_cast`, with helper objects hidden) to find which object it is.
   Two cutters that share a plane left six zero-area faces in a cone [HARD, run]: cut a stepped pocket with one
   lofted cutter, and keep a part that fills the pocket (a lamp shroud) 2 mm off the cutter's faces, so no two
-  faces coincide.
+  faces coincide. The exact solver wants the target to be one closed shell [HARD, run]: cut the solid first,
+  then join loose extras that only touch it (brows, lips, fins) afterwards.
+- **Material indices through bmesh** [HARD, run: every face of a multi-material part came out index 0]:
+  `bm.to_mesh(me)` clamps each face's `material_index` to the mesh's slot count, so a mesh with no slots yet
+  loses them all. Append the materials to `me.materials` before `to_mesh`. Joining bmeshes through a temporary
+  mesh has the same trap: record each face's index before the round trip and set it again after.
 - **Triangle budget** [HARD, measured on a large turret]: the first full detail pass reached about 74,000
   triangles, almost all from over-segmented round parts. Segment counts that still read smooth at play distance:
   48 around a 2 m radome (14 rows in its cap), 64 for 2.7 m turned rings, 40 for 0.5-1 m rings and drums, 28-32
@@ -448,6 +453,12 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   one facet mask for both sides of a mirrored part so the bands match. A plain tiling band with no feature to
   centre: give each facet `width_px * k / n` px of U (n facets, k whole repeats) so the circle closes without a
   jump, and pick k for the band width you want.
+- **Outlines and other flat shapes on a faceted cylinder** [HARD, run: a rounded-rectangle seam round a vent
+  group on a 48-sided body]: the facets unroll flat without distortion, so lay the shape out in (s, h), with s
+  the distance along the facet chords, then map each point back: facet `j = floor(s / chord)`, lerp between its
+  two corners, add h. Put a vertex wherever the band crosses a facet edge (`s = k * chord`), so every quad lies
+  on one facet, and lift those fold points by the formula above. Mitre the corners from averaged side normals.
+  Every vertex measured 1.50-1.54 mm off the surface.
 - **Decals on curved surfaces:** split the quad into columns that follow the radius (8 columns for a 0.4 m
   sign on a 1.05 m cylinder) instead of one flat quad, which would float or sink by about 2 cm at the edges.
   Check text direction in a render: the first try read mirrored, fixed by reversing U (`u = u0 + u1 - u`).

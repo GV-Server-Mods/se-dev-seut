@@ -9,8 +9,11 @@ driving a live Blender through the Blender MCP.
 
 It is not affiliated with Keen Software House or the SEUT authors. Facts come from SEUT's source, the
 Space Engineers wiki, the ModSDK content, and checks run in Blender 4.5 with SEUT 1.2.1. Every claim in the
-references is tagged **[HARD]** (read in source or docs) or **[SOFT]** (inferred, verify first), and
-`references/sources.md` lists what is still unverified. Export of a Main plus collision model was tested through the Blender MCP; in-game behaviour has not been tested yet.
+references is tagged **[HARD]** (read in source or docs), **[SOFT]** (inferred, verify first) or **[owner]**
+(seen in game or asked for by the person a model was built for), and `references/sources.md` lists what is
+still unverified. Export through the Blender MCP was tested end to end (model, LODs, build stages, subparts,
+collision, SBC, icon), and three blocks built with the skill were loaded in game: a test cube, a kitbashed
+cargo crate and a WeaponCore gatling turret with subparts.
 
 ## What it covers
 

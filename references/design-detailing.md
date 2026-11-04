@@ -15,7 +15,7 @@ SKILL.md: [owner] = owner design feedback, [HARD] = measured or rendered, [SOFT]
 
 ## Workflow
 
-1. **Design document before Blender** [owner]. Ask for style references first: screenshots of the owner's own
+1. **Design document before Blender** [owner]. Ask for style references first: screenshots of the user's own
    blocks in the style they want, saved next to the concept art. If the concept art is perspective only, also
    ask for straight-on front, side and top views of it (`reference-images.md`). Then write a short doc and get it confirmed:
    intent, block size and mount faces, a parts table with heights above the mount face (and which subpart each
@@ -25,13 +25,13 @@ SKILL.md: [owner] = owner design feedback, [HARD] = measured or rendered, [SOFT]
    checkpoints (step 2). Concept art and notes disagree more often than they look; settling that on paper is far
    cheaper than in a model.
 2. **Review checkpoints and a build log** [owner: check progress often]. List the checkpoints in the doc, each
-   with an owner sign-off: blockout, kitbash, each part group, each decal group (contact sheet first), the
+   with a user sign-off: blockout, kitbash, each part group, each decal group (contact sheet first), the
    split, LODs and stages, the icon. Render each at the concept art's angle, the owner's reference angle and
    orthographic views. Keep `build-log.md` beside the doc and update it at every checkpoint (done, decided,
    renders, next), so a context compaction or a fresh session continues from the files.
 3. **Silhouette first: blockout, then iterate proportions only.** Plain shapes at the doc's sizes, rendered at
    the concept art's angle and as an orthographic side view. Expect several rounds (the turret's base thickness,
-   leg height and stance, pivot height and plate size changed seven times). Do not detail until the owner
+   leg height and stance, pivot height and plate size changed seven times). Do not detail until the user
    signs off the silhouette.
 4. **Kitbash check, honestly.** Look for a vanilla part first (`kitbash.md`), but compare its proportions with
    the concept: a vanilla gatling barrel was too short and stubby for a long-barrelled concept, so custom
@@ -77,8 +77,6 @@ keep working. Put it in the design doc as a "fixed by the block it replaces" tab
   1.5 mm), place the decal on the surface found by a ray cast, and check a 3x3 grid of points on it (each
   lands on the surface, nothing covers it within 5 cm). A decal may be stretched to fill a strip with equal
   margins when its art tolerates it (a frame with a slot did) [owner].
-- **Decals on a structural outline look added on** [owner]: hazard stripes on a slab's chamfered corners read
-  as an afterthought and were removed. Put marks where something happens (a moving joint, a port, a hatch).
 - **Greeble with real parts only where they read from a few metres** (handles, vents, pipes, lamps); leave the
   rest to decals and textures.
 - **Think about the neighbours**: flush faces, mount points and edge chamfers should let the block join
@@ -104,25 +102,18 @@ keep working. Put it in the design doc as a "fixed by the block it replaces" tab
   left 90-degree gaps at its corners. Measure the part's outline (for a chamfered square, max |x| and
   max |x|+|y| of its vertices give the half size and the chamfer), cut a fitted hole with an even clearance
   (about 1 cm), and keep every surrounding step parallel to it.
-- **Nothing perched or overhanging** [owner]: no boxes stuck on top of a smooth shell, and no parts hanging
-  past the edge of the structure that carries them.
-- **Keep a clean shell clean** [owner]: a smooth cowl or dome with seam decals and recessed vents or windows
-  reads better than strips, rivets, hatches and lifting eyes.
 
 ## Equipment and filling space
 
-- **Fill negative space with chunky equipment** [owner]: one big feature cylinder at most (a drum with bands),
-  then chamfered machine boxes. Finned or ribbed cylinders lose their effect when repeated.
-- **One mounting frame**: rails and cross ties under the boxes, so they read as installed, not as boxes glued to
-  boxes [owner].
+- **One mounting frame** for equipment boxes: rails and cross ties under them, so they read as installed, not as
+  boxes glued to boxes [owner].
 - **Cable runs** need a fitting at each end and clamps along the way, and should follow the structure (parallel
   to an edge). Segmented, misaligned hoses read as an afterthought [owner].
 - **Show how things reach where they go** [owner]: ammunition, power or fluid needs a visible path. A small
   hatch with nothing behind it reads as a joke, and an intake with nothing behind it reads as a flat plate;
   run a tube or duct of the same style on into whatever it feeds, with fittings at both ends. A turret example
   is in `turret-design.md`.
-- **Interaction points on a fixed part** [HARD, game code: detectors in subparts are ignored]. A terminal keypad
-  embedded flat in a pocket in a face read better than a bolted-on console or a sloped corner pocket [owner]
+- **Interaction points on a fixed part** [HARD, game code: detectors in subparts are ignored]
   (`interaction-highlights.md`).
 
 ## Surface detail: bolts, wear, seams, decals, labels
@@ -137,17 +128,16 @@ keep working. Put it in the design doc as a "fixed by the block it replaces" tab
   corners and the edge that clamps, not every edge). Place every row from those numbers. Never ring every face
   edge of a part with bolts, never put a bolt on a seam (keep the head about 1 cm clear of the groove), and never
   put two at a shared corner. Count bolts per part after each build: a part with far more than its share is the
-  clutter the owner sees.
+  clutter a reviewer sees.
 - **Rows, not scattered bolts** [owner: rows from neighbouring seams bunched at plate corners, and short joints
   got pairs a few cm apart, which looked random]. Lay each joint's row as one line at one pitch, and keep every
   bolt at least two insets (the pair across a seam) from any bolt of another row, measured over the surface.
   Lay the longest rows first; trim a later row to its clear stretches and re-space each stretch evenly instead of
   dropping single bolts, and skip a stretch shorter than two insets. Line up the two rows of a seam, and parallel
   rows on one plate, so the bolts pair across the joint.
-- **Wear on bevels only, and sparingly** [owner]: a `*Scratched*` variant over whole faces looks bad. Clean
-  material on faces, the scratched sibling on bevel strips (recipe in `bpy-recipes.md`, "Edge-only wear"). Even
-  on bevels it was too obvious along long structural edges (a base slab, a turntable rim) and was removed
-  there; keep it for small machinery, and ask before putting it on the block's main outline.
+- **Edge wear**: for wear on the edges only, keep the clean material on faces and put the `*Scratched*` sibling
+  on bevel strips (recipe in `bpy-recipes.md`, "Edge-only wear"). How much wear, and where, is a matter of
+  taste: ask before putting it over whole faces or along the block's main outline.
 - **Panel seams as decals**, not 3D grooves, with mitred T-joins and pointed ends; give the tip vertex its own U
   or the groove shades flipped (`atlas-regions.md`, "Panel lines"). Seams must sit on surface: check each seam
   vertex with a short ray cast against the face behind it, and route seams round recesses and pockets, since a
@@ -156,22 +146,18 @@ keep working. Put it in the design doc as a "fixed by the block it replaces" tab
   permanent structural joints (around big mechanical parts: trunnion housings, bearing rings, frames, fillets in
   inside corners), bolts where a plate clamps something. Weld lines are decals too (`atlas-regions.md`, "Weld
   lines"): one direction along each line, no mirrored spans, and a welded corner gets a rounder bevel that the
-  bead follows. Bolts kept clear of welds is a style preference, not a rule: one owner wanted panel bolts about
-  0.3 m from any weld and none on a welded joint. Ask before applying it.
-- **On a painted shell, prefer paint-colour panel decals over lettering** [owner: stencilled numbers and marks on
-  a dome were disliked]. `Atlas3_Colorable` access panels, window plates, hinge panels and slatted vents take
-  the block's paint and get relief from the normal map, so they read as real panels. Skip decals from the
-  light-grey `Decals` sheet on light paint (they nearly vanish). To choose, crop candidate regions into a
-  labelled contact sheet (normal-map relief preview) and let the owner pick from it.
+  bead follows. Whether bolts stay clear of welds, and how far, is a style choice: ask.
+- **Panel decals on a painted shell**: `Atlas3_Colorable` access panels, window plates, hinge panels and slatted
+  vents take the block's paint and get relief from the normal map, so they read as real panels. Skip decals
+  from the light-grey `Decals` sheet on light paint (they nearly vanish). To choose, crop candidate regions into
+  a labelled contact sheet (normal-map relief preview) and let the user pick from it.
 - **Signs sized boldly**: one or two hazard or warning signs per side, big enough to read (a 0.1 m diamond was
   far too small on a large block, 0.3 m worked).
 - **Symmetric trim, asymmetric marks** [owner]: panel and trim decals on structural edges (a plate's sides and
   chamfered corners) go symmetric: centred on each face, the same piece on every matching corner, a split pair
   either side of anything in the way. Only signs, labels and the odd hazard mark go asymmetric.
-- **Labels**: do not mirror one label symmetrically on the front; place labels on the sides and spread stencils
-  asymmetrically (`TextAtlas` letters and digits, badges, gauges) [owner]. Unit numbers and specification
-  stencils sit best somewhere underneath (an underside access panel), not on a front face [owner]. Text
-  direction is easy to get wrong on any face, so render every label once. On a downward face, read by someone
+- **Labels** (`TextAtlas` letters and digits, badges, gauges): text direction is easy to get wrong on any
+  face, so render every label once. On a downward face, read by someone
   looking up from in front (front at Blender -Y): letter right = +X, letter up = -Y, face normal -Z [HARD, took
   three renders to get right].
 

@@ -57,6 +57,14 @@ A three-quarter view still gives proportions:
 - Settle the rest on blockout renders from a Blender camera matched to the art's angle (line up the block's
   edges with the art's), compared side by side with `look(image=...)`.
 
+### Enlarge small parts before reading them [HARD, a user rejected the pass read at full size]
+
+A small part (a sensor dome, a sight, a side box) covers a few dozen pixels of the art, and read at that size
+its basic form came out wrong: windows modelled on the outside of a dome where the art sets them in, and a
+sight looking at the sky instead of forward. Crop the part from every view the art has, upscale each crop 3-4x
+(Pillow, `Image.LANCZOS`) into one side-by-side sheet, and write down for each feature whether it is recessed or
+raised, which way it faces, and its outline from each side, before modelling it.
+
 ## 2. Build a target table
 
 Put the numbers in a short table (feature, size, position) and keep it in the conversation. Build from

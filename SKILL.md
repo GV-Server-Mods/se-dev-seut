@@ -21,6 +21,7 @@ SEUT turns a Blender scene into an `.mwm` model plus an SBC block definition. Th
 look: shape, UVs, material *name*, collision, bounding box and empties are what ship. Model for those.
 
 Tags: **[HARD]** read in SEUT source or the wiki. **[SOFT]** inferred or field-tested, verify before relying on it.
+**[owner]** what the user the model was built for saw in game or asked for in a review.
 Everything below was checked against SEUT 1.2.1 on Blender 4.5 unless marked "unverified".
 
 ## Workflow
@@ -40,7 +41,7 @@ Everything below was checked against SEUT 1.2.1 on Blender 4.5 unless marked "un
    meshes instead of rebuilding them; build from scratch only what no vanilla part covers, then bevel and
    smooth shade it. Import with SEUT's `scene.import` (`getattr(bpy.ops.scene, 'import')`), not the raw FBX
    importer; recipe and traps: `references/kitbash.md`.
-3b. **Decal pass on every surface** (mandatory, see "Decals before geometry"): before adding any flat 3D
+3b. **Decal pass on every surface** (default, see "Decals before geometry"): before adding any flat 3D
    detail, propose decals from a contact sheet and use them; revisit plain faces at the end and offer more.
 4. **UVs, then material.** Link a vanilla material from the SEUT material library and lay UVs onto its
    atlas. Do not bake. Details: `references/materials.md`.
@@ -169,14 +170,14 @@ vanilla materials in `<SEUT Assets>\Materials\Materials.blend` (marked Vanilla, 
 Pick a material from `references/vanilla-materials.md`, link it (`link=True`), and move UV islands over the
 atlas region you want. A model that uses only vanilla textures ships no textures of its own.
 
-## Decals before geometry (mandatory, owner's standing rule)
+## Decals before geometry (default)
 
 **Every flat surface detail is a decal unless you can say why it cannot be.** Panel lines, weld lines, access
 panels, hatches, vents and grilles, window plates, hinge panels, rivet and bolt rows, buttons, keypads, hazard
 stripes, warning signs: reach for a vanilla `DECAL_CUTOUT` decal first, every time, and actively look for more
-places a decal improves a plain surface. Large features count too [owner]: big bay panels, X panels and corner
-vent plates are decals on a flat face, not modelled recesses. The owner has had to push for this repeatedly;
-do not wait to be asked.
+places a decal improves a plain surface; offer them unasked [owner: had to ask for decals again and again].
+Large features can be decals too (big bay panels, X panels and corner vent plates on a flat face instead of
+modelled recesses); how far to take that is the user's call, so ask.
 
 1. **Propose before you model.** When a surface needs detail, crop the candidate atlas regions into a
    labelled contact sheet (normal-map relief preview, `references/atlas-regions.md` for the boxes), show it,
@@ -184,7 +185,7 @@ do not wait to be asked.
 2. **Paint-colour panels first on painted surfaces.** `Atlas3_Colorable` (access panels, hinge panels, window
    plates, slatted vents, grilles, dimple plates), `Atlas1Colorable` (plates, circuit schematic pieces) and
    `PanelingColorable` (panel seams) take the block's paint and get their relief from the normal map, so they read
-   as real panels. Prefer them over lettering and over the light-grey `Decals` sheet, which nearly vanishes on
+   as real panels. Prefer them over the light-grey `Decals` sheet, which nearly vanishes on
    light paint.
 3. **Signs and hazards, sized boldly.** `Atlas2` warning signs and hazard marks, placed asymmetrically and big
    enough to read (a 0.1 m mark was far too small, 0.3 m worked on a large turret).
