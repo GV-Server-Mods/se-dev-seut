@@ -50,8 +50,9 @@ new textures. Many vanilla blocks share atlases and tiling materials, which is w
      armor, 0.40 UV/m was far too fine, and 0.07 UV/m was still "a tad" too fine. For an armor-style block
      start at **about 0.05 UV/m** (a 2.5 m face spans about 0.13 of the tile) [SOFT: 0.05 is extrapolated].
    - Functional (non-armor) cube blocks have fine detail. A vanilla reinforced conveyor tube matched the
-     0.40 UV/m probe. For machines, panels and other functional blocks use **about 0.40 UV/m** [SOFT: one
-     block compared].
+     0.40 UV/m probe by eye [owner], and the vanilla small cargo container's own model measures 0.495 UV/m
+     [HARD, measured on its SEUT import]. For machines, panels, weapons and other functional blocks use
+     **about 0.40 to 0.5 UV/m**.
    Pick the scale by what the block is, then adjust by eye against a vanilla block of the same kind wearing the
    same skin and colour. Box-project each face (`uv = (a, b) * D + 0.5`, using the two axes across the face's
    dominant normal); overlapping islands are fine on a tiling material.

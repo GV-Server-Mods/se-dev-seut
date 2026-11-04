@@ -110,7 +110,7 @@ def box_project_uv(bm, uv_per_metre, origin=0.37):
             l[uv].uv = (l.vert.co[a] * uv_per_metre + origin, l.vert.co[b] * uv_per_metre + origin)
 ```
 
-Armor-style density is about 0.05 UV per metre, functional blocks about 0.40 (`materials.md`). Check the result
+Armor-style density is about 0.05 UV per metre, functional blocks about 0.40 to 0.5 (`materials.md`). Check the result
 by comparing UV area to world area per triangle: `sqrt(uv_area / world_area)` is the UV per metre.
 
 Collision for angled members: make one collision mesh per piece (a box is fine for an axis-aligned rail),

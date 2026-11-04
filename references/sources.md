@@ -72,8 +72,8 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
 ## Not yet verified
 
 - In-game checks still open: a turret run by the game's own turret code without WeaponCore (its aiming, barrel
-  and muzzle dummies, manual-control camera), subpart facing on a WeaponCore `ConveyorSorter` turret, mirroring,
-  and the armor-style UV density (about 0.05 UV/m is extrapolated). Turret details: `weapons-turrets.md`,
+  and muzzle dummies, manual-control camera), subpart facing on a WeaponCore `ConveyorSorter` turret, and
+  mirroring. Each matters only when a block of that kind is built. Turret details: `weapons-turrets.md`,
   "Unverified".
 - Confirmed in game by the owner on the gatling turret (a vanilla `LargeMissileTurret` type driven by
   WeaponCore; azimuth, elevation and spinning barrel subparts, two LODs per scene): it places and mounts, builds

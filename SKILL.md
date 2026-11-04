@@ -147,7 +147,7 @@ shape reference at most, and ask before spending credit.
   whole model, and carry seams over edges onto the bevel instead of stopping them short. `references/atlas-regions.md`
   ("Groove direction", "Seams over edges and bevels").
 - **Tiling texture scale depends on the kind of block** [HARD, owner-observed]: armor-style blocks want about
-  0.05 UV per metre, functional blocks about 0.40. `references/materials.md`.
+  0.05 UV per metre, functional blocks about 0.40 to 0.5. `references/materials.md`.
 - **Re-exporting with `export_sbc_type = 'new'` writes `<SubtypeId>_1.sbc`** instead of overwriting. Use
   `'new'` once, then `'none'`.
 - **ASCII only** in SubtypeId, material and object names [HARD, E033] or no MWM is written.
