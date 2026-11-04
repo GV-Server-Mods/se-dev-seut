@@ -340,8 +340,50 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   2-segment bevel on a 90-degree edge makes 30-degree steps, so smooth-by-angle 30 smooths them, and the big
   face's vertex normals tilt toward the bevel (measured 20-45 degrees on plates, boxes and drum caps). Apply the
   same Weighted Normal modifier (`FACE_AREA`, weight 100, `keep_sharp`) to every bevelled part, boxes
-  included. Check before export: for each face over 0.02 m^2 with 4+ corners, the largest angle between
-  `me.corner_normals[i].vector` and `p.normal`; it should be 0 on flat faces (only curved sides may show more).
+  included, then run the shading check below.
+- **Shading check** [HARD, run on every part of a large turret; the owner saw each fault below in solid view]:
+  for every mesh in the scene, evaluated with its modifiers, take each face over 0.01 m² that is at least 4 cm
+  wide (area over longest edge; narrower faces are bevel strips and modelled rounds, which turn on purpose) and
+  find the largest angle between its corner normals and its face normal. Flat faces should read under 1-2
+  degrees; round parts, and decals laid on them, show their facet step (5.6 degrees on 64 sides). Check every
+  moving group, the fixed base included.
+
+  ```python
+  dg = bpy.context.evaluated_depsgraph_get(); bad = []
+  for o in [o for o in bpy.context.scene.objects if o.type == 'MESH']:
+      oe = o.evaluated_get(dg); me = oe.to_mesh()
+      for p in [p for p in me.polygons if p.area > 0.01]:
+          v = [me.vertices[i].co for i in p.vertices]
+          if p.area / max((a - b).length for a, b in zip(v, v[1:] + v[:1])) > 0.04:
+              dev = max(math.degrees(me.corner_normals[i].vector.angle(p.normal, 0)) for i in p.loop_indices)
+              if dev > 2:
+                  bad.append((o.name, round(dev, 1), round(p.area, 3), tuple(p.center)))
+      oe.to_mesh_clear()
+  ```
+
+  Count the hits per object: round parts and the decals on them return many at their facet step; any hit on a
+  flat part is a fault. To see what the user sees, render their exact view: read the 3D viewport's `region_3d` (`view_location`,
+  `view_rotation`, `view_distance`), put a camera at `view_location + view_rotation @ (0, 0, view_distance)`
+  and render with Workbench using their `shading.light` and `studio_light`, with cavity and shadows off.
+  Faults found and their fixes:
+  - **Soft folds**: two wide faces meeting at 10-30 degrees, under the 30 degree bevel and smoothing limits and
+    not sharp, shade as one curved gradient and the fold barely shows (corner normals 20-24 degrees off on 2-3 m²
+    armour sides). With nothing lying on the fold, lower that part's Bevel `angle_limit` below its folds (9-10
+    degrees). Where decals run along the fold, mark it sharp instead
+    (`me.set_sharp_from_angle(angle=math.radians(10))`, kept by Weighted Normal's `keep_sharp`): a 2 cm bevel
+    on a 20 degree fold drops the surface 2-4 mm under the decal, enough to show it floating.
+  - **Wide faces beside thin strips** on a part with no modifiers: 1.8 cm lip strips folding 24 degrees off
+    8 cm wide arms pulled the arms 19 degrees off. The Weighted Normal modifier above fixes it; the strips then
+    carry the turn as a bevel would.
+  - **A lofted part whose base follows the shapes under it** (a ridge lofted over a drum, the gap behind a cone
+    and the cone): with a fixed top width its sides twist between sections, and a base that narrows toward the
+    nose twists them more; smooth shading turns each twist into streaks. Make each side one flat plane running
+    down to a flat base buried below everything under it, place sections only on the profile's corners, and
+    narrow a nose with a flat facet (a vertical plane across each lower front corner) instead of a taper; check
+    the facet's crease stays clear of the surface it crosses. The rebuilt ridge went from 740 to 296 triangles.
+  - **Zero-area faces from a convex hull cut with `bisect_plane`**: near-coincident cuts left 26 on an 80-face
+    hull, and one threw a neighbour's normals 54 degrees off. Run
+    `bmesh.ops.dissolve_degenerate(bm, edges=bm.edges[:], dist=1e-4)` after the cuts.
 - **A cut into a low-poly round part** [HARD, run on Blender 4.5; owner saw "funky surface issues" round a trough
   cut into a 32-sided cone]: the boolean leaves uneven pieces of the round surface, and smooth or area-weighted
   normals shade them in streaks (Weighted Normal at weight 100 snaps each vertex to its largest face). Give that

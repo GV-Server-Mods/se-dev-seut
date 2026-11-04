@@ -70,3 +70,23 @@ Only if no vanilla material gives the look. Create it with `object.create_materi
 under a `...\Textures\...` path (E007), Color Space Non-Color for NG, Alpha Channel Packed, then set
 technique and parameters in the SEUT Shader Editor panel. Textures are authored outside Blender; baking
 inside Blender is the last resort.
+
+**A vanilla decal piece with changed values** (run on SEUT 1.2.1 and exported; not yet seen in game). Use it when
+a vanilla piece has the right shape but the wrong colour, gloss or paint behaviour:
+1. Crop a power-of-two window round the piece from each of the atlas's four TIFs (`_cm`, `_ng`, `_add`,
+   `_alphamask`, under `<SEUT Assets>\Textures\Models\Cubes`) with a few clear pixels of margin, change what
+   needs changing, and save them as TIFs in a folder whose path contains `\Textures\`, for example
+   `<source>\Textures\Cubes\Large\<Name>_cm.tif`. Load and save the pixels as raw values (Non-Color), and edit
+   colour in linear. Scale gloss by an offset rather than a multiply, which clips the bright scratches.
+2. Copy a linked vanilla material of the same kind (`mat = linked.copy(); mat.name = ...;
+   mat.asset_clear()` if it has asset data) and point its image nodes `CM`, `NG`, `ADD` and `ALPHAMASK` at the
+   new TIFs, keeping each old image's colour space and alpha mode. The copy keeps SEUT's node names and
+   technique. Map the decal quads to the piece's box inside the window.
+3. At export SEUT writes a `Material` entry for a local material with each texture path cut at the last
+   `\Textures\` and ending `.dds` (E007 if the path has no `\Textures\`), and converts each TIF that is not in
+   its own Assets folder to `<mod path>\<that path>.dds` when the source is newer (I002) [HARD, SEUT source
+   `export\seut_export_utils.py` and `seut_export_texture.py`; run]. A 64 px set came out with 7 mips: `_cm` and
+   `_add` BC7 sRGB, `_ng` and `_alphamask` BC7 linear, as vanilla except vanilla's BC4 alpha mask.
+4. Ship the DDS files in the mod at that path. In game, "Reload models" is enough for new texture files: the
+   renderer loads a texture path the first time a material asks for it, and "Reload textures" re-reads only
+   textures already loaded [HARD, `MyFileTextureManager.GetTexture` and `ReloadTextures`; not yet seen in game].

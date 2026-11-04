@@ -69,6 +69,21 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
 
 - Roof parts of the same turret (a turned sensor dome, a periscope pod, side sensor boxes; Blender 4.5.10): the material index clamp and the exact boolean's one-shell need were hit in runs; the faceted-cylinder outline seam was measured by ray cast; the enlarged-crop reading came after the user rejected a pass read at full size. Not seen in game.
 
+- Shading round on the same turret (Blender 4.5.10): the owner saw a smeared ridge side, soft folds on the
+  gunhouse and bustle, and streaked port braces in solid view. Each was measured with the shading check
+  (`bpy-recipes.md`), fixed, and measured again, and the views were matched with a Workbench render from the
+  owner's viewport. Zero-area faces traced to `bisect_plane` on a convex hull. The fold bevel was rejected
+  because decals lie on the folds (2-4 mm drop measured). Not seen in game.
+- `pipeline.md`: the stage order and the builder/editor rule came from the same build, where in-place fixes
+  had been mirrored into builders that were no longer rerun (owner: "this two sources of truth thing hurts my
+  head"). The decal-carrying parts were found by counting decal vertices near each heavy part with
+  `BVHTree.find_nearest`; the drift check was run on a rebuilt part, matched it, and flagged a 1 cm shift.
+  `scripts/rebuild_check.py` was run on a copy of the same turret in a background Blender (4.5.10): 177 of 183
+  objects matched at first; after the fixes it found, the saved file matched its rebuild in all 183 under
+  several `PYTHONHASHSEED` values. The face order that varied between sessions was traced by hashing one
+  part's face list after each build stage: the input to `bmesh.ops.bevel` was the same every time, its output
+  order was not. That a set of BMesh elements is ordered by memory address is inferred, not traced.
+
 ## Not yet verified
 
 - In-game checks still open: a turret run by the game's own turret code without WeaponCore (its aiming, barrel

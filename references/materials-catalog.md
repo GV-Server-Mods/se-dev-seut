@@ -34,6 +34,15 @@ Fixed-colour siblings share the same atlas and UVs but are not paintable: `*_Dar
 `*_Chrome`, `Atlas3_Darker`, `Atlas4_Chrome`. Swap between a Colorable and a fixed sibling without changing
 UVs [SOFT, same atlas file names in the table].
 
+Paint keeps a colour map's brightness: the painted value is the colour map's value plus half the paint's value
+offset [HARD, `colorize_1` read in the export colorize shader; owner saw the result in game]. So a paintable
+decal on painted metal stays as much lighter or darker as its colour map is. `PanelingColorable` uses the light
+`Decals_Atlas_A_01_cm`: its bolt heads 1-11 measured 0.11-0.40 above `PaintedMetalColorable_cm` (linear value
+over the alpha-solid pixels; head 10 the lightest) and showed as bright spots on painted plate, while the
+`Atlas3_Colorable` and `Atlas1Colorable` pieces measured 0.05-0.14 below it. Compare the values before picking
+a paintable decal for a painted surface. When no piece is close, copy the piece with its colour map scaled to the
+plate's value (`materials.md`, "A vanilla decal piece with changed values").
+
 Armor skins swap textures by material name, so keep vanilla material names unchanged on armor-style
 surfaces; glass, holo and shield materials are excluded (wiki, Materials reference).
 
@@ -173,6 +182,12 @@ face shows the same colour; for a lamp in the player's paint colour use `Emissiv
 `ScreenArea*` / `TransparentScreenArea*` mark LCD surfaces (the rotated variants orient the screen).
 `GLASS`, `HOLO`, `SHIELD` materials must match a TransparentMaterials SubtypeId [HARD, wiki]; the library has
 18 GLASS and 4 HOLO materials. `Terminal` is the keypad / terminal panel look (MESH, 50% emissive).
+
+For glass the player should see through, use `WindowRectangularOutside` (the window blocks' outer glass,
+reflectivity 0.1), not `GlassOutside` (0.7, otherwise the same settings): it read as a dark mirror that hid the
+parts behind it [HARD, values in `TransparentMaterials.sbc`; owner saw `GlassOutside` in game; the swap is not
+yet seen in game]. Both textures are a faint dirt rim round a clear middle, one per pane, so map each pane's face
+to the whole 0..1 square (`RectangularWindowDirtInside` is 1:2, long side along V).
 
 ## Picking a material
 

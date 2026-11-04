@@ -526,9 +526,26 @@ along it, as for panel lines. At about 5 cm wide one U span covers about 1.4 m (
   a joint still lands on clean texture, then check that every bead UV lies in the clean range.
 - **Beads round a bevel** [owner: the harsh welded edge needed "a little bevel", on the corner and on the weld
   decal both]. A rounder bevel alone changed nothing: the bead was still drawn in flat facets with a crease down
-  its middle. Bevel welded corners rounder than plate edges (2.5 cm in 4 segments, each step under the 30 degree
+  its middle. Bevel welded corners rounder than plate edges (2.5 cm in 6 segments, each step under the 30 degree
   smoothing angle), lay the bead on the bevelled surface as in "Seams over edges and bevels" with 8 rows across
   (seams need 4), then merge its vertices and shade it smooth.
+  - **Check the bevel is there under every weld** [HARD, measured; owner saw welded corners with no bevel at all]:
+    the Bevel modifier's `use_clamp_overlap` (on by default) shrinks a bevel to fit the shortest neighbouring
+    edge, and on a part with short edges near its welded corners it shrank them to zero width. Turn it off on
+    welded parts, then check the evaluated mesh for flipped and self-intersecting faces. Take a cross-section
+    under a few beads to confirm the bevel's steps are there.
+  - **Keep the laid bead off the surface between its vertices** [HARD, measured; owner saw a bead 0.06 mm off the
+    surface z-fight in game as a jagged line]. Each face is flat, so it dips into the bevel between vertices
+    laid on it. Across the bead, a row crossing one of a 4-segment bevel's folds dipped about 1.1 mm; 6 segments
+    fixed it. Along the bead, a long face dips wherever the bevel bends along the weld: corner patches where
+    bevels meet, and mitred ends. Before laying, add cross-steps along the strip wherever an edge between two
+    laid vertices dips more than 0.25 mm below its ends (sample every cm, halve the step until it passes). Give
+    every row the same steps so the strip stays in one piece, and let a mitred end face blend into its tip across
+    the steps so it can split too. Do not split faces after laying (bmesh `subdivide_edges`): faces that get only
+    some edges cut become many-sided polygons, and they fold once their new vertices are laid.
+  - In a concave groove the lifted point is nearer the other face: push it out along that face's normal until it
+    clears both. Check every bead's gap at face centres and edge midpoints: aim for at least 0.7 mm with a 1.5 mm
+    lift [SOFT until seen in game].
 
 Round joints get a ring of short quads; a fillet weld in an inside corner is a strip at 45 degrees across the
 corner, one edge on each face. Which joints get a weld: `design-detailing.md`, "Every joint says how it was

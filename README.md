@@ -31,6 +31,7 @@ cargo crate and a WeaponCore gatling turret with subparts.
 | File | Scope |
 | :--- | :--- |
 | [`SKILL.md`](./SKILL.md) | Workflow, rules that fail silently, Blender MCP guidance, index of references |
+| `references/pipeline.md` | Stage order of a whole build, builder scripts vs the .blend, the freeze |
 | `references/bpy-recipes.md` | Verified `bpy` snippets for SEUT scenes, materials and collision |
 | `references/modeling-rules.md` | Geometry, collision, LODs, empties, mountpoints, mirroring |
 | `references/block-scenes.md` | Ideal scene layout, vanilla LOD distances, build stages |
@@ -42,7 +43,7 @@ cargo crate and a WeaponCore gatling turret with subparts.
 | `references/setup.md` | Installing Blender, SEUT, Havok and the ModSDK from scratch, first model, testing in game |
 | `references/kitbash.md` | Import recipe for reusing vanilla model parts, tested |
 | `references/atlas-regions.md` | UV boxes for each piece of the vanilla decal atlases (JSON copy: `atlas-regions.json`) |
-| `scripts/` | Blender and Pillow scripts that regenerate the atlas region maps |
+| `scripts/` | Blender and Pillow scripts that regenerate the atlas region maps; `rebuild_check.py`, the whole-model drift check |
 | `references/errors.md` | SEUT error codes and fixes |
 | `references/hard-surface.md`, `reference-images.md` | Modeling technique and working from pictures |
 | `references/sources.md` | Provenance and verification status |

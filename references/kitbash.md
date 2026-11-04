@@ -185,6 +185,13 @@ assume the FBX material names are what the game renders.
 - Vanilla detector empties and their linked meshes come along with the container parts. Keep the pairs
   together, rename them to unused indices, and check each empty covers its mesh
   (`interaction-highlights.md`, "Detector size").
+- **Kitbashed shells are open where the vanilla walls hid them** [HARD, owner saw daylight in game]: frames,
+  edge beams and corner pieces used without their container's walls leave gaps behind them, and the game draws
+  no back faces, so daylight shows through up close or looking up along a side. Put a dark backing (a liner)
+  behind them, facing out: a wall just inside the shells, rings out to the beams at each band, fins behind
+  corner rods, closed from below as well. Test each view with two Workbench renders against a magenta world,
+  back-face culling on and off: magenta only in the culled render is a hole. Render the liner in its own colour
+  too, to check it shows only through the gaps.
 - State in the report which vanilla parts were reused and which shapes had to be built new.
 
 ## Not yet tested

@@ -36,7 +36,8 @@ Everything below was checked against SEUT 1.2.1 on Blender 4.5 unless marked "un
    Keep the model in metres at export scale 1.0 unless the user says otherwise.
 3. **Model into `Main (<SubtypeId>)`.** One top-level (unparented) object per exported collection
    [HARD, E031]; parent detail objects under it. Details: `references/modeling-rules.md`; for anything
-   beyond a plain box, follow the design workflow in `references/design-detailing.md`. **Kitbash first**:
+   beyond a plain box, follow the stage order in `references/pipeline.md` and the design workflow in
+   `references/design-detailing.md`. **Kitbash first**:
    when a vanilla model has the part you need (crate frame, port, panel, handle), import it and reuse its
    meshes instead of rebuilding them; build from scratch only what no vanilla part covers, then bevel and
    smooth shade it. Import with SEUT's `scene.import` (`getattr(bpy.ops.scene, 'import')`), not the raw FBX
@@ -47,7 +48,8 @@ Everything below was checked against SEUT 1.2.1 on Blender 4.5 unless marked "un
    atlas. Do not bake. Details: `references/materials.md`.
 5. **Collision** in `Collision - Main (...)`: at most 10 convex objects, inside the bounding box, rigid
    body shape Box / Sphere / Capsule / Cylinder / Convex Hull. `references/modeling-rules.md`.
-6. **LODs and build stages** (`LOD1..3`, `BS1..3`), then mountpoints and mirroring if the block needs them.
+6. **LODs and build stages** (`LOD1..3`, `BS1..3`), then mountpoints and mirroring if the block needs them,
+   and a check of every interaction point (`references/pipeline.md`, stage 11).
 7. **Check before export.** Run the checklist in `references/errors.md`; most failures are UVs,
    non-ASCII names, unapplied collision modifiers, or geometry outside the bounding box.
 8. **Export** (`scene.export`) needs a saved .blend, a mod path and an `...\Models\...` export folder, and a
@@ -226,6 +228,7 @@ container breakdown: `references/interaction-highlights.md`.
 | `references/doors-subparts.md` | doors, hatches or any block with animated subparts: scene setup, orientation quirk, advanced door SBC fields |
 | `references/characters-and-animation.md` | a playable/NPC character, creature, or handheld weapon animation controller (outline only) |
 | `references/weapons-turrets.md` | turrets, weapons or tools (ConveyorSorter, WeaponCore, ToolCore): subpart chain, muzzle and camera dummies |
+| `references/pipeline.md` | any build past a plain box: stage order and gates, builder scripts vs the .blend as source of truth, the freeze, telling the user where the job stands |
 | `references/design-detailing.md` | designing and detailing any block: design doc, blockout, shaped parts, openings, equipment, bolts, wear, seams, decals, labels, review checks |
 | `references/turret-design.md` | turret or weapon specifics on top of that: subpart chain, clearance, gun and muzzle, ammo path |
 | `references/interaction-highlights.md` | any terminal, inventory, keypad, conveyor port or door interaction point |

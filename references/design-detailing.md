@@ -15,6 +15,9 @@ SKILL.md: [owner] = owner design feedback, [HARD] = measured or rendered, [SOFT]
 
 ## Workflow
 
+The order of the whole job, what each sign-off locks, and when scripts or the .blend are the source of truth are
+in `pipeline.md`. These steps are the design side of it.
+
 1. **Design document before Blender** [owner]. Ask for style references first: screenshots of the user's own
    blocks in the style they want, saved next to the concept art. If the concept art is perspective only, also
    ask for straight-on front, side and top views of it (`reference-images.md`). Then write a short doc and get it confirmed:
@@ -41,10 +44,12 @@ SKILL.md: [owner] = owner design feedback, [HARD] = measured or rendered, [SOFT]
    until then (`weapons-turrets.md`, "Splitting a turret into subpart scenes").
 6. **Small MCP steps.** Save before each step, never loop over a live collection while creating data, and keep
    a helper library in a Blender text block so every part gets the same bevel, cleanup, UV and material
-   treatment (`bpy-recipes.md`, "Shaped parts and edge wear from script").
-7. **Decal pass on every surface** before any flat 3D detail (SKILL.md, "Decals before geometry").
-8. **Count triangles early** and cut over-segmented round parts and buried faces (`bpy-recipes.md`, "Triangle
-   budget" and "Buried faces").
+   treatment (`bpy-recipes.md`, "Shaped parts and edge wear from script"). Part builders follow the four rules
+   in `pipeline.md`, "Builders, editors and the freeze".
+7. **Shading check and triangle count before decals** (`bpy-recipes.md`, "Shading check" and "Triangle
+   budget"): fix smeared faces, and cut over-segmented round parts that will carry decals. Parts without decals
+   and buried faces wait for the LOD stage ("Buried faces").
+8. **Decal pass on every surface** before any flat 3D detail (SKILL.md, "Decals before geometry").
 
 ## Replacing a block's model
 
