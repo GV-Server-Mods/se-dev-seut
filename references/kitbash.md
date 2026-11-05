@@ -192,6 +192,17 @@ assume the FBX material names are what the game renders.
   corner rods, closed from below as well. Test each view with two Workbench renders against a magenta world,
   back-face culling on and off: magenta only in the culled render is a hole. Render the liner in its own colour
   too, to check it shows only through the gaps.
+  A liner behind the shells does not close the shells themselves [HARD, owner saw it in game after a liner had
+  passed 29 renders]. Where a profile (frame rim, corner post, edge beam) sat against the vanilla wall, it is open
+  under its lip: at a grazing angle the eye goes in behind the rim and the inside reads as a hollow. A dark flipped
+  copy of the shell in place (`bmesh.ops.reverse_faces`) does not fix it [HARD, owner saw no change in game]: the
+  hollow is painted dark but is still a hollow. Close it instead [HARD, owner in game: "way better"]: take the shell's open
+  edges along each lip (`edge.is_boundary` at the lip's offset) and sweep each straight back to the panel behind,
+  facing out of the hollow, in the shell's paint. Built on the lip's own vertices, the new faces round exactly like
+  the shell in game (SKILL.md, vertex rounding), so no crack opens. Grazing views are what renders miss: check with
+  rays from eyes 1.5-4 m out along each side, counting rays whose first face points away with no face pointing back
+  in the same place, on vertices rounded as the game stores them. On a 12 m kitbashed frame that count went from
+  about 44,000 to under 40, each landing on the liner 1-2 cm behind.
 - State in the report which vanilla parts were reused and which shapes had to be built new.
 
 ## Not yet tested
