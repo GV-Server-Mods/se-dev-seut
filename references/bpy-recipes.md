@@ -305,7 +305,9 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   the pin, U cradle = rectangle with an arc cut) and extrude it with a local frame matrix whose X and Y span the
   outline's plane: `M = Matrix((ex, ey, ex.cross(ey))).transposed().to_4x4(); M.translation = origin`. A pad
   "parallel to a sloped face" uses `ex` = the slope direction and `ey` = the world axis along the face.
-  Triangulate the caps of concave outlines (`bmesh.ops.triangulate`) before export.
+  Triangulate the caps of concave outlines (`bmesh.ops.triangulate`) before export. Call `f.normal_update()`
+  on a new face first [HARD, seen on a muzzle brake]: triangulate projects the ngon along its normal, and a face
+  without one came out filled across its concave side (the slots' round ends closed over in game).
 - **Booleans:** cut pockets into the *unbevelled* solid first, then bevel; an exact boolean on an already
   bevelled mesh produced stray geometry. A feature that pokes through the far side of a plate shows as a dark
   slot there: ray-cast from the camera (`scene.ray_cast`, with helper objects hidden) to find which object it is.
@@ -431,6 +433,13 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   covered from every angle; otherwise move the copy that should win 0.7-1 mm in front along its normal (a
   window frame's inner edges into the opening, a brace's ends 1 mm back behind the beam face). Render the
   spot from grazing angles before export.
+  **A cover is not a nudge** [HARD, owner saw z-fighting in game]: a cap laid over a beam 2 mm above it, with the
+  beam running 6-15 cm on underneath, flickered in a jagged band seen from a few metres away, and a 0.3 mm scan
+  does not flag a 2 mm gap. End the covered part just under the cover's edge: move its end vertices out to the
+  cover's own end at each point of the profile, plus about 2 mm under the cover's bevelled lip. Check it with
+  rays at 1 mm steps along the joint from several angles: what is left should be a 1-3 mm sliver where the lip
+  crosses the beam at an angle. Sinking a part with a plain shift also pushes its downward- and inward-facing
+  lips out past the cover; check those faces too.
 - **Many small cuts:** an exact boolean that slotted six small turned tubes at once collapsed them to fragments
   (two tries). Build such features by construction instead: a slotted tube is a base ring, partial tube
   sections (wall rings swept over an angle range, capped at both ends) and an end ring. Build each copy from a
@@ -454,7 +463,8 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   on the decal's up axis, while a 6-segment cone has its first corner on local +X, so turn one of them 30 degrees
   about the normal [HARD, the owner saw every head 30 degrees off]. Smaller bolts get head 3 (u
   0.0635-0.0928, v 0.9697-0.999, a dome inside a recessed ring in the normal map) about 1.5 times their size
-  underneath as a counterbore, about 1 mm lower. Fit each ring to its face: ray-cast 16 rim points down with a
+  underneath as a counterbore (cut it round the head where you can: the height between them orders nothing in
+  game, see "Decal offset"). Fit each ring to its face: ray-cast 16 rim points down with a
   2 mm tolerance and a normal check, shrink until all land on flat face, drop it otherwise (a 2 cm tolerance let
   rings lap over a pad's bevel).
   For fasteners with no 3D boss at all, use a sunken head instead: every `Decals` bolt head reads as raised
@@ -466,9 +476,24 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   non-decal mesh in the scene (world space), then for each decal face `ray_cast(centre + n * 0.0001, -n, 0.06)`
   and list the gaps. To normalise, split each decal object into connected islands: a flat island moves as a
   whole by `target - min(gap)` along its normal (per-vertex rays would miss where a decal overhangs a small
-  boss); an island on a curved surface sets each vertex to `hit + n * target` along its vertex normal. Targets
-  1.5 mm, and 0.7 mm for rings under bolt heads. The first pass found heads at 3-4 mm, one ring 26 mm off its
-  face and another at 0.1 mm (a z-fighting risk). Rebuild LODs afterwards, since they copy the decals.
+  boss); an island on a curved surface sets each vertex to `hit + n * target` along its vertex normal. Target
+  1.5 mm. The first pass found heads at 3-4 mm, one ring 26 mm off its face and another at 0.1 mm (a z-fighting
+  risk). Rebuild LODs afterwards, since they copy the decals. A lower target for a ring under a bolt head orders
+  nothing, since decals do not write depth (SKILL.md, "Lay layered decals side by side"). Where two decals must
+  overlap, draw order decides which one shows.
+  - **Rounding** [HARD, game code and an exported `.mwm`; owner saw "broken glass" wedges up close]: the gap above
+    is the design gap. The game stores positions on a grid of about 1 mm per whole metre of the vertex's largest
+    coordinate (`pack()` in `scripts/decal_snap.py` reproduces it exactly), and rounds the surface and the decal
+    separately. On a 5x5 large turret reaching 6.7 m, 5,550 of 24,330 decal triangles came out under 0.3 mm after
+    rounding, 2,390 at or behind their surface: a dome window, underside text, a whole sign. `snap()` left 166,
+    all small pieces on 25 mm bevels or in recesses, where the rounding warps the solid parts themselves.
+  - What the snap costs: the gap becomes 0.6 mm up to one grid step (up to 6 mm at 6 m), and vertices shift
+    sideways about as much as the game's own rounding (1.4 mm against 1.25 mm on a window 4.6 m out), so a round
+    decal there shows a slight wobble either way. It records each corner's normal first and restores it as custom
+    split normals, since the move tilts small faces by up to 10 degrees.
+  - Traps met building it: ray-cast against the evaluated meshes (an unapplied 25 mm bevel modifier changes the
+    surface near every edge); skip grid points on a whole metre (6.0 exported as 5.9999999 and took the next scale); re-set custom
+    normals only after a real move (unchanged ones drift 0.0002 per rebuild, which fails a rebuild check).
 - **UVs on round painted shells** [HARD, owner saw hard skin seams in game]: box projection switches axis every
   90 degrees round a cylinder or dome, so a paint skin (camouflage) breaks in four vertical seams. Map the shell
   cylindrically instead: `u = theta * R * upm`, with `theta = atan2(x, -y)` so the one wrap seam sits at the

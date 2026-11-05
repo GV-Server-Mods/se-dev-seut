@@ -46,6 +46,17 @@ plate's value (`materials.md`, "A vanilla decal piece with changed values").
 Armor skins swap textures by material name, so keep vanilla material names unchanged on armor-style
 surfaces; glass, holo and shield materials are excluded (wiki, Materials reference).
 
+Each skin covers only the materials its definition lists [HARD, `Data\AssetModifiers\ArmorModifiers.sbc`].
+`PaintedMetal_Colorable` is in every skin. `Doodads` (the vanilla airtight and cargo-container corners) is not in
+Battered, Wartorn, Weldless, Corrugated or Plastic. `PaintedMetal_Darker`, `Chrome`, `Metal_Dull` and
+`PaintedMetal_Yellow` are only in Frozen and Heavy Rust. Battered covers no decal sheet. So a kitbashed vanilla
+part whose paint sits on another material keeps flat paint beside the skinned `PaintedMetal_Colorable` round it
+[HARD, owner saw it in game under Battered]. Put every large painted area on `PaintedMetal_Colorable`. To keep a
+vanilla part's own texture where it is unpainted, cut its faces along the colour-mask outline (the `_add` alpha)
+in UV space, using lines through the outline's straight edges; let each piece vote on the mask, and move the
+painted pieces to `PaintedMetal_Colorable`, box mapped. Carry the custom normals across the cuts, and weld the
+cut points within 10 µm: rounding to 1 µm left cracks.
+
 ## Decal families
 
 `DECAL_CUTOUT` materials draw on top of the surface behind them using an alpha mask. Use them for panel

@@ -117,6 +117,11 @@ shape reference at most, and ask before spending credit.
 - **Decal materials (`DECAL_CUTOUT`: `Atlas*`, `ButtonsAtlas_*`, `Decals`, `Paneling*`, `TextAtlas*`) are for
   flat quads only** [HARD, seen in game]. On a 3D dome they render with broken transparency; keep each decal
   fully inside its flat face. `references/materials-catalog.md`.
+- **The game rounds vertex positions, about 1 mm per whole metre from the model origin** [HARD,
+  `VRage.Import.PositionPacker`; an exported `.mwm` matched it exactly]. Each vertex is stored as half floats times
+  floor(max |x|, |y|, |z|), so 4 m out it lands on a 3.9 mm grid along its largest axis, 6 m out on 5.9 mm. A decal
+  1.5 mm off a surface there rounds onto or behind it and vanishes or breaks into wedges [owner, in game]. On a model
+  that reaches past 2 m, run `scripts/decal_snap.py` as the last build step. `references/bpy-recipes.md`, "Decal offset".
 - **Shade curved parts smooth and bevel hard edges** [HARD, owner saw faceted cylinders]:
   `bpy.ops.object.shade_smooth_by_angle(angle=math.radians(30))` on every part. `references/modeling-rules.md`.
 - **A `detector_conveyor*` empty is also the conveyor connection point** [HARD, game code]: put it in the cell
@@ -198,10 +203,16 @@ Decals cost almost nothing in triangles and keep blocks consistent with vanilla.
 in narrow columns, mitre every seam join (T-joins end in a pointed tip, never square), place bolts from one
 written fastener plan, check text direction and obstruction with a render and a ray cast
 (`references/bpy-recipes.md`, `references/design-detailing.md`).
-Decal quads sit just off the surface (not coplanar) to avoid z-fighting: about 1.5 mm, and 0.7 mm for an
-underlay such as a counterbore ring under a bolt head [owner: bolt decals at 3-4 mm looked like they floated
-in game]. Measure every decal's gap with a ray cast before export (`references/bpy-recipes.md`, "Decal
-offset"); see `references/materials-catalog.md` for normals and DLC pitfalls.
+Decal quads sit just off the surface (not coplanar) to avoid z-fighting: about 1.5 mm [owner: bolt decals at
+3-4 mm looked like they floated in game]. Measure every decal's gap with a ray cast before export
+(`references/bpy-recipes.md`, "Decal offset"); past 2 m from the origin the game's vertex rounding sets the real gap
+(rule above). See `references/materials-catalog.md` for normals and DLC pitfalls.
+**Lay layered decals side by side, not stacked.** Model decals are drawn with a depth test but no depth write,
+and the depth pass skips them [HARD, `MyGBufferRenderPass.InitPartForDecal`, `MyDepthRenderPass`]. So where two
+opaque decals overlap, the higher one does not win: draw order decides. Cut the lower piece round the upper one
+instead: a plate with a round hole round a ring, a ring with a hole round a centre button, all at the same height.
+(A ring 0.8 mm above a plate broke into wedges in game [owner]; the vertex rounding above caused that, and it still
+did once the two lay side by side, until the decals were snapped.)
 
 ## Interaction points highlight real geometry (default style)
 

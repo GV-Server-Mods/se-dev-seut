@@ -62,6 +62,12 @@
   `export_deleteLooseFiles = False`) and fix every WARNING; the clean run's `I007` does not mean the log is
   clean. One run still logged 5 identical-UV warnings after all measurable zero-area faces were gone and the
   source was not found, so treat that warning as unresolved until the block is seen in game.
+- **Bent bars and handles: straight runs joined by true arcs** [owner: a U handle swept along a Catmull-Rom spline
+  through eight points looked "really ugly and bent" in game]. A spline through sparse points bows the straight
+  legs and flattens the corners; compute the centre line as lines and circular arcs (a few degrees a step). Give the
+  tube enough sides that no edge passes the bevel's angle limit (24 at a 30 degree limit), shade it smooth with no
+  bevel or Weighted Normal, and UV it along and round the bar: box projection streaks a round bar's texture and
+  the bevel plus face-area normals make it read as flat facets.
 - Triangulation is handled at export; model in quads where practical [SOFT].
 - Recalculate normals outward and check Face Orientation before export [SOFT].
 - LOD meshes may drop bevels (`Remove Bevels` exists for this) [HARD].

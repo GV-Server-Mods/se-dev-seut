@@ -40,6 +40,14 @@ def map_quad_to_region(obj, u0, v0, u1, v1, uv_name='UVMap'):
 
 Rotate the quad (or reorder the corner list) rather than flipping UVs when a piece is the wrong way up. Keep the quad's aspect ratio equal to the region's `px` ratio so the piece is not stretched.
 
+**Cropping a round piece to a smaller circle** [SOFT, built and ray-checked, not yet seen in game]: a square crop
+leaves the ring's outer lip in the corners. Lay a disc instead, a 48-gon whose vertices sit at radius `k * size` round
+the piece's centre, with UVs `(cu + k * (u1 - u0) * cos t, cv + k * (v1 - v0) * sin t)`, where `k` is the cut as a
+fraction of the piece's width. Pick `k` from a radial profile of the lit texture (colour, alpha and normal map
+averaged over angle) instead of by eye. To make the edge the darkest line, cut at the bottom of the outer groove,
+where the normal map's z is lowest and the colour darkest. Atlas3 10 (concentric rings) has that groove at
+k = 0.4675; its alpha runs out at 0.497.
+
 **Cropping a piece without Pillow** (for a contact sheet or a pixel check) [HARD, run on Windows]: PowerShell's
 `System.Drawing` reads the asset TIFs (`<SEUT Assets>\Textures\Models\Cubes\*.TIF`, 2048 px). Pixel rows count
 from the top, so a box's top row is `(1 - v1) * 2048`:
