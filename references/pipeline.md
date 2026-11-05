@@ -17,8 +17,9 @@ needs only stages 1, 2 and 7 to 13.
 1. **Design doc.** Done when the user confirms intent, size, mount faces, parts table, decal table, the
    interaction points (terminals, inventories, keypads, conveyor ports) with the fixed part that carries each,
    and the gates (`design-detailing.md`, "Workflow").
-2. **Blockout.** Done when the silhouette is signed off at the reference's angle and in orthographic views
-   (`reference-images.md`). Locks proportions and pivots; going back moves every detail on the moved parts.
+2. **Blockout.** Done when the silhouette check passes, the critic finds nothing high, and the user signs the
+   silhouette off at the reference's angle and in orthographic views (`measured-modelling.md`,
+   `reference-images.md`). Locks proportions and pivots; going back moves every detail on the moved parts.
 3. **Kitbash check.** Each part marked vanilla or custom (`kitbash.md`).
 4. **Detail, one part group at a time** (`design-detailing.md`, `hard-surface.md`). Locks shapes and bevels.
    Each interaction point's mesh is built with the part that carries it, as its own object with its detector

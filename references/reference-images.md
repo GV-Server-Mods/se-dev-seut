@@ -25,8 +25,14 @@ generated top and side views fixed the gunhouse, roof, front slope, rear section
 - Use generated views for shape and ratios, not exact sizes. Scale each to the dimensions already agreed
   (width, length, height; a different scale per axis is fine), and write the pixel-to-metre mapping down.
 - Views from a generator disagree with each other and with the original art (a part's position, a length, a
-  taper). List each disagreement, follow the user's choice, and record it in the build log.
-- Check the blockout as outline overlays on each view from an orthographic camera at the same scale.
+  taper). Find them with the reference sheet (`measured-modelling.md`), follow the user's choice, and record it
+  in the build log.
+- Generators drift off-axis [SOFT, user report]: one kept drawing a rear view a few degrees to one side.
+  Ask for an orthographic elevation drawing, camera level on the centreline, no side faces visible, flat light,
+  no shadow. A slightly leaning view still works for the outline (`measured-modelling.md`, real-art results).
+  For a symmetric object the opposite view, mirrored, gives the same outline, and the leaning picture still
+  serves the critic for details.
+- Check every blockout pass with the silhouette check and a separate critic (`measured-modelling.md`).
 
 ### Measure, do not eyeball [HARD, hit in two test runs]
 

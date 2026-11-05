@@ -84,6 +84,18 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
   part's face list after each build stage: the input to `bmesh.ops.bevel` was the same every time, its output
   order was not. That a set of BMesh elements is ordered by memory address is inferred, not traced.
 
+- Measured modelling (`measured-modelling.md`): the method follows modding community advice. Measure renders
+  with code, because model vision is too coarse. Review with a separate critic, because the builder grades its
+  own work kindly. Make an orthographic turnaround up front. `scripts/ortho_measure.py` was tested in a
+  background Blender 4.5.10 on a synthetic block with planted model errors and planted art inconsistencies: it
+  found all five and named the parts. A second run covered all six view sides, a top view drawn turned 90
+  degrees (`rotate`), `fit`, and loose annotation marks (dropped by `keep`). A third run checked the owner's
+  generated turret art (front, side and top, with drop shadows and annotations) against a finished model.
+  That run is the source of the shadow, `shadow`, `exclude` and shared-parts notes. A fourth run added a rear
+  view the generator drew off-axis (the lean notes). Landmarks were tested on a synthetic block with planted
+  detail errors (a moved hatch, a long panel, a decal quad inside a joined mesh, a missing part) and on four
+  details of the real rear view. The live-Blender call path has not been run.
+
 ## Not yet verified
 
 - In-game checks still open: a turret run by the game's own turret code without WeaponCore (its aiming, barrel

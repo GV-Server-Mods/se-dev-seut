@@ -71,6 +71,8 @@ checkable steps and leave the scene tidy.
 1. `get_addon_status` once (Blender version, add-on match), then `get_scene_info`.
 2. Plan from dimensions and the reference before writing geometry. With a picture, read
    `references/reference-images.md` first: extract proportions into a dimension table, then build to it.
+   With straight-on views, measure every blockout pass and have a separate critic review it:
+   `references/measured-modelling.md`.
 3. One change per script; print only what you need (names, counts, dimensions).
 4. `look` after each meaningful change: `mode=angles` with `views` for shape, `shading=wireframe` for
    topology, `max_size` 400-512 for quick checks. Compare with the reference, fix the largest difference first.
@@ -227,6 +229,7 @@ container breakdown: `references/interaction-highlights.md`.
 |---|---|
 | `references/hard-surface.md` | building geometry: blockout, cuts, bevels, topology checks, bmesh snippets |
 | `references/reference-images.md` | the user supplies a picture, blueprint or photo to match |
+| `references/measured-modelling.md` | a blockout from straight-on views: signed-off reference sheet, silhouette and landmark (detail placement) check per pass (`scripts/ortho_measure.py`), separate critic |
 | `references/bpy-recipes.md` | scripting scenes, collections, materials, collision through the Blender MCP |
 | `references/modeling-rules.md` | geometry, bevels and normals, collision, LOD, build stages, empties, mountpoints, mirroring |
 | `references/materials.md` | picking or creating materials, texture types, techniques, atlas UV workflow |
