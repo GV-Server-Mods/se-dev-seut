@@ -2,7 +2,7 @@
 
 The numbers that make a block look like Keen made it: edges and shading, how surfaces are layered and laid out,
 the standard parts, panel lines, bolts, signs and materials. Use it to size a design (`design-detailing.md` is the
-workflow; this file is the values) and to check a finished block against vanilla.
+workflow; this file is the values) and to check a finished block against vanilla ("Checking a model").
 
 [HARD, measured]: headless Blender scripts measured 60 vanilla ModSDK models (28 newer large grid, 12 newer small
 grid, 20 classic), and a second, independent script re-measured every value. A value is the median across models,
@@ -21,6 +21,7 @@ each model weighted evenly, with the middle range in brackets; counts are per bl
 - Bolts and rivets
 - Signs and markings
 - Materials and decal sheets
+- Checking a model
 
 ## Which rules win
 
@@ -668,3 +669,29 @@ Shares in this table count every face, hidden ones included.
 - **Landing gear (N_L_LandingGearReskin)**: black Rubber hoses 30-55 mm thick, a Chrome hub carrying the matching
   Atlas3_Chrome decal, a short Chrome bar at the edge, a Metal_Dull lock pad (not the port latch kit), and a plain
   Atlas1 #5 strip 387 x 60 mm on the edge of the Darker panel.
+
+## Checking a model
+
+`scripts/keen_check.py` measures a SEUT model and prints PASS, WARN or INFO for each table row above that a script
+can measure, against the vanilla ranges in `keen-rules.json` [HARD, run]. The same script surveyed the 60 vanilla
+models, so the model and the ranges are measured the same way; a range can differ a little from the tables above,
+which other scripts measured. Run it headless on a copy of the .blend, never the file open in Blender:
+
+```bash
+blender -b <copy.blend> --python <skill>/scripts/keen_check.py -- --era newer --out <folder>
+```
+
+- **It measures what SEUT exports**: the `Main (...)` collection of the active scene (`--scene` picks another), with
+  modifiers applied. Run it once per subpart scene. The grid comes from the SEUT scene; `--grid` overrides it.
+- **Shares count the visible surface**: a sample point counts when any of 162 ray directions in front of it escapes
+  the model, so faces inside housings or buried in other parts drop out. Hidden faces are 38% (28-47) of a vanilla
+  model's area and were 70% on one large modded turret [HARD, measured], so shares over all faces mislead. The
+  Material roles rows count every face, as that table does.
+- **PASS** is inside the middle 80% of vanilla models of the same era and grid; **WARN** is outside it on the side
+  that matters (too few bevelled edges, not too many); **INFO** is reported only. A WARN asks whether the difference
+  is meant; it is not an error.
+- **The craft-rule rows** (decal gap, decals inside their face, the game's vertex packing) use the skill's limits,
+  not Keen's ("Which rules win"). The report ends with the rows it cannot measure; check those by eye.
+- **Without Blender**: `--out` saves `<name>.survey.json`, and `python keen_check.py --compare <name>.survey.json
+  --era classic` re-prints the report. `--model <file.glb or .fbx>` surveys an exported or vanilla model, and
+  `--build-rules` rebuilds `keen-rules.json` from such surveys.
