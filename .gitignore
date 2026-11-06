@@ -2,6 +2,7 @@
 *.log
 scratch/
 .system_generated/
+__pycache__/
 
 # IDE / Editor Files
 .vs/

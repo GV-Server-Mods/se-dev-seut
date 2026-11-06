@@ -25,6 +25,8 @@ cargo crate and a WeaponCore gatling turret with subparts.
 - Interaction highlights (terminal, inventory, conveyor port) tied to real model parts.
 - The SEUT error and warning catalog with a pre-export checklist.
 - Working in a live Blender: look-and-fix loop, hard-surface building order, matching reference images.
+- Designing and detailing a block from a design doc, measured blockouts from straight-on views, and decals snapped
+  to the game's vertex grid so they layer cleanly far from the block centre.
 - Keen's block style measured on 60 vanilla models (edges, layers, standard parts, panel lines, bolts, signs,
   materials), so a new block looks like it belongs beside vanilla. A picture guide with labelled examples is at
   [Keen Block Style](https://claude.ai/artifact/Q3bq4kdc1ut2SMKCLEjHpt).
@@ -47,7 +49,9 @@ cargo crate and a WeaponCore gatling turret with subparts.
 | `references/kitbash.md` | Import recipe for reusing vanilla model parts, tested |
 | `references/atlas-regions.md` | UV boxes for each piece of the vanilla decal atlases (JSON copy: `atlas-regions.json`) |
 | `references/keen-style.md` | Keen's measured block style: sizes, spacing and placement on newer and classic vanilla blocks |
-| `scripts/` | Blender and Pillow scripts that regenerate the atlas region maps; `rebuild_check.py`, the whole-model drift check |
+| `references/design-detailing.md`, `turret-design.md` | Designing and detailing a block (design doc, blockout, decals, review checks); turret specifics |
+| `references/measured-modelling.md` | Blockouts measured from straight-on views: reference sheet, silhouette and landmark checks, critic |
+| `scripts/` | Atlas region map generators; `rebuild_check.py` (whole-model drift check), `decal_snap.py` (snaps decals to the game's vertex grid), `ortho_measure.py` (silhouette and landmark check), `mwm_dummies.py` (reads an exported model's dummies) |
 | `references/errors.md` | SEUT error codes and fixes |
 | `references/hard-surface.md`, `reference-images.md` | Modeling technique and working from pictures |
 | `references/sources.md` | Provenance and verification status |
