@@ -266,6 +266,12 @@ texture. Model counts in brackets are out of 28 newer large or 12 newer small mo
 - **A large port on a small block** keeps the 1.36 m frame (1.34 m on the small survival kit), the shutter and the
   large bars, but can be much shallower (small cargo container below). The classic small medium cargo container
   (S_CargoContainerMedium) mixes 2 large and 2 small ports.
+- **Conveyor-only vs inventory ports** [SOFT, owner]: blocks with player inventory access (cargo containers,
+  assemblers, reactors, welders) use the full port style with the two yellow crossbars, Metal_Dull latch strips,
+  and a nearby terminal keypad. If a block is conveyored only for structural routing / passthrough and does not
+  intend to have inventory or terminal access (similar to the vanilla Structural Platform Conveyor blocks or
+  conveyor tubes), it does not need the crossbars, latch strips, or full cargo hatch dressing — a clean port
+  frame and recessed Conveyor shutter without bars is standard.
 
 ### Surface detail
 

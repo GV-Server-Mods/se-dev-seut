@@ -168,6 +168,11 @@ assume the FBX material names are what the game renders.
   the used slots.
 - To make a kitbashed block behave like the container (conveyor ports, inventory, terminal, and the debug draw
   of model dummies), give it the container's `TypeId`: `<Definition xsi:type="MyObjectBuilder_CargoContainerDefinition">`
+- **Conveyor-only vs inventory blocks** [SOFT, owner]: when kitbashing conveyor sections, distinguish between
+  inventory-accessible ports and pure conveyor routing. For blocks with inventory (cargo, refinery, assembler),
+  keep the full hatch style with crossbars, latch strips, and terminal. For blocks that are conveyored only for
+  structural routing with no inventory (like the vanilla Structural Platform Conveyor), omit the crossbars and
+  cargo hatch hardware — a clean port frame and recessed shutter is standard.
   with `<TypeId>CargoContainer</TypeId>`. A plain `CubeBlock` draws no dummies in the debug overlay
   (`references/interaction-highlights.md`).
 
