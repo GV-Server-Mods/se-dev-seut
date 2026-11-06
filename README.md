@@ -25,6 +25,9 @@ cargo crate and a WeaponCore gatling turret with subparts.
 - Interaction highlights (terminal, inventory, conveyor port) tied to real model parts.
 - The SEUT error and warning catalog with a pre-export checklist.
 - Working in a live Blender: look-and-fix loop, hard-surface building order, matching reference images.
+- Keen's block style measured on 60 vanilla models (edges, layers, standard parts, panel lines, bolts, signs,
+  materials), so a new block looks like it belongs beside vanilla. A picture guide with labelled examples is at
+  [Keen Block Style](https://claude.ai/artifact/Q3bq4kdc1ut2SMKCLEjHpt).
 
 ## Files
 
@@ -43,6 +46,7 @@ cargo crate and a WeaponCore gatling turret with subparts.
 | `references/setup.md` | Installing Blender, SEUT, Havok and the ModSDK from scratch, first model, testing in game |
 | `references/kitbash.md` | Import recipe for reusing vanilla model parts, tested |
 | `references/atlas-regions.md` | UV boxes for each piece of the vanilla decal atlases (JSON copy: `atlas-regions.json`) |
+| `references/keen-style.md` | Keen's measured block style: sizes, spacing and placement on newer and classic vanilla blocks |
 | `scripts/` | Blender and Pillow scripts that regenerate the atlas region maps; `rebuild_check.py`, the whole-model drift check |
 | `references/errors.md` | SEUT error codes and fixes |
 | `references/hard-surface.md`, `reference-images.md` | Modeling technique and working from pictures |

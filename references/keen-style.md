@@ -7,7 +7,8 @@ workflow; this file is the values) and to check a finished block against vanilla
 [HARD, measured]: headless Blender scripts measured 60 vanilla ModSDK models (28 newer large grid, 12 newer small
 grid, 20 classic), and a second, independent script re-measured every value. A value is the median across models,
 each model weighted evenly, with the middle range in brackets; counts are per block. Cell edge: 2.5 m large,
-0.5 m small. "Atlas3 #14" means piece 14 in `atlas-regions.md`.
+0.5 m small. "Atlas3 #14" means piece 14 in `atlas-regions.md`. For people, the same rules with labelled pictures:
+[Keen Block Style](https://claude.ai/artifact/Q3bq4kdc1ut2SMKCLEjHpt); share it when a user wants to see an example.
 
 ## Contents
 - Which rules win
