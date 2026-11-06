@@ -16,7 +16,8 @@ SKILL.md: [owner] = owner design feedback, [HARD] = measured or rendered, [SOFT]
 ## Workflow
 
 The order of the whole job, what each sign-off locks, and when scripts or the .blend are the source of truth are
-in `pipeline.md`. These steps are the design side of it.
+in `pipeline.md`. These steps are the design side of it. The sizes that make a block match vanilla (chamfers,
+layers, part sizes, line, bolt and sign sizes and spacing) are in `keen-style.md`: put them in the design doc.
 
 1. **Design document before Blender** [owner]. Ask for style references first: screenshots of the user's own
    blocks in the style they want, saved next to the concept art. If the concept art is perspective only, also
@@ -156,8 +157,8 @@ keep working. Put it in the design doc as a "fixed by the block it replaces" tab
   vents take the block's paint and get relief from the normal map, so they read as real panels. Skip decals
   from the light-grey `Decals` sheet on light paint (they nearly vanish). To choose, crop candidate regions into
   a labelled contact sheet (normal-map relief preview) and let the user pick from it.
-- **Signs sized boldly**: one or two hazard or warning signs per side, big enough to read (a 0.1 m diamond was
-  far too small on a large block, 0.3 m worked).
+- **Signs** like Keen's: sizes, count, placement and which sign fits which block are in `keen-style.md`
+  ("Signs and markings").
 - **Symmetric trim, asymmetric marks** [owner]: panel and trim decals on structural edges (a plate's sides and
   chamfered corners) go symmetric: centred on each face, the same piece on every matching corner, a split pair
   either side of anything in the way. Only signs, labels and the odd hazard mark go asymmetric.

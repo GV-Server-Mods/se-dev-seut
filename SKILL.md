@@ -37,7 +37,8 @@ Everything below was checked against SEUT 1.2.1 on Blender 4.5 unless marked "un
 3. **Model into `Main (<SubtypeId>)`.** One top-level (unparented) object per exported collection
    [HARD, E031]; parent detail objects under it. Details: `references/modeling-rules.md`; for anything
    beyond a plain box, follow the stage order in `references/pipeline.md` and the design workflow in
-   `references/design-detailing.md`. **Kitbash first**:
+   `references/design-detailing.md`, sized to Keen's measured style in `references/keen-style.md` so the block
+   matches vanilla. **Kitbash first**:
    when a vanilla model has the part you need (crate frame, port, panel, handle), import it and reuse its
    meshes instead of rebuilding them; build from scratch only what no vanilla part covers, then bevel and
    smooth shade it. Import with SEUT's `scene.import` (`getattr(bpy.ops.scene, 'import')`), not the raw FBX
@@ -192,12 +193,15 @@ modelled recesses); how far to take that is the user's call, so ask.
    labelled contact sheet (normal-map relief preview, `references/atlas-regions.md` for the boxes), show it,
    and let the user pick with a multiple-choice prompt. Offer several options per surface, not one.
 2. **Paint-colour panels first on painted surfaces.** `Atlas3_Colorable` (access panels, hinge panels, window
-   plates, slatted vents, grilles, dimple plates), `Atlas1Colorable` (plates, circuit schematic pieces) and
-   `PanelingColorable` (panel seams) take the block's paint and get their relief from the normal map, so they read
+   plates, slatted vents, grilles, dimple plates), `Atlas4_Colorable` (thin panel lines and trim bands),
+   `Atlas1Colorable` (plates, circuit schematic pieces) and `PanelingColorable` (panel seams) take the block's paint and get their relief from the normal map, so they read
    as real panels. Prefer them over the light-grey `Decals` sheet, which nearly vanishes on
    light paint.
-3. **Signs and hazards, sized boldly.** `Atlas2` warning signs and hazard marks, placed asymmetrically and big
-   enough to read (a 0.1 m mark was far too small, 0.3 m worked on a large turret).
+3. **Signs and hazards at Keen's sizes** [HARD, measured on 40 newer vanilla models]. `Atlas2` warning signs and
+   hazard marks, placed asymmetrically: text warning plates about 100-145 mm wide and pictogram triangles
+   55-80 mm, the same real size on small grid (not scaled down), about 150 mm (up to 225) on blocks of 2x2 cells and
+   up; stencil codes 20-35 mm tall. Count, placement and which sign fits which block: `references/keen-style.md`
+   ("Signs and markings").
 4. **Geometry only for silhouette, grazing light or collision.** Say which decal you rejected and why when you
    model a surface detail in 3D instead.
 
@@ -244,6 +248,7 @@ container breakdown: `references/interaction-highlights.md`.
 | `references/weapons-turrets.md` | turrets, weapons or tools (ConveyorSorter, WeaponCore, ToolCore): subpart chain, muzzle and camera dummies |
 | `references/pipeline.md` | any build past a plain box: stage order and gates, builder scripts vs the .blend as source of truth, the freeze, telling the user where the job stands |
 | `references/design-detailing.md` | designing and detailing any block: design doc, blockout, shaped parts, openings, equipment, bolts, wear, seams, decals, labels, review checks |
+| `references/keen-style.md` | making a block look vanilla: Keen's measured sizes for chamfers, layers, surface layout, standard parts (ports, terminals, vents, hatches), panel lines, bolts, signs and materials, large and small grid, newer and classic style |
 | `references/turret-design.md` | turret or weapon specifics on top of that: subpart chain, clearance, gun and muzzle, ammo path |
 | `references/interaction-highlights.md` | any terminal, inventory, keypad, conveyor port or door interaction point |
 | `references/errors.md` | any SEUT error or warning, and the pre-export checklist |

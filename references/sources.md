@@ -96,6 +96,11 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
   detail errors (a moved hatch, a long panel, a decal quad inside a joined mesh, a missing part) and on four
   details of the real rear view. The live-Blender call path has not been run.
 
+- Keen's style numbers (`keen-style.md`; panel line pieces and widths in `atlas-regions.md`, "Panel lines"; sign
+  sizes in SKILL.md): measured with headless Blender scripts on 60 vanilla models from the ModSDK
+  (40 newer, DLC-era and recent, 20 classic), as the median across models with the middle range. A second agent
+  re-measured every number with its own scripts.
+
 ## Not yet verified
 
 - In-game checks still open: a turret run by the game's own turret code without WeaponCore (its aiming, barrel

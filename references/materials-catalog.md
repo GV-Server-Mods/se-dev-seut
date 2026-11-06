@@ -63,7 +63,7 @@ cut points within 10 µm: rounding to 1 µm left cracks.
 lines, vents, hazard stripes, buttons, text, labels. Vanilla list: `Atlas1`, `Atlas1Colorable`, `Atlas2`,
 `Atlas3_*`, `Atlas4_*`, `ButtonsAtlas_*`, `Decals`, `PanelingColorable`, `PanelingDarker`,
 `PanelingDarkerNoReskin`, `TextAtlas`, `TextAtlasDark`. Decal quads need an offset from the base surface to
-avoid z-fighting: 0.01 m off the surface exported cleanly in a test run [SOFT: not seen in game yet].
+avoid z-fighting: about 1.5 mm (SKILL.md, "Decals before geometry"; `bpy-recipes.md`, "Decal offset").
 `DECAL` and `DECAL_NOPREMULT` are other techniques for decal-style transparency (no vanilla library material
 uses them). Technique count over the 165 library materials [HARD, read from `Materials.blend`]: `MESH` 119,
 `DECAL_CUTOUT` 19, `GLASS` 18, `ALPHA_MASKED` 7 (`CargoNet`, `Fish`, `Grating`, `GratingMetallic`,
@@ -79,18 +79,33 @@ game), and a decal bigger than the open area of a framed face looks oversized.
 Decal quad pitfalls [HARD, hit in a test run]: a new bmesh face has no normal until `bm.normal_update()`, and
 `recalc_face_normals` flips an isolated quad arbitrarily, so check `face.normal` against the direction you
 want and flip explicitly (`bmesh.ops.reverse_faces`); a quad facing into the block is invisible. A decal on
-curved geometry (a dome) misrenders, see above. In game the test crate's top vent decal showed even though it
-sat 0.025 m below the surface (decals appear to ignore depth), so a wrong offset can go unnoticed; still keep
-decals 0.01 m above the surface.
+curved geometry (a dome) misrenders, see above. Model decals are depth-tested without writing depth [HARD,
+`MyGBufferRenderPass.InitPartForDecal`], yet a test crate's top vent decal 0.025 m below its surface still
+showed in game (not explained). So a wrong offset can go unnoticed: measure every gap with a ray cast.
 
 ## DLC materials (W012) [HARD, `asset_data.seut.is_dlc` in `Materials.blend`]
 
-Using one of these locks the model to the DLC (W012). Avoid them in public or non-DLC blocks:
-`AquariumGlass`, `BraidedSteel`, `Console`, `Cooker`, `Dirt`, `FabricBlack`, `FabricWhite`, `Fish`,
-`FoodDispenser`, `HydrogenThrusterCone`, `HydrogenThrusterConePlates`, `HydrogenThrusterInjector`,
-`LabEquipmentScreen_01`, `Leather_Dark`, `LightPanel_Light`, `PaintedMetal_Red`, `WarningSignsEaster`.
-There is no non-DLC solid red `PaintedMetal`; for red use a paintable `Colorable` material painted red, or a
-red region from `ButtonsAtlas_*` as a flat decal quad for a small lamp (never on a 3D dome). Re-read the flag with a background Blender
+SEUT flags these 17 and prints W012 when a model uses one: `AquariumGlass`, `BraidedSteel`, `Console`, `Cooker`,
+`Dirt`, `FabricBlack`, `FabricWhite`, `Fish`, `FoodDispenser`, `HydrogenThrusterCone`,
+`HydrogenThrusterConePlates`, `HydrogenThrusterInjector`, `LabEquipmentScreen_01`, `Leather_Dark`,
+`LightPanel_Light`, `PaintedMetal_Red`, `WarningSignsEaster`. W012 is a warning; the export goes on.
+- **The game does not check materials** [HARD, `MySessionComponentDLC.HasDefinitionDLC`, `MyCubeGrid`]: DLC is
+  checked only through the block definition's `<DLC>` tag, and these textures ship with the base game. An
+  untagged block that uses one builds and renders for everyone.
+- **Keen's rule is policy** [HARD, ModSDK `OriginalContent\Models\readme.txt`]: content that contains DLC content
+  "in its original form or a derivative form" must carry the DLC's `<DLC>` tag in the SBC; mods that break it
+  are removed. The text says content and assets, never materials; a texture painted from scratch is not a DLC
+  asset, one traced or edited from DLC art is the risky case.
+- **Six also ship on vanilla blocks with no DLC tag** [HARD, vanilla MWM scan and `CubeBlocks_*.sbc`]:
+  `PaintedMetal_Red` (Refill Station, Irrigation System, Prototech Drill), `BraidedSteel` (short suspensions,
+  Refill Station), `FabricBlack` and `FabricWhite` (the free Bed), `Console` (Food Processor) and
+  `WarningSignsEaster` (the free Easter warning signs). Whether that makes them usable without a tag is the
+  user's call: tell them, don't decide.
+- **Free stand-ins**: `PaintedMetal_Colorable` painted dark red for `PaintedMetal_Red` (same normal map; Red is
+  less metallic), `FabricColorable` painted for the two fabrics, the free glass textures with an own tint for
+  `AquariumGlass`, `Emissive` for `LightPanel_Light` (41 vanilla lights use it). For a small red lamp, a red
+  region from `ButtonsAtlas_*` on a flat decal quad (never on a 3D dome). A local copy of a flagged material
+  that still points at the same textures only hides W012. Re-read the flag with a background Blender
 (`blender -b Materials.blend --python ...`) after SEUT asset updates.
 
 ## Emissive materials and state-driven glow

@@ -293,7 +293,7 @@ Full size 1024 x 1024 px, 6 pieces, re-catalogued at full resolution and checked
 |---|---|---|---|---|---|---|
 | 1 | 0.0068 | 0.6953 | 0.9932 | 0.7725 | 1010x79 | row of four trapezoid caps, alternating narrow and wide tops (repeats along a line) |
 | 2 | 0 | 0.5693 | 1 | 0.6689 | 1024x102 | wide band with a row of eight bolt holes (tileable) |
-| 3 | 0 | 0.4834 | 1 | 0.5166 | 1024x34 | thin double strip with a dark centre line (tileable) |
+| 3 | 0 | 0.4834 | 1 | 0.5166 | 1024x34 | thin double strip with a dark centre line (tileable; Keen's panel line on newer blocks, see "Panel lines") |
 | 4 | 0 | 0.3359 | 1 | 0.4355 | 1024x102 | band with dark edge lines and a stained light centre (tileable) |
 | 5 | 0 | 0.124 | 1 | 0.3027 | 1024x183 | wide band of perforated bare metal: raised rims round a field of small round holes (tileable) |
 | 6 | 0 | 0.0166 | 1 | 0.1006 | 1024x86 | band with raised square blocks, gear-like (tileable) |
@@ -398,9 +398,9 @@ Full size 2048 x 2048 px, 61 pieces, re-catalogued at full resolution and checke
 | 6 | 0.1587 | 0.9712 | 0.1851 | 0.9976 | 54x54 | bolt head 6: round domed |
 | 7 | 0.1904 | 0.9727 | 0.2158 | 0.9961 | 52x48 | bolt head 7: hex socket |
 | 8 | 0.2217 | 0.9717 | 0.2471 | 0.9971 | 52x52 | bolt head 8: slotted screw |
-| 9 | 0.2505 | 0.9697 | 0.2803 | 0.999 | 61x60 | bolt head 9: Phillips screw |
+| 9 | 0.2505 | 0.9697 | 0.2803 | 0.999 | 61x60 | bolt head 9: hex socket head on a round washer |
 | 10 | 0.2842 | 0.9717 | 0.3096 | 0.9971 | 52x52 | bolt head 10: plain round dome |
-| 11 | 0.313 | 0.9692 | 0.3428 | 0.999 | 61x61 | bolt head 11: hex socket in a ring |
+| 11 | 0.313 | 0.9692 | 0.3428 | 0.999 | 61x61 | bolt head 11: hex nut on a round washer |
 | 12 | 0.3438 | 0.9688 | 0.5312 | 1 | 384x64 | scratched light metal strip (one opaque rectangle; the scratches are in its colour) |
 | 13 | 0.4121 | 0.8672 | 0.6489 | 0.9688 | 485x208 | dark grime drips overlay |
 | 14 | 0.3262 | 0.8535 | 0.3916 | 0.8965 | 134x88 | grime blob |
@@ -440,14 +440,14 @@ Full size 2048 x 2048 px, 61 pieces, re-catalogued at full resolution and checke
 | 48 | 0.0469 | 0.4961 | 0.2617 | 0.5859 | 440x184 | words HIGH VOLTAGE (inside sign) |
 | 49 | 0 | 0.2954 | 1 | 0.3086 | 2048x27 | full-width plain strip (top) |
 | 50 | 0 | 0.2744 | 1 | 0.2871 | 2048x26 | row of round rivets that read raised under light from above, full width (see "Riveted bands") |
-| 51 | 0 | 0.2554 | 1 | 0.269 | 2048x28 | panel seam, V-groove (used for seams) |
+| 51 | 0 | 0.2554 | 1 | 0.269 | 2048x28 | panel seam, lopsided groove (no vanilla model uses it as a seam) |
 | 52 | 0 | 0.2329 | 1 | 0.2461 | 2048x27 | full-width plain strip |
 | 53 | 0 | 0.2119 | 1 | 0.2246 | 2048x26 | row of round recessed dimples, full width (see "Riveted bands") |
-| 54 | 0 | 0.1929 | 1 | 0.2065 | 2048x28 | panel seam, V-groove (used on the gatling turret) |
+| 54 | 0 | 0.1929 | 1 | 0.2065 | 2048x28 | panel seam, groove with the same relief as 51 (no vanilla model uses it as a seam) |
 | 55 | 0 | 0.1392 | 1 | 0.1753 | 2048x74 | weld bead, full width (capped ends: repeat texels 62 to 1931, "Weld lines") |
 | 56 | 0.0288 | 0.0898 | 0.9937 | 0.1084 | 1976x38 | grime speck row |
 | 57 | 0 | 0.0449 | 1 | 0.0552 | 2048x21 | full-width thin strip |
-| 58 | 0 | 0.0073 | 1 | 0.0239 | 2048x34 | panel seam with one-sided bevel |
+| 58 | 0 | 0.0073 | 1 | 0.0239 | 2048x34 | panel seam with one-sided bevel (Keen's classic panel line) |
 | 59 | 0 | 0.2554 | 1 | 0.3086 | 2048x109 | riveted band, raised rivets: strip + rivet row + strip as one decal (49+50+51) |
 | 60 | 0 | 0.1929 | 1 | 0.2461 | 2048x109 | dimpled band, recessed dimples: strip + dimple row + strip as one decal (52+53+54) |
 | 61 | 0 | 0.0073 | 1 | 0.0552 | 2048x98 | double strip: thin strip + bevelled seam as one decal (57+58) |
@@ -456,12 +456,18 @@ Outlines (UV points in order; the piece's quad or polygon uses the same points a
 
 - 23 pipe elbow (L-shaped outline; its box would cover the small square plate): (0.1252, 0.7434), (0.1965, 0.7439), (0.2092, 0.7483), (0.2175, 0.7556), (0.2219, 0.7629), (0.2244, 0.7727), (0.2244, 0.8435), (0.2205, 0.8435), (0.2117, 0.8435), (0.2117, 0.7742), (0.2083, 0.7644), (0.2024, 0.759), (0.1951, 0.7566), (0.1252, 0.7566)
 
-**Panel lines** [HARD, read from the `_ng` and `_cm` textures, used on a model]: strips 51, 54 and 58 are
-panel seams. Their colour is a flat mid grey and the line comes from the normal map, so put them on
-`PanelingColorable` (takes the block's paint) for colorable surfaces or `PanelingDarker` for dark fixed metal,
-not on `Decals` (which would paint a grey band). Map V across the band (about 0.025 to 0.03 m wide on hull-sized plates; scale it with the part, since
-on a part about 1.3 m across 2 cm read heavy and 1 cm right [SOFT, one user's call]) and U along
-its length; U past 1 wraps within the same strip, so a long ring or seam can use `u = length * 0.5`. Build the
+**Panel lines** [HARD, read from the `_ng` and `_cm` textures, used on a model]: strips 51, 54 and 58 here and
+Atlas4 piece 3 are panel seams. Their colour is a flat mid grey and the line comes from the normal map, so put
+them on the paintable variant (`PanelingColorable`, `Atlas4_Colorable`) on painted surfaces or the dark one
+(`PanelingDarker`, `Atlas4_Darker`) on dark fixed metal, not on `Decals` (which would paint a grey band).
+Keen's choice [HARD, measured on 60 vanilla models]: newer blocks use Atlas4 piece 3, in the variant that matches
+the surface under it; classic blocks use strip 58 or 61; no vanilla model uses 51 or 54 as a seam. Keen's line width:
+13-23 mm (median 16) on newer large-grid blocks, 7-12 mm (median 10) on small grid, 29-51 mm (median 37) on classic
+blocks (one user also found 1 cm right and 2 cm heavy on a part about 1.3 m across [SOFT]). Map V exactly across
+the piece's box (Atlas4 piece 3 is transparent outside it, so a quad whose V runs past the box draws narrower than
+the quad) and U along
+its length; U past 1 wraps within the same strip, so a long ring or seam can use `u = length * 0.5`. Where Keen
+puts lines (insets, spacing, corners, how much of a face): `keen-style.md`, "Panel lines". Build the
 band from many short quads that follow the surface (rings, meridians, radial lines), 1.5 mm off it like every
 decal (SKILL.md). On a curved surface a flat quad's middle sits about `length² / (8 × radius)` below its
 corners, so keep the quads short enough that this sag stays well under the offset, and check with a ray cast

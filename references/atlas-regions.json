@@ -2113,7 +2113,7 @@
     "v1": 0.5166,
     "w_px": 1024,
     "h_px": 34,
-    "piece": "thin double strip with a dark centre line (tileable)",
+    "piece": "thin double strip with a dark centre line (tileable; Keen's panel line on newer blocks)",
     "inside": false
    },
    {
@@ -3014,7 +3014,7 @@
     "v1": 0.999,
     "w_px": 61,
     "h_px": 60,
-    "piece": "bolt head 9: Phillips screw",
+    "piece": "bolt head 9: hex socket head on a round washer",
     "inside": false
    },
    {
@@ -3036,7 +3036,7 @@
     "v1": 0.999,
     "w_px": 61,
     "h_px": 61,
-    "piece": "bolt head 11: hex socket in a ring",
+    "piece": "bolt head 11: hex nut on a round washer",
     "inside": false
    },
    {
@@ -3533,7 +3533,7 @@
     "v1": 0.269,
     "w_px": 2048,
     "h_px": 28,
-    "piece": "panel seam, V-groove (used for seams)",
+    "piece": "panel seam, lopsided groove (no vanilla model uses it as a seam)",
     "inside": false
    },
    {
@@ -3566,7 +3566,7 @@
     "v1": 0.2065,
     "w_px": 2048,
     "h_px": 28,
-    "piece": "panel seam, V-groove (used on the gatling turret)",
+    "piece": "panel seam, groove with the same relief as 51 (no vanilla model uses it as a seam)",
     "inside": false
    },
    {
@@ -3610,7 +3610,7 @@
     "v1": 0.0239,
     "w_px": 2048,
     "h_px": 34,
-    "piece": "panel seam with one-sided bevel",
+    "piece": "panel seam with one-sided bevel (Keen's classic panel line)",
     "inside": false
    },
    {

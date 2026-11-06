@@ -453,7 +453,7 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   are already bevelled, set `material_index = 1` on faces where `area / longest edge < 0.03`.
 - **Bolt decals:** `Decals_Atlas_A_01` bolt heads 1-11 (`atlas-regions.md`, one row per head), one head per
   quad: for example head 4 hex nut u 0.0957-0.123 v 0.9722-0.9966, head 6 round domed u 0.1587-0.1851 v
-  0.9712-0.9976, head 11 hex socket in a ring u 0.313-0.3428 v 0.9692-0.999. Material `Decals`,
+  0.9712-0.9976, head 11 hex nut on a round washer u 0.313-0.3428 v 0.9692-0.999. Material `Decals`,
   quad 1.5 mm off the surface (3 mm looked like floating heads in game [owner]). Turn every head to a random angle about its normal (and every 3D nut about its
   axis) so they look individually tightened [owner]. Keep real 3D bolts few and low (about 12 mm tall).
   A flat hex decal alone reads as a pale sticker on dark metal (the sheet's colour is light grey, and the darker
