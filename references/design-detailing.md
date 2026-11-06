@@ -182,6 +182,12 @@ keep working. Put it in the design doc as a "fixed by the block it replaces" tab
   bearing, behind side covers and above a drum]: before placing, also cast from the spot toward a ring of
   viewpoints about 5 m out (several azimuths, below the horizon for undersides, every elevation a moving part
   reaches) and keep spots that several viewpoints see.
+- **Check a decal's whole outline, not its centre** [owner: kit pieces "run through other shapes or decals"]: an
+  atlas piece sized by its width takes its height from the atlas aspect, so a slot 0.14 m wide came out 0.62 m tall
+  and ran under a bolted-on plate, and a 0.13 m slot ran up through a weld bead, while both centres were clear. Write
+  down the face's clear area (inside its welds and seams, off any plate bolted onto it, out of the band a moving part
+  in front sweeps), compute each piece's corners in face coordinates before laying it, and stop the build if one
+  falls outside. The centre ray check above misses these.
 - **Removing a part under a decal strands the decal**: deleting 16 mm bosses left their bolt decals floating
   16 mm up. Re-cast every decal that sat on the removed part down to the new surface.
 - **Left and right are the block's own**, facing its front: with the front at Blender -Y, the block's left is +X

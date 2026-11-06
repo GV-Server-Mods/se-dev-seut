@@ -5,6 +5,10 @@ Run it on a copy, in a background Blender, so the user's open file is never touc
     copy model.blend check.blend
     blender -b check.blend --python rebuild_check.py -- <out_dir> <text.py:function> [<scene>]
 
+Copy the file with the OS, not with Blender's save-a-copy (`save_as_mainfile(copy=True)`): that rewrites relative
+paths for the copy's folder, so a build that sets `//...` texture paths itself sees them differ, reloads them from
+the copy's folder and fails ("Cannot read '//Textures\\...'") [HARD, seen].
+
 <text.py:function> names the rebuild entry point in a text block saved in the .blend (for example
 `build_all.py:run`); it must rebuild every scripted part. Save the file in the pose the rebuild leaves it in.
 Writes <out_dir>/rebuild_report.txt and the rebuilt copy <out_dir>/rebuilt.blend. Every object in the scene (all
