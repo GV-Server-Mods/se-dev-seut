@@ -271,7 +271,9 @@ texture. Model counts in brackets are out of 28 newer large or 12 newer small mo
   and a nearby terminal keypad. If a block is conveyored only for structural routing / passthrough and does not
   intend to have inventory or terminal access (similar to the vanilla Structural Platform Conveyor blocks or
   conveyor tubes), it does not need the crossbars, latch strips, or full cargo hatch dressing — a clean port
-  frame and recessed Conveyor shutter without bars is standard.
+  frame and recessed shutter without bars is standard. The shutter face is painted yellow (`Conveyor_Yellow` material,
+  not dark grey `Conveyor`), and conveyor empties must NOT have a mesh highlight linked so players are not misled into
+  expecting inventory interaction.
 
 ### Surface detail
 

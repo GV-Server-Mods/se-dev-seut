@@ -129,10 +129,12 @@ shape reference at most, and ask before spending credit.
   `bpy.ops.object.shade_smooth_by_angle(angle=math.radians(30))` on every part. `references/modeling-rules.md`.
 - **A `detector_conveyor*` empty is also the conveyor connection point** [HARD, game code]: put it in the cell
   it belongs to, facing the neighbour. `references/interaction-highlights.md`.
-- **Conveyor-only blocks need no cargo crossbars** [SOFT, owner]: if a block is conveyored only for structural
-  routing and has no inventory (similar to the vanilla Structural Platform Conveyor), it does not need the
-  yellow crossbars, latch strips, or full cargo hatch dressing. Keep the recessed shutter clean.
-  `references/keen-style.md`.
+- **Conveyor-only blocks: no crossbars, yellow shutter, no mesh highlight** [SOFT, owner]: if a block is conveyored
+  only for structural routing and has no inventory (similar to the vanilla Structural Platform Conveyor or conveyor pipes),
+  it does not need the yellow crossbars, latch strips, or full cargo hatch dressing. Keep the recessed shutter clean,
+  use `Conveyor_Yellow` material for the shutter face (not grey `Conveyor`), and do NOT configure a mesh highlight on the conveyor
+  empty (highlighting tricks players into thinking the block has an inventory). `references/keen-style.md`,
+  `references/interaction-highlights.md`.
 - **Linking a subpart scene from script can crash Blender** [HARD, seen once on 4.5.10]: save first, set
   `linkSubpartInstances = False` on the main scene, make the subpart empty the active object, then set
   `empty.seut.linkedScene`. The add-dummy and add-subpart operators also leave the new empty unparented.

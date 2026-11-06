@@ -99,9 +99,12 @@ bpy.ops.object.add_highlight_empty(detector_type="detector_terminal_", index=1)
   A plain `CubeBlock` has no conveyor endpoint, so the empty only highlights; the port connects once the SBC
   `TypeId` is a conveyor block type [SOFT, from the code, not yet seen connecting in game].
   - **Conveyor-only blocks vs inventory ports** [SOFT, owner]: if a block is conveyored only for structural
-    passthrough or piping and has no player inventory (similar to the vanilla Structural Platform Conveyor),
+    passthrough or piping and has no player inventory (similar to the vanilla Structural Platform Conveyor or conveyor pipes),
     the `detector_conveyor*` empty still defines the conveyor endpoint connection, but the physical port does
-    not need the yellow cargo crossbars, Metal_Dull latch strips, or terminal keypad hardware.
+    not need the yellow cargo crossbars, Metal_Dull latch strips, or terminal keypad hardware. In addition, the shutter
+    uses `Conveyor_Yellow` (painted yellow) rather than grey `Conveyor`, and conveyor empties on non-cargo blocks must NOT
+    have a mesh highlight linked (`empty.seut.highlight_objects` left empty or using `detector_conveyorline_*`) — a mesh
+    highlight tricks players into thinking the block has interactive inventory access.
 - The debug overlay "Model dummies" (F11 menu, Debug draw settings) draws nothing for a plain `CubeBlock`
   [HARD, game code plus owner test]: `MyDebugRenderComponentCubeBlock.DebugDraw` never calls the base method
   that draws dummies, while terminal-type blocks (`MyDebugRenderComponentTerminal`) do. A vanilla cargo
