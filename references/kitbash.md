@@ -209,6 +209,22 @@ assume the FBX material names are what the game renders.
   rays from eyes 1.5-4 m out along each side, counting rays whose first face points away with no face pointing back
   in the same place, on vertices rounded as the game stores them. On a 12 m kitbashed frame that count went from
   about 44,000 to under 40, each landing on the liner 1-2 cm behind.
+- **LODs and build stages from vanilla's own files** [HARD, run on a 3 x 3 mount kitbashed from
+  `Structural_5_platform`, exported; not yet seen in game]. The SDK has `<Model>_LOD1..3.fbx` and
+  `<Model>Construction_1..3.fbx` beside the model.
+  - LOD1 and LOD2 keep LOD0's part names and layout with fewer bevels and decals. A builder that cuts and moves
+    vanilla parts by role runs on them unchanged, and the LODs then switch like the vanilla block beside them
+    (the platform's: 10 / 45 / 90 m).
+  - LOD3 can rename or merge parts (the platform's posts and struts swapped names). Check the builder's
+    folded-face count and a render.
+  - `Construction_3` is LOD0 with every opaque material set to `Construction`, its Atlas4 lines in
+    `Atlas4_Chrome` and most other decals dropped. Make BS3 from the finished model the same way.
+  - Stages 1 and 2 are scaffolds that repeat per cell. To shrink a multi-cell block, bisect at cell boundaries,
+    drop whole cells and move the outer cells in.
+  - Pick the variant whose features match the block: the conveyor platform's stages show port frames on the
+    sides.
+  - SEUT's importer triangulates: the platform's `Construction_1` is 9,153 polygons in the raw FBX and
+    19,424 triangles after `scene.import`.
 - State in the report which vanilla parts were reused and which shapes had to be built new.
 
 ## Not yet tested

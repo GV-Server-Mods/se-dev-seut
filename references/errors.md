@@ -110,6 +110,7 @@ Calls fail with "Connection to Blender lost" / WinError 10054, or `get_addon_sta
 | E039 / E050 | Assimp32.dll / VC++ redist missing | install .NET 3.5 SP1, VC++ 2012 x86 |
 | E043 / E044 | MWM conversion failed | read `*.mwm.log` (turn `Delete Temporary Files` off first). Seen: `Mesh 'pc' has no UV map/channel` for `<SubtypeId>.hkt.fbx` means a collision mesh has no UVs or all UVs at (0,0): MwmBuilder builds the collision FBX too, so give collision meshes a real UV map (Blender's primitives have one). The main `.mwm` is still written, but without the collision |
 | E045 | model path outside mod folder | fix Mod / Export paths |
+| (no code) | export stops with a Python error, `rigidbody.object_add.poll() Cannot edit hidden object` | the Collision collection or its object is hidden in the viewport (layer collection or object `hide_viewport`). SEUT adds a rigid body to each collision object with an operator. Unhide both for the export and hide them again afterwards [HARD, run]. The next clean run removes the FBX and XML files the failed one left |
 | E046 | DDS conversion failed | check texture file and `texconv` |
 | E053 | custom node tree | use SEUT material; change textures instead |
 | E054 | rigid body shape COMPOUND | Box / Sphere / Capsule / Cylinder / Convex Hull |
