@@ -52,7 +52,7 @@ cargo crate and a WeaponCore gatling turret with subparts.
 | `references/keen-style.md` | Keen's measured block style: sizes, spacing and placement on newer and classic vanilla blocks |
 | `references/design-detailing.md`, `turret-design.md` | Designing and detailing a block (design doc, blockout, decals, review checks); turret specifics |
 | `references/measured-modelling.md` | Blockouts measured from straight-on views: reference sheet, silhouette and landmark checks, critic |
-| `scripts/` | Atlas region map generators; `rebuild_check.py` (whole-model drift check), `decal_snap.py` (snaps decals to the game's vertex grid), `ortho_measure.py` (silhouette and landmark check), `mwm_dummies.py` (reads an exported model's dummies), `keen_check.py` (checks a model against `keen-style.md` on its visible surface, using the vanilla ranges in `references/keen-rules.json`) |
+| `scripts/` | Atlas region map generators; `rebuild_check.py` (whole-model drift check), `decal_snap.py` (snaps decals to the game's vertex grid), `ortho_measure.py` (silhouette and landmark check), `mwm_dummies.py` (reads an exported model's dummies), `icon_render_bg.py` (SEUT-style icon from a background Blender, no window), `keen_check.py` (checks a model against `keen-style.md` on its visible surface, using the vanilla ranges in `references/keen-rules.json`) |
 | `references/errors.md` | SEUT error codes and fixes |
 | `references/hard-surface.md`, `reference-images.md` | Modeling technique and working from pictures |
 | `references/sources.md` | Provenance and verification status |

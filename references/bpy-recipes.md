@@ -210,6 +210,14 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   icon; that was wrong. The Pillow route (render a PNG, `Image.save('X.dds', pixel_format='DXT5')`) still
   works as a fallback [HARD, tested] but needs the `seut` collection left visible. Icon loading in game is
   [SOFT, not yet seen].
+  **Without a window** [HARD, tested]: when the user does not want windows popping up in their Blender [owner],
+  render the saved .blend in a background Blender instead:
+  `blender.exe -b <file.blend> --python scripts/icon_render_bg.py -- <out.png> [res] [SubtypeId]`. It rebuilds
+  SEUT's rig and compositor from the scene's saved render settings, renders Main only and never writes the .blend.
+  Then convert with SEUT's own preset, `texconv.exe <png> -ft DDS -f BC7_UNORM_SRGB -pmalpha -srgb -y -o <dir>`
+  (texconv is in the add-on's `tools` folder). The result had SEUT's format (128 x 128, BC7 sRGB, 8 mips, same file
+  size). "Cannot relocate indirectly linked library" lines in its output are harmless. Inside the live MCP session
+  `save_render` wrote no pixels for a render started from the MCP timer, so render there only through SEUT's operator.
 - In game [HARD, owner test]: a local mod folder containing only this SBC and the `.mwm` loads and the block can
   be placed. Gaps seen: the placeholder icon is ugly (render a real one with SEUT's icon renderer, above);
   BuildInfo hints `IsAirTight` is null, so add `<IsAirTight>true</IsAirTight>` (or `false`) for blocks that are

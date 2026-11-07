@@ -84,6 +84,10 @@ Calls fail with "Connection to Blender lost" / WinError 10054, or `get_addon_sta
    distances increasing (E011).
 6. Paths: Export Folder contains `Models\` (E014), Mod folder set and model path inside it (E045),
    MwmBuilder and Havok paths valid in Addon Preferences (E012, E013).
+7. Decal seams, on the whole model and not only the decals you laid: every T-join pointed, every corner mitred,
+   no line that fades out or stops inside a plate. Check top-down close renders of each junction and line end,
+   inherited and kitbashed lines included (`references/atlas-regions.md`, "Joins and ends", "Inherited seams").
+   Then the decal snap as the last build step.
 
 ## Errors with a fix
 

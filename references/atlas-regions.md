@@ -485,6 +485,17 @@ the cross seam's centre line, stop each side of the band where it reaches the cr
 the face), and close the end with the tip at the centre-line point. A stem that runs into the corner of two
 seams (a diagonal into a T) stops each side on whichever near edge it reaches last and puts its tip where the
 centre lines cross. A square end, even one cut flush along the cross seam, still reads as pasted on.
+**Inherited seams** [owner: had to ask for every junction to be mitred on a deck another author laid]: these
+rules cover every seam on the model, not only the ones you lay. When you take over a model (another author's
+pass, a vanilla kitbash), list its seam junctions and line ends first and fix them before adding decals. Seen:
+single quads with square ends overlapping at every join, rim lines stopping inside a corner pad, and a vanilla
+joint line tapering to nothing just past a cross seam. Rebuild such a network as closed, mitred outlines plus
+pointed stems, outlines first in the mesh.
+**Pointing a vanilla half strip** [HARD, rendered]: Keen often lays a line as two half-width strips whose outer V
+runs past the piece's box into transparent atlas, so only part of each quad's width shows. Cut to a point the
+plain way, its visible edge ends short of the tip and leaves a dark notch. Move each side corner back from the
+tip by the cross seam's half-width divided by `frac`, the visible share of the strip's width:
+`frac = (box_edge - v_centre) / (v_outer - v_centre)` in V.
 
 **Groove direction** [HARD, read from the `_ng` texture of `Decals_Atlas_A_01`; owner saw the jog]: piece 51's
 groove is lopsided. Across the strip its normal map tilts towards `v1` over the first 11 px and towards `v0`

@@ -212,7 +212,9 @@ modelled recesses); how far to take that is the user's call, so ask.
    model a surface detail in 3D instead.
 
 Decals cost almost nothing in triangles and keep blocks consistent with vanilla. Wrap them to curved surfaces
-in narrow columns, mitre every seam join (T-joins end in a pointed tip, never square), place bolts from one
+in narrow columns, mitre every seam join (T-joins end in a pointed tip, never square), and audit the seams you
+inherit (another author's pass, kitbashed vanilla lines) the same way before adding your own [owner: had to ask for
+it on an inherited deck; `references/atlas-regions.md`, "Inherited seams"], place bolts from one
 written fastener plan, check text direction and obstruction with a render and a ray cast
 (`references/bpy-recipes.md`, `references/design-detailing.md`).
 Decal quads sit just off the surface (not coplanar) to avoid z-fighting: about 1.5 mm [owner: bolt decals at
