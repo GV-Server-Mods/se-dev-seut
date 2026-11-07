@@ -459,6 +459,12 @@ Keen fakes almost every bolt with decals; only pipe flanges get 3D nuts.
 | Band a bolted rail or ring with Atlas4 #2 (bolt holes 1.25 band widths apart, so choose the width from the hole spacing) | 59 mm (47-87) wide, holes 76 mm (57-130) apart, pieces 0.8 m (0.2-1.7); closed rings in 3 models | 18 mm wide, holes 23 mm apart | |
 
 - **Keep each band's art unstretched** (UV mapping and relief: `atlas-regions.md`, "Riveted bands").
+- **A band rivets a seam, so it runs along one** [owner: bands down the edges of corner columns and short straps
+  across joints looked "randomly stuck on"]. Lay it on a seam, panel line or plate edge for that line's whole
+  length, and stop both ends on an edge, a cross line or a bevel. A strip that tiles at any length, left with free
+  ends in the middle of a face, reads as pasted on.
+- **Riveted bands suit plated, armoured looks.** On a light structural or truss style, ask before adding them
+  [owner: wrong for a truss-sided platform].
 
 ### Examples
 
