@@ -546,6 +546,10 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
 - **Preview renders:** Workbench in Texture mode shows only one image of a SEUT material (often the mask) and
   exaggerates wear; EEVEE (`BLENDER_EEVEE_NEXT` in 4.5) with a sun lamp and a grey world reads closer to the
   game, but the in-game shader still differs.
+- **Turn decal shadows off in EEVEE renders** [HARD, game code; seen in a render]: EEVEE lets a decal quad cast
+  a shadow, so a vent quad 6 mm off its face drew a dark box round the vent. The game draws no decal into its
+  shadow maps (`MyDepthRenderPass.GetDepthPartType`: DECAL, DECAL_NOPREMULT and DECAL_CUTOUT are NOT_DRAWN). Set
+  `visible_shadow = False` on every object whose materials are all decals before rendering.
 
 ## Operators seen in the addon source (signatures tested only where noted)
 

@@ -185,6 +185,13 @@ assume the FBX material names are what the game renders.
   UV density stay consistent. To make a part longer or wider (a frame beam spanning more cells), cut it
   across its straight middle and move the vertices on one side of the cut; the ends, bevels and texture scale
   stay as Keen made them. Re-check the UVs of the stretched faces, since they stretch with them.
+- **Decals on a stretched part** [HARD, owner marked the faults on a render]. Keen's frame lines are often joined
+  into one piece (a side, a chamfer and a corner), so moving each connected decal piece whole breaks the frame
+  where the plate stretches. Stretch line decals vertex by vertex, with the same cut as the plate, and put the
+  cut where only straight lines along the stretch cross it, never through a chamfer line (check that every
+  outline edge crossing the cut runs along the stretch). Move vents, bolts and plates whole. Those by the
+  part's root, where it meets the beam it hangs from, keep vanilla's place. Those by the free edge move with
+  that edge.
 - The vanilla parts bring their own bevels and smooth shading. Anything you add yourself must be bevelled
   and smooth shaded the same way (`modeling-rules.md`, "Geometry and shading"), or it will look like a
   different game next to them.
