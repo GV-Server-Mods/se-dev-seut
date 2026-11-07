@@ -397,6 +397,12 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   Weighted Normal replaces them. So bevel that part in the mesh first (`bmesh.ops.bevel` on edges over 30
   degrees, leaving the cut's lip crisp) and leave both modifiers off it. Custom normals survive a
   `bm.from_mesh` / `bm.to_mesh` round trip.
+- **Custom normals are stored once per smooth fan** [HARD, Blender 4.5.10]: corners that meet across an edge
+  not marked sharp share one stored normal, so `normals_split_custom_set()` blends corners you set to
+  different normals. Setting a 150 mm slope flat without splitting its edges left the result changing on every
+  rerun. Before the call, mark sharp (`e.smooth = False` in bmesh, then `bm.to_mesh`) every edge whose two
+  faces' wanted normals differ at either end. Stored normals come back about 1e-3 off, so compare with a 2e-3
+  tolerance, or a rerun reports changes that are not there.
 - **Buried faces** [HARD, took a turret from 43,600 to 39,000 triangles with no visible change]: a face is
   hidden when all its corners and its centre, nudged 0.5 mm along its normal, lie inside another closed solid.
   Split every mesh into connected islands in world space and keep only closed ones (every edge has two faces);

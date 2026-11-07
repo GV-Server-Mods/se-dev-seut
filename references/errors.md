@@ -34,7 +34,11 @@ Calls fail with "Connection to Blender lost" / WinError 10054, or `get_addon_sta
    and `bpy.data.filepath`. Also save the .blend before each risky script step; a crash loses the rest.
 2. **Read the crash log**: `%TEMP%\<blend name>.crash.txt` (stack trace plus the last operators run). A
    trace through `pyrna_prop_collection_iter_next` means a loop over a live collection while data changed
-   (`bpy-recipes.md`, "Moving parts between .blend files").
+   (`bpy-recipes.md`, "Moving parts between .blend files"). A trace through `bpy_lib_exit`,
+   `BKE_blendfile_append` and `BLI_strncpy` came from listing one name twice in a single
+   `bpy.data.libraries.load` call (`dst.meshes = ["Body", "Body"]`) [HARD, Blender 4.5.10]. List each name once.
+   To compare a mesh before and after an edit, keep a copy in memory
+   (`[c.vector.copy() for c in me.corner_normals]`) instead of loading the checkpoint again.
 3. **Ask before restarting** unless the user already said to: it closes their other work and may need
    permission to start a process. If allowed, relaunch with the launcher beside the recorded path (see the
    `blender-launcher.exe` note below), for example
