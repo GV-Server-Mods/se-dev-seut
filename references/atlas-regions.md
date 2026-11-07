@@ -506,6 +506,14 @@ seams running front to back, and the same side (inside or outside) all the way r
 when building each strip (reverse the polyline when its first segment's `v1` side breaks the rule), then check
 it: from each seam face's positions and UVs, solve the world direction V increases in and count the faces that
 break the rule. Piece 58 is one-sided by design; measure 54 the same way before using it.
+**Mirrored faces** [HARD, rendered]: to copy a face's decals onto its mirror (the bottom deck of a two-sided
+plate, the far side of a symmetric block), negate the mirrored axis, reverse each face's vertex order and keep
+the UVs. Negating alone flips the face to point inward and mirrors the art; with the winding reversed, (U, V,
+normal) stays right-handed, text and arrows read the right way and the groove keeps its side.
+**Overlap order inside one decal mesh** [SOFT: GPUs draw a mesh's triangles in index order; seen in a render,
+not yet in game]: where a stem's tip overlaps its cross seam, the face drawn later shows. Sort the faces so the
+cross seams and outlines come first (`bm.faces.sort(key=...)`, then `bm.faces.index_update()`), and keep the 1 mm
+lift above for the Blender view.
 
 **Seams over edges and bevels** [HARD, rendered; owner saw a gap at every edge]: a seam that stops short of an
 edge leaves a gap at each bevel, and it shows from most angles. Run every seam that crosses a plate edge right

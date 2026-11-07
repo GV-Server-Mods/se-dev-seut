@@ -77,6 +77,11 @@ checkable steps and leave the scene tidy.
 3. One change per script; print only what you need (names, counts, dimensions).
 4. `look` after each meaningful change: `mode=angles` with `views` for shape, `shading=wireframe` for
    topology, `max_size` 400-512 for quick checks. Compare with the reference, fix the largest difference first.
+   `mode=angles` opens one render viewport per view in the user's Blender [HARD, seen: about 10 at once; owner
+   disliked it], and starting `blender.exe` opens a console window. Where the user minds, use one default `look`
+   and do multi-angle and close-up checks in a background Blender on the saved .blend
+   (`blender.exe -b <file.blend> --python <shots.py>`, PNGs to a scratch folder); launch the UI with
+   `blender-launcher.exe`, which has no console.
    LOD copies and collision sit on top of the Main model, so a bare `look` shows them stacked: hide the other
    collections (`layer_collection.hide_viewport`) or offset the objects temporarily before checking one.
 5. Build new work in its own scene; do not delete or reshuffle the user's objects unless asked.
