@@ -33,6 +33,21 @@ layers, part sizes, line, bolt and sign sizes and spacing) are in `keen-style.md
    split, LODs and stages, the icon. Render each at the concept art's angle, the owner's reference angle and
    orthographic views. Keep `build-log.md` beside the doc and update it at every checkpoint (done, decided,
    renders, next), so a context compaction or a fresh session continues from the files.
+   **Sketch a layout over a render before building it** [owner: "doing that sketch for me is super helpful"].
+   When a request reads a layout off a reference (panel seams, plate breaks, decal or stripe positions, cut-outs)
+   and your reading involves choices, draw it as coloured lines over the last orthographic checkpoint render,
+   with a notes column in a margin (positions, sizes, what goes away), and show it before you build. It costs one
+   Pillow image against a build, render and rework round, and the user answers by approving it or marking it up.
+   Project from the model's numbers, not by eye: an ortho render maps a point to the image centre plus its offset
+   from the camera target along the camera's right and up axes, times pixels per metre (longer image side over
+   `ortho_scale`); a point on a cylinder wall of radius R at azimuth θ from the camera's right axis lands
+   R·cos θ right of the axis. Use the same camera as the checkpoint orthos so the sketch and the next render
+   line up. Before drawing, check one known part (a dome, a mast) lands where the render shows it: a camera aimed
+   straight down with `to_track_quat('-Z', 'Y')` came out turned 180 degrees [HARD, seen], and a sketch drawn
+   the wrong way round put each cut-out on the other part. Where the reference leaves a real choice (two parts
+   in the way of a plate ring, say), draw two or three versions side by side and let the user pick one
+   [owner: picked one of two layouts after turning down a single uneven one].
+   Skip it when nothing is open to choice (a size the user stated).
 3. **Silhouette first: blockout, then iterate proportions only.** Plain shapes at the doc's sizes, rendered at
    the concept art's angle and as an orthographic side view. Expect several rounds (the turret's base thickness,
    leg height and stance, pivot height and plate size changed seven times). Do not detail until the user

@@ -379,6 +379,8 @@ line; Decals #58 is a seam with a one-sided bevel, #61 a thin strip plus that se
 - **Spacing**: parallel lines have no set spacing; it follows the panel size (doubles excepted).
 - **Round a recess**: about 1 line in 10 on a big face rings a recess, 10-40 mm out from its edge.
 - **On a seam**: a line centred on a seam or on the foot of a raised part is rare; most lines sit about 3 widths in.
+  When a line does mark a border between two materials, centre it on the border (`atlas-regions.md`, "Lines on a
+  material border").
 - **Groove or line**: split a single plate with a decal line, and never lay a decal line along a modelled groove
   (V groove sizes in "Layers and silhouette"). A line that meets a groove may run over its chamfer into the gap.
 - **Classic lines** go on PanelingColorable on paint, PanelingDarker on dark metal. Keen also puts them on plain

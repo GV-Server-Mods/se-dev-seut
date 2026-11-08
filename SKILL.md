@@ -73,7 +73,9 @@ checkable steps and leave the scene tidy.
 2. Plan from dimensions and the reference before writing geometry. With a picture, read
    `references/reference-images.md` first: extract proportions into a dimension table, then build to it.
    With straight-on views, measure every blockout pass and have a separate critic review it:
-   `references/measured-modelling.md`.
+   `references/measured-modelling.md`. Before building a layout you read off a reference (seams, plate breaks,
+   decal positions), draw it over an ortho render and get a yes first [owner]: `references/design-detailing.md`,
+   step 2.
 3. One change per script; print only what you need (names, counts, dimensions).
 4. `look` after each meaningful change: `mode=angles` with `views` for shape, `shading=wireframe` for
    topology, `max_size` 400-512 for quick checks. Compare with the reference, fix the largest difference first.
@@ -84,6 +86,9 @@ checkable steps and leave the scene tidy.
    `blender-launcher.exe`, which has no console.
    LOD copies and collision sit on top of the Main model, so a bare `look` shows them stacked: hide the other
    collections (`layer_collection.hide_viewport`) or offset the objects temporarily before checking one.
+   A render (`bpy.ops.render.render`) ignores that viewport hide: set `hide_render` on the collision and LOD
+   objects for the render and back afterwards [HARD: a collision cylinder drew over a cut-in bay, filled its gaps
+   and put false lines and notches on every part, and two critic rounds reported them as modelling faults].
 5. Build new work in its own scene; do not delete or reshuffle the user's objects unless asked.
 6. **Checkpoint before every risky edit** (reducing segments, deleting faces, moving or re-splitting parts,
    anything that rewrites existing meshes): commit the .blend if the folder is under git, otherwise
@@ -153,6 +158,10 @@ shape reference at most, and ask before spending credit.
   `references/bpy-recipes.md` ("Moving parts between .blend files, LODs from script"). At session start record
   `bpy.app.binary_path` and `bpy.data.filepath`; after a crash see `references/errors.md` ("When Blender
   crashes or the MCP connection drops").
+- **Removing a mesh also deletes every object still using it** [HARD, a model's main object vanished and was
+  saved into a checkpoint that way]: check `m.users == 0` before `bpy.data.meshes.remove(m)`, and run helper
+  scripts with `exec(code, {...})` in their own namespace, since a helper's loop variable can rebind yours.
+  `references/bpy-recipes.md` ("Moving parts between .blend files").
 - **Leave the icon render preview window open after `icon_render_preview`** [owner]: do not close windows
   from script (a render-and-close session crashed Blender); save before each render and tell the user to
   close the preview windows when you are done. Subparts need manual collection instancing to
@@ -252,7 +261,7 @@ container breakdown: `references/interaction-highlights.md`.
 | `references/materials.md` | picking or creating materials, texture types, techniques, atlas UV workflow |
 | `references/setup.md` | the user has not installed Blender, SEUT, Havok or the ModSDK yet; first model; testing in game (credits Chipstix213's tutorial series) |
 | `references/kitbash.md` | Reusing parts of vanilla models (crates, frames, ports, panels) instead of modelling them from scratch: import recipe |
-| `references/atlas-regions.md` | UV-mapping a decal quad onto a specific piece of Atlas1-4, ButtonsAtlas, Decals or TextAtlas (UV boxes per piece) |
+| `references/atlas-regions.md` | UV-mapping a decal quad onto a specific piece of Atlas1-4, ButtonsAtlas, Decals or TextAtlas (UV boxes per piece); finding a decal by kind, shape or relief (tags; `scripts/find_decal.py vent round`) |
 | `references/materials-catalog.md` | choosing a material by behaviour: paintable, decal, or emissive and state-driven glow; emissive presets and colours |
 | `references/vanilla-materials.md` | choosing one of the 165 vanilla materials by name |
 | `references/block-scenes.md` | laying out Main, LODs, build stages and collision for a complete block; vanilla LOD distances |

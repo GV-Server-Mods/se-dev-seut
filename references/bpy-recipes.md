@@ -246,6 +246,15 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
 - **Crash rule:** snapshot before mutating. A loop over `col.all_objects` that created and removed meshes
   crashed Blender (access violation in `pyrna_prop_collection_iter_next`, crash log in `%TEMP%`). Use
   `objs = list(col.all_objects)` first. Save the .blend before each step; the crash loses unsaved work.
+- **Removing a mesh deletes the objects that still use it** [HARD, Blender 4.5.10, reproduced in a background
+  Blender]: `bpy.data.meshes.remove(m)` gives no warning. A script swapped a temp mesh into the main visual
+  object to render a variant (`o.data = tmp`), ran a render helper with `exec(code)` in its own globals, then
+  `o.data = orig; bpy.data.meshes.remove(tmp)`. The helper's last loop, `for o in hidden:`, had rebound `o` to
+  a collision object, so the restore went onto that object and the remove deleted the real one, which was then
+  saved into a checkpoint. So: run helpers in their own namespace, `exec(code, {"bpy": bpy, "OUT_DIR": d})`, as
+  `scripts/ortho_measure.py` shows; check `tmp.users == 0` before removing a temp mesh; render variants from a
+  duplicate object rather than swapping the real one's mesh; and check the key objects exist
+  (`name in bpy.data.objects`) before saving a checkpoint.
 - **Appending parts:** `bpy.data.libraries.load(path, link=False)` with `dst.objects = [names]` pulls the old
   parent in as `<Name>.001` as well. Compute the world matrix *before* removing that parent, from the parent's
   `matrix_basis`: `parent.matrix_basis @ o.matrix_parent_inverse @ o.matrix_basis` (for a one-level hierarchy).
