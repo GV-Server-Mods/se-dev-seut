@@ -79,11 +79,9 @@ checkable steps and leave the scene tidy.
 3. One change per script; print only what you need (names, counts, dimensions).
 4. `look` after each meaningful change: `mode=angles` with `views` for shape, `shading=wireframe` for
    topology, `max_size` 400-512 for quick checks. Compare with the reference, fix the largest difference first.
-   `mode=angles` opens one render viewport per view in the user's Blender [HARD, seen: about 10 at once; owner
-   disliked it], and starting `blender.exe` opens a console window. Where the user minds, use one default `look`
-   and do multi-angle and close-up checks in a background Blender on the saved .blend
-   (`blender.exe -b <file.blend> --python <shots.py>`, PNGs to a scratch folder); launch the UI with
-   `blender-launcher.exe`, which has no console.
+   `look`, `mode=angles` included, opens no new window in the Windows taskbar [owner: none seen over a session
+   of angle checks]. The window the owner minded is the console window `blender.exe` opens: it stays open, and
+   closing it closes Blender. Launch the UI with `blender-launcher.exe`, which has none (`references/errors.md`).
    LOD copies and collision sit on top of the Main model, so a bare `look` shows them stacked: hide the other
    collections (`layer_collection.hide_viewport`) or offset the objects temporarily before checking one.
    A render (`bpy.ops.render.render`) ignores that viewport hide: set `hide_render` on the collision and LOD
