@@ -48,7 +48,7 @@ cargo crate and a WeaponCore gatling turret with subparts.
 | `references/materials.md`, `materials-catalog.md`, `vanilla-materials.md` | Texture types, behaviour catalog, all 165 materials |
 | `references/setup.md` | Installing Blender, SEUT, Havok and the ModSDK from scratch, first model, testing in game |
 | `references/kitbash.md` | Import recipe for reusing vanilla model parts, tested |
-| `references/atlas-regions.md` | UV boxes for each piece of the vanilla decal atlases (JSON copy: `atlas-regions.json`) |
+| `references/atlas-regions.md` | UV boxes and tags for each piece of the vanilla decal atlases (JSON copy: `atlas-regions.json`; search with `scripts/find_decal.py`) |
 | `references/keen-style.md` | Keen's measured block style: sizes, spacing and placement on newer and classic vanilla blocks |
 | `references/design-detailing.md`, `turret-design.md` | Designing and detailing a block (design doc, blockout, decals, review checks); turret specifics |
 | `references/measured-modelling.md` | Blockouts measured from straight-on views: reference sheet, silhouette and landmark checks, critic |

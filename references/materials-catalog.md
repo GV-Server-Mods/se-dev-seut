@@ -57,6 +57,18 @@ in UV space, using lines through the outline's straight edges; let each piece vo
 painted pieces to `PaintedMetal_Colorable`, box mapped. Carry the custom normals across the cuts, and weld the
 cut points within 10 µm: rounding to 1 µm left cracks.
 
+Bare metals differ mostly in gloss, the `_ng` alpha (the `_cm` alpha is metalness) [HARD, mean of each texture]:
+`Chrome` is fully metallic but only 38% gloss, with a smudged light colour map, so it reads as satin metal.
+`Metal_Shiny` (`Aluminium_cm`, `AluminiumGlossy_ng`) is as light, clean and the glossiest at 87%; `BlackMetal` is a
+dark metal (15% colour) at 55%; `Metal_Dull` 16%. The `_Chrome` decal sheets are about 30% gloss, so their pieces
+read a little duller than a `Metal_Shiny` plate under them. Keen uses `Metal_Shiny` in 23 cube models and
+`BlackMetal` in 15 (Cover Wall, Window Edge, Trapdoor and Basic Refinery have both), handy for a look in game
+[HARD, search of `Content\Models\Cubes`]. A Blender preview on a plain backdrop shows little of the difference,
+since the metal has nothing to reflect.
+**The names mislead** [owner, seen in game]: `Metal_Shiny` looks far more like chrome than `Chrome` does, and
+`Chrome` reads as brushed stainless steel. For a mirror-bright part (a polished rod, a reflector) pick
+`Metal_Shiny`; for brushed or satin steel pick `Chrome` or a `_Chrome` decal sheet.
+
 ## Decal families
 
 `DECAL_CUTOUT` materials draw on top of the surface behind them using an alpha mask. Use them for panel
@@ -146,7 +158,16 @@ face (a lens recessed in a bezel, a window plate), not on a decal quad.
 (v > 0.5) is fine horizontal scan lines; the bottom half is a grungy bright patch. The emissive mask (ADD
 green) is even over the whole sheet, so the CM sets how bright it looks. For a plain lens, map the face into
 the brightest plain area, about u 0.40-0.50, v 0.26-0.32; a face left on default UVs can land on the scan
-lines and render striped.
+lines and render striped. For a long glow strip, map like vanilla instead of squeezing it into that small
+patch: Keen's `Emissive` faces are even in pixels, about 300-450 texture pixels per metre (Beacon about 305,
+Conveyor Sorter about 450). The sheet is 1024 x 2048, so that is twice as many UV per metre along u as along v
+(Beacon 0.30 u and 0.15 v per metre) [HARD, measured on the SDK FBX files]. A small patch stretched 10:1 along
+a 3 m strip looked smeared [owner]. For a plain glow, lay the strip's length along u through the bright disc
+of the lower half (centre about u 0.49, v 0.26); for a scan-line glow, lay it along v in the top half, so the
+lines run across the strip. The scan-line half tiles along v: 64 lines on a 16 pixel period, its first and last
+rows matching, so a long strip can repeat it for denser lines (two tiles of v 0.5 to 1.0 over a 3 m strip show
+no join) [HARD, read from the CM and rendered]. A preview of the ADD or NG channels shows the scan lines soft and light; in game
+they take the CM's colours, which are high contrast [HARD, read from the textures].
 
 Other emissive materials are static unless named as above: `LightPanel_Light`, `ScreenArea*`,
 `CockpitScreen_*`, `EmissiveColorable` (flat, fully paintable and emissive), `FoodDispenser`,
