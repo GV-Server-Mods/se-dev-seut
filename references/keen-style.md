@@ -94,10 +94,11 @@ chamfer reads as a soft round. Values are the share of edge length shaded smooth
 | Keep 90-degree edges hard | outer 7% (1-30), inner 5% (0-62) | outer 13% (2-84) | outer edges mostly smooth: 70% (15-94) on large grid |
 | Weight the normals toward the bigger face | on 84% (68-91) of smooth 40-50 degree edge length; plain averaging 9% (4-25) | 88% (77-91) | same (88%) |
 
-- **Smoothing angle**: the skill's default stands. Keen's value on newer blocks is about 60 degrees, 45-degree
-  chamfers included, with normals weighted by face area. The skill smooths by angle at 30 degrees, then applies
+- **Smoothing angle**: Keen's value on newer blocks is about 60 degrees, 45-degree chamfers included, with normals
+  weighted by face area. The skill's default for a part on its own smooths by angle at 30 degrees, then applies
   Weighted Normal (Face Area, Keep Sharp) (`modeling-rules.md`, "Geometry and shading"), which leaves 45-degree
-  chamfers hard-shaded where Keen's read as soft rounds.
+  chamfers hard-shaded where Keen's read as soft rounds. Where built parts sit beside kitbashed vanilla ones, match
+  Keen instead: `bpy-recipes.md`, "Matching vanilla shading".
 
 ### Examples
 

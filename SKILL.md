@@ -135,6 +135,8 @@ shape reference at most, and ask before spending credit.
   that reaches past 2 m, run `scripts/decal_snap.py` as the last build step. `references/bpy-recipes.md`, "Decal offset".
 - **Shade curved parts smooth and bevel hard edges** [HARD, owner saw faceted cylinders]:
   `bpy.ops.object.shade_smooth_by_angle(angle=math.radians(30))` on every part. `references/modeling-rules.md`.
+  Beside kitbashed vanilla parts, rebuild the normals by Keen's measured rule: `references/bpy-recipes.md`,
+  "Matching vanilla shading".
 - **A `detector_conveyor*` empty is also the conveyor connection point** [HARD, game code]: put it in the cell
   it belongs to, facing the neighbour. `references/interaction-highlights.md`.
 - **Conveyor-only blocks: no crossbars, yellow shutter, no mesh highlight** [SOFT, owner]: if a block is conveyored

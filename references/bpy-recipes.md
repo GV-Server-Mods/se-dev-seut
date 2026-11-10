@@ -336,6 +336,23 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   `bm.to_mesh(me)` clamps each face's `material_index` to the mesh's slot count, so a mesh with no slots yet
   loses them all. Append the materials to `me.materials` before `to_mesh`. Joining bmeshes through a temporary
   mesh has the same trap: record each face's index before the round trip and set it again after.
+- **Moving vertices of a textured part** [HARD, run; the owner saw the broken texture]: UVs stay on the
+  corners, so a stretched face stretches its texture. Record each face's corners and UVs before the move. A face
+  whose corners all moved by one offset keeps its UVs; a stretched face gets an affine fit of its old UVs in its
+  own plane, so the texel size stays:
+
+  ```python
+  # P: a face's corners before the move, U: their uvs, Q: its corners after (numpy arrays, one row per corner)
+  n = sum(np.cross(a, b) for a, b in zip(P, np.roll(P, -1, 0))); n /= np.linalg.norm(n)   # Newell normal
+  e = max((b - a for a, b in zip(P, np.roll(P, -1, 0))), key=np.linalg.norm)               # longest edge
+  t1 = e - n * (e @ n); t1 /= np.linalg.norm(t1); t2 = np.cross(n, t1); c = P.mean(0)
+  A = np.linalg.lstsq(np.c_[(P - c) @ t1, (P - c) @ t2, np.ones(len(P))], U, rcond=None)[0]
+  new_uvs = np.c_[(Q - c) @ t1, (Q - c) @ t2, np.ones(len(Q))] @ A
+  ```
+
+  Fit in the face's plane, never u and v on x, y, z and 1: a flat face's corners give that fit no data along its
+  normal, so the coefficient there is noise (worst on small faces far from the origin), and any move off the old
+  plane multiplies it. A 5.3 cm lift threw a handwheel's UVs out to 1e5 and slid a pipe's texture along it.
 - **Triangle budget** [HARD, measured on a large turret]: the first full detail pass reached about 74,000
   triangles, almost all from over-segmented round parts. Segment counts that still read smooth at play distance:
   48 around a 2 m radome (14 rows in its cap), 64 for 2.7 m turned rings, 40 for 0.5-1 m rings and drums, 28-32
@@ -420,6 +437,28 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   rerun. Before the call, mark sharp (`e.smooth = False` in bmesh, then `bm.to_mesh`) every edge whose two
   faces' wanted normals differ at either end. Stored normals come back about 1e-3 off, so compare with a 2e-3
   tolerance, or a rerun reports changes that are not there.
+- **Matching vanilla shading** [HARD, measured on one newer large-grid vanilla model before any change, then run
+  over a block built on it; not yet seen in game]: use it where built parts sit beside kitbashed vanilla ones and
+  must shade like them. Keen's normals there smooth every edge up to 60 degrees, most up to 70, and keep 90-degree
+  corners hard; large faces dominate the shared normal, so a large flat face stays flat and the bevel beside it
+  shades round. Many of his normals are blends no rule rebuilds exactly. Share of his corners each weighting
+  rebuilt within 2 / 6 degrees: face area 36 / 74%, area squared 72 / 84, area cubed 78 / 87, largest face only
+  83 / 83, flat-region area cubed 81 / 86 (95% of his flat corners kept flat). Material boundaries made no
+  difference. The rule that came closest, per corner:
+  - Smooth across edges under 65 degrees; mark every edge over it sharp first (bullet above).
+  - Group faces into flat regions (joined edge to edge within 0.5 degree) and weight each face by its region's area
+    cubed, a region counting once at each corner. With plain area cubed, a bevel tinted the narrow strip of a large
+    flat top beside it into a dark wedge; the region gives the strip the whole top's weight.
+  - Join corners by position (rounded to 0.1 mm), not by vertex, so faces split apart in the mesh shade as one.
+  - Leave decal faces out: they keep their normals and add no weight.
+  - Kitbashed vanilla parts keep Keen's normals. On a vanilla mesh you extended, keep every corner whose normal is
+    more than 0.5 degrees off its face normal (his shading) and recompute the flat ones; where a recomputed corner's
+    smooth fan reaches a kept corner, take the kept normal nearest the rule's, so new and vanilla faces join without
+    a shading seam (674 such seams on the block before this step).
+
+  Then `use_smooth = True` on every face and `me.normals_split_custom_set()`, after the last Bevel or Weighted
+  Normal modifier is applied (both replace custom normals, above). A rerun changes nothing. Afterwards seams over
+  15 degrees remained only on tiny faces (small chamfers where two trims meet) and in the vanilla model itself.
 - **Buried faces** [HARD, took a turret from 43,600 to 39,000 triangles with no visible change]: a face is
   hidden when all its corners and its centre, nudged 0.5 mm along its normal, lie inside another closed solid.
   Split every mesh into connected islands in world space and keep only closed ones (every edge has two faces);

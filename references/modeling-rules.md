@@ -38,7 +38,9 @@
   `sum(p.use_smooth for p in me.polygons)`, which should be close to the polygon count, and do it for LOD
   meshes too. Flat decal quads can stay flat. Smoothing alone tilts the normals of a big flat face that meets
   a smoothed bevel, which shows as a fake angled shade in game [owner]; finish every bevelled part with an
-  applied Weighted Normal modifier (`bpy-recipes.md`, "Flat faces next to smoothed bevels").
+  applied Weighted Normal modifier (`bpy-recipes.md`, "Flat faces next to smoothed bevels"). Where built parts
+  sit beside kitbashed vanilla ones, rebuild their normals by Keen's measured rule instead (`bpy-recipes.md`,
+  "Matching vanilla shading").
 - Every wide flat face shades flat [owner, HARD]. Soft folds of 10-30 degrees, wide faces beside thin strips,
   and lofted sides that follow the shapes under them each smeared or streaked large faces on a turret. The check
   that finds them, and the fixes, are in `bpy-recipes.md`, "Shading check"; run it before the decal pass.

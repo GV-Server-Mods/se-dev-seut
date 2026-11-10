@@ -184,7 +184,8 @@ assume the FBX material names are what the game renders.
 - Scale a vanilla part only when it must fit a different size, and keep the scale uniform so bevels and
   UV density stay consistent. To make a part longer or wider (a frame beam spanning more cells), cut it
   across its straight middle and move the vertices on one side of the cut; the ends, bevels and texture scale
-  stay as Keen made them. Re-check the UVs of the stretched faces, since they stretch with them.
+  stay as Keen made them. The stretched faces stretch their texture with them: refit their UVs
+  (`bpy-recipes.md`, "Moving vertices of a textured part").
 - **Decals on a stretched part** [HARD, owner marked the faults on a render]. Keen's frame lines are often joined
   into one piece (a side, a chamfer and a corner), so moving each connected decal piece whole breaks the frame
   where the plate stretches. Stretch line decals vertex by vertex, with the same cut as the plate, and put the
@@ -193,8 +194,8 @@ assume the FBX material names are what the game renders.
   part's root, where it meets the beam it hangs from, keep vanilla's place. Those by the free edge move with
   that edge.
 - The vanilla parts bring their own bevels and smooth shading. Anything you add yourself must be bevelled
-  and smooth shaded the same way (`modeling-rules.md`, "Geometry and shading"), or it will look like a
-  different game next to them.
+  and smooth shaded the same way (`modeling-rules.md`, "Geometry and shading"; normals that match theirs:
+  `bpy-recipes.md`, "Matching vanilla shading"), or it will look like a different game next to them.
 - Vanilla detector empties and their linked meshes come along with the container parts. Keep the pairs
   together, rename them to unused indices, and check each empty covers its mesh
   (`interaction-highlights.md`, "Detector size").
