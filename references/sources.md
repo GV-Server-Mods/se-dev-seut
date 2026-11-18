@@ -112,6 +112,9 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
   through its three stages, and tracks and fires with the subpart facing and dummies set up as in
   `weapons-turrets.md`.
 - Confirmed in game by the owner on crate 2 (SEUT importer, LODs by script, SEUT-rendered icon): clean vanilla materials, highlights, conveyor and terminal use, collision, the 11 dummies after a full restart, LOD switching, the icon. LOD levels: a hand-built LOD must keep every material of Main, including the vanilla `detector_*` meshes.
+- Owner, 2026-11-17: the Debug Draw "Reload models" button picks up dummy changes when the same export changes
+  the model's meshes; a full game restart is needed only when the dummies change and nothing else does. This
+  replaces an earlier note that a reload kept a block's old dummies although its new meshes had loaded.
 - Confirmed in game by the owner (probe cube): the exported mod loads with no mod errors, the highlight outlines the linked mesh, a 2.5 m collision box matches the model, paint and vanilla materials work, the keypad panel maps correctly, and `IsAirTight` in the SBC clears the BuildInfo hint.
 - Atlas region names: every atlas was re-catalogued at full resolution and its boxes and groupings checked against owner markup, but the piece names were read by eye; the X-panel triangle depths come from edge steepness in the normal map.
 - Dummy and subpart presets other than the vanilla-type turret names the gatling used; ToolCore subparts.
