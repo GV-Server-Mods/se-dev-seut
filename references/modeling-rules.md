@@ -127,10 +127,9 @@ mechanical parts, openings, equipment, bolts, wear, seams, decals and labels) is
   defaults. Do not decimate hard: keep every material the block shows from a distance, and never let a
   decimate pass delete decal or accent faces (`bpy-recipes.md`, "LOD from script").
 - Without a collision model the game makes a box from the bounding box. Construction (BS) models should share
-  the main block's collision. Collision and subpart changes need a full game restart [collision: wiki;
-  subparts: owner], and so does a change to dummies alone [owner, 2026-11-17]; mesh and texture changes,
-  including dummy changes that come with a mesh change, only need the Debug Draw "Reload models" /
-  "Reload textures" buttons [HARD, owner].
+  the main block's collision. Collision, subpart and dummy changes need a full game restart [collision: wiki;
+  subparts: owner; dummies: game code, even when the meshes changed too]; mesh and texture changes only need
+  the Debug Draw "Reload models" / "Reload textures" buttons [HARD, owner].
 - `BS1..BS3` are construction stages (typically shells with less geometry). `Apply Construction` assigns
   the Construction material; `Cut and Solidify` makes the scaffold look [HARD]. Both were run: Cut and Solidify
   leaves zero-area UVs that need a re-unwrap, `Add Bevels` uses a hairline 2.5 mm width whatever you ask for,

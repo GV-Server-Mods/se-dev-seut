@@ -30,9 +30,9 @@ the plain yellow-square box; a detector empty linked to a mesh outlines that mes
 3. Resize the empty so it covers the **whole** highlighted mesh, with a small margin (see "Detector size"
    below). The highlight only shows while the reticle is inside the empty, so any part of the mesh outside it
    looks dead to the player.
-4. Export, reload and aim at the area. When the export also changed the model's meshes, the Debug Draw
-   "Reload models" button picks up the new dummies; when only the dummies changed, restart the game fully
-   [owner, 2026-11-17] (`SKILL.md`, step 8). A yellow square means the empty and mesh are not associated.
+4. Export, restart the game fully and aim at the area. The Debug Draw "Reload models" button does not pick up
+   changed dummies or `highlight` names, even when the meshes changed too [HARD, game code; owner, 2026-11-17]
+   (`SKILL.md`, step 8). A yellow square means the empty and mesh are not associated.
 
 **From script, the exported link is the empty's custom property `highlight`, not the `seut.highlight_objects`
 list** [HARD, owner saw no outlines on a turret's keypad and port; the `.mwm` held no `highlight` key]. Filling
@@ -117,8 +117,8 @@ bpy.ops.object.add_highlight_empty(detector_type="detector_terminal_", index=1)
   empty to be selectable. The outline colour is game wide (Environment Definition `ContourHighlightColor`)
   and cannot be set per block; the outline-only style is the default for text panel blocks (UseObjects
   highlight style). The wiki says to restart the game completely, not just the world, to see model changes; the owner finds the
-  Debug Draw "Reload models" / "Reload textures" buttons enough for simple mesh and texture updates, and for
-  dummy changes that come with a mesh change (`SKILL.md`, step 8).
+  Debug Draw "Reload models" / "Reload textures" buttons enough for simple mesh and texture updates; dummy
+  changes still need the full restart (`SKILL.md`, step 8).
 - Select the next target explicitly before each call; the operator works on the single selected object.
 
 ## Detector types (SEUT 1.2.1 `empties['highlight_empties']`)

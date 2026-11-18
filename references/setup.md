@@ -105,9 +105,8 @@ grey, the texture conversion did not finish or the Asset Directory is wrong.
   contracts, respawn ships and similar) so the world loads faster. Space Engineers does not accept most model
   changes on the fly, so the video author reloads the world often.
 - The owner's faster loop for simple model and texture changes: the Debug Draw "Reload models" and "Reload
-  textures" buttons (Alt+F11 offline singleplayer), which also pick up dummy changes that come with a mesh
-  change; a full game restart is still needed for subpart and collision changes, and for dummy changes alone
-  (`SKILL.md`, step 8).
+  textures" buttons (Alt+F11 offline singleplayer); a full game restart is still needed for subpart, dummy
+  and collision changes, even when the meshes changed too (`SKILL.md`, step 8).
 - Search the block by name in the G menu, drag it to the toolbar, place it, check collision, and use a
   grinder to step through the build stages. A new block with no localization shows its raw `DisplayName`.
 - Inventory size changes need a newly placed block, because blocks already in the world keep the inventory

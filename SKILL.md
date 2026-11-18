@@ -60,10 +60,13 @@ Everything below was checked against SEUT 1.2.1 on Blender 4.5 unless marked "un
    **Fast in-game loop** [HARD, owner]: for simple model and texture updates, no game restart is needed. In
    offline singleplayer open the admin Debug Draw menu (Alt+F11 on the owner's keys) and press "Reload
    models" or "Reload textures". Do a full game restart after changing subparts [owner: reload has failed
-   to pick up subpart changes] or collision (rule below). Dummies [owner, 2026-11-17]: when an export changes
-   the model's meshes along with its dummies, "Reload models" picks up the new dummies too; a full restart is
-   needed only when the dummies change and nothing else does. A reload that shows old dummies is stale data,
-   not a model fault.
+   to pick up subpart changes] or collision (rule below), and after any dummy change to a model file the game
+   has already loaded, even when the meshes changed too [HARD, game code]: "Reload models" reloads only the
+   render side (meshes, materials, section names), while the game keeps each model's dummies, with their
+   `highlight` names and conveyor points, until it closes; on PC a world reload keeps them too. A model under a
+   new file name loads fresh. A reload that shows old dummies, or a highlight that stays dark, is stale data,
+   not a model fault [owner, 2026-11-17: a corrected port highlight stayed dark after a reload and lit up after
+   a full restart].
 
 ## Driving the live Blender (MCP)
 
