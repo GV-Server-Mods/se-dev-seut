@@ -156,10 +156,13 @@ shape reference at most, and ask before spending credit.
 - **Vanilla-type turret and door subparts face backward in game unless their scene content is turned 180
   degrees about Z** [HARD, SEUT export axes and game code that drops the subpart empty's rotation]. Turning the
   empty does not help. `references/modeling-rules.md` ("Which way a subpart faces").
-- **Muzzle empties kitbashed from vanilla weapon models keep their own orientation, which WeaponCore may not fire along**
-  [HARD, WeaponCore `Dummies.cs` fires along the dummy's Forward; owner saw flares shoot up and down out of the block].
-  A dummy's forward is the empty's local +Y. After export, run `scripts/mwm_dummies.py` and check that every `muzzle_*`
-  fwd points out of its barrel; fix a wrong one by turning the empty in its local frame, then restart the game.
+- **Check every muzzle dummy against the system that fires the weapon** [HARD]: find out whether the block is a
+  vanilla weapon or a WeaponCore one and point its `muzzle_*` empties for that system. Vanilla (`MyGunBase`, from
+  `muzzleWorldMatrix.Forward`) and WeaponCore (`Dummies.cs`, `dummyMatrix.Forward`) both fire along the dummy's
+  Forward, which is the empty's local +Y. Importing a vanilla model can turn its empties: Keen's flare launchers
+  came into Blender with every muzzle a quarter turn about X, and the re-exported blocks fired up or down out of
+  the block [owner, in game]. After export, compare each muzzle with the vanilla `.mwm` using `scripts/mwm_dummies.py`,
+  turn wrong ones in their local frame, then restart the game.
 - **Never loop over a live `collection.all_objects` / `bpy.data.objects` while creating or removing data**
   [HARD, two Blender 4.5.10 crashes in `pyrna_prop_collection_iter_next`]: copy first,
   `objs = list(col.all_objects)`, then build meshes, remove temp meshes, link objects. Save before each step.
