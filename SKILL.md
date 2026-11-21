@@ -141,6 +141,11 @@ shape reference at most, and ask before spending credit.
   `bpy.ops.object.shade_smooth_by_angle(angle=math.radians(30))` on every part. `references/modeling-rules.md`.
   Beside kitbashed vanilla parts, rebuild the normals by Keen's measured rule: `references/bpy-recipes.md`,
   "Matching vanilla shading".
+- **An Exact boolean welds the whole object it cuts** [HARD, measured on 16 exported models; owner saw the
+  shading in game]: cutting a port into a kitbashed vanilla mesh merged every split vertex in it, and Keen's
+  normals then read back up to 60 degrees off far from the cut (smeared bevels, odd wedges at the corners). After
+  any cut, rebuild the mesh from the pre-cut checkpoint (`scripts/restore_cut_normals.py`) and check the export
+  against vanilla (`scripts/mwm_normals_vs_vanilla.py`): `references/kitbash.md`, "Cutting into a vanilla mesh".
 - **A `detector_conveyor*` empty is also the conveyor connection point** [HARD, game code]: put it in the cell
   it belongs to, facing the neighbour. `references/interaction-highlights.md`.
 - **Conveyor-only blocks: no crossbars, yellow shutter, no mesh highlight** [SOFT, owner]: if a block is conveyored

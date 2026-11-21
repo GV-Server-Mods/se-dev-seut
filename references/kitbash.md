@@ -196,6 +196,24 @@ assume the FBX material names are what the game renders.
 - The vanilla parts bring their own bevels and smooth shading. Anything you add yourself must be bevelled
   and smooth shaded the same way (`modeling-rules.md`, "Geometry and shading"; normals that match theirs:
   `bpy-recipes.md`, "Matching vanilla shading"), or it will look like a different game next to them.
+- **Cutting into a vanilla mesh** [HARD, measured on 16 exported flare launcher models and their LODs; the owner
+  saw the shading in game]. The Exact boolean solver merges every vertex that shares a position across the whole
+  object, not just near the cut. A port cut into Keen's large flare launcher changed 4 faces, but its mesh went
+  from 4,723 vertices to 1,532 and lost its `sharp_edge` attribute. Custom normals are stored once per smooth fan
+  (`bpy-recipes.md`), so after the weld Blender read Keen's normals against the new fans: a median 14 degrees
+  off, up to 61, over the whole model. In game the bevels looked smoothed over, with odd trapezoids of light at
+  the corners. So:
+  - Save a checkpoint before the cut and compare the object's vertex count after it. A drop means it welded.
+  - Then rebuild the mesh with `scripts/restore_cut_normals.py`: it takes the pre-cut copy (Keen's faces, split
+    vertices and normals), swaps in only the faces the cut changed, and sets every corner normal. Kept faces get
+    their pre-cut normal. A new face gets the pre-cut normal where it lies, interpolated on the pre-cut triangle
+    under it. This brought all 16 models back to Keen's shading, with the dummies unchanged.
+  - Check the export against the vanilla model with `scripts/mwm_normals_vs_vanilla.py`. An untouched vanilla
+    mesh reads 0 vertices over 5 degrees, with a maximum of about 1.4 from the normal packing. The welded
+    launcher read 3,585.
+  - Possibly simpler, not yet run [SOFT]: boolean only a separated copy of the faces the cutter touches and put
+    the result back as its own island. Keen's meshes are split along every hard edge, so an island is fine. The
+    copy's normals still need setting as above, since the boolean welds them too.
 - Vanilla detector empties and their linked meshes come along with the container parts. Keep the pairs
   together, rename them to unused indices, and check each empty covers its mesh
   (`interaction-highlights.md`, "Detector size").
