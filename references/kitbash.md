@@ -207,7 +207,8 @@ assume the FBX material names are what the game renders.
   - Then rebuild the mesh with `scripts/restore_cut_normals.py`: it takes the pre-cut copy (Keen's faces, split
     vertices and normals), swaps in only the faces the cut changed, and sets every corner normal. Kept faces get
     their pre-cut normal. A new face gets the pre-cut normal where it lies, interpolated on the pre-cut triangle
-    under it. This brought all 16 models back to Keen's shading, with the dummies unchanged.
+    under it. This brought all 16 models back to Keen's shading, with the dummies unchanged [owner: looked right
+    in game after a Debug Draw "Reload models"].
   - Check the export against the vanilla model with `scripts/mwm_normals_vs_vanilla.py`. An untouched vanilla
     mesh reads 0 vertices over 5 degrees, with a maximum of about 1.4 from the normal packing. The welded
     launcher read 3,585.
