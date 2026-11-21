@@ -43,6 +43,12 @@ needs only stages 1, 2 and 7 to 13.
     and aimed at every interaction point up to the rim of its mesh: the outline shows, the terminal or inventory
     opens, and a conveyor placed against each port connects.
 13. **Icon** (`bpy-recipes.md`, "Icons" under "Export through the MCP").
+14. **Publish** to the Workshop. A Workshop item another Steam account created, with the user as a contributor,
+    is refused in game with "not the owner of this mod", and SEWorkshopTool refuses it too. Steam accepts the
+    update; the game's check only looks at a subscribed copy and at the mod list of the world the Mods screen was
+    opened from [HARD, code; SOFT, worked in game]. So unsubscribe, restart the game, open Mods from a world that
+    doesn't load the item, and publish the local mod, keeping the `modinfo.sbmi` that names the item. Details in
+    the se-dev-mes skill, `diagnostics_and_troubleshooting.md` §4 entry 21.
 
 ## Builders, editors and the freeze
 
