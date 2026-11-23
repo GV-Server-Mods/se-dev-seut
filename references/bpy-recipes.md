@@ -255,6 +255,28 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   Since Warfare III (1.211) Keen's suspensions use only Right icons: a mod copying an older vanilla definition can
   still name a removed `...Left` icon (blank in the G menu) or a retired blue one that is still in the game folder
   (check the file's date). Compare the copy's icon with Keen's current definition.
+  **An icon with the block's lights on** [HARD, read in the material and measured; a hover-engine mod's icons, 2026-11].
+  SEUT's node group has no emissive colour: Emission Color is the ADD map's green channel (the glow mask), strength
+  from `Emission Strength`. The library loads `_add` maps as sRGB while the game reads them raw, so a mask Keen stores at
+  0.25 reads about 0.05 in Blender and any glow comes out faint. Find which materials the block lights in its script
+  (`SetEmissiveParts(material, colour, emissivity)`): one mod lit `emissive10` green at 5 and `emissive11` dark red at 1,
+  which reads as grey; lighting both put green where the owner sees grey [owner]. In a copy of the group for those
+  materials only: raise G to the power 1/2.2, multiply by that colour into Emission Color and by that emissivity into
+  Emission Strength, and fade Base Color and Specular IOR Level to 0 under the mask (mask x4, clamped), or the white base
+  washes the colour out [owner: "too washed out"]. Multiply the strength by Light Path "Is Camera Ray" as well: in game an
+  emissive part lights nothing else and shows in no reflection [owner: "the green is reflecting off of other surfaces
+  which isn't how SE works"].
+  **Chrome like Icon Studio's** [SOFT, matched by eye; owner asked for its reflections]: Icon Studio draws `Chrome` and
+  `Metal_Shiny` as near mirrors over a dark studio; through SEUT's materials in Cycles they read as satin. Roughness x0.3
+  on those materials, plus an HDRI that only glossy rays see (Light Path "Is Glossy Ray" mixes the world from the plain
+  background to Blender's `datafiles\studiolights\world\studio.exr` at strength 0.6), matched it. City and courtyard
+  tinted the chrome.
+  **Rendering a modded `.mwm`**: older mods reuse names like `Material.125` for parts with different textures, so map
+  parts to library materials by their CM texture, not their name. Icon Studio does not always show a model from the side
+  its neighbours use: render a family of icons (sizes, armoured variants) facing the same way [owner: a 1x1 icon facing
+  right "should follow the others and face left"]. Icon Studio crashes with a memory error on `.mwm` files older than
+  `01157001` [HARD, owner run; those carry 7 more floats per mesh part]. A copy rewritten in the current format loads,
+  but it froze the owner's PC on one ("extremely unstable"), so render those models in Blender.
   `.hkt` and log files. Always make the last run with True.
 - Re-running with `export_sbc_type = 'new'` does not overwrite: it writes `<SubtypeId>_1.sbc` beside the first
   one. Use `'new'` once, then `'none'` (or `'update'`). Delete stray `_1.sbc` files.
