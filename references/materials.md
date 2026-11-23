@@ -60,6 +60,12 @@ new textures. Many vanilla blocks share atlases and tiling materials, which is w
    `Models\Cubes\Large\Armor\SquarePlate.mwm` (material `SquarePlate`, 4x2 pattern sheet, UV span 0.25 x 0.5
    per 2.5 m plate, 0.141 UV/m averaged) [HARD, SBC and SDK FBX]. Look up the model a vanilla block really
    uses in `Content\Data\CubeBlocks\*.sbc` before measuring it (`ArmorCenter` is not the armor cube).
+   **Those UV numbers are not what renders.** The armor plate `.mwm` files carry a `PatternScale` tag of 4, and
+   the game divides every UV by it at load (`MyMwmData`, `MyMeshes.LoadMwm`; SEUT exports write 1) [HARD, game
+   code and tag read from `HeavySquarePlate.mwm`]. So a 2.5 m heavy armor plate really shows 0.0625 x 0.125 of
+   its sheet: **0.025 UV/m across and 0.05 UV/m up**, which is why the probes above found 0.05 "a tad" fine.
+   Divide by the model's `PatternScale` before copying a vanilla UV span. Mapping `HeavySquarePlate` at the raw
+   0.25 x 0.5 span made a slab's plates half vanilla size in game [owner].
 5. If every material on the model is Vanilla, no textures need to ship with the mod [HARD, wiki].
 
 W012: a DLC material forces the model to be DLC-locked; avoid DLC-tagged materials for public blocks.
