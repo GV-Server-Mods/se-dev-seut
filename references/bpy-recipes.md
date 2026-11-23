@@ -226,6 +226,35 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   stdout; wrap the call in `contextlib.redirect_stdout` / `redirect_stderr` to an `io.StringIO`.
 - A clean run ends with `I007` and leaves only `<SubtypeId>.mwm` (plus `<SubtypeId>_LODn.mwm` files and the
   SBC) when `export_deleteLooseFiles` is True. With False the run ends at `I004` and leaves the FBX, XML,
+  A background render uses the file's active scene whatever `scene=` says, so on a file with several icon scenes
+  every scene but the active one failed with "Cannot render, no camera"; the script now removes the other scenes
+  first (never saved) [HARD, tested on a 24-scene file].
+  **Full colour that matches Keen's icons** [HARD, measured; the owner asked for it, 2026-11-22: "make the lighting
+  match a little closer to keens", "white balance and tone"]. With `renderColorOverlay` on, SEUT's compositor still
+  applies the lift it tunes for the blue look (Color Correction midtones gain 2.0, shadows gain 2.5; Bright/Contrast
+  0.35/0.35), and Blender 4.x renders with the AgX view transform, which SEUT never sets. Together they flatten the
+  render: shadows at 44 of 255 against Keen's 12, highlights 154 against 176, no warmth. Leave SEUT's rig as built
+  unless the user asks for this; when they do, calibrate on a vanilla model they share a style with: render Keen's
+  own block through the same rig and compare it with Keen's icon (percentiles of luminance over opaque pixels, channel
+  means). For a vanilla suspension and 3x3 wheel against `WheelSuspension3x3Right` these matched (average colour 78/76/74 against
+  81/77/77): view transform Standard, Color Correction gains 1/1, contrast 0.25, fill light x0.15, key light x1.6
+  with colour (1, 0.95, 0.95), exposure +1.4, and a gentle curve (display points 0.16->0.15, 0.36->0.44,
+  0.68->0.70). A tone curve alone pushed hard enough to match the histogram speckled the rubber texture, and a
+  white-balance gain tinted the blacks red: get the contrast and warmth from the lights, and use the curve only to finish.
+  Keen's full colour icons come from Icon Studio: camera 35 degrees up (SEUT's default is 20), about 75 to 79% fill.
+  SEUT's lights scale with `renderDistance` while the inverse square falls faster, so a large block rendered by moving
+  the camera back comes out dark: scale the model to fit the distance-1 camera instead (icons show no scale).
+  A wheel on a suspension: the wheel's `wheel` dummy goes on the suspension's `electric_motor` dummy, same
+  orientation; the axle is the mwm +Y. The Left icon is the Right one mirrored across the vertical plane facing the
+  camera's right (normal along the camera's x axis), which keeps the lights where they are; mirroring the model's own
+  axis shows the block's other side instead. Rolling a suspension about its axle: Keen draws the wheel at the bottom
+  of the icon, so put the `electric_motor` dummy below the block's centre. Keen's regular suspension centres it, so a
+  roll calibrated on it can come out 180 degrees wrong; a modded lifted suspension, with its mount far along the model's
+  +Z, then shows the wheel above the arm [owner saw every lifted icon upside down]. Pick the roll per model from where
+  that dummy sits, and calibrate the angle on a vanilla model whose mount is off centre (Keen's compact).
+  Since Warfare III (1.211) Keen's suspensions use only Right icons: a mod copying an older vanilla definition can
+  still name a removed `...Left` icon (blank in the G menu) or a retired blue one that is still in the game folder
+  (check the file's date). Compare the copy's icon with Keen's current definition.
   `.hkt` and log files. Always make the last run with True.
 - Re-running with `export_sbc_type = 'new'` does not overwrite: it writes `<SubtypeId>_1.sbc` beside the first
   one. Use `'new'` once, then `'none'` (or `'update'`). Delete stray `_1.sbc` files.
@@ -441,9 +470,9 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   over a block built on it; not yet seen in game]: use it where built parts sit beside kitbashed vanilla ones and
   must shade like them. Keen's normals there smooth every edge up to 60 degrees, most up to 70, and keep 90-degree
   corners hard; large faces dominate the shared normal, so a large flat face stays flat and the bevel beside it
-  shades round. Many of his normals are blends no rule rebuilds exactly. Share of his corners each weighting
+  shades round. Many of Keen's normals are blends no rule rebuilds exactly. Share of Keen's corners each weighting
   rebuilt within 2 / 6 degrees: face area 36 / 74%, area squared 72 / 84, area cubed 78 / 87, largest face only
-  83 / 83, flat-region area cubed 81 / 86 (95% of his flat corners kept flat). Material boundaries made no
+  83 / 83, flat-region area cubed 81 / 86 (95% of Keen's flat corners kept flat). Material boundaries made no
   difference. The rule that came closest, per corner:
   - Smooth across edges under 65 degrees; mark every edge over it sharp first (bullet above).
   - Group faces into flat regions (joined edge to edge within 0.5 degree) and weight each face by its region's area
@@ -452,7 +481,7 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   - Join corners by position (rounded to 0.1 mm), not by vertex, so faces split apart in the mesh shade as one.
   - Leave decal faces out: they keep their normals and add no weight.
   - Kitbashed vanilla parts keep Keen's normals. On a vanilla mesh you extended, keep every corner whose normal is
-    more than 0.5 degrees off its face normal (his shading) and recompute the flat ones; where a recomputed corner's
+    more than 0.5 degrees off its face normal (Keen's shading) and recompute the flat ones; where a recomputed corner's
     smooth fan reaches a kept corner, take the kept normal nearest the rule's, so new and vanilla faces join without
     a shading seam (674 such seams on the block before this step).
 

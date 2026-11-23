@@ -16,6 +16,10 @@ OUT = argv[0]
 RES = int(argv[1]) if len(argv) > 1 else None
 SUB = argv[2] if len(argv) > 2 else None
 sc = next(s for s in bpy.data.scenes if s.seut.sceneType == "mainScene" and (SUB is None or s.seut.subtypeId == SUB))
+# A background render uses the file's active scene whatever scene= says ("Cannot render, no camera" on every
+# scene but the active one). The .blend is never saved, so drop the other scenes.
+for other in [x for x in bpy.data.scenes if x != sc]:
+    bpy.data.scenes.remove(other)
 s = sc.seut
 d = s.renderDistance
 MAIN = "Main (%s)" % s.subtypeId
