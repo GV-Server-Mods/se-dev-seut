@@ -8,6 +8,7 @@ on error) shows them; `Delete Temporary Files` off keeps `*.mwm.log` for export 
 - When Blender crashes or the MCP connection drops
 - Pre-export checklist
 - Errors with a fix
+- Game load errors from the block SBC
 - Warnings
 
 ## Setup prerequisites and the Notifications panel [HARD, wiki Installation Guide, Addon Preferences, Notifications]
@@ -122,6 +123,16 @@ Calls fail with "Connection to Blender lost" / WinError 10054, or `get_addon_sta
 
 Other codes (E001, E003, E009, E010, E015, E016, E019-E021, E024-E030, E035, E036, E038, E040, E041, E047-E049,
 E051, E052) cover import, planets, animation, armatures and tool setup; read the message, it names the target.
+
+## Game load errors from the block SBC
+
+SEUT writes the SBC once; the components, PCU and other values you add to it afterwards are read by the game,
+not by SEUT, so these show only when the world loads.
+
+| Symptom in game | Cause | Fix |
+|---|---|---|
+| `MOD_CRITICAL_ERROR ... MOD SKIPPED, Cannot load definition file`, naming a file you did not touch | the whole mod is skipped when any of its files fails to read, and the message names the file the loader stopped on, not the one at fault. The real error is in `SpaceEngineers.log` under `Exception during objectbuilder read` | read the exception lines after that entry |
+| that log entry says `OverflowException: Value was either too large or too small for a UInt16`, in `CubeBlockComponent` | a `<Component Subtype="..." Count="..."/>` above 65,535: `Count` is a `ushort` [HARD, `MyObjectBuilder_CubeBlockDefinition.CubeBlockComponent`; a count of 100,000 skipped a whole mod in game] | split it into several entries of the same subtype, each at most 65,535 (vanilla repeats subtypes the same way); the total, mass and build cost stay the same |
 
 ## Warnings
 

@@ -197,6 +197,9 @@ shape reference at most, and ask before spending credit.
   0.05 UV per metre, functional blocks about 0.40 to 0.5. `references/materials.md`.
 - **Re-exporting with `export_sbc_type = 'new'` writes `<SubtypeId>_1.sbc`** instead of overwriting. Use
   `'new'` once, then `'none'`.
+- **A component `Count` above 65,535 skips the whole mod at load** [HARD, `ushort` in game code; seen in game]:
+  the error names some other file. Split big counts into several entries of the same subtype.
+  `references/errors.md` ("Game load errors from the block SBC").
 - **ASCII only** in SubtypeId, material and object names [HARD, E033] or no MWM is written.
 - **Collision outside the bounding box** makes the game fall back to cube collision [HARD, wiki].
 - **Concave collision** gets filled in by Havok; split it into convex pieces [HARD, wiki].
