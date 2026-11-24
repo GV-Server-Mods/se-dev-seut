@@ -220,8 +220,18 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   [SOFT, not yet seen].
   **Without a window** [HARD, tested]: when the user does not want windows popping up in their Blender [owner],
   render the saved .blend in a background Blender instead:
-  `blender.exe -b <file.blend> --python scripts/icon_render_bg.py -- <out.png> [res] [SubtypeId]`. It rebuilds
-  SEUT's rig and compositor from the scene's saved render settings, renders Main only and never writes the .blend.
+  `blender.exe -b <file.blend> --python scripts/icon_render_bg.py -- <out.png> [res] [SubtypeId] [--subparts] [--fit [FILL]]`.
+  It rebuilds SEUT's rig and compositor from the scene's saved render settings, renders Main only and never writes
+  the .blend. `--subparts` instances every subpart empty to its subpart scene's Main for this render, so a turret
+  shows whole (item 4 above, without touching the file). `--fit` ignores the saved zoom and empty location: it
+  centres the model and sets the lens so its longest side fills FILL of the frame (default 0.9), measured from
+  128 px test renders, and prints the fill and centre offset of the result; the saved rotation still sets the
+  angle. [HARD, tested on Blender 5.2.1, SEUT 1.2.1: a fixed gun and a turret with two nested subparts, blue
+  filter and full colour; fill within 0.01 of the target, centre within 0.5 %.] Blender 5.x: the compositor is a
+  node group (`scene.compositing_node_group`; `scene.node_tree`, the Composite node and MixRGB are gone) and the
+  engine is `BLENDER_EEVEE`; the script builds the same tree either way. Point the Render Layers node's `scene` at
+  the icon scene: left alone it renders the file's active scene, which in a turret file was a subpart scene
+  ("Cannot render, no camera") [HARD, tested].
   Then convert with SEUT's own preset, `texconv.exe <png> -ft DDS -f BC7_UNORM_SRGB -pmalpha -srgb -y -o <dir>`
   (texconv is in the add-on's `tools` folder). The result had SEUT's format (128 x 128, BC7 sRGB, 8 mips, same file
   size). "Cannot relocate indirectly linked library" lines in its output are harmless. Inside the live MCP session
