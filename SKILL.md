@@ -168,9 +168,10 @@ shape reference at most, and ask before spending credit.
   came into Blender with every muzzle a quarter turn about X, and the re-exported blocks fired up or down out of
   the block [owner, in game]. After export, compare each muzzle with the vanilla `.mwm` using `scripts/mwm_dummies.py`,
   turn wrong ones in their local frame, then restart the game.
-- **Never loop over a live `collection.all_objects` / `bpy.data.objects` while creating or removing data**
-  [HARD, two Blender 4.5.10 crashes in `pyrna_prop_collection_iter_next`]: copy first,
-  `objs = list(col.all_objects)`, then build meshes, remove temp meshes, link objects. Save before each step.
+- **Never loop over a live `collection.all_objects` / `bpy.data.objects` while creating or removing data, or
+  while changing visibility** [HARD, three Blender 4.5.10 crashes in `pyrna_prop_collection_iter_next`; the third
+  set `hide_render` in a loop over `all_objects` right after toggling `layer_collection.hide_viewport`]: copy first,
+  `objs = list(col.all_objects)`, then build meshes, remove temp meshes, link objects, hide. Save before each step.
   `references/bpy-recipes.md` ("Moving parts between .blend files, LODs from script"). At session start record
   `bpy.app.binary_path` and `bpy.data.filepath`; after a crash see `references/errors.md` ("When Blender
   crashes or the MCP connection drops").

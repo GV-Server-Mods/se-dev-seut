@@ -40,6 +40,13 @@ Subpart scenes (moving parts) use the same layout without BS or mountpoints; see
   cube and keep it for blocks with real detail to shed.
 - Every LOD mesh needs the same material and real UVs, like Main. Each exports as its own
   `<SubtypeId>_LODn.mwm`, and Main's `.mwm` lists them.
+- **Check each switch at the size the game draws it.** The game's field of view (70 degrees by default) is the
+  vertical angle [HARD, `MyCamera` passes it to `MatrixD.CreatePerspectiveFieldOfView`, "field of view in the y
+  direction"], so at 1080p a model at distance d covers 540 / tan(35 deg) / d = 771 / d px per metre: 19 at 40 m,
+  6.4 at 120 m, 2.6 at 300 m. In Blender (36 mm sensor width) that is `lens = 771 * 36 / resolution_x`. Render LOD(n-1)
+  and LODn from the same views at LODn's distance, at that size, and score the share of model pixels that change; a
+  pop the player would see stands out at once. Rendering larger than the game is a stricter check, smaller hides
+  faults. Recipe and the faults it found: `bpy-recipes.md`, "Decimated LODs on a detailed model".
 
 ## Build stages
 
@@ -80,7 +87,18 @@ Subpart scenes (moving parts) use the same layout without BS or mountpoints; see
   and still look like they float [owner]. Add solid beams under a framed plate (along the supports, plus cross
   beams reaching the frame's edge strips and any central post) until every support visibly meets metal.
 - **Merge outline points closer than the strip width** before insetting: a support's hull with 2 cm corner
-  edges and a 7 cm inset exploded to 270 km.
+  edges and a 7 cm inset exploded to 270 km. For a convex hull of a detailed part, merge hull corners within about
+  10 cm to their centroid, hull again (twice), then `dissolve_limit` (1 degree) to join coplanar triangles.
+- **Split big faces into panels before framing** [seen in renders of a 5x5x3 turret]: strips round an 8 m face
+  read as a flimsy rim beside a vanilla stage's dense frame. `bisect_plane` the faces to frame at about 1.5 m
+  (x, y) and 1.2 m (z), then inset each panel. A panel with a corner under about 35 degrees spikes when inset and
+  reads as a stray solid shard when kept as a plate: delete it, and its neighbours' strips frame the opening.
+- **A hull only suits a part that is convex**: the hull of a hose loop filled the loop into a solid half-moon plate.
+  Leave such parts out of the stages, or build them from tubes.
+- **A base kitbashed from a vanilla block can take that block's own construction stages** (SEUT import of
+  `<Model>Construction_1..3`). They can be heavy: the 5x5 platform conveyor's are 21,000 / 17,600 / 10,900
+  triangles, against the gatling turret's 2,000 to 3,600 faces. Apply the same edits you made to the finished base
+  (moved or widened parts) to each stage, and leave out vanilla pieces your model covers (a port under a turret).
 - A stage mesh sits in its `BS<n>` collection; SEUT exports `<SubtypeId>_BS<n>.mwm` beside the main model.
   The finished turret came to 3,400 / 3,100 / 2,000 triangles per stage. Subparts are not shown while the block
   is under construction (the stage model has no subpart empties) [SOFT, check in game], so a turret's stages

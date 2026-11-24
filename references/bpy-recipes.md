@@ -195,6 +195,14 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
      `e.instance_type = 'COLLECTION'; e.instance_collection = <that subpart scene's Main collection>`. Set them
      back (`instance_type = 'NONE'`, `instance_collection = None`) before saving or exporting. Do not use
      `scene.update_subpart_instances` for this (note under "Quick tools": it crashed Blender).
+     On a vanilla-type turret or door, whose subpart content is turned 180 degrees in its scene
+     (`modeling-rules.md`, "Which way a subpart faces"), also turn the base scene's subpart empty 180 degrees about
+     Z for the render, and only that one (nested ones follow), then restore its matrix [HARD, run: without it the
+     guns pointed over the turret's back].
+     Frame with SEUT's own settings (`renderZoom`, `renderDistance`, `renderEmptyLocation`,
+     `renderEmptyRotation`) set before `renderToggle = 'on'`, and leave the rig, camera and lights SEUT builds as
+     they are [owner: "Just use SEUT the way it was meant to be used!", after a session overrode its light energies
+     by hand].
      Framing: `renderEmptyRotation` z turns the model; if the gun points away from the camera, add or subtract
      180 degrees. Check the PNG's bounding box for clipping; move `renderEmptyLocation` toward the clipped side
      and lower `renderZoom` until there is a margin on every side.
@@ -218,14 +226,6 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   (texconv is in the add-on's `tools` folder). The result had SEUT's format (128 x 128, BC7 sRGB, 8 mips, same file
   size). "Cannot relocate indirectly linked library" lines in its output are harmless. Inside the live MCP session
   `save_render` wrote no pixels for a render started from the MCP timer, so render there only through SEUT's operator.
-- In game [HARD, owner test]: a local mod folder containing only this SBC and the `.mwm` loads and the block can
-  be placed. Gaps seen: the placeholder icon is ugly (render a real one with SEUT's icon renderer, above);
-  BuildInfo hints `IsAirTight` is null, so add `<IsAirTight>true</IsAirTight>` (or `false`) for blocks that are
-  airtight on all faces; plain-text `DisplayName` is easier than the `{LOC:...}` placeholders for a test mod.
-- Reading a vanilla FBX with `bpy.ops.import_scene.fbx` prints a huge "could not find any file path" dump to
-  stdout; wrap the call in `contextlib.redirect_stdout` / `redirect_stderr` to an `io.StringIO`.
-- A clean run ends with `I007` and leaves only `<SubtypeId>.mwm` (plus `<SubtypeId>_LODn.mwm` files and the
-  SBC) when `export_deleteLooseFiles` is True. With False the run ends at `I004` and leaves the FBX, XML,
   A background render uses the file's active scene whatever `scene=` says, so on a file with several icon scenes
   every scene but the active one failed with "Cannot render, no camera"; the script now removes the other scenes
   first (never saved) [HARD, tested on a 24-scene file].
@@ -277,6 +277,14 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   right "should follow the others and face left"]. Icon Studio crashes with a memory error on `.mwm` files older than
   `01157001` [HARD, owner run; those carry 7 more floats per mesh part]. A copy rewritten in the current format loads,
   but it froze the owner's PC on one ("extremely unstable"), so render those models in Blender.
+- In game [HARD, owner test]: a local mod folder containing only this SBC and the `.mwm` loads and the block can
+  be placed. Gaps seen: the placeholder icon is ugly (render a real one with SEUT's icon renderer, above);
+  BuildInfo hints `IsAirTight` is null, so add `<IsAirTight>true</IsAirTight>` (or `false`) for blocks that are
+  airtight on all faces; plain-text `DisplayName` is easier than the `{LOC:...}` placeholders for a test mod.
+- Reading a vanilla FBX with `bpy.ops.import_scene.fbx` prints a huge "could not find any file path" dump to
+  stdout; wrap the call in `contextlib.redirect_stdout` / `redirect_stderr` to an `io.StringIO`.
+- A clean run ends with `I007` and leaves only `<SubtypeId>.mwm` (plus `<SubtypeId>_LODn.mwm` files and the
+  SBC) when `export_deleteLooseFiles` is True. With False the run ends at `I004` and leaves the FBX, XML,
   `.hkt` and log files. Always make the last run with True.
 - Re-running with `export_sbc_type = 'new'` does not overwrite: it writes `<SubtypeId>_1.sbc` beside the first
   one. Use `'new'` once, then `'none'` (or `'update'`). Delete stray `_1.sbc` files.
@@ -315,6 +323,15 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   `o.parent = None; o.matrix_world = mw`, link to the target collection, `o.parent = new_root;
   o.matrix_parent_inverse = new_root.matrix_world.inverted()`. Remove the `.001` leftovers and
   `bpy.data.orphans_purge()`, or highlight links and W007 resolve to the wrong objects.
+- **`matrix_world` is stale in a scene that has not been active** [HARD, seen on SEUT subpart scenes]: after the
+  .blend was reopened, empties in subpart scenes that had not been shown read an identity `matrix_world` while their
+  `location` was right, and `view_layers[0].update()` did not refresh them. A script that set an empty from that
+  matrix moved it to the origin. In a scene other than the window's, read `matrix_basis` (with its parent's), or make
+  that scene the window's first and read it in a later call.
+- **Baking a move into a mesh** (`me.transform(M)`, then the object at identity) keeps custom normals for rigid
+  moves, except at corners where two vertices share one spot (a decal snap leaves such pairs): 46 of 26,312 corners
+  on a decal mesh came out wrong. Save `corner_normals`, turn them by `M`'s rotation and set them again with
+  `normals_split_custom_set` [HARD, run]; corners on zero-area faces stay degenerate either way.
 - **Rigid bodies survive an append** (`o.rigid_body` is kept) even with no rigid body world in the new scene.
 - **Highlight links** (`empty.seut.highlight_objects[i].obj`) keep working when both the empty and the mesh
   are re-parented; reassign `.obj` by hand if the mesh was renamed.
@@ -337,6 +354,26 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   object to the `LODn (...)` collection and the export wrote the LOD `.mwm` files and the
   `<Model><LOD Distance=...>` XML (25 / 50) with no other setup. Final crate: LOD1 7595 and LOD2 3415 faces
   (ratios 0.5 and 0.25 on the shell), export well under a second.
+- **Decimated LODs on a detailed model** [HARD, seen in switch renders of an 83,000-triangle turret, three LODs]:
+  - Work per piece (faces joined by position), not per object: drop pieces below a size per level, keep decals by
+    material and size per level, and decimate (collapse) only what is left. Keep emissive faces at every level,
+    however small: they show the block's state at range, and a size cut removed every lamp at LOD3.
+  - Lock every vertex of a shell face that a kept decal lies on (decal points within about 1 cm): put the free
+    vertices in a vertex group, set the modifier's `vertex_group` and `vertex_group_factor` 1000. Otherwise the
+    shell moves under its decals and they float or sink.
+  - Thin frames break first: a port frame lost its crossbars at a ratio of 0.2 and folded into a V at 0.06. Give
+    such parts their own, higher ratio.
+  - A mesh split at every UV seam (Keen's kitbashed shells: 12,119 vertices for 8,674 triangles) bends its braces
+    and shows pale patches below a ratio of about 0.5. Welding it by position first gave dark bands, and welding
+    plus locking the seams gave holes. Keep such a mesh at 0.5 or more and cut it by dropping small pieces instead.
+  - A part that is already coarse (triangles averaging 0.09 m2 or more, flat panels) folds into long slivers that
+    read as diagonal wedges of the wrong shade. Keep it whole.
+  - New long edges blend two big panels' shading. Read each new corner's normal from the full mesh a few cm inside
+    the corner (ray cast along the normal, then nearest point, then the barycentric blend of that triangle's corner
+    normals), and fall back to a computed normal where nothing lies under it. It cures shading, not folded geometry:
+    check which of the two a wedge is before fixing it.
+  - Score each switch from 8 azimuths x 2 elevations at the game's draw size (`block-scenes.md`, LODs). A worst view
+    of 12.8% changed pixels at 300 m came down to 1.4% once the frames and the split mesh kept their own ratios.
 - A SEUT scene exported this way produced `Models\<Subtype>.mwm`, `_LOD1`, `_LOD2` (plus a `.hkt.mwm` that the earlier install of the same block did
   not need) directly under `Models`; copy the three `.mwm` files into the mod's `Models` folder (LOD paths are
   relative to the mod root).
@@ -416,6 +453,12 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   `subdivide_edges(cuts=1)` on the ring edges plus pushing each new vertex back out to its neighbours' radius.
   Smoothing hides facets on the surface, not on the outline, so judge the silhouette at the distance players
   actually see the part from.
+  Halving a finished tube along its length [HARD, run; hoses 11,600 to 6,300 triangles with no visible change]:
+  find the closed edge loops round it, chain neighbouring loops along each tube, and dissolve every second loop
+  (`dissolve_edges(use_verts=True)`), keeping each tube's end loops and any loop with a crease across it. Test the
+  crease on the corner normals of the two faces beside each loop edge, not on vertex smoothness: a faceted 12-sided
+  tube has no smooth vertex at all. Restore each kept corner's normal from the old corner of its vertex whose face
+  pointed most the same way (carry the old vertex index in an int layer through bmesh).
 - **Angle-limited bevels and segment counts**: a 12-sided cylinder's side edges meet at exactly 30 degrees, so a
   Bevel with `angle_limit = 30` bevels every side edge and multiplies the triangles. Use 14 or more sides, raise
   the limit, or skip the bevel on small cylinders (barrels, pins, piston bodies). Small hex bosses need no bevel.
@@ -502,6 +545,15 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
     flat top beside it into a dark wedge; the region gives the strip the whole top's weight.
   - Join corners by position (rounded to 0.1 mm), not by vertex, so faces split apart in the mesh shade as one.
   - Leave decal faces out: they keep their normals and add no weight.
+  - Keen's blends do not survive stretching [HARD, owner saw it]: a vanilla top face stretched to a 12.5 m deck kept
+    Keen's corners, which lean 45 degrees into the bevels, and the whole deck shaded as one slope. Run the shading check
+    on a kitbashed mesh you scaled or extended, and give its large flat faces (and the bevel corners in their fans)
+    the area-weighted rule instead of Keen's normals.
+  - Tell a shading fault from a rounded edge before fixing it [HARD, measured]: a check for corners far off their
+    face normal also flags every intended rounded edge. Set the flagged corners flat, render the same views, diff
+    them and revert the file. A rounded edge shows as a thin line along the edge; a fault shows as a patch across a
+    face. On a 12.5 m base, 217 corners up to 90 degrees off were all rounded rail edges or hidden behind other
+    parts. A corner that changes no pixel in any view is not worth fixing.
   - Kitbashed vanilla parts keep Keen's normals. On a vanilla mesh you extended, keep every corner whose normal is
     more than 0.5 degrees off its face normal (Keen's shading) and recompute the flat ones; where a recomputed corner's
     smooth fan reaches a kept corner, take the kept normal nearest the rule's, so new and vanilla faces join without
@@ -524,6 +576,24 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   Sealed cavities (the hollow under a turntable, closed by a ring and a lid) need explicit bounds: delete faces
   wholly inside the cavity, plus walls and caps that face only into it, and flat faces covered by a part
   sitting on them (a ring gear's top and bottom). Re-check flat-face normals afterwards.
+  The all-corners test is strict: on a second turret it cut 6,650 triangles against 15,800 estimated from part
+  overlaps, so budget with the dry run, not the estimate. Check decals afterwards by listing decal triangles that
+  have no surface under them before and after the cut; test the new ones for being inside a solid in the checkpoint,
+  since after the cut the overlapping solids are open and every inside test fails [HARD, run: 359 such decal
+  triangles lay inside a closed gunhouse shell, never seen].
+  Faces inside open parts (no closed solid) need a visibility test instead [HARD, run]. A ray test (no ray from the
+  face escapes) is only a candidate list: its rays stop on the back of faces, which the game does not draw, so a
+  player sees through a single-sided panel from behind. On a base, 211 of its 1,244 candidates were visible, and
+  a cut that trusted it opened strips along the frames. Filter with face-ID renders: draw every face into one temp
+  mesh in a flat colour that encodes its index (Workbench, `light = "FLAT"`, `color_type = "VERTEX"`, back faces
+  culled, Standard view transform, a FLOAT_COLOR attribute holding the linear value of each sRGB byte), render
+  1,000+ views round the part plus close views a player could have, and cut only faces whose ID never appears.
+  Traps: `render.opengl` takes anti-aliasing from `preferences.system.viewport_aa`, not the scene, and blended
+  edge pixels decode as other faces' IDs, so set it `"OFF"` for the run and restore it; load one image and
+  `reload()` it per render (loading and removing one per render crashed Blender 4.5.10 after about 1,400);
+  material-preview renders made right after opening a file differ while shaders compile, so render a warm-up set
+  before a before/after comparison. A never-seen face may be a duplicate lying level with another face, which the
+  game shows as flicker: cutting it is a fix, and it shows in the before/after diff as thin triangles.
   The inside test misses **flush joints** [HARD, owner saw z-fighting in game]: a cross beam whose ends stop
   exactly at a long beam's outer face leaves its end cap and end chamfers in the same plane as the long beam's
   faces, facing the same way, and they flicker. Find them with a `BVHTree.find_nearest_range(centre, 0.0015)`
@@ -607,6 +677,23 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   - Traps met building it: ray-cast against the evaluated meshes (an unapplied 25 mm bevel modifier changes the
     surface near every edge); skip grid points on a whole metre (6.0 exported as 5.9999999 and took the next scale); re-set custom
     normals only after a real move (unchanged ones drift 0.0002 per rebuild, which fails a rebuild check).
+  - **Dips the snap leaves** [HARD, run; owner saw broken seam corners]: `snap()` places corners, and reports a
+    triangle already under `KEEP` before rounding as a design fault without moving it. A flat decal face laid
+    across a rounded edge (a seam wrapped over a bevel corner) touches the bevel at its corners and passes under
+    it between them; Blender showed the body through as white specks. Lift those first: every triangle whose
+    lowest `gaps()` sample is under `KEEP` but less than about 1.2 mm under moves out along its normal to 0.9 mm
+    (a corner shared by several takes the largest move), then snap. On a gunhouse that was 250 triangles. Deeper
+    ones are usually a decal under another part: look at those instead of moving them. The design-fault count
+    `snap()` reports is taken before it moves anything; counted again after a snap against the unrounded surface it
+    comes out several times higher (42 became 181), since snapped corners sit on the grid in front of the rounded
+    surface, not the modelled one. To compare a later edit, count gaps after rounding (`gaps(rb, ...)`).
+  - **Small decal faces far out** [HARD, run]: at 3 m from the origin the grid is 2.9 mm on every axis, so decal
+    rows a few mm apart come out scrambled (a seam tip built in 4 mm rows over a rounded corner broke into
+    shards). Keep faces there 15 mm or more across, and follow a curve with rows about 25 mm apart.
+  - **Blender-only lift** [HARD, run]: two opaque decals at one stored height draw in mesh order in game but
+    z-fight in Blender. Moving the upper one's corners less than half a grid step up (0.4 mm against 2.9 mm) fixes
+    Blender while the game rounds them back to the snapped grid points. Check it with `pack()` before and after,
+    and run it after the snap each build, since the snap moves them back.
 - **UVs on round painted shells** [HARD, owner saw hard skin seams in game]: box projection switches axis every
   90 degrees round a cylinder or dome, so a paint skin (camouflage) breaks in four vertical seams. Map the shell
   cylindrically instead: `u = theta * R * upm`, with `theta = atan2(x, -y)` so the one wrap seam sits at the

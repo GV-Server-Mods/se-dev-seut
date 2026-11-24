@@ -564,6 +564,10 @@ the cross seam's centre line, stop each side of the band where it reaches the cr
 the face), and close the end with the tip at the centre-line point. A stem that runs into the corner of two
 seams (a diagonal into a T) stops each side on whichever near edge it reaches last and puts its tip where the
 centre lines cross. A square end, even one cut flush along the cross seam, still reads as pasted on.
+The exception is a very shallow meeting (about 20 degrees) far from the origin [SOFT, rendered]: the tip becomes a
+sliver several centimetres long, and the vertex rounding breaks its thin rows into shards. There, run the stem on
+in rows about 25 mm long and end it flush along the cross seam's near edge; pull back any corner that already
+lies past that edge. Not yet seen by an owner in game.
 **Lines on a material border** [owner, rendered: a chrome plate outlined in a dark gap]: a seam line that separates
 two textures (a plate's outline where the material changes, the foot of a raised part) is centred on that border,
 half on each side, never inset inside one of them. Inset, the strip leaves a sliver of the inner surface between its

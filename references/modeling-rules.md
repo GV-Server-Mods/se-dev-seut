@@ -155,6 +155,11 @@ mechanical parts, openings, equipment, bolts, wear, seams, decals and labels) is
     scene; that is expected.
   - A subpart linked from a subpart scene (a barrel, a recoil part) keeps its empty's matrix, so with unrotated
     empties its frame matches its parent's.
+  - **Assembling the block yourself** (whole-block renders, LOD or build-stage proxies in block space): turn only the
+    first link, `T(azimuth empty) @ Rz(180)`, and place each nested subpart with its empty's translation alone, no
+    second turn [HARD: a turn at every link pointed a turret's guns back over its bustle in every render and
+    proxy until checked against the pre-split model]. Before trusting an assembly, compare one muzzle or camera
+    dummy with the same point in a pre-split checkpoint.
   - WeaponCore sorter turrets keep the empty's rotation (`AzimuthPart.OriginalPosition` in
     `WeaponController.AimBarrel`), so the half turn reaches the game there; the right arrangement for them is
     unverified, so check the facing in game.

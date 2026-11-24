@@ -180,6 +180,16 @@ Done on a large gatling turret built in one scene with a `part` tag on every obj
    ports, shared files, the old dummies): `design-detailing.md`, "Replacing a block's model".
 6. Check the split by rebuilding the turret in the main scene from temporary objects that share the LOD or Main
    meshes, placed with the inverse transforms, and render it before export.
+7. **Snap the decals again in each subpart scene** [HARD, run on a 5-cell turret]. Each subpart model stores its
+   vertices relative to its own origin, so the game's position grid (SKILL.md, vertex rounding) lies elsewhere than
+   in the one-scene model, and a snap done before the split no longer holds. Run `scripts/decal_snap.py` per subpart
+   scene with that scene active (`window.scene`): it reads the active scene's depsgraph, and an object of another
+   scene comes back without its modifiers, so decals get moved against unbevelled surfaces. Pick the azimuth
+   origin's height with the grid in mind: on vanilla turret types the game keeps only the empty's position and turns
+   about the vertical axis through it, so any point on that axis turns the part the same [SOFT: read from
+   `MyLargeTurretBase.RotateModels`, not yet seen in game]. With the origin on the slew disc, a sensor dome 4 m above
+   it stored its heights on a 3.9 mm grid and 24 seam triangles could not be snapped clear; with the origin at the
+   trunnion's height the grid there was 1 mm and every one snapped.
 
 ## Build checklist
 
