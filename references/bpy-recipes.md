@@ -231,14 +231,14 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   node group (`scene.compositing_node_group`; `scene.node_tree`, the Composite node and MixRGB are gone) and the
   engine is `BLENDER_EEVEE`; the script builds the same tree either way. Point the Render Layers node's `scene` at
   the icon scene: left alone it renders the file's active scene, which in a turret file was a subpart scene
-  ("Cannot render, no camera") [HARD, tested].
+  ("Cannot render, no camera") [HARD, tested]. With that, the other scenes stay in the file, and `--subparts` needs
+  them [HARD, run on Blender 4.5.10: a fix that deleted the other scenes first left the turret's base alone; a
+  non-active scene of a 67-scene icon file rendered right with them kept, with and without `--fit`]. For icons that
+  match Keen's, pass `--fit 0.77`: Keen's fill about 75 to 79% (below), the default 0.9 fills more.
   Then convert with SEUT's own preset, `texconv.exe <png> -ft DDS -f BC7_UNORM_SRGB -pmalpha -srgb -y -o <dir>`
   (texconv is in the add-on's `tools` folder). The result had SEUT's format (128 x 128, BC7 sRGB, 8 mips, same file
   size). "Cannot relocate indirectly linked library" lines in its output are harmless. Inside the live MCP session
   `save_render` wrote no pixels for a render started from the MCP timer, so render there only through SEUT's operator.
-  A background render uses the file's active scene whatever `scene=` says, so on a file with several icon scenes
-  every scene but the active one failed with "Cannot render, no camera"; the script now removes the other scenes
-  first (never saved) [HARD, tested on a 24-scene file].
   **Full colour that matches Keen's icons** [HARD, measured; the owner asked for it, 2026-11-22: "make the lighting
   match a little closer to keens", "white balance and tone"]. With `renderColorOverlay` on, SEUT's compositor still
   applies the lift it tunes for the blue look (Color Correction midtones gain 2.0, shadows gain 2.5; Bright/Contrast

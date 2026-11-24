@@ -11,7 +11,8 @@ The saved .blend is read, never written, so the options below change only this r
 --subparts   instance every subpart empty to its subpart scene's Main collection, so a turret shows whole
              (SEUT's own renderer shows the base only).
 --fit FILL   ignore the saved zoom and empty location: centre the model and scale it so its longest side fills FILL
-             of the frame (default 0.9), measured from small test renders. The saved rotation still sets the angle.
+             of the frame (above 0, at most 1; default 0.9, Keen's icons fill about 0.77), measured from small test
+             renders. The saved rotation still sets the angle.
 
 Works on Blender 4.x (scene.node_tree compositor, as SEUT) and 5.x (compositing_node_group; the Composite and
 MixRGB nodes are gone; the engine is BLENDER_EEVEE again). The Render Layers node is pointed at the icon scene:
@@ -39,11 +40,12 @@ RES = int(pos[1]) if len(pos) > 1 else None
 SUB = pos[2] if len(pos) > 2 else None
 B5 = bpy.app.version >= (5, 0, 0)
 
+if FIT is not None and not 0 < FIT <= 1:
+    sys.exit("--fit FILL is a fraction of the frame, above 0 and at most 1 (got %g)" % FIT)
+
 sc = next(s for s in bpy.data.scenes if s.seut.sceneType == "mainScene" and (SUB is None or s.seut.subtypeId == SUB))
-# A background render uses the file's active scene whatever scene= says ("Cannot render, no camera" on every
-# scene but the active one). The .blend is never saved, so drop the other scenes.
-for other in [x for x in bpy.data.scenes if x != sc]:
-    bpy.data.scenes.remove(other)
+# The other scenes stay: --subparts needs the subpart scenes, and the Render Layers node is pointed at this scene
+# below (left alone it renders the file's active scene: "Cannot render, no camera").
 s = sc.seut
 d = s.renderDistance
 MAIN = "Main (%s)" % s.subtypeId
