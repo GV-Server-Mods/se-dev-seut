@@ -664,6 +664,9 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
 - **Edge-only wear:** `md = ob.modifiers.new('bev','BEVEL'); md.material = 1`, then give the mesh the slots
   `[PaintedMetal_Darker, PaintedMetalScratched_Darker]` so only the bevel faces get scratches. For meshes that
   are already bevelled, set `material_index = 1` on faces where `area / longest edge < 0.03`.
+  Not on paintable surfaces [HARD, ADD textures; owner saw no wear in game]: `PaintedMetalScratched_Colorable`'s
+  ADD is flat (100% paintable), so the block's paint covers its scratches, and no tiling scratched metal is partly
+  paintable. On a Colorable model the choice is unpainted worn edges (`*Scratched_Darker` / `_VeryDark`) or no wear.
 - **Bolt decals:** `Decals_Atlas_A_01` bolt heads 1-11 (`atlas-regions.md`, one row per head), one head per
   quad: for example head 4 hex nut u 0.0957-0.123 v 0.9722-0.9966, head 6 round domed u 0.1587-0.1851 v
   0.9712-0.9976, head 11 hex nut on a round washer u 0.313-0.3428 v 0.9692-0.999. Material `Decals`,

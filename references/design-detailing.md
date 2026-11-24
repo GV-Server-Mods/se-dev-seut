@@ -156,7 +156,8 @@ keep working. Put it in the design doc as a "fixed by the block it replaces" tab
   Lay the longest rows first; trim a later row to its clear stretches and re-space each stretch evenly instead of
   dropping single bolts, and skip a stretch shorter than two insets. Line up the two rows of a seam, and parallel
   rows on one plate, so the bolts pair across the joint.
-- **Edge wear**: for wear on the edges only, keep the clean material on faces and put the `*Scratched*` sibling
+- **Edge wear** (not on paintable `*_Colorable` surfaces, whose scratched sibling paints over its scratches; see the
+  recipe): for wear on the edges only, keep the clean material on faces and put the `*Scratched*` sibling
   on bevel strips (recipe in `bpy-recipes.md`, "Edge-only wear"). How much wear, and where, is a matter of
   taste: ask before putting it over whole faces or along the block's main outline.
 - **Panel seams as decals**, not 3D grooves, with mitred T-joins and pointed ends; give the tip vertex its own U
