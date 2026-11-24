@@ -251,7 +251,27 @@ with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
   with colour (1, 0.95, 0.95), exposure +1.4, and a gentle curve (display points 0.16->0.15, 0.36->0.44,
   0.68->0.70). A tone curve alone pushed hard enough to match the histogram speckled the rubber texture, and a
   white-balance gain tinted the blacks red: get the contrast and warmth from the lights, and use the curve only to finish.
-  Keen's full colour icons come from Icon Studio: camera 35 degrees up (SEUT's default is 20), about 75 to 79% fill.
+  Keen's full colour icons come from Icon Studio, about 75 to 79% fill. Its default camera is 35 degrees up and 135
+  around (the 45 degree diagonal; SEUT's default is 20 up), but Keen sets many blocks by hand.
+  **Keen's icon cameras** [HARD, read in Keen's override file, the copy built into `SEIconStudio.pck`: 438 of its
+  1,479 entries set a camera]. The file is `default_icon_render_overrides.json` next to `SEIconStudio.exe`, one entry
+  per subtype: `"cam_rot": [-up, -around, 0]` and an optional `"model_rot": [x, y, z]` that turns the model, in radians.
+  - 20 up, 155 around is Keen's camera for long, tall and big blocks, not only weapons (87 entries): every turret and
+    missile launcher, all thrusters, drills, grinders, ore detectors, the 3x conveyor tubes and pipes, support beams,
+    exhaust pipes, the hydrogen engine, assembler, bulk containers and upgrade modules. The radio antenna mast is
+    15 up, 160 around.
+  - Long fixed guns: 20 up, 160 around (small autocannon and assault cannon), 25 up for the artillery, 20 up and 147
+    around for the railguns. Pistons 20 to 25 up, 150 around; beacons 30 up and the compact antenna 35 up, both 150.
+  - Ammo: 40 up, 145 around (35 for torpedoes). Flat things look down further at 135 around: floor slab, interior
+    plate and laser antenna 45, steel plate 55, datapad 65. Signs and LCD symbols face on (0 up).
+  - A subtype without its own entry takes Keen's entry for its TypeId (`LargeMissileTurret#EMPTY_SUBTYPE` and the
+    gatling and small launcher ones at 20 up, 155 around; `SmallGatlingGun` and `OxygenTank` 30 up, 155) before the
+    35 up default [owner saw a modded missile turret load at 20]. A batch run for a mod therefore needs an entry for
+    every block it renders, even one that wants the default.
+  - For modded blocks, follow these groups [owner, 2026-11-23]. Keep the 155 around: turning the camera round to fill
+    the frame pointed barrels at it. Raise a long block from 20 only where that fills clearly more (10% or so), and no
+    higher than about 35: 60 up was "way too steep". Turn a long item with `model_rot` instead (a missile pointing down
+    to the lower right, like Keen's ammo).
   SEUT's lights scale with `renderDistance` while the inverse square falls faster, so a large block rendered by moving
   the camera back comes out dark: scale the model to fit the distance-1 camera instead (icons show no scale).
   A wheel on a suspension: the wheel's `wheel` dummy goes on the suspension's `electric_motor` dummy, same
