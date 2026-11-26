@@ -52,6 +52,23 @@ Calls fail with "Connection to Blender lost" / WinError 10054, or `get_addon_sta
    auto-starting on this machine (some installs start it automatically, others do not). Tell the user to open the
    side panel (N) in Blender and press Start MCP Server, or enable the add-on's auto-start option if its
    preferences have one. Do not loop restarts.
+5. **Calls time out though Blender is idle and its panel says the server is running** [HARD, Windows, Blender
+   5.3, 2026-11-26]: check who holds the port (`netstat -ano | grep :9876`). Several `mcp-for-blender.exe`
+   processes connected at once (left over from timed-out calls, another Claude window, or another agent such as
+   Antigravity) keep the add-on's server busy, so a raw request to the port gets no reply and every new session's
+   connect times out after 30 s. Stopping a process needs the user's permission: ask them to restart the server
+   from Blender's side panel (or restart Blender) and reconnect `blender` in `/mcp`, and to keep one MCP client on
+   Blender at a time. Blender's own MCP server (tools `mcp__Blender__*`, below) connected while the old one
+   still timed out.
+- **Two Blender MCP servers exist** [HARD, both used]: `mcp-for-blender` (tools `get_addon_status`,
+  `get_scene_info`, `look`, `execute_blender_code` that returns what it prints) and Blender's own MCP add-on
+  (tools `mcp__Blender__execute_blender_code`, `get_objects_summary`, `get_screenshot_of_window_as_image`,
+  `render_viewport_to_path`). Blender's own one returns only a dict assigned to `result` (a list is refused),
+  plus the console output; it has no `look`, so check visually with a window screenshot or a render to a file.
+  Recipes in this skill run on both; swap `print` for `result = {...}`.
+- **"Cannot relocate indirectly linked library ...SEUT.blend"** when opening a SEUT file on Blender 5.3 [HARD,
+  seen 2026-11-26] is harmless: `Materials.blend` links `SEUT.blend` itself, both libraries load and none is
+  missing (`[l for l in bpy.data.libraries if l.is_missing]` is empty).
 - **A crash dialog blocks the MCP** [HARD, seen on Windows, Blender 4.5.10]: when Blender crashes, its error
   dialog stays open and the MCP call does not fail; it just waits for a result that never comes. If a call
   hangs, ask the user whether a Blender error window is open; once they close it or click Restart, read the

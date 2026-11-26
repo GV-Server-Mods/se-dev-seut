@@ -22,7 +22,9 @@ look: shape, UVs, material *name*, collision, bounding box and empties are what 
 
 Tags: **[HARD]** read in SEUT source or the wiki. **[SOFT]** inferred or field-tested, verify before relying on it.
 **[owner]** what the user the model was built for saw in game or asked for in a review.
-Everything below was checked against SEUT 1.2.1 on Blender 4.5 unless marked "unverified".
+Everything below was checked against SEUT 1.2.1 on Blender 4.5 unless marked "unverified". Opening, editing
+and exporting a kitbashed block (model, LODs, collision) also works on SEUT 1.2.2-alpha.3 with Blender 5.3
+(2026-11-26); the rest is not rechecked there.
 
 ## Workflow
 
@@ -73,7 +75,9 @@ Everything below was checked against SEUT 1.2.1 on Blender 4.5 unless marked "un
 The user's real Blender session is the workspace, and every call changes their file. Work in small,
 checkable steps and leave the scene tidy.
 
-1. `get_addon_status` once (Blender version, add-on match), then `get_scene_info`.
+1. `get_addon_status` once (Blender version, add-on match), then `get_scene_info`. With Blender's own MCP
+   add-on instead (`mcp__Blender__*`, no `look`), read the same facts with `execute_blender_code` and return a
+   `result` dict; calls that time out on an idle Blender: `references/errors.md`, step 5.
 2. Plan from dimensions and the reference before writing geometry. With a picture, read
    `references/reference-images.md` first: extract proportions into a dimension table, then build to it.
    With straight-on views, measure every blockout pass and have a separate critic review it:
@@ -146,6 +150,11 @@ shape reference at most, and ask before spending credit.
   normals then read back up to 60 degrees off far from the cut (smeared bevels, odd wedges at the corners). After
   any cut, rebuild the mesh from the pre-cut checkpoint (`scripts/restore_cut_normals.py`) and check the export
   against vanilla (`scripts/mwm_normals_vs_vanilla.py`): `references/kitbash.md`, "Cutting into a vanilla mesh".
+- **LOD meshes export with Blender's `.001` suffix in their section names** [HARD, SEUT 1.2.1 and 1.2.2]: a
+  LOD copy of `Body_section01` is named `Body_section01.001`, and SEUT writes that name into the LOD's `.mwm`, so
+  the section no longer matches the main model's. Export each LOD once with its section objects renamed to the
+  base name and the clashing ones moved aside, then put the names back: `references/bpy-recipes.md` ("Export
+  through the MCP"). Check the result with `grep -aoE '[A-Za-z]+_section_?[0-9]+(\.[0-9]+)?' <lod>.mwm`.
 - **A `detector_conveyor*` empty is also the conveyor connection point** [HARD, game code]: put it in the cell
   it belongs to, facing the neighbour. `references/interaction-highlights.md`.
 - **Conveyor-only blocks: no crossbars, yellow shutter, no mesh highlight** [SOFT, owner]: if a block is conveyored

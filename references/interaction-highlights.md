@@ -151,6 +151,16 @@ of the panel did nothing, and players would expect the whole mesh to react.
 - For a mesh at an angle, or a curved port frame, cover the box that contains the whole mesh. A bigger empty
   only costs extra aim area.
 - Keep the empty inside the block bounding box where the mesh allows it.
+- **Copying a vanilla detector into Blender** [HARD, round trip checked on SEUT 1.2.2, 2026-11-26]: `scripts/mwm_dummies.py`
+  prints `pos` and `size` in the model's axes. An unrotated SEUT empty at Blender location (x, y, z) lands at
+  model (x, z, -y), and `size` is the empty's full extent (`empty_display_size * scale * 2`, so with the default
+  display size 0.5 the scale itself). The order of `size` follows the dummy's own rotation: Keen's dummies read
+  `fwd (0, 1, 0)  up (0, 0, 1)`, and their `size` is in Blender's X, Y, Z order, so copy it straight into
+  `scale`; SEUT's export of an unrotated empty reads `fwd (0, 0, -1)  up (0, 1, 0)`, with `size` in X, Z, Y
+  order. Example: Keen's small Inset Flare Launcher `detector_inventory`, `pos (0, 0, -0.218)`, `size (0.277,
+  0.072, 0.398)`, is a Blender empty at (0, 0.218, 0) with scale (0.277, 0.072, 0.398). Keen sizes such a detector
+  to only the part the player should aim at (the tube mouths), smaller than the highlighted mesh, so the rest of
+  the block can be painted without the outline getting in the way.
 
 ```python
 def size_detector_to_mesh(empty, mesh, pad=0.01, depth_half=0.04, depth_axis=1):

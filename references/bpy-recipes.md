@@ -121,7 +121,7 @@ non-degenerate coordinates work).
 
 Collision meshes should be sized to the model's real extent. Do not inset a full cube.
 
-## Export through the MCP [HARD, tested on SEUT 1.2.1, Blender 4.5]
+## Export through the MCP [HARD, tested on SEUT 1.2.1, Blender 4.5, and SEUT 1.2.2-alpha.3, Blender 5.3]
 
 `scene.export` polls for a 3D viewport in Object mode, which the MCP does not give by default, so override the
 context. The .blend must be saved, and the Mod folder and Export Folder must exist (the folder must contain
@@ -137,6 +137,33 @@ area = next(a for a in win.screen.areas if a.type == 'VIEW_3D')
 region = next(r for r in area.regions if r.type == 'WINDOW')
 with bpy.context.temp_override(window=win, area=area, region=region, scene=scn):
     result = bpy.ops.scene.export()
+```
+
+**Base section names on the LODs** [HARD, run on SEUT 1.2.2-alpha.3, Blender 5.3, 2026-11-26]: object names are
+unique across the file, so a LOD's copy of `Tubes_section_01` is `Tubes_section_01.001`, and SEUT writes that
+into the LOD `.mwm`. Export once into a scratch mod folder per LOD, with that LOD's section objects (and their
+meshes) renamed to the base name and the Main or other-LOD objects holding the name moved aside, restore the
+names in a `finally`, and keep only that LOD's `.mwm` from each pass (Main and LOD3 come from a normal pass):
+
+```python
+import re
+def export_lod_with_base_names(lod_collection, export_fn):
+    renames = []                                     # (object or None, old object name / mesh, old mesh name)
+    try:
+        for o in [o for o in lod_collection.objects if o.type == 'MESH' and re.search(r"_section_?\d+\.\d+$", o.name)]:
+            base = re.sub(r"\.\d+$", "", o.name)
+            clash = bpy.data.objects.get(base)
+            if clash and clash != o:
+                renames.append((clash, clash.name, clash.data.name)); clash.name = clash.data.name = base + "__tmp"
+            mclash = bpy.data.meshes.get(base)
+            if mclash and mclash != o.data:
+                renames.append((None, mclash, mclash.name)); mclash.name = base + "__tmpm"
+            renames.append((o, o.name, o.data.name)); o.name = base; o.data.name = base
+        return export_fn()                           # set mod_path / export_exportPath to a scratch folder first
+    finally:
+        for obj, old, mname in reversed(renames):
+            if obj is None: old.name = mname
+            else: obj.name = old; obj.data.name = mname
 ```
 
 - **Small-grid blocks** [HARD, run]: a scene with `gridScale = 'small'` exports as a *Large* block by default
