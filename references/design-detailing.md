@@ -32,7 +32,9 @@ layers, part sizes, line, bolt and sign sizes and spacing) are in `keen-style.md
    with a user sign-off: blockout, kitbash, each part group, each decal group (contact sheet first), the
    split, LODs and stages, the icon. Render each at the concept art's angle, the owner's reference angle and
    orthographic views. Keep `build-log.md` beside the doc and update it at every checkpoint (done, decided,
-   renders, next), so a context compaction or a fresh session continues from the files.
+   renders, next), so a context compaction or a fresh session continues from the files. For multi-round builds,
+   also save a lightweight `progress.html` gallery alongside `build-log.md` with clearly titled, overlay-free
+   milestone renders per round so the user can compare progress at a glance [SOFT].
    **Sketch a layout over a render before building it** [owner: "doing that sketch for me is super helpful"].
    When a request reads a layout off a reference (panel seams, plate breaks, decal or stripe positions, cut-outs)
    and your reading involves choices, draw it as coloured lines over the last orthographic checkpoint render,
@@ -185,8 +187,12 @@ keep working. Put it in the design doc as a "fixed by the block it replaces" tab
 
 ## Checking and reviewing
 
-- Render each pass at the concept angle plus close-ups of what changed, in EEVEE (Workbench texture mode
-  exaggerates wear). Ray-cast from the camera to identify a stray dark shape before guessing.
+- Render each pass in EEVEE (Workbench texture mode exaggerates wear) with four diagnostic views: the concept
+  angle (3/4 overview), close-ups of what changed, a **low-angle / mount-face grazing view** (catches floating or
+  sunken parts, bad support joints, and overhangs past mount planes), and a **wireframe view** (catches intersecting
+  or sloppy geometry) [SOFT]. Ray-cast from the camera to identify a stray dark shape before guessing. For detail
+  passes as well as blockouts, a separate fresh-context critic using the `measured-modelling.md` rubric (at least
+  3 named flaws, `< 9/10` blocks sign-off) counters builder blind spots [SOFT].
 - Check every part against its support edge, every decal for floating or z-fighting, and every moving part
   through its full range (`weapons-turrets.md`, "Clearance for moving subparts").
 - **Decal obstruction check** [HARD, caught real clashes; owner: decals were hidden or colliding]: hide the decal

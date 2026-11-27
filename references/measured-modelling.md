@@ -73,7 +73,10 @@ Suggested tolerance: 5 cm on a large grid block, 1-2 cm on a small one [SOFT].
 
 Start a separate agent with fresh context: the Agent tool in Claude Code, a new thread elsewhere. Give it only:
 the concept art, the sheet's views, the dimension table, `report.md`, `overlays.png`, `board_<view>.png`,
-`detail_<n>.png`, and renders of the model at the art's angles plus close-ups of each part group. Brief:
+`detail_<n>.png`, and clean (overlay-free) renders of the model: at the art's angles, close-ups of each part
+group, a **low-angle / mount-face grazing view** (catches floating, sunken, or overhanging parts), and a
+**wireframe view** (catches intersections and topology flaws). The same critic loop works on detail passes too
+[SOFT]. Brief:
 
 ```
 You review a 3D model pass against its references. You did not build it; your job is to find differences.
@@ -82,14 +85,18 @@ You review a 3D model pass against its references. You did not build it; your jo
    metres (the model's parts in flat colours). Read positions off the grid. Compare them, then the renders
    with the concept art, for what an outline cannot show: parts inside the outline (panels, vents, hatches,
    sights), raised against recessed, which way each part faces, how parts overlap, counts of repeated parts,
-   symmetry, and parts present in one and absent in the other.
+   symmetry, parts present in one and absent in the other, floating/clipped joints (low-angle view), and
+   intersecting or messy geometry (wireframe view).
 3. Give a size only when it comes from the report, the table or the grid; otherwise describe the difference.
-Answer with a list, worst first: what, where (view and world range, or part), how big, evidence (report row or
-image), confidence (high, medium, low), and whether the reference itself is unclear there.
+Answer with:
+- A list of at least 3 specific flaws, worst first (even on clean passes): what, where (view and world range,
+  or part), how big, evidence (report row or image), confidence (high, medium, low), and whether the reference
+  itself is unclear there.
+- An overall fidelity score out of 10 (anything below 9/10 blocks sign-off).
 ```
 
-The builder fixes every high-confidence item and goes round again. When the check passes and the critic's list
-holds nothing high, the pass goes to the user (`pipeline.md`, the blockout gate).
+The builder fixes every high-confidence item and goes round again. When the check passes, the score clears 9/10,
+and the critic's list holds nothing high, the pass goes to the user (`pipeline.md`, the blockout gate).
 
 ## What it does not see
 

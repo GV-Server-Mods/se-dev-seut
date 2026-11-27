@@ -87,6 +87,9 @@ checkable steps and leave the scene tidy.
 3. One change per script; print only what you need (names, counts, dimensions).
 4. `look` after each meaningful change: `mode=angles` with `views` for shape, `shading=wireframe` for
    topology, `max_size` 400-512 for quick checks. Compare with the reference, fix the largest difference first.
+   For milestone and critic reviews, include a **low-angle / mount-face grazing view** (catches floating, sunken
+   or overhanging parts) and a **wireframe shot** (catches intersecting geometry) alongside the 3/4 and close-up
+   views (`design-detailing.md`, `measured-modelling.md`).
    `look`, `mode=angles` included, opens no new window in the Windows taskbar [owner: none seen over a session
    of angle checks]. The window the owner minded is the console window `blender.exe` opens: it stays open, and
    closing it closes Blender. Launch the UI with `blender-launcher.exe`, which has none (`references/errors.md`).

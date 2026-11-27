@@ -13,7 +13,10 @@ Look at the image and write down, in plain numbers where possible:
 - Symmetry (which axes), repeating elements and their counts.
 - Where the image is perspective (distorted) rather than orthographic; do not measure across perspective.
 
-Ask for a missing side view or a scale cue when a dimension would otherwise be a guess.
+Ask for a missing side view or a scale cue when a dimension would otherwise be a guess. When straight-on views are
+unavailable, a short walkaround video clip (such as a ~15-second turntable of a real-world object or an orbit
+capture of an existing in-game block) also works as a multimodal reference for proportions and occluded sides
+before blocking out [SOFT].
 
 ### Ask for straight-on views first [SOFT, field-tested on a turret]
 

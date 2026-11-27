@@ -105,6 +105,10 @@ Empty Properties reference, Collisions, Mountpoints and Mirroring tutorials, Mat
   and their custom data) is cleared on session unload only on memory-limited platforms or with
   `LimitNPCsOnLowMemory` (`MySession`), so on PC it lasts until the game closes. Owner, 2026-11-17: a conveyor
   port's corrected `highlight` name stayed dark after a reload and lit up after a full restart.
+- Diagnostic 4-view render set (low-angle grounding + wireframe), critic minimum-flaw/9-of-10 gate on detail passes,
+  walkaround video references, and `progress.html` milestone gallery (`SKILL.md`, `measured-modelling.md`,
+  `design-detailing.md`, `reference-images.md`): adapted from Google AI Studio's *Building 3D Games and Procedural
+  Worlds with Gemini 4 Argon* guide (2026-10-13), tagged `[SOFT]`.
 
 ## Not yet verified
 
